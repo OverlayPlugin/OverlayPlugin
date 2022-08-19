@@ -93,7 +93,7 @@ namespace RainbowMage.OverlayPlugin
                     _logger.Log(LogLevel.Error, "Failed to load the plugin config. Please report this error on the GitHub repo or on the ACT Discord.");
                     _logger.Log(LogLevel.Error, "");
                     _logger.Log(LogLevel.Error, "  ACT Discord: https://discord.gg/ahFKcmx");
-                    _logger.Log(LogLevel.Error, "  GitHub repo: https://github.com/ngld/OverlayPlugin");
+                    _logger.Log(LogLevel.Error, "  GitHub repo: https://github.com/OverlayPlugin/OverlayPlugin");
 
                     FailWithLog();
                     return;

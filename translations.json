@@ -137,7 +137,7 @@
             "zh-CN": "温馨提示："
         },
         "lnkGithubRepo.Text": {
-            "en": "https://github.com/ngld/OverlayPlugin"
+            "en": "https://github.com/OverlayPlugin/OverlayPlugin"
         }
     },
     "OverlayPlugin.Core/Controls/NewOverlayDialog": {

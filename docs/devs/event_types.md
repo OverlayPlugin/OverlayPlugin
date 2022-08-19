@@ -11,7 +11,7 @@ sidebar:
 ### CombatData
 
 Sent once per second while the player is in combat.<br>
-Load `https://ngld.github.io/OverlayPlugin/assets/miniparse_debug.html` in an overlay for a full list of available fields.
+Load `https://overlayplugin.github.io/OverlayPlugin/assets/miniparse_debug.html` in an overlay for a full list of available fields.
 
 ### LogLine
 

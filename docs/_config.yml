@@ -1,10 +1,10 @@
-title: ngld OverlayPlugin
+title: OverlayPlugin
 description: >- # this means to ignore newlines until "baseurl:"
   Yet another OverlayPlugin fork.
 baseurl: "/OverlayPlugin"
-url: "https://ngld.github.io/OverlayPlugin"
-github_username: ngld
-repository: ngld/OverlayPlugin
+url: "https://overlayplugin.github.io/OverlayPlugin"
+github_username: OverlayPlugin
+repository: OverlayPlugin/OverlayPlugin
 
 # Build settings
 #theme: jekyll-text-theme

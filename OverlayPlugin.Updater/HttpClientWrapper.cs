@@ -25,7 +25,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             ProgressInfoCallback infoCb, bool resume)
         {
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "ngld/OverlayPlugin v" + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            client.DefaultRequestHeaders.Add("User-Agent", "OverlayPlugin/OverlayPlugin v" + Assembly.GetExecutingAssembly().GetName().Version.ToString());
             
             foreach (var key in headers.Keys)
             {

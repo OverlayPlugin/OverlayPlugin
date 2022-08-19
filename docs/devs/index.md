@@ -12,7 +12,7 @@ Each overlay is a website which means that a basic understanding of HTML, JavaSc
 
 To demonstrate, you can enter https://google.com or any other URL in OverlayPlugin's URL field and you'll see the relevant website appear in the overlay. You can of course enter local paths (or select local files through the `...` button) as well.
 
-A good starting point is the simple default overlay [miniparse.html](https://github.com/ngld/OverlayPlugin/blob/master/OverlayPlugin.Core/resources/miniparse.html).
+A good starting point is the simple default overlay [miniparse.html](https://github.com/OverlayPlugin/OverlayPlugin/blob/main/OverlayPlugin.Core/resources/miniparse.html).
 
 It has some CSS to make the output pretty, JavaScript to build a table based on the MiniParse data and a bit HTML to tie everything together.
 
@@ -22,9 +22,9 @@ If you already know HTML, CSS and JavaScript most of that won't be new to you an
 
 First of all, you should include OverlayPlugin's [common.min.js](../assets/shared/common.min.js) like this:
 ```html
-<script type="text/javascript" src="https://ngld.github.io/OverlayPlugin/assets/shared/common.min.js"></script>
+<script type="text/javascript" src="https://overlayplugin.github.io/OverlayPlugin/assets/shared/common.min.js"></script>
 ```
-[Here's a link to the non-minified source](https://github.com/ngld/OverlayPlugin/blob/master/docs/assets/shared/common.js) if you're curious.
+[Here's a link to the non-minified source](https://github.com/OverlayPlugin/OverlayPlugin/blob/main/docs/assets/shared/common.js) if you're curious.
 
 This way, you'll always have the latest version of `common.js` which will be compatible with the latest version of OverlayPlugin.
 

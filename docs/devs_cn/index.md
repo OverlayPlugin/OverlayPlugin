@@ -12,7 +12,7 @@ sidebar:
 
 为了演示，你可以在OverlayPlugin的URL字段中输入 https://www.baidu.com/ 或其他网址，你就会看到网址对应的网页在悬浮窗中加载出来。当然你也可以输入本地路径（或者通过`...`按钮选择本地文件）来加载本地网页。
 
-一个比较推荐初心者查看的简易悬浮窗Demo是默认的悬浮窗样式 [miniparse.html](https://github.com/ngld/OverlayPlugin/blob/master/OverlayPlugin.Core/resources/miniparse.html)。
+一个比较推荐初心者查看的简易悬浮窗Demo是默认的悬浮窗样式 [miniparse.html](https://github.com/OverlayPlugin/OverlayPlugin/blob/main/OverlayPlugin.Core/resources/miniparse.html)。
 
 它通过JavaScript在HTML中生成基于MiniParse数据的表格，并使用了CSS来让数据变得漂亮一点。
 
@@ -22,13 +22,13 @@ sidebar:
 
 首先，你需要在悬浮窗网页中引用OverlayPlugin的[common.min.js](.../assets/shared/common.min.js)。
 ```html
-<script type="text/javascript" src="https://ngld.github.io/OverlayPlugin/assets/shared/common.min.js"></script>
+<script type="text/javascript" src="https://overlayplugin.github.io/OverlayPlugin/assets/shared/common.min.js"></script>
 ```
 如果你的用户位于中国境内，我们推荐引用这里的镜像文件。
 ```html
 <script type="text/javascript" src="https://act.diemoe.net/overlays/common/common.min.js"></script>
 ```
-[点击这个链接查看该js的未压缩原始代码](https://github.com/ngld/OverlayPlugin/blob/master/docs/assets/shared/common.js) if you're curious.
+[点击这个链接查看该js的未压缩原始代码](https://github.com/OverlayPlugin/OverlayPlugin/blob/main/docs/assets/shared/common.js) if you're curious.
 
 像上面这样在网页中添加代码段落，你将始终引用最新版本的 `common.js` ，它将与最新版本的OverlayPlugin兼容。
 

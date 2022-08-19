@@ -19,12 +19,12 @@ In ACT, go to the `Plugins` tab and then to the `OverlayPlugin.dll` tab. You'll 
 
 Example HTML files are in the `resources` folder.
 
-We also have [instructions for users who want to display their overlay in OBS](https://ngld.github.io/OverlayPlugin/streamers).
+We also have [instructions for users who want to display their overlay in OBS](https://overlayplugin.github.io/OverlayPlugin/streamers).
 
 ## Overlays
 
 * [A list of popular overlays](https://gist.github.com/ngld/e2217563bbbe1750c0917217f136687d#overlays)
-* [Documentation for creating your own](https://ngld.github.io/OverlayPlugin/devs/)
+* [Documentation for creating your own](https://overlayplugin.github.io/OverlayPlugin/devs/)
 
 
 ## Troubleshooting
@@ -46,4 +46,4 @@ Once finished, the plugin file `OverlayPlugin.dll` will appear in the `out` fold
 
 MIT license. See LICENSE.txt for details.
 
-[releases]: https://github.com/ngld/OverlayPlugin/releases
+[releases]: https://github.com/OverlayPlugin/OverlayPlugin/releases

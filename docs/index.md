@@ -7,7 +7,7 @@ permalink: /
 
 OverlayPlugin allows you to display different overlays over your game and supply them with data from ACT.
 
-**[Click here to download the latest release](https://github.com/ngld/OverlayPlugin/releases/latest)**.
+**[Click here to download the latest release](https://github.com/OverlayPlugin/OverlayPlugin/releases/latest)**.
 
 ## Information about ACT and FFXIV
 

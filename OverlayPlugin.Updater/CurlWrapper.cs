@@ -1305,7 +1305,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         private static void _init()
         {
-            USER_AGENT = "ngld/OverlayPlugin v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            USER_AGENT = "OverlayPlugin/OverlayPlugin v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             var libPath = Path.Combine(pluginDirectory, "libs", Environment.Is64BitProcess ? "x64" : "x86", "libcurl.dll");
             if (!File.Exists(libPath))
