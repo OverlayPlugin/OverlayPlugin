@@ -1,11 +1,17 @@
 try {
-    # This assumes Visual Studio 2019 is installed in C:. You might have to change this depending on your system.
-    $VS_PATH = "C:\Program Files\Microsoft Visual Studio\2022\Community"
+    # This assumes Visual Studio 2022 is installed in C:. You might have to change this depending on your system.
+    $DEFAULT_VS_PATH = "C:\Program Files\Microsoft Visual Studio\2022\Community"
 
-    if ( -not (Test-Path "$VS_PATH")) {
-        echo "Error: VS_PATH isn't set correctly! Update the variable in build.ps1 for your system."
-        echo "... or implement it properly with vswhere and submit a PR. (Please)"
-        exit 1
+    $DEFAULT_VSWHERE_PATH = "${Env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    if ( -not (Test-Path "$DEFAULT_VSWHERE_PATH")) {
+        echo "Unable to find vswhere.exe, defauling to $DEFAULT_VS_PATH value in build.ps1."
+        if ( -not (Test-Path "$DEFAULT_VS_PATH")) {
+            echo "Error: DEFAULT_VS_PATH isn't set correctly! Update the variable in build.ps1 for your system."
+            exit 1
+        }
+        $VS_PATH = $DEFAULT_VS_PATH
+    } else {
+        $VS_PATH = & "$DEFAULT_VSWHERE_PATH" -latest -property installationPath
     }
 
     if ( -not (Test-Path "Thirdparty\ACT\Advanced Combat Tracker.exe" )) {
