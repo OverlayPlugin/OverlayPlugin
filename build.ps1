@@ -1,3 +1,7 @@
+param (
+    [switch]$ci = $false
+)
+
 try {
     # This assumes Visual Studio 2022 is installed in C:. You might have to change this depending on your system.
     $DEFAULT_VS_PATH = "C:\Program Files\Microsoft Visual Studio\2022\Community"
@@ -50,6 +54,12 @@ try {
         copy .\libcurl-vc16-x86-release-dll-ipv6-sspi-winssl\bin\libcurl.dll ..\..\..\OverlayPlugin.Updater\Resources\libcurl.dll
 
         cd ..\..\..
+    }
+
+    if ($ci) {
+        echo "==> Continuous integration flag set. Building Debug..."
+        msbuild -p:Configuration=Debug -p:Platform=x64 "OverlayPlugin.sln" -t:Restore
+        msbuild -p:Configuration=Debug -p:Platform=x64 "OverlayPlugin.sln"    
     }
 
     echo "==> Building..."

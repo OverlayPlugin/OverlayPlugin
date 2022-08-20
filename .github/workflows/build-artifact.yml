@@ -59,7 +59,7 @@ jobs:
           echo "::add-matcher::.github/matchers/${{ github.job }}.json"
 
       - name: Run Build
-        run: build.bat
+        run: .\build.bat -ci
         shell: cmd
         
       - name: Determine Version
