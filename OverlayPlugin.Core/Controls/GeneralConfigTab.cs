@@ -156,7 +156,7 @@ namespace RainbowMage.OverlayPlugin
                 var cactbotConfig = cactbotEs.GetType().GetProperty("Config").GetValue(cactbotEs);
                 configType.GetField("LastUpdateCheck").SetValue(cactbotConfig, DateTime.MinValue);
 
-                var checker = checkerType.GetConstructor(new Type[] { loggerType }).Invoke(new object[] { cactbotEs });
+                var checker = checkerType.GetConstructor(new Type[] { loggerType }).Invoke(new object[] { logger });
                 checkerType.GetMethod("DoUpdateCheck", new Type[] {configType}).Invoke(checker, new object[] { cactbotConfig });
             } catch(FileNotFoundException)
             {
