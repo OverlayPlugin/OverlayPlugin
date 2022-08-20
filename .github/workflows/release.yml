@@ -96,7 +96,7 @@ jobs:
         with:
           name: OverlayPlugin ${{ needs.validate_tag.outputs.version }}
           tag: v${{ needs.validate_tag.outputs.version }}
-          artifacts: out/OverlayPlugin-*.*
+          artifacts: out/OverlayPlugin-${{ needs.validate_tag.outputs.version }}.zip
           artifactContentType: application/zip
           draft: true
           generateReleaseNotes: true
