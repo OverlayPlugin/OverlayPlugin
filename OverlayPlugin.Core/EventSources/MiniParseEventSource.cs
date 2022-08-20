@@ -516,6 +516,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                             name = c.Name,
                             worldId = c.WorldID,
                             job = c.Job,
+                            level = c.Level,
                             inParty = GetPartyType(c) == 1 /* Party */,
                         });
                     }
