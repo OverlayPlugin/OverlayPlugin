@@ -132,7 +132,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 var asm = Assembly.Load("CactbotEventSource");
                 var checkerType = asm.GetType("Cactbot.VersionChecker");
-                var loggerType = asm.GetType("Cactbot.ILogger");
+                var loggerType = typeof(ILogger);
                 var configType = asm.GetType("Cactbot.CactbotEventSourceConfig");
 
                 var esList = container.Resolve<Registry>().EventSources;
@@ -156,7 +156,7 @@ namespace RainbowMage.OverlayPlugin
                 var cactbotConfig = cactbotEs.GetType().GetProperty("Config").GetValue(cactbotEs);
                 configType.GetField("LastUpdateCheck").SetValue(cactbotConfig, DateTime.MinValue);
 
-                var checker = checkerType.GetConstructor(new Type[] { loggerType }).Invoke(new object[] { cactbotEs });
+                var checker = checkerType.GetConstructor(new Type[] { loggerType }).Invoke(new object[] { logger });
                 checkerType.GetMethod("DoUpdateCheck", new Type[] {configType}).Invoke(checker, new object[] { cactbotConfig });
             } catch(FileNotFoundException)
             {
