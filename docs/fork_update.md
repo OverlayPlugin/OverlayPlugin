@@ -24,9 +24,18 @@ Click `Yes`.
 Repeat this process until there are no plugins in the list that say `OverlayPlugin.dll`.
 You need to do this even if you got the old plugin from `Get Plugins`.
 
-## 2) Add the new OverlayPlugin
+Once you are done, close ACT entirely.
 
-Open ACT if needed.
+## 2) Close ACT
+
+Now that you have removed the old OverlayPlugin,
+close ACT entirely.
+
+## 3) Add the new OverlayPlugin
+
+Reopen ACT.
+If you have not closed ACT after step 1, please close it now and reopen it.
+
 Go to `Plugins` -> `Plugin Listing`. 
 In the upper right corner of ACT, click `Get Plugins...`.
 Select `(77) Overlay Plugin`.
@@ -34,7 +43,7 @@ Click `Download and Enable`.
 If successful, it will say `The plugin has been added and started.`
 Close the `Get Plugins` window.
 
-## 3) Reorder your plugins
+## 4) Reorder your plugins
 
 Open ACT if needed.
 Go to `Plugins` -> `Plugin Listing`. 
@@ -49,3 +58,8 @@ During this process, ACT may prompt you with `ACT Restart Requested` and `Restar
 You are welcome to click this any time it shows up and restart ACT.
 However, once you are done with all of the above three steps,
 click `Restart` or manually close and reopen ACT yourself one final time.
+
+## Known Errors
+
+If OverlayPlugin prompts you for an update with a blank changelog and errors
+that says `The download was interrupted` and `"https://github.com/ngld/OverlayPlugin/releases/download/v0.19.0/OverlayPlugin-0.19.0.7z" failed with code: 404` then it is likely that you have partially updated.  Start again from step 1 above, make sure all OverlayPlugin.dll entries have been removed, and then make sure that you close ACT after this step.
