@@ -15,6 +15,8 @@ If you'd like to be a maintainer, please contact anybody on that list.
 Run `python tools/set_version.py 0.19.0`
 where `0.19.0` is the version you want to update.
 This will update all of the `AssemblyInfo.cs` files to the new version number.
+You can verify this by running `python tools/validate_versions.py`,
+which will print `Versions in sync!` if the versions in all files match.
 
 Commit this change and upload a PR, e.g. `Bump version to 0.19.0`.
 
