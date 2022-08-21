@@ -52,7 +52,7 @@ If needed, click the ⬆️ button until `Overplugin.dll` is directly below `FFX
 Said again, `FFXIV_ACT_Plugin.dll` should be the top entry in the list.
 `OverlayPlugin.dll` should be the second entry in the list.
 
-## 4) Close and reopen ACT
+## 5) Close and reopen ACT
 
 During this process, ACT may prompt you with `ACT Restart Requested` and `Restarting ACT is required to complete changes`.
 You are welcome to click this any time it shows up and restart ACT.
