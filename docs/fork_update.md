@@ -7,7 +7,7 @@ tl;dr: OverlayPlugin will break in 6.2 and will require all users to perform man
 OverlayPlugin is moving from <https://github.com/ngld/OverlayPlugin/> to <https://github.com/OverlayPlugin/OverlayPlugin>.
 Unfortunately, nobody has a way to make a release from the old version to update automatically and so you (the user) have to do this manually on your machine (sorry).
 
-The old version might continue working for use cases for some time,
+The old version might continue working for a few use cases for some time,
 but it is unsupported and many things will stop working after 6.2.
 It is recommended that everybody update to the new OverlayPlugin fork as soon as possible.
 Hopefully this will be the last time this has to happen, fingers crossed.
