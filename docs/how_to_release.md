@@ -5,8 +5,8 @@ This doc describes how to make a release of OverlayPlugin.
 ## Overview
 
 Anybody can (and should) propose a release by sending a PR if they think a release is needed.
-Only [maintainers](https://github.com/orgs/OverlayPlugin/teams/maintainers/members) can currently publish a release.
-If you'd like to be a maintainer, please contact anybody on that list.
+Only @maintainers can currently publish a release.
+You can notify that alias if you need somebody to cut a release for you.
 
 ## Steps
 
