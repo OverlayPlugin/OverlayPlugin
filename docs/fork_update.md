@@ -1,9 +1,14 @@
 # Updating to OverlayPlugin Fork
 
+tl;dr: OverlayPlugin will break in 6.2 and will require all users to perform manual steps listed below to update it.
+
+## Details
+
 OverlayPlugin is moving from <https://github.com/ngld/OverlayPlugin/> to <https://github.com/OverlayPlugin/OverlayPlugin>.
 Unfortunately, nobody has a way to make a release from the old version to update automatically and so you (the user) have to do this manually on your machine (sorry).
 
-The old version will likely continue working for some use cases for some time, but is no longer supported.
+The old version might continue working for use cases for some time,
+but it is unsupported and many things will stop working after 6.2.
 It is recommended that everybody update to the new OverlayPlugin fork as soon as possible.
 Hopefully this will be the last time this has to happen, fingers crossed.
 (Sorry for the hassle!)
@@ -40,7 +45,7 @@ Said again, `FFXIV_ACT_Plugin.dll` should be the top entry in the list.
 
 ## 4) Close and reopen ACT
 
-During this process, ACT will prompt you with `ACT Restart Requested` and `Restarting ACT is required to complete changes`.
-You are welcome to click this any time it shows up.
+During this process, ACT may prompt you with `ACT Restart Requested` and `Restarting ACT is required to complete changes`.
+You are welcome to click this any time it shows up and restart ACT.
 However, once you are done with all of the above three steps,
-click `Restart` or manually close and reopen ACT yourself.
+click `Restart` or manually close and reopen ACT yourself one final time.
