@@ -14,6 +14,7 @@ namespace RainbowMage.OverlayPlugin
         private ILogger logger;
         private Timer timer;
         private FFXIVRepository repository;
+        private Process xivProc;
 
         public OverlayZCorrector(TinyIoCContainer container)
         {
@@ -23,6 +24,8 @@ namespace RainbowMage.OverlayPlugin
 
             var span = TimeSpan.FromSeconds(3);
             timer = new Timer(EnsureOverlaysAreOverGame, null, span, span);
+
+            repository.RegisterProcessChangedHandler(UpdateFFXIVProcess);
         }
 
         public void DeInit()
@@ -30,12 +33,16 @@ namespace RainbowMage.OverlayPlugin
             timer.Change(0, -1);
         }
 
+        private void UpdateFFXIVProcess(Process p)
+        {
+            xivProc = p;
+        }
+
         private void EnsureOverlaysAreOverGame(object _)
         {
             var watch = new Stopwatch();
             watch.Start();
 
-            var xivProc = repository.GetCurrentFFXIVProcess();
             if (xivProc == null || xivProc.HasExited)
                 return;
 
