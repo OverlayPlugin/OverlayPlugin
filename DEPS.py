@@ -4,7 +4,7 @@
 
 deps = {
     'ACT': {
-        'url': 'https://github.com/EQAditu/AdvancedCombatTracker/releases/download/3.4.7.268/ACTv3.zip',
+        'url': 'https://github.com/EQAditu/AdvancedCombatTracker/releases/download/3.4.9.271/ACTv3.zip',
         'dest': 'Thirdparty/ACT',
         'strip': 0,
         'hash': ['sha256', 'adf13a38d0938ce90f8e674f8365b227d933b91636ddf72b26c85702f6e3b808'],

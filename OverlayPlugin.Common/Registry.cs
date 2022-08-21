@@ -10,7 +10,6 @@ namespace RainbowMage.OverlayPlugin
         private List<Type> _overlays;
         private List<IEventSource> _eventSources;
         private List<Type> _esQueue;
-        private bool _esReady = false;
         private List<IOverlayPreset> _overlayPresets;
 
         public IEnumerable<Type> Overlays => _overlays;
@@ -28,7 +27,6 @@ namespace RainbowMage.OverlayPlugin
             _overlays = new List<Type>();
             _eventSources = new List<IEventSource>();
             _esQueue = new List<Type>();
-            _esReady = false;
             _overlayPresets = new List<IOverlayPreset>();
         }
 
