@@ -336,7 +336,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 repo = "OverlayPlugin/OverlayPlugin",
                 downloadUrl = "https://github.com/{REPO}/releases/download/v{VERSION}/OverlayPlugin-{VERSION}.zip",
                 strippedDirs = 1,
-                actPluginId = checkPreRelease ? 86 : 77,
+                actPluginId = 86,
             };
 
             await RunAutoUpdater(options, manualCheck);
