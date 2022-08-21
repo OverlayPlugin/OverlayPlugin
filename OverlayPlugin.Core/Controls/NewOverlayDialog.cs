@@ -268,9 +268,12 @@ namespace RainbowMage.OverlayPlugin
         public bool Locked { get; set; }
         public List<string> Supports { get; set; }
 
+        // Suppress CS0649 since this is modified on deserialization
+        #pragma warning disable 0649
         [JsonExtensionData]
         [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "JsonExtensionData modifies this variable")]
         private IDictionary<string, JToken> _others;
+        #pragma warning restore 0649
 
         [OnDeserialized]
         public void ParseOthers(StreamingContext ctx)
