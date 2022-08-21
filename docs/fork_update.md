@@ -1,0 +1,46 @@
+# Updating to OverlayPlugin Fork
+
+OverlayPlugin is moving from <https://github.com/ngld/OverlayPlugin/> to <https://github.com/OverlayPlugin/OverlayPlugin>.
+Unfortunately, nobody has a way to make a release from the old version to update automatically and so you (the user) have to do this manually on your machine (sorry).
+
+The old version will likely continue working for some use cases for some time, but is no longer supported.
+It is recommended that everybody update to the new OverlayPlugin fork as soon as possible.
+Hopefully this will be the last time this has to happen, fingers crossed.
+(Sorry for the hassle!)
+
+## 1) Remove the old OverlayPlugin
+
+Open ACT.
+Go to `Plugins` -> `Plugin Listing`.
+For every box in the left column that says `OverlayPlugin.dll`, click the ❌ button on that box.
+It will prompt you `Are you sure you wish to remove plugin OverlayPlugin.dll?`.  
+Click `Yes`.
+
+Repeat this process until there are no plugins in the list that say `OverlayPlugin.dll`.
+You need to do this even if you got the old plugin from `Get Plugins`.
+
+## 2) Add the new OverlayPlugin
+
+Open ACT if needed.
+Go to `Plugins` -> `Plugin Listing`. 
+In the upper right corner of ACT, click `Get Plugins...`.
+Select `(77) Overlay Plugin`.
+Click `Download and Enable`.
+If successful, it will say `The plugin has been added and started.`
+Close the `Get Plugins` window.
+
+## 3) Reorder your plugins
+
+Open ACT if needed.
+Go to `Plugins` -> `Plugin Listing`. 
+There will be an `OverlayPlugin.dll` listed at the bottom of the list in the left column.
+If needed, click the ⬆️ button until `Overplugin.dll` is directly below `FFXIV_ACT_Plugin.dll`.
+Said again, `FFXIV_ACT_Plugin.dll` should be the top entry in the list.
+`OverlayPlugin.dll` should be the second entry in the list.
+
+## 4) Close and reopen ACT
+
+During this process, ACT will prompt you with `ACT Restart Requested` and `Restarting ACT is required to complete changes`.
+You are welcome to click this any time it shows up.
+However, once you are done with all of the above three steps,
+click `Restart` or manually close and reopen ACT yourself.
