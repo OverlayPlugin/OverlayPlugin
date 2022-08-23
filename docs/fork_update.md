@@ -52,6 +52,8 @@ If needed, click the ⬆️ button until `Overplugin.dll` is directly below `FFX
 Said again, `FFXIV_ACT_Plugin.dll` should be the top entry in the list.
 `OverlayPlugin.dll` should be the second entry in the list.
 
+If you are using cactbot, then `CactbotOverlay.dll` should be below `OverlayPlugin.dll`.  In other words, `FFXIV_ACT_Plugin.dll` on top, then `OverlayPlugin.dll`, then `CactbotOverlay.dll`.
+
 ## 5) Close and reopen ACT
 
 During this process, ACT may prompt you with `ACT Restart Requested` and `Restarting ACT is required to complete changes`.
