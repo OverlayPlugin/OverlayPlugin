@@ -38,7 +38,7 @@ If you have not closed ACT after step 1, please close it now and reopen it.
 
 Go to `Plugins` -> `Plugin Listing`. 
 In the upper right corner of ACT, click `Get Plugins...`.
-Select `(77) Overlay Plugin`.
+Select `(86) Overlay Plugin`.
 Click `Download and Enable`.
 If successful, it will say `The plugin has been added and started.`
 Close the `Get Plugins` window.
