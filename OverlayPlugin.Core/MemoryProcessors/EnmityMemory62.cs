@@ -36,7 +36,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         private const int inCombatSignatureOffset = -12;
         private const int inCombatRIPOffset = 1;
         private const int enmityHudSignatureOffset = 0;
-        private readonly int[] enmityHudPointerPath = new int[] { 0x30, 0x58, 0x98, 0x20 };
+        private readonly int[] enmityHudPointerPath = new int[] { 0x30, 0x58, 0xA8, 0x20 };
 
         // Offsets from the targetAddress to find the correct target type.
         private const int targetTargetOffset = 176;
@@ -358,7 +358,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             [FieldOffset(0XC0)]
             public Single Radius;
 
-            [FieldOffset(0x1A50)]
+            [FieldOffset(0x1A68)]
             public uint TargetID;
 
             [FieldOffset(0x1C4)]
@@ -370,7 +370,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             [FieldOffset(0x1E0)]
             public byte Job;
 
-            [FieldOffset(0x1B28)]
+            [FieldOffset(0x1B48)]
             public fixed byte Effects[effectBytes];
         }
 
