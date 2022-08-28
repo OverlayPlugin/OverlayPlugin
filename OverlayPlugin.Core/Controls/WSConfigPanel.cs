@@ -20,7 +20,6 @@ namespace RainbowMage.OverlayPlugin
     public partial class WSConfigPanel : UserControl
     {
         const string MKCERT_DOWNLOAD = "https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-windows-amd64.exe";
-        const string NGROK_DOWNLOAD_IDX = "https://ngrok.com/download";
 
         IPluginConfig _config;
         WSServer _server;
@@ -594,30 +593,16 @@ tunnels:
             {
                 UpdateTunnelStatus(TunnelStatus.Downloading);
 
-                simpLogBox.AppendText("Fetching latest ngrok version...\r\n");
-                string dlPage;
-                try
-                {
-                    dlPage = CurlWrapper.Get(NGROK_DOWNLOAD_IDX);
-                } catch (Exception e)
-                {
-                    simpLogBox.AppendText(string.Format("\r\nFailed: {0}\r\n\r\n", e));
-                    return false;
-                }
-
-                var arch = Environment.Is64BitOperatingSystem ? "amd64" : "386";
-                // <a id="windows-dl-link" class="[...]" href="https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip"
-                var match = Regex.Match(dlPage, " href=\"(https://bin.equinox.io/c/[^/]+/ngrok-v3-stable-windows-" + arch + "\\.zip)\"");
-                if (match == Match.Empty)
-                {
-                    simpLogBox.AppendText("Failed to find version on the download page! Please notify ngld or some other dev working on OverlayPlugin.\r\n");
-                    return false;
-                }
+                // Use latest known 2.x because 3.x is incompatible
+                // URLs from https://dl.equinox.io/ngrok/ngrok/stable/archive
+                var ngrokUrl = Environment.Is64BitOperatingSystem ?
+                    "https://bin.equinox.io/a/8exBtGpBr59/ngrok-2.3.40-windows-amd64.zip" :
+                    "https://bin.equinox.io/a/cfjNxTRk1tM/ngrok-2.3.40-windows-386.zip";
 
                 simpLogBox.AppendText("Downloading ngrok client...\r\n");
                 try
                 {
-                    CurlWrapper.Get(match.Groups[1].Captures[0].Value, new Dictionary<string, string>(), ngrokPath + ".zip", NgrokProgressCallback, false);
+                    CurlWrapper.Get(ngrokUrl, new Dictionary<string, string>(), ngrokPath + ".zip", NgrokProgressCallback, false);
                 }
                 catch (Exception e)
                 {
