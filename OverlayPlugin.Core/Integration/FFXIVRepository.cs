@@ -59,11 +59,16 @@ namespace RainbowMage.OverlayPlugin
         private readonly ILogger logger;
         private IDataRepository repository;
         private IDataSubscription subscription;
+        private object gameProcessLock = new object();
 
         public FFXIVRepository(TinyIoCContainer container)
         {
             logger = container.Resolve<ILogger>();
+            GameProcess = GetCurrentFFXIVProcessImpl();
+            RegisterProcessChangedHandler(CacheGameProcess);
         }
+
+        public Process GameProcess { get; private set; }
 
         private ActPluginData GetPluginData() {
             return ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(plugin => {
@@ -310,14 +315,23 @@ namespace RainbowMage.OverlayPlugin
             var sub = GetSubscription();
             if (sub != null)
             {
-                sub.ProcessChanged += new ProcessChangedDelegate(handler);
-                /*
-                var repo = GetRepository();
-                if (repo != null)
+                // Invoke handler with cached process to avoid missing event
+                lock (gameProcessLock)
                 {
-                    var process = repo.GetCurrentFFXIVProcess();
-                    if (process != null) handler(process);
-                }*/
+                    if (GameProcess != null)
+                    {
+                        handler(GameProcess);
+                    }
+                }
+                sub.ProcessChanged += new ProcessChangedDelegate(handler);
+            }
+        }
+
+        private void CacheGameProcess(Process p)
+        {
+            lock (gameProcessLock)
+            {
+                GameProcess = p;
             }
         }
     }
