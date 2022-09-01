@@ -64,8 +64,14 @@ namespace RainbowMage.OverlayPlugin
         public FFXIVRepository(TinyIoCContainer container)
         {
             logger = container.Resolve<ILogger>();
-            GameProcess = GetCurrentFFXIVProcessImpl();
-            RegisterProcessChangedHandler(CacheGameProcess);
+
+            lock (gameProcessLock)
+            {
+                // Acquire this lock to prevent CacheGameProcess from running
+                // before the process search in constructor is complete
+                RegisterProcessChangedHandler(CacheGameProcess);
+                GameProcess = GetCurrentFFXIVProcessImpl();
+            }
         }
 
         public Process GameProcess { get; private set; }
@@ -318,12 +324,18 @@ namespace RainbowMage.OverlayPlugin
                 // Invoke handler with cached process to avoid missing event
                 lock (gameProcessLock)
                 {
+                    // C# events are actually collection of delegates
+                    // When events are invoked, runtime simply loop through it and fire them one by one
+                    // Thus, even if ProcessChanged event fires while inside this lock block
+                    // It will be blocked in CacheGameProcess if it is fired on another thread.
+                    // It will only resume after new handler is added, i.e. lock is released.
+                    // Therefore new handler will not miss the event even in this edge case.
                     if (GameProcess != null)
                     {
                         handler(GameProcess);
                     }
+                    sub.ProcessChanged += new ProcessChangedDelegate(handler);
                 }
-                sub.ProcessChanged += new ProcessChangedDelegate(handler);
             }
         }
 
