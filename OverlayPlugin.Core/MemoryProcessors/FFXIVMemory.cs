@@ -57,40 +57,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             OnProcessChange?.Invoke(this, null);
         }
 
-        private void FindProcess()
-        {
-            return;
-            if (processHandle != IntPtr.Zero)
-            {
-                if (process != null && !process.HasExited)
-                {
-                    // The current handle is still valid.
-                    return;
-                } else
-                {
-                    CloseProcessHandle();
-                }
-            }
-
-            Process proc = repository.GetCurrentFFXIVProcess();
-            if (proc == null || proc.HasExited)
-                return;
-
-            if (proc.ProcessName == "ffxiv")
-            {
-                logger.Log(LogLevel.Error, "{0}", "DX9 is not supported.");
-                return;
-            }
-            else if (proc.ProcessName != "ffxiv_dx11")
-            {
-                logger.Log(LogLevel.Error, "{0}", "Unknown ffxiv process.");
-                return;
-            }
-
-            process = proc;
-            processHandle = NativeMethods.OpenProcess(ProcessAccessFlags.VirtualMemoryRead, false, proc.Id);
-        }
-
         private void CloseProcessHandle()
         {
             NativeMethods.CloseHandle(processHandle);
@@ -109,14 +75,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             if (processHandle != IntPtr.Zero)
                 return true;
 
-            FindProcess();
-            if (processHandle == IntPtr.Zero || process == null || process.HasExited)
-            {
-                return false;
-            }
-
-            OnProcessChange?.Invoke(this, null);
-            return true;
+            return false;
         }
 
         public unsafe static string GetStringFromBytes(byte* source, int size)
