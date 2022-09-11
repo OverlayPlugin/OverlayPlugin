@@ -68,6 +68,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const string LogLineEvent = "LogLine";
         private const string ImportedLogLinesEvent = "ImportedLogLines";
         private const string ChangeZoneEvent = "ChangeZone";
+        private const string ChangeMapEvent = "ChangeMap";
         private const string ChangePrimaryPlayerEvent = "ChangePrimaryPlayer";
         private const string FileChangedEvent = "FileChanged";
         private const string OnlineStatusChangedEvent = "OnlineStatusChanged";
@@ -98,6 +99,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             RegisterCachedEventTypes(new List<string> {
                 ChangePrimaryPlayerEvent,
                 ChangeZoneEvent,
+                ChangeMapEvent,
                 OnlineStatusChangedEvent,
                 PartyChangedEvent,
             });
@@ -397,6 +399,24 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         }));
                         break;
 
+                    case LogMessageType.ChangeMap:
+                        if (line.Length < 6) return;
+                        
+                        var mapID = Convert.ToUInt32(line[2], 10);
+                        var regionName = line[3];
+                        var placeName = line[4];
+                        var placeNameSub = line[5];
+                        
+                        DispatchAndCacheEvent(JObject.FromObject(new
+                        {
+                            type = ChangeMapEvent,
+                            mapID,
+                            regionName,
+                            placeName,
+                            placeNameSub
+                        }));
+                        break;
+                    
                     case LogMessageType.ChangePrimaryPlayer:
                         if (line.Length < 4) return;
 
