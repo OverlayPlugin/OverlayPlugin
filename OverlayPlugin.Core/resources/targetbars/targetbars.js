@@ -36,6 +36,12 @@ const configTitles = {
     Hover: 'Hover-Ziel Einstellungen',
     TargetOfTarget: 'Ziel des Ziels Einstellungen',
   },
+  Korean: {
+    Target: '대상 설정',
+    Focus: '주시 대상 설정',
+    Hover: '마우스 선택 대상 설정',
+    TargetOfTarget: '대상의 대상 설정',
+  },
 };
 
 const helpText = {
@@ -51,6 +57,10 @@ const helpText = {
 <a href="https://mdn.github.io/css-examples/tools/color-picker/" target="_blank">
   Farbauswahl
 </a>`,
+  Korean: `설정이 끝나면 '클릭 무시'와 '위치 잠금'을 반드시 체크합니다.<br>
+  <a href="https://mdn.github.io/css-examples/tools/color-picker/" target="_blank">
+    색상 선택기 바로 가기
+  </a>`,
 };
 
 // language -> displayed option text -> text key
@@ -94,6 +104,19 @@ const textOptionsAll = {
     'Absolute Feindseligkeit': 'AbsoluteEnmity',
     'Relative Feindseligkeit': 'RelativeEnmity',
   },
+  Korean: {
+    '사용 안 함': 'None',
+    '이름': 'Name',
+    '현재 HP': 'CurrentHP',
+    '최대 HP': 'MaxHP',
+    '현재 HP / 최대 HP': 'CurrentAndMaxHP',
+    '퍼센트(%) HP': 'PercentHP',
+    '죽음까지 남은 시간': 'TimeToDeath',
+    '거리': 'Distance',
+    '유효 거리': 'EffectiveDistance',
+    '적개심(절대값)': 'AbsoluteEnmity',
+    '적개심(상대값)': 'RelativeEnmity',
+  }
 };
 
 
@@ -197,6 +220,7 @@ const configStructure = [
       English: 'Left Text',
       Chinese: '左侧文本',
       German: 'Linker Text',
+      Korean: '왼쪽 글자'
     },
     type: 'select',
     optionsByType: textOptionsByTargetType,
@@ -208,6 +232,7 @@ const configStructure = [
       English: 'Middle Text',
       Chinese: '中间文本',
       German: 'Mittlerer Text',
+      Korean: '중간 글자'
     },
     optionsByType: textOptionsByTargetType,
     type: 'select',
@@ -219,6 +244,7 @@ const configStructure = [
       English: 'Right Text',
       Chinese: '右侧文本',
       German: 'Rechter Text',
+      Korean: '오른쪽 글자'
     },
     optionsByType: textOptionsByTargetType,
     type: 'select',
@@ -230,6 +256,7 @@ const configStructure = [
       English: 'Height of the bar',
       Chinese: '血条高度',
       German: 'Höhe des Balkens',
+      Korean: '막대 높이'
     },
     type: 'text',
     default: 11,
@@ -240,6 +267,7 @@ const configStructure = [
       English: 'Width of the bar',
       Chinese: '血条长度',
       German: 'Weite des Balkens',
+      Korean: '막대 너비'
     },
     type: 'text',
     default: 250,
@@ -251,6 +279,7 @@ const configStructure = [
       English: 'Number Format',
       Chinese: '数字格式',
       German: 'Zahlenformat',
+      Korean: '숫자 형식'
     },
     type: 'select',
     options: formatOptions,
@@ -262,6 +291,7 @@ const configStructure = [
       English: 'Enable rounded corners',
       Chinese: '视觉效果 - 圆角',
       German: 'Aktiviere abgerundete Ecken',
+      Korean: '둥근 모서리 허용'
     },
     type: 'checkbox',
     default: true,
@@ -272,6 +302,7 @@ const configStructure = [
       English: 'Size of the border',
       Chinese: '描边宽度',
       German: 'Größe des Rahmens',
+      Korean: '테두리 두께'
     },
     type: 'text',
     default: 1,
@@ -282,6 +313,7 @@ const configStructure = [
       English: 'Color of the border',
       Chinese: '描边颜色',
       German: 'Farbe des Rahmens',
+      Korean: '테두리 색'
     },
     type: 'text',
     default: 'black',
@@ -292,6 +324,7 @@ const configStructure = [
       English: 'Size of the font',
       Chinese: '字体大小',
       German: 'Größe der Schrift',
+      Korean: '글자 크기'
     },
     type: 'text',
     default: 10,
@@ -302,6 +335,7 @@ const configStructure = [
       English: 'Name of the font',
       Chinese: '字体名称',
       German: 'Name der Schrift',
+      Korean: '글꼴 이름 (폰트 설정)'
     },
     type: 'text',
     default: 'Meiryo',
@@ -312,6 +346,7 @@ const configStructure = [
       English: 'Color of the font',
       Chinese: '字体颜色',
       German: 'Farbe der Schrift',
+      Korean: '글자 색'
     },
     type: 'text',
     default: 'white',
@@ -322,6 +357,7 @@ const configStructure = [
       English: 'Color of the font shadow',
       Chinese: '字体阴影的颜色',
       German: 'Farbe des Schriftschattens',
+      Korean: '글자 그림자 색'
     },
     type: 'text',
     default: 'black',
@@ -332,6 +368,7 @@ const configStructure = [
       English: 'Size of the font shadow',
       Chinese: '字体阴影的大小',
       German: 'Größe des Schriftschattens',
+      Korean: '글자 그림자 크기'
     },
     type: 'text',
     default: 0,
@@ -342,6 +379,7 @@ const configStructure = [
       English: 'Color of the font outline',
       Chinese: '字体轮廓的颜色',
       German: 'Farbe der Schriftumrandung',
+      Korean: '글자 테두리 색'
     },
     type: 'text',
     default: 'black',
@@ -352,6 +390,7 @@ const configStructure = [
       English: 'Size of the font outline',
       Chinese: '字体轮廓的大小',
       German: 'Dicke der Schriftumrandung',
+      Korean: '글자 테두리 두께'
     },
     type: 'text',
     default: 0,
@@ -362,6 +401,7 @@ const configStructure = [
       English: 'Background depleted bar color',
       Chinese: '血条背景色',
       German: 'Hintergrundfarbe bei leerem Balken',
+      Korean: '막대 색'
     },
     type: 'text',
     default: 'rgba(4, 15, 4, 1)',
@@ -372,6 +412,7 @@ const configStructure = [
       English: 'Bar color when hp is high',
       Chinese: '血条颜色 - 高血量',
       German: 'Balkenfarbe bei hohen HP',
+      Korean: '막대 색 - HP가 높을 때'
     },
     type: 'text',
     default: 'rgba(0, 159, 1, 1)',
@@ -382,6 +423,7 @@ const configStructure = [
       English: 'Percent below where hp is mid',
       Chinese: '中血量定义 (剩余体力值百分比)',
       German: 'Prozentwert unter dem HP als mittig gilt',
+      Korean: 'HP 중간 지점 퍼센트(%) 값'
     },
     type: 'text',
     default: 60,
@@ -392,6 +434,7 @@ const configStructure = [
       English: 'Bar color when hp is mid',
       Chinese: '血条颜色 - 中血量',
       German: 'Balkenfarbe bei mittleren HP',
+      Korean: '막대 색 - HP가 절반일 때'
     },
     type: 'text',
     default: 'rgba(160, 130, 30, 1)',
@@ -402,6 +445,7 @@ const configStructure = [
       English: 'Percent below where hp is low',
       Chinese: '低血量定义 (剩余体力值百分比)',
       German: 'Prozentwert unter dem HP als gering gilt',
+      Korean: 'HP 낮은 지점 퍼센트(%) 값'
     },
     type: 'text',
     default: 30,
@@ -412,6 +456,7 @@ const configStructure = [
       English: 'Bar color when hp is low',
       Chinese: '血条颜色 - 低血量',
       German: 'Balkenfarbe bei geringen HP',
+      Korean: '막대 색 - HP가 낮을 때'
     },
     type: 'text',
     default: 'rgba(240, 40, 30, 1)',
