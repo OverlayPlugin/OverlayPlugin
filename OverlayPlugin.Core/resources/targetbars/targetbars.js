@@ -14,6 +14,7 @@ const languageToLocale = {
   English: 'en-US',
   Chinese: 'zh-CN',
   German: 'de-DE',
+  Korean: 'ko-KR',
 };
 
 // Map of language -> targetType -> settings title.
