@@ -304,6 +304,9 @@ namespace RainbowMage.OverlayPlugin
         [MethodImpl(MethodImplOptions.NoInlining)]
         internal bool WriteLogLineImpl(uint ID, string line)
         {
+            // TODO: re-enable this once https://github.com/anoyetta/ACT.Hojoring/issues/366 is fixed.
+            return false;
+
             if (logOutputWriteLineFunc == null)
             {
                 var plugin = GetPluginData();
