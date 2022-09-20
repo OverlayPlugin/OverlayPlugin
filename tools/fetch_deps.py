@@ -100,7 +100,8 @@ def main(update_hashes=False):
                     h = hashlib.new(meta['hash'][0])
 
                     with open(dlname, 'rb') as stream:
-                        h.update(stream.read(16 * 1024))
+                        while data := stream.read(16 * 1024):
+                            h.update(data)
 
                     if update_hashes:
                         rep_map[meta['hash'][1]] = meta['hash'][1] = h.hexdigest()
