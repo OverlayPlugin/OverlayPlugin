@@ -312,6 +312,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     string pluginFileName = data.pluginFile.Name;
                     // TODO: remove plugins from this check as they are updated for compatibility.
+                    // e.g. when https://github.com/anoyetta/ACT.Hojoring/issues/366 is closed.
                     // Also, add new ones as discovered.
                     bool incompatible = data.cbEnabled.Checked
                            && (pluginFileName == "ACT.SpecialSpellTimer.dll"
