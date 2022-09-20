@@ -49,7 +49,7 @@ def main(update_hashes=False):
         sys.exit(1)
 
     deps_path = os.path.join(base, 'DEPS.py')
-    with open(deps_path, 'r') as stream:
+    with open(deps_path, 'r', encoding='utf-8') as stream:
         exec(stream.read(), scope)
 
     deps = scope.get('deps', {})
@@ -58,7 +58,7 @@ def main(update_hashes=False):
     dl_path = os.path.join(base, '.deps_dl')
 
     if os.path.isfile(cache_path):
-        with open(cache_path, 'r') as stream:
+        with open(cache_path, 'r', encoding='utf-8') as stream:
             cache = json.load(stream)
 
     old = set(cache.keys())
@@ -172,20 +172,20 @@ def main(update_hashes=False):
 
     finally:
         print('Saving dependency cache...')
-        with open(cache_path, 'w') as stream:
+        with open(cache_path, 'w', newline='\n') as stream:
             json.dump(cache, stream)
 
         if rep_map:
             print('Updating hashes...')
             print(rep_map)
 
-            with open(deps_path, 'r') as stream:
+            with open(deps_path, 'r', encoding='utf-8') as stream:
                 data = stream.read()
 
             for old, new in rep_map.items():
                 data = data.replace(old, new)
 
-            with open(deps_path, 'w') as stream:
+            with open(deps_path, 'w', newline='\n') as stream:
                 stream.write(data)
 
         print('Cleaning up...')
