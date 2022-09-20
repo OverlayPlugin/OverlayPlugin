@@ -311,6 +311,8 @@ namespace RainbowMage.OverlayPlugin
                 _safeToWriteExtraLogLines = !ActGlobals.oFormActMain.ActPlugins.Any(data =>
                 {
                     string pluginFileName = data.pluginFile.Name;
+                    // TODO: remove plugins from this check as they are updated for compatibility.
+                    // Also, add new ones as discovered.
                     bool incompatible = data.cbEnabled.Checked
                            && (pluginFileName == "ACT.SpecialSpellTimer.dll"
                                || pluginFileName == "ACT.UltraScouter.dll"
