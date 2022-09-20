@@ -115,43 +115,20 @@ def main(update_hashes=False):
 
                 print('Extracting...')
                 if meta['url'].endswith('.zip'):
-                    ar_type = 'zip'
-                    archive = zipfile.ZipFile(dlname)
-                    members = [(m.filename, m.is_dir(), m) for m in archive.infolist()]
+                    with zipfile.ZipFile(dlname) as archive:
+                        top_dir = os.path.commonprefix([x.filename for x in archive.filelist])
+                        for member in archive.filelist:
+                            local_path = os.path.join(dest, os.path.relpath(member.filename, top_dir))
+                            archive.extract(member, local_path)
                 elif meta['url'].endswith(('.tar.gz', '.tar.xz', '.tgz', '.txz', '.tar')):
-                    ar_type = 'tar'
-                    archive = tarfile.open(dlname)
-                    members = [(m.name, m.isdir(), m) for m in archive.getmembers()]
+                    with tarfile.open(dlname) as archive:
+                        top_dir = os.path.commonprefix([x.name for x in archive.getmembers()])
+                        for member in archive.getmembers():
+                            local_path = os.path.join(dest, os.path.relpath(member.name, top_dir))
+                            archive.extract(member, local_path)
                 else:
                     print('ERROR: %s has an unknown archive type!' % meta['url'])
                     continue
-
-                files = len(members)
-                for i, (outpath, isdir, member) in enumerate(members):
-                    sys.stdout.write('\r%4d / %d    ' % (i, files))
-
-                    if meta.get('strip', 0) > 0:
-                        outpath = outpath.split('/')
-                        if len(outpath) <= meta['strip']:
-                            continue
-
-                        outpath = '/'.join(outpath[meta['strip']:])
-
-                    outpath = os.path.join(dest, outpath)
-                    os.makedirs(os.path.dirname(outpath), exist_ok=True)
-
-                    if isdir:
-                        if not os.path.isdir(outpath):
-                            os.mkdir(outpath)
-                    else:
-                        with open(outpath, 'wb') as stream:
-                            if ar_type == 'zip':
-                                shutil.copyfileobj(archive.open(member), stream)
-                            elif ar_type == 'tar':
-                                shutil.copyfileobj(archive.extractfile(member), stream)
-
-                archive.close()
-                sys.stdout.write('\r%4d / %d\n' % (files, files))
                 cache[key] = meta
 
         if obsolete:
