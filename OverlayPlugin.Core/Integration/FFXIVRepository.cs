@@ -301,11 +301,33 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        private bool? _safeToWriteExtraLogLines;
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         internal bool WriteLogLineImpl(uint ID, string line)
         {
-            // TODO: re-enable this once https://github.com/anoyetta/ACT.Hojoring/issues/366 is fixed.
-            return false;
+            if (_safeToWriteExtraLogLines == null)
+            {
+                _safeToWriteExtraLogLines = !ActGlobals.oFormActMain.ActPlugins.Any(data =>
+                {
+                    string pluginFileName = data.pluginFile.Name;
+                    bool incompatible = data.cbEnabled.Checked
+                           && (pluginFileName == "ACT.SpecialSpellTimer.dll"
+                               || pluginFileName == "ACT.UltraScouter.dll"
+                               || pluginFileName == "ACT.TTSYukkuri.dll"
+                               || pluginFileName == "ACT.XIVLog.dll");
+                    if (incompatible)
+                    {
+                        logger.Log(LogLevel.Warning,
+                            "Disabled extra log lines due to incompatible plugin " + pluginFileName);
+                    }
+                    return incompatible;
+                });
+            }
+            if (!_safeToWriteExtraLogLines.Value)
+            {
+                return false;
+            }
 
             if (logOutputWriteLineFunc == null)
             {
