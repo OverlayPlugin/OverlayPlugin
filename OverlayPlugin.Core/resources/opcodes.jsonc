@@ -14,6 +14,10 @@
     "2022.07.05.0000.0000": {
         // Region: KR
         // Version: 6.05h
+        "MapEffect": {
+            "opcode": 404,
+            "size": 11
+        },
         "CEDirector": {
             "opcode": 423,
             "size": 16
