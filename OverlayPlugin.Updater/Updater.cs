@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using Markdig;
 using System.Runtime.CompilerServices;
+using System.IO;
 
 namespace RainbowMage.OverlayPlugin.Updater
 {
@@ -324,6 +325,15 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public static async void PerformUpdateIfNecessary(string pluginDirectory, TinyIoCContainer container, bool manualCheck = false, bool checkPreRelease = false)
         {
+            var logger = container.Resolve<ILogger>();
+
+            // e.g. dir/OverlayPlugin/out/Release/OverlayPlugin.dll checking for dir/OverlayPlugin/.git/
+            if (Directory.Exists(Path.GetFullPath(Path.Combine(pluginDirectory, "../../.git"))))
+            {
+                logger.Log(LogLevel.Info, Resources.IgnoreUpdateDueToDotGitDirectoryMessage);
+                return;
+            }
+
             var config = container.Resolve<IPluginConfig>();
 
             var options = new UpdaterOptions
