@@ -1,3 +1,5 @@
+import ntpath
+import posixpath
 import sys
 import os.path
 import json
@@ -118,14 +120,22 @@ def main(update_hashes=False):
                     with zipfile.ZipFile(dlname) as archive:
                         top_dir = os.path.commonprefix([x.filename for x in archive.filelist])
                         for member in archive.filelist:
-                            local_path = os.path.join(dest, os.path.relpath(member.filename, top_dir))
-                            archive.extract(member, local_path)
+                            if member.is_dir():
+                                continue
+                            local_path = archive_file_output_path(member.filename, dest, top_dir)
+                            os.makedirs(os.path.dirname(local_path), exist_ok=True)
+                            with open(local_path, 'wb+') as local, archive.open(member) as z:
+                                local.write(z.read())
                 elif meta['url'].endswith(('.tar.gz', '.tar.xz', '.tgz', '.txz', '.tar')):
                     with tarfile.open(dlname) as archive:
                         top_dir = os.path.commonprefix([x.name for x in archive.getmembers()])
                         for member in archive.getmembers():
-                            local_path = os.path.join(dest, os.path.relpath(member.name, top_dir))
-                            archive.extract(member, local_path)
+                            if member.isdir():
+                                continue
+                            local_path = archive_file_output_path(member.name, dest, top_dir)
+                            os.makedirs(os.path.dirname(local_path), exist_ok=True)
+                            with open(local_path, 'wb+') as local, archive.extractfile(member.name) as z:
+                                local.write(z.read())
                 else:
                     print('ERROR: %s has an unknown archive type!' % meta['url'])
                     continue
@@ -167,6 +177,13 @@ def main(update_hashes=False):
 
         print('Cleaning up...')
         safe_rmtree(dl_path)
+
+
+def archive_file_output_path(path: str, dest_path: str, archive_top_dir: str) -> str:
+    local_path = os.path.join(dest_path, os.path.relpath(path, archive_top_dir))
+    # normpath only convert '/' to '\' on windows.
+    local_path = os.path.normpath(local_path.replace(ntpath.sep, posixpath.sep))
+    return local_path
 
 
 if __name__ == '__main__':
