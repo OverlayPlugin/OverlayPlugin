@@ -180,10 +180,9 @@ def main(update_hashes=False):
 
 
 def archive_file_output_path(path: str, dest_path: str, archive_top_dir: str) -> str:
-    local_path = os.path.join(dest_path, os.path.relpath(path, archive_top_dir))
     # normpath only convert '/' to '\' on windows.
-    local_path = os.path.normpath(local_path.replace(ntpath.sep, posixpath.sep))
-    return local_path
+    local_path = os.path.join(dest_path, os.path.relpath(path.replace(ntpath.sep, posixpath.sep), archive_top_dir))
+    return os.path.normpath(local_path)
 
 
 if __name__ == '__main__':
