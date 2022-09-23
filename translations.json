@@ -1554,7 +1554,7 @@
         },
         "IgnoreUpdateDueToDotGitDirectoryMessage": {
             "en": "Ignoring auto-update due to OverlayPluign being a .git repo.",
-            "zh-CN": "由于 OverlayPluign 文件夹被 git 管理, 跳过自动更新。"
+            "zh-CN": "由于 OverlayPluign 文件夹是 git 本地仓库, 跳过自动更新。"
         },
         "LaunchingInstallerFailed": {
             "de-DE": "Installationsprogramm konnte nicht gestartet werden: {0}",
