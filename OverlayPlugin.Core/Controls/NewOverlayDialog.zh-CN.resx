@@ -134,28 +134,28 @@
     <value>28, 13</value>
   </data>
   <data name="lblType.Text" xml:space="preserve">
-    <value>种类</value>
+    <value>类型</value>
   </data>
   <data name="lblTypeDesc.Text" xml:space="preserve">
-    <value>对于大多数悬浮窗，您必须在此处选择[数据统计]。 是的，即使Cactbot也需要[数据统计]类型。
+    <value>对于大多数悬浮窗, 你应该选择 "数据统计" 类型。 (Cactbot 也需要选择 "数据统计" 类型。)
 
-[标签]允许您在屏幕上显示静态文本或HTML。对于笔记和技能循环提醒很实用。
-[技能冷却]显示ACT内置的技能冷却计时器，与Hojoring的SpecialSpellTimers或SPESPE无关。
+"标签" 类型显示静态文本或 HTML, 可以非常方便地显示笔记和技能循环提醒。
+"技能冷却" 类型显示 ACT 内置的技能冷却计时器, 请注意此功能与 Hojoring 的 SpecialSpellTimers 或 SPESPE 无关。
 </value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>创建新的悬浮窗</value>
+    <value>创建新悬浮窗</value>
   </data>
   <data name="lblPreset.Text" xml:space="preserve">
     <value>预设</value>
   </data>
   <data name="lblPresetDescription.Text" xml:space="preserve">
-    <value>选择上方的预设后，您将看到其预览。
-您可以通过使用鼠标拖动来移动预览。
-要调整预览的大小，请拖动其右下角。
+    <value>在 "预设" 下拉菜单中选择悬浮窗预设可以预览其内容。
+点击悬浮窗并拖拽可以移动其位置, 点击并拖拽右下方的手柄可以调整悬浮窗的尺寸和形状。
+当你调整完毕后, 点击 "确定" 即可保存现有配置。
 
-如果要使用未列出的悬浮窗，请选择“自订”预设和正确的悬浮窗种类。
+若要使用预设未列出的悬浮窗, 请选择 "自定义悬浮窗" 预设和正确的悬浮窗类型。
 
-如果要添加新的预设，请发送PR到GitHub项目（可以在“通用”选项卡中找到链接）。</value>
+若要添加新的预设, 请向我们的 Github 项目提交 PR (可以在 "通用" 选项卡中找到链接)。</value>
   </data>
 </root>

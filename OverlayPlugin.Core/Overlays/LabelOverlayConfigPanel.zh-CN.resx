@@ -126,7 +126,7 @@
     <value>鼠标穿透</value>
   </data>
   <data name="buttonOpenDevTools.Text" xml:space="preserve">
-    <value>启动Debug工具</value>
+    <value>打开 DevTools</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
     <value>锁定悬浮窗</value>
@@ -135,22 +135,22 @@
     <value>显示文字</value>
   </data>
   <data name="buttonReloadBrowser.Text" xml:space="preserve">
-    <value>重新加载（用于更换悬浮窗后即时刷新）</value>
+    <value>刷新悬浮窗</value>
   </data>
   <data name="buttonCopyUpdateScript.Text" xml:space="preserve">
-    <value>复制变量到剪切板</value>
+    <value>复制变量到剪贴板</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>显示悬浮窗</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>悬浮窗路径</value>
+    <value>悬浮窗地址</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
     <value>设置悬浮窗 开/关 快捷键</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>将文本显示为HTML</value>
+    <value>将文本显示为 HTML</value>
   </data>
 
 </root>

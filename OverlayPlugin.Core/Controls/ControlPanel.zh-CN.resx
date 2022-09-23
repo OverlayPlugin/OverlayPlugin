@@ -132,10 +132,10 @@
     <value>自动滚动日志</value>
   </data>
   <data name="groupBox2.Text" xml:space="preserve">
-    <value>添加/删除悬浮窗</value>
+    <value>新建/删除悬浮窗</value>
   </data>
   <data name="label_ListEmpty.Text" xml:space="preserve">
-    <value>点击[添加]按钮设置悬浮窗</value>
+    <value>点击 [新建] 按钮设置悬浮窗</value>
   </data>
 
   <data name="buttonRename.Text" xml:space="preserve">

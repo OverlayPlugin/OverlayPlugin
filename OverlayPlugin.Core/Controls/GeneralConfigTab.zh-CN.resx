@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>  <data name="cbHideOverlaysWhenNotActive.Text" xml:space="preserve">
-    <value>当ACT和游戏全部最小化时自动隐藏悬浮窗</value>
+    <value>游戏窗口未在前台时隐藏悬浮窗</value>
   </data>
   <data name="cbErrorReports.Text" xml:space="preserve">
     <value>自动向开发者发送错误报告</value>
@@ -129,22 +129,22 @@
     <value>自动检查更新</value>
   </data>
   <data name="cbHideOverlaysDuringCutscene.Text" xml:space="preserve">
-    <value>当过场动画时自动隐藏悬浮窗</value>
+    <value>进入过场动画时隐藏悬浮窗</value>
   </data>
 
   <data name="lblGithub.Text" xml:space="preserve">
-    <value>GitHub项目：</value>
+    <value>GitHub 项目: </value>
   </data>
   <data name="lblNewUserWelcome.Text" xml:space="preserve">
-    <value>如果您正在此处寻找链接字段，那么说明您仍然习惯于旧版本的OverlayPlugin或遵循于过时的指南。您首先需要使用左下角的“新建”按钮创建一个悬浮窗，然后才能看到OverlayPlugin的任何悬浮窗。
-请尝试使用预设而不是手动设置的链接，这将可以防止一系列的问题。
+    <value>请点击左下方的 "新建" 按钮添加新的悬浮窗。
+我们提供了一系列的内容预设供你选择, 可以满足大部分场景需要。推荐你优先选择其中一个预设完成配置。
 
 </value>
   </data>
   <data name="lblReadMe.Text" xml:space="preserve">
-    <value>温馨提示：</value>
+    <value>温馨提示: </value>
   </data>
   <data name="btnCactbotUpdate.Text" xml:space="preserve">
-    <value>检查Cactbot更新</value>
+    <value>检查 Cactbot 更新</value>
   </data>
 </root>

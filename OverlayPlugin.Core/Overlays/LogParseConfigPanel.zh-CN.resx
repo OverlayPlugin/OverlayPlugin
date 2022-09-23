@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>  <data name="label6.Text" xml:space="preserve">
-    <value>最大帧速率</value>
+    <value>最大帧速率 (FPS)</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
     <value>启用悬浮窗 开/关 快捷键</value>
@@ -126,13 +126,13 @@
     <value>鼠标穿透</value>
   </data>
   <data name="buttonLogParseCopyActXiv.Text" xml:space="preserve">
-    <value>复制变量到剪切板</value>
+    <value>复制变量到剪贴板</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
     <value>锁定悬浮窗</value>
   </data>
   <data name="buttonLogParseOpenDevTools.Text" xml:space="preserve">
-    <value>启动Debug工具</value>
+    <value>打开 DevTools</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>快捷键功能</value>
@@ -141,10 +141,10 @@
     <value>浏览</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>悬浮窗路径</value>
+    <value>悬浮窗地址</value>
   </data>
   <data name="buttonLogParseReloadBrowser.Text" xml:space="preserve">
-    <value>重新加载（用于更换悬浮窗后即时刷新）</value>
+    <value>刷新悬浮窗</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>显示悬浮窗</value>
