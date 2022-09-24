@@ -1,3 +1,5 @@
+import ntpath
+import posixpath
 import sys
 import os.path
 import json
@@ -49,7 +51,7 @@ def main(update_hashes=False):
         sys.exit(1)
 
     deps_path = os.path.join(base, 'DEPS.py')
-    with open(deps_path, 'r') as stream:
+    with open(deps_path, 'r', encoding='utf-8') as stream:
         exec(stream.read(), scope)
 
     deps = scope.get('deps', {})
@@ -58,7 +60,7 @@ def main(update_hashes=False):
     dl_path = os.path.join(base, '.deps_dl')
 
     if os.path.isfile(cache_path):
-        with open(cache_path, 'r') as stream:
+        with open(cache_path, 'r', encoding='utf-8') as stream:
             cache = json.load(stream)
 
     old = set(cache.keys())
@@ -116,43 +118,28 @@ def main(update_hashes=False):
 
                 print('Extracting...')
                 if meta['url'].endswith('.zip'):
-                    ar_type = 'zip'
-                    archive = zipfile.ZipFile(dlname)
-                    members = [(m.filename, m.is_dir(), m) for m in archive.infolist()]
+                    with zipfile.ZipFile(dlname) as archive:
+                        top_dir = os.path.commonprefix([x.filename for x in archive.filelist])
+                        for member in archive.filelist:
+                            if member.is_dir():
+                                continue
+                            local_path = archive_file_output_path(member.filename, dest, top_dir)
+                            os.makedirs(os.path.dirname(local_path), exist_ok=True)
+                            with open(local_path, 'wb+') as local, archive.open(member) as z:
+                                local.write(z.read())
                 elif meta['url'].endswith(('.tar.gz', '.tar.xz', '.tgz', '.txz', '.tar')):
-                    ar_type = 'tar'
-                    archive = tarfile.open(dlname)
-                    members = [(m.name, m.isdir(), m) for m in archive.getmembers()]
+                    with tarfile.open(dlname) as archive:
+                        top_dir = os.path.commonprefix([x.name for x in archive.getmembers()])
+                        for member in archive.getmembers():
+                            if member.isdir():
+                                continue
+                            local_path = archive_file_output_path(member.name, dest, top_dir)
+                            os.makedirs(os.path.dirname(local_path), exist_ok=True)
+                            with open(local_path, 'wb+') as local, archive.extractfile(member.name) as z:
+                                local.write(z.read())
                 else:
                     print('ERROR: %s has an unknown archive type!' % meta['url'])
                     continue
-
-                files = len(members)
-                for i, (outpath, isdir, member) in enumerate(members):
-                    sys.stdout.write('\r%4d / %d    ' % (i, files))
-
-                    if meta.get('strip', 0) > 0:
-                        outpath = outpath.split('/')
-                        if len(outpath) <= meta['strip']:
-                            continue
-
-                        outpath = '/'.join(outpath[meta['strip']:])
-
-                    outpath = os.path.join(dest, outpath)
-                    os.makedirs(os.path.dirname(outpath), exist_ok=True)
-
-                    if isdir:
-                        if not os.path.isdir(outpath):
-                            os.mkdir(outpath)
-                    else:
-                        with open(outpath, 'wb') as stream:
-                            if ar_type == 'zip':
-                                shutil.copyfileobj(archive.open(member), stream)
-                            elif ar_type == 'tar':
-                                shutil.copyfileobj(archive.extractfile(member), stream)
-
-                archive.close()
-                sys.stdout.write('\r%4d / %d\n' % (files, files))
                 cache[key] = meta
 
         if obsolete:
@@ -173,24 +160,30 @@ def main(update_hashes=False):
 
     finally:
         print('Saving dependency cache...')
-        with open(cache_path, 'w') as stream:
+        with open(cache_path, 'w', newline='\n') as stream:
             json.dump(cache, stream)
 
         if rep_map:
             print('Updating hashes...')
             print(rep_map)
 
-            with open(deps_path, 'r') as stream:
+            with open(deps_path, 'r', encoding='utf-8') as stream:
                 data = stream.read()
 
             for old, new in rep_map.items():
                 data = data.replace(old, new)
 
-            with open(deps_path, 'w') as stream:
+            with open(deps_path, 'w', newline='\n') as stream:
                 stream.write(data)
 
         print('Cleaning up...')
         safe_rmtree(dl_path)
+
+
+def archive_file_output_path(path: str, dest_path: str, archive_top_dir: str) -> str:
+    # normpath only convert '/' to '\' on windows.
+    local_path = os.path.join(dest_path, os.path.relpath(path.replace(ntpath.sep, posixpath.sep), archive_top_dir))
+    return os.path.normpath(local_path)
 
 
 if __name__ == '__main__':
