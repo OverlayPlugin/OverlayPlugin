@@ -81,6 +81,7 @@
     "OverlayPlugin.Core/Controls/GeneralConfigTab": {
         "btnCactbotUpdate.Text": {
             "en": "Check For Cactbot Updates",
+            "ko-KR": "Cactbot 업데이트 확인",
             "zh-CN": "检查Cactbot更新"
         },
         "btnUpdateCheck.Text": {
@@ -112,7 +113,7 @@
             "en": "Automatically hide overlays when the game is in the background",
             "fr-FR": "Cacher automatiquement les overlays quand le jeu est en fond de tâche",
             "ja-JP": "ACTまたはゲームがアクティブでない場合にオーバーレイを非表示にする",
-            "ko-KR": "게임 비활성화일 때 자동으로 오버레이 숨기기",
+            "ko-KR": "게임이 백그라운드에 있을 때 자동으로 오버레이 숨기기",
             "zh-CN": "当ACT和游戏全部最小化时自动隐藏悬浮窗"
         },
         "cbUpdateCheck.Text": {
@@ -126,14 +127,17 @@
         "lblGithub.Text": {
             "de-DE": "GitHub Repo:",
             "en": "GitHub Repo:",
+            "ko-KR": "GitHub 저장소:",
             "zh-CN": "GitHub项目："
         },
         "lblNewUserWelcome.Text": {
             "en": "If you're looking for a URL field here, you're either used to the old OverlayPlugin or following an outdated guide. You need to create an overlay using the New button in the bottom-left corner before you will see any overlays from OverlayPlugin.\nPlease try using the presets instead of manually setting the URL since this can prevent a bunch of issues.\n\n",
+            "ko-KR": "여기에서 URL 필드를 찾고 있다면 옛날 OverlayPlugin 방식을 사용하는 중이거나 오래된 가이드를 따르고 있는 것입니다. 오버레이를 띄우려면 먼저 왼쪽 하단 모서리에 있는 추가 버튼을 눌러 오버레이를 만들어야 합니다.\n여러 가지 문제를 방지할 수 있으므로 URL을 수동으로 설정하는 대신 프리셋을 사용해 보십시오.\n\n",
             "zh-CN": "如果您正在此处寻找链接字段，那么说明您仍然习惯于旧版本的OverlayPlugin或遵循于过时的指南。您首先需要使用左下角的“新建”按钮创建一个悬浮窗，然后才能看到OverlayPlugin的任何悬浮窗。\n请尝试使用预设而不是手动设置的链接，这将可以防止一系列的问题。\n\n"
         },
         "lblReadMe.Text": {
             "en": "READ THIS:",
+            "ko-KR": "도움말:",
             "zh-CN": "温馨提示："
         },
         "lnkGithubRepo.Text": {
@@ -177,6 +181,7 @@
             "en": "Preset",
             "fr-FR": "Preset",
             "ja-JP": "プリセット",
+            "ko-KR": "프리셋",
             "zh-CN": "预设"
         },
         "lblPresetDescription.Text": {
@@ -184,6 +189,7 @@
             "en": "Once you have selected a preset above, you'll see a preview.\nYou can move the preview around by dragging it with your mouse.\nTo resize the preview, drag the bottom right corner.\n\nIf you want to use an overlay that isn't listed, select the Custom preset and the correct overlay type.\n\nIf you want to add new presets, send a PR to the GitHub repo (you can find a link on the General tab).",
             "fr-FR": "Une fois un preset choisi, un aperçu sera affiché.\nVous pouvez déplacer l'aperçu en l'attrapant avec votre souris.\nPour redimensionner l'aperçu, attrapez le coin inférieur droit.\n\nSi vous voulez utiliser un overlay qui n'est pas dans la liste, choisissez Personnalisé et le bon type d'overlay.\n\nSi vous voulez ajouter un nouveau preset, faites un PR sur le repo GitHub (un lien est présent sur l'onglet Général).",
             "ja-JP": "上記のプリセットを選択するとプレビューが表示されます。\nプレビューはマウスでドラッグして移動できます。まらサイズを変更するには右下の端をドラッグします。\n\nリストに無いオーバーレイを使用する場合は Custom を選択して適切なタイプを選択して下さい。\n\n新しいプリセットを追加するには GitHub で Pull Request を送って下さい。\n(リンクは General タブにあります。)",
+            "ko-KR": "아무 프리셋을 선택하면 미리보기가 표시됩니다.\n마우스로 미리보기를 드래그하여 이동할 수 있습니다.\n미리보기의 크기를 조정하려면 오른쪽 하단 모서리를 드래그하세요.\n\n목록에 없는 오버레이를 사용하려면 커스텀을 선택하고 올바른 오버레이 유형을 선택하십시오.\n\n새 프리셋을 추가하려면 GitHub 저장소에 PR을 주세요. (일반 탭에 링크 있음).",
             "zh-CN": "选择上方的预设后，您将看到其预览。\n您可以通过使用鼠标拖动来移动预览。\n要调整预览的大小，请拖动其右下角。\n\n如果要使用未列出的悬浮窗，请选择“自订”预设和正确的悬浮窗种类。\n\n如果要添加新的预设，请发送PR到GitHub项目（可以在“通用”选项卡中找到链接）。"
         },
         "lblType.Text": {
@@ -199,7 +205,7 @@
             "en": "For most overlays you have to select MiniParse here.\nLabel allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.\nSpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.\n",
             "fr-FR": "Pour la plupart des overlays, vous devez sélectionner MiniParse. Oui, même Cacbot doit être de type MiniParse.\n\nLabel vous permet d'afficher du texte ou du HTML à l'écran (pratique pour des notes ou rotations.\nSpellTimer Affiche les timers intégrés d'ACT et n'a rien à voir avec SPESPE SpecialSpellTimers d'Hojoring.\n",
             "ja-JP": "ほとんどのオーバーレイはMiniParseを選択してください。CactbotもMiniParseを使用してください。\n\nLabelはディスプレイにテキストやHTMLを表示する際に使用します。メモ用途に適しています。\nSpellTimerはACT内蔵のスペルタイマーを表示します。SpecialSpellTimers(スペスペ)用ではありません。",
-            "ko-KR": "대부분의 오버레이는 MiniParse 유형을 선택합니다. cactbot 오버레이도 마찬가지로 MiniParse 유형을 필요로 합니다.\n\nLabel 유형을 사용하면 오버레이에 텍스트나 HTML을 표시할 수 있습니다. 메모나 반복 알림 표시에 유용합니다.\nSpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스페스페와는 아무런 관련이 없습니다.\n",
+            "ko-KR": "대부분의 오버레이는 MiniParse 유형을 선택합니다. Cactbot 오버레이도 마찬가지로 MiniParse 유형을 필요로 합니다.\n\nLabel 유형을 사용하면 오버레이에 텍스트나 HTML을 표시할 수 있습니다. 메모나 반복 알림 표시에 유용합니다.\nSpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스페스페와는 아무런 관련이 없습니다.\n",
             "zh-CN": "对于大多数悬浮窗，您必须在此处选择[数据统计]。 是的，即使Cactbot也需要[数据统计]类型。\n\n[标签]允许您在屏幕上显示静态文本或HTML。对于笔记和技能循环提醒很实用。\n[技能冷却]显示ACT内置的技能冷却计时器，与Hojoring的SpecialSpellTimers或SPESPE无关。\n"
         }
     },
@@ -208,24 +214,28 @@
             "de-DE": "Overlay umbenennen",
             "en": "Rename Overlay",
             "fr-FR": "Renommer l'overlay",
+            "ko-KR": "이름 바꾸기",
             "zh-CN": "重命名悬浮窗"
         },
         "btnCancel.Text": {
             "de-DE": "Abbrechen",
             "en": "Cancel",
             "fr-FR": "Annuler",
+            "ko-KR": "취소",
             "zh-CN": "取消"
         },
         "btnOk.Text": {
             "de-DE": "OK",
             "en": "OK",
             "fr-FR": "OK",
+            "ko-KR": "확인",
             "zh-CN": "确定"
         },
         "lblName.Text": {
             "de-DE": "Name",
             "en": "Name",
             "fr-FR": "Nom",
+            "ko-KR": "이름",
             "zh-CN": "名称"
         }
     },
@@ -247,7 +257,7 @@
         "introPage.Text": {
             "en": "Intro",
             "fr-FR": "Introduction",
-            "ko": "소개",
+            "ko-KR": "소개",
             "zh-CN": "简介"
         },
         "label1.Text": {
@@ -298,6 +308,7 @@
         "lblWsserverIntro.Text": {
             "en": "Here's a short explanation for both tabs:\n\nStream/Local Overlay: If you start WSServer through this tab, you can use the generated URLs on this PC (i.e. in OBS, XL's overlay plugin, etc.). If you know a bit about networks and SSL you can even make this work with other devices in your LAN but in general I'd recommend using the Shared Overlay tab for that since it's much easier to use.\n\nShared Overlay: If you start WSServer through this tab, you can use the generated URLs on any device that is connected to the internet (your phone, tablet, a friend's PC, etc.). You can share these links with other people.\n\nFinally, if WSServer is started through the Stream/Local Overlay tab, it will automatically restart on ACT launch. If it's started through the Shared Overlay tab, it won't start automatically since you'd get a new URL each time anyway. Note: If this bothers you, ask ngld in the ACT Discord (or on OverlayPlugin's GitHub repo) to fix this. There are ways around this but I'm not sure how many people want this feature.\n",
             "fr-FR": "Voici une brève explication pour les deux onglets :\n\nOverlay Local/Stream : Si vous démarrez WSServer par cet onglet, vous pouvez utiliser les URLs générées sur ce PC (par exemple dans OBS, XL overlay, etc.). Si vous vous y connaissez un peu en matière de réseaux et de SSL, vous pouvez même le faire fonctionner avec d'autres appareils sur votre réseau local, mais en général, je vous recommande d'utiliser l'onglet Overlay Partagé pour cela, car il est beaucoup plus facile à utiliser.\n\nOverlay Partagé : Si vous démarrez WSServer via cet onglet, vous pouvez utiliser les URL générées sur n'importe quel appareil connecté à Internet (votre téléphone, votre tablette, le PC d'un ami, etc.). Vous pouvez partager ces liens avec d'autres personnes. Enfin, si vous démarrez WSServer via l'onglet Overlay Local/Stream, il redémarrera automatiquement au lancement d'ACT. S'il est démarré par l'onglet Overlay Partagé, il ne démarrera pas automatiquement car vous obtiendrez de toute façon une nouvelle URL à chaque fois. Note : Si cela vous dérange, demandez à ngld dans le Discord ACT (ou sur le repo GitHub de OverlayPlugin) de corriger cela. Il y a des moyens de contourner ce problème, mais je ne sais pas combien de personnes souhaitent cette fonctionnalité.\n",
+            "ko-KR": "다음은 두 탭에 대한 간단한 설명입니다.\n\nStream/Local 오버레이: 이 탭을 통해 WSServer를 시작하면 이 PC에서 생성된 URL을 사용할 수 있습니다(예: OBS, XL의 오버레이 플러그인 등). 네트워크와 SSL에 대해 조금 알고 있다면 LAN에 있는 다른 장치에서도 이 작업을 수행할 수 있지만 일반적으로 공유 오버레이 탭이 사용하기 훨씬 쉽기 때문에, 이를 위해 공유 오버레이 탭을 사용하는 것이 좋습니다.\n\n공유 오버레이: 이 탭을 통해 WSServer를 시작하면 인터넷에 연결된 모든 장치(휴대폰, 태블릿, 친구의 PC 등)에서 생성된 URL을 사용할 수 있습니다. 이 링크를 다른 사람들과 공유할 수 있습니다.\n\n마지막으로 WSServer가 Stream/Local 오버레이 탭을 통해 시작되면 ACT 시작 시 자동으로 다시 시작됩니다. 공유 오버레이 탭을 통해 시작한 경우 매번 새 URL을 받게 되므로 자동으로 시작되지 않습니다. 참고: 이것이 귀찮다면 ACT Discord(또는 OverlayPlugin의 GitHub 저장소)에서 문제를 해결하도록 요청하세요. 이 문제를 해결할 수 있는 방법이 있지만 이 기능을 원하는 사람이 몇 명인지 잘 모르겠습니다.\n",
             "zh-CN": "此处是对后两个选项卡的简介：\n\n直播/本地悬浮窗：如果您通过此选项卡启动WS服务器，您就可以在这台电脑上使用生成的链接 （例如在OBS中，XL的overlay plugin中，等等）。如果您对网络和SSL略知一二，您甚至可以在您的局域网中的其他设备上使用它。但是一般来说，我建议使用共享悬浮窗选项卡，因为它更易于使用。\n\n共享悬浮窗：如果您通过此选项卡启动WS服务器，则可以在连接到互联网的任何设备上使用生成的链接（例如您的手机、平板电脑、朋友的电脑，等等）。您可以与其他人共享这些链接。\n\n最后，如果您通过“直播/本地悬浮窗”选项卡启动了WS服务器, 它将在ACT启动时自动重新启动。如果是通过“共享悬浮窗”选项卡启动的, 它不会自动启动，因为您每次都将获得一个新的链接。备注：如果这让您感到困扰，请在ACT Discord（或在OverlayPlugin的GitHub仓库）中要求ngld修复此问题。有很多方法可以解决这个问题，但是我不确定有多少人需要这个功能。\n"
         },
         "logDisplay.Text": {
@@ -454,6 +465,7 @@
         },
         "lblLogLines.Text": {
             "en": "Write additional log lines",
+            "ko-KR": "추가 로그 라인 출력",
             "zh-CN": "输出额外日志行"
         }
     },
@@ -486,6 +498,7 @@
             "de-DE": "...",
             "en": "...",
             "fr-FR": "...",
+            "ko-KR": "...",
             "zh-CN": "浏览"
         },
         "label1.Text": {
@@ -582,6 +595,7 @@
             "de-DE": "...",
             "en": "...",
             "fr-FR": "...",
+            "ko-KR": "...",
             "zh-CN": "浏览"
         },
         "label1.Text": {
@@ -668,6 +682,7 @@
         },
         "btnClearCache.Text": {
             "en": "Clear Cache",
+            "ko-KR": "캐시 지우기",
             "zh-CN": "清除缓存"
         },
         "btnRemoveHotkey.Text": {
@@ -706,6 +721,7 @@
             "de-DE": "...",
             "en": "...",
             "fr-FR": "...",
+            "ko-KR": "...",
             "zh-CN": "浏览"
         },
         "buttonResetOverlayPosition.Text": {
@@ -803,6 +819,7 @@
         },
         "label14.Text": {
             "en": "Hide overlay outside combat",
+            "ko-KR": "전투 중이 아닐 때 오버레이 숨기기",
             "zh-CN": "脱战后隐藏悬浮窗"
         },
         "label15.Text": {
@@ -942,6 +959,7 @@
             "de-DE": "...",
             "en": "...",
             "fr-FR": "...",
+            "ko-KR": "...",
             "zh-CN": "浏览"
         },
         "label1.Text": {
@@ -1036,6 +1054,7 @@
             "de-DE": "NewOverlayDialog: Fehler beim laden der Voreinstellungen: {0}",
             "en": "NewOverlayDialog: Failed to load presets: {0}",
             "fr-FR": "NewOverlayDialog: Impossible de charger les préréglages : {0}",
+            "ko-KR": "NewOverlayDialog: 프리셋 불러오기 실패: {0}",
             "zh-CN": "新悬浮窗对话框：加载预设悬浮窗失败：{0}"
         },
         "ErrorOverlayNameEmpty": {
@@ -1910,6 +1929,7 @@
             "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)\nThis text is displayed in ACT's restart prompt. ACT already asks the user to restart so we don't have to.",
             "de-DE": "{0} wurde erfolgreich geupdatet.",
             "en": "{0} was updated successfully.",
+            "ko-KR": "{0} 업데이트에 성공했습니다.",
             "zh-CN": "{0}已成功更新。"
         },
         "UpdateSuccess": {
