@@ -123,7 +123,7 @@
   </data>
 
   <data name="label1.Text" xml:space="preserve">
-    <value>丢失了某些OverlayPlugin所必须的关键文件。如果您刚刚安装OverlayPlugin或刚刚进行了更新，这个情况是正常的。这些文件很大（&gt; 150 MiB）并且很少需要更改（每月最多一次）。为了使所有人都能轻松地进行更新，这些文件被拆分为单独下载。</value>
+    <value>OverlayPlugin 的重要文件丢失了! 如果你刚刚安装 OverlayPlugin 或刚刚进行了更新, 这个情况是正常的。这些文件的大小通常大于 150 MiB, 但不需要经常更新; 一般情况下, 每月最多一次。因此这些文件没有包含在插件内, 需要单独下载。</value>
   </data>
 
   <data name="tabPage2.Text" xml:space="preserve">
@@ -139,11 +139,11 @@
   </data>
 
   <data name="label5.Text" xml:space="preserve">
-    <value>如果这对您不起作用，请查看另一个选项卡。</value>
+    <value>如果此方法无效, 请查看另一个选项卡。</value>
   </data>
 
   <data name="label2.Text" xml:space="preserve">
-    <value>如果自动安装无法正常工作，请使用此选项。</value>
+    <value>如果自动安装失败, 请使用此选项。</value>
   </data>
 
   <data name="btnOpenManual.Text" xml:space="preserve">
@@ -151,17 +151,17 @@
   </data>
 
   <data name="label3.Text" xml:space="preserve">
-    <value>下载以下文件，然后使用底部的按钮将其打开：</value>
+    <value>下载以下文件, 然后使用底部的按钮将其打开: </value>
   </data>
 
   <data name="label4.Text" xml:space="preserve">
-    <value>点击下面的按钮，让OverlayPlugin自动处理所有内容。建议大多数用户使用。</value>
+    <value>点击下面的按钮, 让 OverlayPlugin 自动处理所有内容。建议大多数用户使用。</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
-    <value>脱战自动重置战斗记录</value>
+    <value>脱战时重置战斗记录</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
-    <value>团灭自动重置战斗记录</value>
+    <value>团灭时重置战斗记录</value>
   </data>
   <data name="tabPage3.Text" xml:space="preserve">
     <value>日志</value>

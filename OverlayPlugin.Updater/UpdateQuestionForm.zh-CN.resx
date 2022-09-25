@@ -120,13 +120,13 @@
     <value>取消</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>{0}更新</value>
+    <value>{0} 更新</value>
   </data>
   <data name="btnConfirm.Text" xml:space="preserve">
     <value>安装更新</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>发现一个可用的{0}更新。现在安装？</value>
+    <value>发现 {0} 更新。现在安装?</value>
   </data>
 
 </root>

@@ -122,62 +122,62 @@
 
 
   <data name="WSInvalidDataRecv" xml:space="preserve">
-    <value>收到无效数据：{0}; {1}</value>
+    <value>收到无效数据: {0}; {1}</value>
   </data>
   <data name="OverlayApiSubscribed" xml:space="preserve">
-    <value>{0}：已订阅{1}</value>
+    <value>{0}: 已订阅 {1}</value>
   </data>
   <data name="WSLoadingCert" xml:space="preserve">
-    <value>WS：正在加载SSL证书{0}...</value>
+    <value>WS: 正在加载 SSL 证书 {0}...</value>
   </data>
   <data name="ListSortFailed" xml:space="preserve">
-    <value>以{0}: {1}排序列表失败</value>
+    <value>以 {0} 排序列表失败。 {1} </value>
   </data>
   <data name="InitOverlayLocalFileIsMissing" xml:space="preserve">
-    <value>初始化插件：本地文件{0}不存在！</value>
+    <value>初始化插件: 本地文件 {0} 不存在!</value>
   </data>
   <data name="WSUnsubFail" xml:space="preserve">
-    <value>处理退订失败：{0}</value>
+    <value>处理退订失败: {0}</value>
   </data>
   <data name="RegisterHotkeyError" xml:space="preserve">
-    <value>在EnableHotKeys()注册热键{0}, {1}失败。</value>
+    <value>在 EnableHotKeys() 注册快捷键 {0} + {1} 失败。</value>
   </data>
   <data name="WSMessageSendFailed" xml:space="preserve">
-    <value>发送信息失败：{0}</value>
+    <value>发送信息失败: {0}</value>
   </data>
   <data name="NetworkParserInitException" xml:space="preserve">
-    <value>无法设置网络解析器：{0}</value>
+    <value>无法初始化网络解析器。 {0}</value>
   </data>
   <data name="OverlayBaseRegisterHotkeyError" xml:space="preserve">
-    <value>注册热键：{0}失败！</value>
+    <value>注册快捷键失败! {0}</value>
   </data>
   <data name="WSNewSubFail" xml:space="preserve">
-    <value>处理新订阅失败：{0}</value>
+    <value>处理新订阅失败。 {0}</value>
   </data>
   <data name="WSIndexPage" xml:space="preserve">
-    <value>&lt;h1&gt;It Works!&lt;/h1&gt;
+    <value>&lt;h1&gt;启动成功！&lt;/h1&gt;
         &lt;p&gt;
-            如果这些链接中有任何一个以&amp;quot;Local:&amp;quot;为前缀显示且不可点击，那是因为
-            这些悬浮窗显示本地文件，并且网页浏览器不允许网站链接到本地文件。
+            如果这些链接中有任何一个以 “Local:” 开头显示且不可点击, 那是因为
+            这些悬浮窗正在调用本地文件, 并且网页浏览器不允许网站链接到本地文件。
         &lt;/p&gt;
         &lt;p&gt;
-            您必须复制&amp;amp;并粘贴到您的地址栏中。
+            你必须复制并粘贴到你的地址栏中。
         &lt;/p&gt;</value>
   </data>
   <data name="WSStartFailed" xml:space="preserve">
-    <value>WS:启动失败：{0}</value>
+    <value>WS: 启动失败。 {0}</value>
   </data>
   <data name="InitOverlayUrlError" xml:space="preserve">
-    <value>初始化插件：路径解析错误！请重新设置悬浮窗路径(Config.Url = {0}): {1}</value>
+    <value>初始化插件: 地址解析错误!请重新设置悬浮窗地址。 (Config.Url = {0}): {1}</value>
   </data>
   <data name="WSShutdownError" xml:space="preserve">
-    <value>WS:关闭失败：{0}</value>
+    <value>WS: 关闭失败。 {0}</value>
   </data>
   <data name="IncompatibleAddon" xml:space="preserve">
-    <value>检测到不兼容的插件{0}。请尽快更新！！</value>
+    <value>检测到不兼容的插件 {0}。请尽快更新!!</value>
   </data>
   <data name="UnregisterHotkeyError" xml:space="preserve">
-    <value>在DisableHotKeys()反注册热键{0}失败。</value>
+    <value>在 DisableHotKeys() 反注册快捷键 {0} 失败。</value>
   </data>
   <data name="PromptSelectOverlayType" xml:space="preserve">
     <value>请选择悬浮窗类型。</value>
@@ -224,46 +224,46 @@
   <data name="MapESMiniParse" xml:space="preserve">
     <value>设置</value>
   </data>  <data name="DuplicateHandlerError" xml:space="preserve">
-    <value>名称{0}重复处理！</value>
+    <value>存在针对 {0} 的重名处理器!</value>
   </data>
   <data name="WSNotConfidentLink" xml:space="preserve">
-    <value>如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。</value>
+    <value>如果此悬浮窗不支持 ACTWebSocket, 此链接可能不会生效。</value>
   </data>
   <data name="JsHandlerCallException" xml:space="preserve">
-    <value>JS处理程序调用失败: {0}</value>
+    <value>调用 JS 处理器出错：{0}</value>
   </data>
   <data name="OverlayApiMissingEventsFieldUnsub" xml:space="preserve">
-    <value>取消订阅呼叫缺少事件字段：{0}</value>
+    <value>取消订阅调用缺少事件字段: {0}</value>
   </data>
   <data name="WSHandlerException" xml:space="preserve">
-    <value>WS：处理程序调用失败：{0}</value>
+    <value>WS: 处理器调用失败。 {0}</value>
   </data>
   <data name="OverlayApiInvalidHandlerCall" xml:space="preserve">
-    <value>收到无效的处理程序调用：{0}</value>
+    <value>收到无效的处理器调用: {0}</value>
   </data>
   <data name="OverlayApiMissingEventsField" xml:space="preserve">
-    <value>订阅呼叫中缺少事件字段：{0}</value>
+    <value>订阅调用缺少事件字段: {0}</value>
   </data>
   <data name="MissingHandlerError" xml:space="preserve">
-    <value>尝试调用不存在的处理程序"{0}"！</value>
+    <value>调用的处理器 "{0}" 不存在!</value>
   </data>
   <data name="FFXIVDataRepositoryException" xml:space="preserve">
-    <value>FFXIV DataRepository检索失败：{0}</value>
+    <value>FFXIV DataRepository 检索失败。 {0}</value>
   </data>
   <data name="MissingEventDispatchError" xml:space="preserve">
-    <value>试图发送未注册的事件类型"{0}"！</value>
+    <value>发送的事件类型 "{0}" 未注册!</value>
   </data>
   <data name="MissingEventSubError" xml:space="preserve">
-    <value>缺少事件"{0}"的订阅！</value>
+    <value>订阅的事件 "{0}" 未注册!</value>
   </data>
   <data name="FFXIVDataSubscriptionException" xml:space="preserve">
-    <value>FFXIV DataSubscription检索失败：{0}</value>
+    <value>FFXIV DataSubscription检索失败。 {0}</value>
   </data>
   <data name="EventHandlerException" xml:space="preserve">
-    <value>无法将事件{0}发送到{1}！ {2}</value>
+    <value>无法将事件 {0} 发送到 {1}! {2}</value>
   </data>
   <data name="ErrorCouldNotLoadPresets" xml:space="preserve">
-    <value>新悬浮窗对话框：加载预设悬浮窗失败：{0}</value>
+    <value>创建悬浮窗对话框: 加载预设悬浮窗失败。{0}</value>
   </data>
   <data name="PromptSelectPreset" xml:space="preserve">
     <value>请选择一个预设悬浮窗。</value>
@@ -272,13 +272,13 @@
     <value>预览</value>
   </data>
   <data name="CustomPresetLabel" xml:space="preserve">
-    <value>自订</value>
+    <value>自定义悬浮窗</value>
   </data>
   <data name="PresetUsesUnsupportedType" xml:space="preserve">
-    <value>预设{0}使用不受支持的类型{1}！</value>
+    <value>预设 {0} 使用不受支持的类型 {1}!</value>
   </data>
   <data name="NetworkParserNoFfxiv" xml:space="preserve">
-    <value>找不到Machina或FFXIV插件。仅当您将ACT与FFXIV一起使用时才是问题。</value>
+    <value>找不到 Machina 或 FFXIV 解析插件。</value>
   </data>
   <data name="EventConfigTab" xml:space="preserve">
     <value>基本设置</value>
@@ -287,6 +287,9 @@
     <value>切换悬浮窗 启用/关闭</value>
   </data>
   <data name="LogNotConnectedError" xml:space="preserve">
-    <value>错误：未连接到日志。</value>
+    <value>错误: 未连接到日志。</value>
+  </data>
+  <data name="ErrorCouldNotLoadReservedLogLines" xml:space="preserve">
+    <value>FFXIV 自定义日志行: 加载保留日志行失败。{0}</value>
   </data>
 </root>

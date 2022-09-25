@@ -161,6 +161,6 @@ Make sure you extracted the whole plugin archive and didn't delete anything (lik
 Make sure you extracted the whole plugin archive and didn't delete any files.</value>
   </data>
   <data name="DependencyOutdated" xml:space="preserve">
-    <value>Fatal: The loaded {0} version is older than expected ({1}  &lt; {2})! This might cause strange bugs in OverlayPlugin and its addons.</value>
+    <value>Fatal: The loaded {0} version is older than expected ({1} &lt; {2})! This might cause strange bugs in OverlayPlugin and its addons.</value>
   </data>
 </root>

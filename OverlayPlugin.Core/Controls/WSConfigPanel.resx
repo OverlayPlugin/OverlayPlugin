@@ -528,7 +528,7 @@ Stream/Local Overlay: If you start WSServer through this tab, you can use the ge
 
 Shared Overlay: If you start WSServer through this tab, you can use the generated URLs on any device that is connected to the internet (your phone, tablet, a friend's PC, etc.). You can share these links with other people.
 
-Finally, if WSServer is started through the Stream/Local Overlay tab, it will automatically restart on ACT launch. If it's started through the Shared Overlay tab, it won't start automatically since you'd get a new URL each time anyway. Note: If this bothers you, ask ngld in the ACT Discord (or on OverlayPlugin's GitHub repo) to fix this. There are ways around this but I'm not sure how many people want this feature.
+Finally, if WSServer is started through the Stream/Local Overlay tab, it will automatically restart on ACT launch. If it's started through the Shared Overlay tab, it won't start automatically since you'd get a new URL each time anyway. Note: If this bothers you, ask the OverlayPlugin Team in the ACT Discord (or on OverlayPlugin's GitHub repo) to fix this. There are ways around this but I'm not sure how many people want this feature.
 </value>
   </data>
   <data name="&gt;&gt;lblWsserverIntro.Name" xml:space="preserve">

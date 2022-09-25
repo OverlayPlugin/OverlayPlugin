@@ -140,8 +140,7 @@
     <value>407, 37</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
-    <value>如果某悬浮窗被锁定，其位置将固定不变，只有将其再次解锁才能移动。
-某些悬浮窗(如cactbot)锁定后方可正常工作。</value>
+    <value>锁定悬浮窗的位置和尺寸, 解除锁定以进行调整。</value>
   </data>
   <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
     <value>175, 44</value>
@@ -150,8 +149,8 @@
     <value>410, 57</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
-    <value>禁用某个悬浮窗会减少CPU使用率，但也会停止它的所有工作（例如声音）。
-隐藏某个悬浮窗只会使其不可见，它仍然在后台运行，并仍可以播放声音、收集统计信息等。
+    <value>禁用悬浮窗可以降低 CPU 占有率，但也会使其声音播放等活动停止。
+隐藏悬浮窗则仅使其不可见, 被隐藏的悬浮窗仍在后台运行, 并且仍然可进行播放声音、收集统计数据等活动。
 </value>
   </data>
   <data name="cbEnableOverlay.Location" type="System.Drawing.Point, System.Drawing">
@@ -188,7 +187,7 @@
     <value>65, 12</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>悬浮窗路径</value>
+    <value>悬浮窗地址</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 12</value>
@@ -242,7 +241,7 @@
     <value>389, 12</value>
   </data>
   <data name="label12.Text" xml:space="preserve">
-    <value>如果您找不到悬浮窗或由于某种原因无法调整其大小时，请启用此选项。</value>
+    <value>若无法找到悬浮窗或无法找到尺寸调节手柄, 请启用此选项。</value>
   </data>
   <data name="tabGeneral.Text" xml:space="preserve">
     <value>通用</value>
@@ -279,7 +278,7 @@
     <value>缩放</value>
   </data>
   <data name="btnResetZoom.Text" xml:space="preserve">
-    <value>重设</value>
+    <value>重置</value>
   </data>
   <data name="checkLogConsoleMessages.Size" type="System.Drawing.Size, System.Drawing">
     <value>240, 16</value>
@@ -291,7 +290,7 @@
     <value>65, 12</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
-    <value>最大帧速率</value>
+    <value>最大帧速率 (FPS)</value>
   </data>
   <data name="tabAdvanced.Text" xml:space="preserve">
     <value>高级</value>
@@ -300,16 +299,16 @@
     <value>71, 12</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>ACTWS兼容性</value>
+    <value>ACTWS 兼容性</value>
   </data>
   <data name="checkActwsCompatbility.Size" type="System.Drawing.Size, System.Drawing">
     <value>192, 16</value>
   </data>
   <data name="checkActwsCompatbility.Text" xml:space="preserve">
-    <value>此悬浮窗需要使用ACTWebSocket</value>
+    <value>此悬浮窗需要使用 ACTWebSocket</value>
   </data>
   <data name="label11.Text" xml:space="preserve">
-    <value>仅当悬浮窗与OverlayPlugin不兼容时，才需要启用此选项。</value>
+    <value>若悬浮窗与 OverlayPlugin 不兼容, 请启用此选项。</value>
   </data>
   <data name="checkNoFocus.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 16</value>
@@ -321,10 +320,10 @@
     <value>取消焦点</value>
   </data>
   <data name="buttonMiniParseOpenDevTools.Text" xml:space="preserve">
-    <value>启动Debug工具</value>
+    <value>打开 DevTools</value>
   </data>
   <data name="buttonMiniParseReloadBrowser.Text" xml:space="preserve">
-    <value>重新加载（用于更换悬浮窗后即时刷新）</value>
+    <value>刷新悬浮窗</value>
   </data>
   <data name="buttonResetOverlayPosition.Text" xml:space="preserve">
     <value>重置悬浮窗位置</value>

@@ -118,44 +118,44 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FailedToLoadCommon" xml:space="preserve">
-    <value>加载公共库失败！</value>
+    <value>加载 Common 失败!</value>
   </data>  <data name="WaitingForAct" xml:space="preserve">
-    <value>正在等待ACT启动完毕...</value>
+    <value>正在等待 ACT 启动完毕...</value>
   </data>
   <data name="InitCef" xml:space="preserve">
-    <value>正在安装CEF...</value>
+    <value>正在安装 CEF...</value>
   </data>
   <data name="InitRuntime" xml:space="preserve">
     <value>正在安装运行库...</value>
   </data>
   <data name="AssemblyMismatch" xml:space="preserve">
-    <value>ACT尝试加载与您的OverlayPlugin版本({2})不匹配的{0} {1}。正在中止插件加载。
+    <value>ACT 尝试加载与你的 OverlayPlugin 版本 ({2}) 不匹配的 {0} {1}。正在中止插件加载。
 
-请确保已禁用旧的OverlayPlugin，然后重新启动ACT。如果仍不能解决问题，请删除上述文件以及同一目录中的所有OverlayPlugin*.dll，CEF或HtmlRenderer.dll文件。
+请确保已禁用旧版 OverlayPlugin, 然后重新启动 ACT。如果仍不能解决问题, 请删除上述文件以及同目录中的所有 OverlayPlugin*.dll、CEF 或 HtmlRenderer.dll 文件。
 </value>
   </data>
 
 
   <data name="CoreOrHtmlRendererInsane" xml:space="preserve">
-    <value>核心或HtmlRenderer不匹配。</value>
+    <value>Core 或 HtmlRenderer 不匹配。</value>
   </data>
   <data name="AssemblyResolverLoaded" xml:space="preserve">
-    <value>AssemblyResolver：已加载：{0}</value>
+    <value>AssemblyResolver: 已加载 {0}</value>
   </data>
   <data name="AssemblyResolverError" xml:space="preserve">
-    <value>AssemblyResolver：错误：{0}</value>
+    <value>AssemblyResolver: 错误 {0}</value>
   </data>
   <data name="CefInstallerFailed" xml:space="preserve">
-    <value>Cef安装程序无法加载。</value>
+    <value>CEF 安装程序无法加载。</value>
   </data>  <data name="DependencyMissing" xml:space="preserve">
-    <value>加载依赖失败{0}: {1}
-确保您解压缩了整个插件压缩包，并且没有删除任何文件。</value>
+    <value>加载依赖 {0} 失败。{1}
+请确保你解压缩了整个插件压缩包, 且没有删除任何文件。</value>
   </data>
   <data name="AssemblyMissing" xml:space="preserve">
-    <value>加载失败{0}: {1}
-确保您解压缩了整个插件压缩包，并且没有删除任何内容（比如libs文件夹）。</value>
+    <value>加载 {0} 失败: {1}
+请确保你解压缩了整个插件压缩包, 且没有删除任何内容 (如 libs 文件夹)。</value>
   </data>
   <data name="DependencyOutdated" xml:space="preserve">
-    <value>致命错误：已加载的{0}版本早于预期 ({1}  &lt; {2})! 这可能会导致OverlayPlugin及其附件发生奇怪错误。</value>
+    <value>致命错误: 已加载的 {0} 版本过旧 ({1} &lt; {2})! 可能会导致 OverlayPlugin 及其附件出现潜在的问题。</value>
   </data>
 </root>
