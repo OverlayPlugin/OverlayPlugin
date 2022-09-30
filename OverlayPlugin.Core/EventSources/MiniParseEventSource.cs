@@ -90,6 +90,15 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     languageId = lang.ToString("d"),
                 });
             });
+            
+            RegisterEventHandler("getVersion", (msg) =>
+            {
+                var version = Assembly.GetExecutingAssembly().GetName().Version;
+                return JObject.FromObject(new
+                {
+                    version = version.ToString()
+                });
+            });
 
             RegisterEventHandler("getCombatants", (msg) =>
             {
