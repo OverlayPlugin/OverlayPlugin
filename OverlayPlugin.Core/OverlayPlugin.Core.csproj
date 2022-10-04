@@ -107,7 +107,6 @@
     <Compile Include="MemoryProcessors\Enmity\EnmityMemoryManager.cs" />
     <Compile Include="MemoryProcessors\Combatant\CombatantMemoryManager.cs" />
     <Compile Include="MemoryProcessors\InCombat\InCombatMemory.cs" />
-    <Compile Include="MemoryProcessors\InCombat\InCombatMemory60.cs" />
     <Compile Include="MemoryProcessors\InCombat\InCombatMemory61.cs" />
     <Compile Include="MemoryProcessors\InCombat\InCombatMemoryManager.cs" />
     <Compile Include="MemoryProcessors\Target\TargetMemoryManager.cs" />
