@@ -11,16 +11,6 @@
             "size": 11
         }
     },
-    "2022.07.05.0000.0000": {
-        "MapEffect": {
-            "opcode": 404,
-            "size": 11
-        },
-        "CEDirector": {
-            "opcode": 423,
-            "size": 16
-        }
-    },
     "2022.07.08.0000.0000": {
         "MapEffect": {
             "opcode": 123,

@@ -29,11 +29,9 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         {
             List<ICombatantMemory> candidates = new List<ICombatantMemory>();
             // For CN/KR, try the lang-specific candidate first, then fall back to intl
-            if (repository.GetMachinaRegion() == GameRegion.Chinese)
-            {
-                candidates.Add(container.Resolve<ICombatantMemory61>());
-            }
-            else if (repository.GetMachinaRegion() == GameRegion.Korean)
+            if (
+                repository.GetMachinaRegion() == GameRegion.Chinese ||
+                repository.GetMachinaRegion() == GameRegion.Korean)
             {
                 candidates.Add(container.Resolve<ICombatantMemory61>());
             }

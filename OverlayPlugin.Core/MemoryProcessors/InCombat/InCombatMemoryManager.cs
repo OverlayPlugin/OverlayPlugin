@@ -25,7 +25,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
         private void FindMemory()
         {
             List<IInCombatMemory> candidates = new List<IInCombatMemory>();
-            // For CN/KR, try the lang-specific candidate first, then fall back to intl
             candidates.Add(container.Resolve<IInCombatMemory61>());
 
             foreach (var c in candidates)
