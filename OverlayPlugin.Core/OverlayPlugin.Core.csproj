@@ -112,7 +112,6 @@
     <Compile Include="MemoryProcessors\Target\TargetMemoryManager.cs" />
     <Compile Include="MemoryProcessors\Target\TargetMemory.cs" />
     <Compile Include="MemoryProcessors\Target\TargetMemory60.cs" />
-    <Compile Include="MemoryProcessors\Combatant\CombatantMemory60.cs" />
     <Compile Include="MemoryProcessors\Combatant\CombatantMemory61.cs" />
     <Compile Include="MemoryProcessors\Combatant\CombatantMemory62.cs" />
     <Compile Include="MemoryProcessors\Combatant\CombatantMemory.cs" />
