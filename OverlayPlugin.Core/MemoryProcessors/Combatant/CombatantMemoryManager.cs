@@ -20,7 +20,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         public CombatantMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<ICombatantMemory60, CombatantMemory60>();
             container.Register<ICombatantMemory61, CombatantMemory61>();
             container.Register<ICombatantMemory62, CombatantMemory62>();
             repository = container.Resolve<FFXIVRepository>();
@@ -36,7 +35,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             }
             else if (repository.GetMachinaRegion() == GameRegion.Korean)
             {
-                candidates.Add(container.Resolve<ICombatantMemory60>());
+                candidates.Add(container.Resolve<ICombatantMemory61>());
             }
             candidates.Add(container.Resolve<ICombatantMemory62>());
 

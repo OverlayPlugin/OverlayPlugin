@@ -12,8 +12,6 @@
         }
     },
     "2022.07.05.0000.0000": {
-        // Region: KR
-        // Version: 6.05h
         "MapEffect": {
             "opcode": 404,
             "size": 11
@@ -62,6 +60,18 @@
         },
         "CEDirector": {
             "opcode": 750,
+            "size": 16
+        }
+    },
+    "2022.09.15.0000.0000": {
+        // Region: KR
+        // Version: 6.1
+        "MapEffect": {
+            "opcode": 750,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 567,
             "size": 16
         }
     }

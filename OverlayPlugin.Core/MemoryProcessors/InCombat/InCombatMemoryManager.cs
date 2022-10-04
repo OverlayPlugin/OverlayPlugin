@@ -18,7 +18,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
         public InCombatMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<IInCombatMemory60, InCombatMemory60>();
             container.Register<IInCombatMemory61, InCombatMemory61>();
             repository = container.Resolve<FFXIVRepository>();
         }
@@ -26,11 +25,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
         private void FindMemory()
         {
             List<IInCombatMemory> candidates = new List<IInCombatMemory>();
-            // For CN, try the lang-specific candidate first, then fall back to intl
-            if (repository.GetMachinaRegion() == GameRegion.Korean)
-            {
-                candidates.Add(container.Resolve<IInCombatMemory60>());
-            }
+            // For CN/KR, try the lang-specific candidate first, then fall back to intl
             candidates.Add(container.Resolve<IInCombatMemory61>());
 
             foreach (var c in candidates)
