@@ -98,5 +98,4 @@ jobs:
           tag: v${{ needs.validate_tag.outputs.version }}
           artifacts: out/OverlayPlugin-${{ needs.validate_tag.outputs.version }}.zip
           artifactContentType: application/zip
-          draft: true
           generateReleaseNotes: true
