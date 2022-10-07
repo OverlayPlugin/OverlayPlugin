@@ -1572,9 +1572,9 @@
             "zh-CN": "异常: {0}"
         },
         "IgnoreUpdateDueToDotGitDirectoryMessage": {
-            "en": "Ignoring auto-update due to OverlayPluign being a .git repo.",
-            "ko-KR": "OverlayPluign 폴더가 로컬 깃 저장소이므로 자동 업데이트를 건너뜁니다.",
-            "zh-CN": "由于 OverlayPluign 文件夹是 git 本地仓库, 跳过自动更新。"
+            "en": "Ignoring auto-update due to OverlayPlugin being a .git repo.",
+            "ko-KR": "OverlayPlugin 폴더가 로컬 깃 저장소이므로 자동 업데이트를 건너뜁니다.",
+            "zh-CN": "由于 OverlayPlugin 文件夹是 git 本地仓库, 跳过自动更新。"
         },
         "LaunchingInstallerFailed": {
             "de-DE": "Installationsprogramm konnte nicht gestartet werden: {0}",

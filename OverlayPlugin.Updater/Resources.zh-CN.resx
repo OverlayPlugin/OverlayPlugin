@@ -287,6 +287,6 @@ OverlayPlugin 需要此运行库。现在安装?</value>
     <value>超过重试次数, 更新失败。</value>
   </data>
   <data name="IgnoreUpdateDueToDotGitDirectoryMessage" xml:space="preserve">
-    <value>由于 OverlayPluign 文件夹是 git 本地仓库, 跳过自动更新。</value>
+    <value>由于 OverlayPlugin 文件夹是 git 本地仓库, 跳过自动更新。</value>
   </data>
 </root>

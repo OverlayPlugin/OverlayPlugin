@@ -115,7 +115,7 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ignoring auto-update due to OverlayPluign being a .git repo..
+        ///   Looks up a localized string similar to Ignoring auto-update due to OverlayPlugin being a .git repo..
         /// </summary>
         public static string IgnoreUpdateDueToDotGitDirectoryMessage {
             get {
