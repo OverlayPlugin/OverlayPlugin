@@ -203,5 +203,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
             return result;
         }
 
+        public abstract Version GetVersion();
     }
 }

@@ -4,12 +4,9 @@ using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
 {
-    public interface IAggroMemory
+    public interface IAggroMemory : IVersionedMemory
     {
         List<AggroEntry> GetAggroList(List<Combatant.Combatant> combatantList);
-
-        void ScanPointers();
-        bool IsValid();
     }
 
     public class AggroMemoryManager : IAggroMemory
@@ -42,16 +39,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
         {
             List<IAggroMemory> candidates = new List<IAggroMemory>();
             candidates.Add(container.Resolve<IAggroMemory60>());
-
-            foreach (var c in candidates)
-            {
-                c.ScanPointers();
-                if (c.IsValid())
-                {
-                    memory = c;
-                    break;
-                }
-            }
+            memory = FFXIVMemory.FindCandidate(candidates, repository.GetMachinaRegion());
         }
 
         public bool IsValid()
@@ -70,6 +58,12 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
                 return null;
             }
             return memory.GetAggroList(combatantList);
+        }
+
+        Version IVersionedMemory.GetVersion() {
+            if (!IsValid())
+                return null;
+            return memory.GetVersion();
         }
     }
 }

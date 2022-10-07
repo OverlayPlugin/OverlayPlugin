@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors
 {
+    public interface IVersionedMemory
+    {
+        Version GetVersion();
+        void ScanPointers();
+        bool IsValid();
+    }
+
     public class FFXIVMemory
     {
         private event EventHandler<Process> OnProcessChange;
@@ -13,6 +21,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         private Process process;
         private IntPtr processHandle;
         private FFXIVRepository repository;
+
+        // The "international" version always uses the most recent.
+        private static Version globalVersion = new Version(99, 0);
+        private static Version cnVersion = new Version(6, 2);
+        private static Version koVersion = new Version(6, 1);
 
         public FFXIVMemory(TinyIoCContainer container)
         {
@@ -350,6 +363,57 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             }
 
             return matches_list;
+        }
+
+        // Returns the best candidate from a list of versioned memory candidates.
+        // Side effect: this function sorts the list provided in place.
+        public static T FindCandidate<T>(List<T> candidates, GameRegion region) where T : IVersionedMemory
+        {
+            // General algorithm, for a given desired version X:
+            // 1) return the first element <= X
+            // 2) return elements after X in ascending order
+            // 3) return elements before X in descending order (just in case)
+            //
+            // e.g. if X = 6.1 with [5.2, null, 5.3, 6.0, 6.2] return 6.0, 6.2, 5.3, 5.2
+
+            Version target;
+            if (region == GameRegion.Chinese)
+                target = cnVersion;
+            else if (region == GameRegion.Korean)
+                target = koVersion;
+            else
+                target = globalVersion;
+
+            candidates.OrderBy(x => x.GetVersion());
+            int idx = candidates.FindIndex(x => x.GetVersion() > target);
+
+            // If not found, all candidates are <= target version, so walk in descending order.
+            // If found, then idx is the first candidate larger than target, so try to
+            // start on the candidate before it.
+            if (idx == -1)
+                idx = candidates.Count;
+            else
+                idx = Math.Max(idx - 1, 0);
+
+            for (var i = idx; i < candidates.Count; ++i)
+            {
+                var candidate = candidates[i];
+                candidate.ScanPointers();
+                if (candidate.IsValid())
+                    return candidate;
+            }
+
+            if (idx == 0)
+                return default(T);
+
+            for (var i = idx - 1; i >= 0; ++i)
+            {
+                var candidate = candidates[i];
+                candidate.ScanPointers();
+                if (candidate.IsValid())
+                    return candidate;
+            }
+            return default(T);
         }
     }
 }
