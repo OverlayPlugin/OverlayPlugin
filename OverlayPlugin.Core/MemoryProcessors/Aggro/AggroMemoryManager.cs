@@ -39,7 +39,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
             ScanPointers();
         }
 
-        public void ScanPointers() {
+        public void ScanPointers()
+        {
             List<IAggroMemory> candidates = new List<IAggroMemory>();
             candidates.Add(container.Resolve<IAggroMemory60>());
 
