@@ -395,7 +395,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             else
                 idx = Math.Max(idx - 1, 0);
 
-            for (var i = idx; i < candidates.Count; ++i)
+            for (var i = idx; i < candidates.Count; i++)
             {
                 var candidate = candidates[i];
                 candidate.ScanPointers();
@@ -406,7 +406,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             if (idx == 0)
                 return default(T);
 
-            for (var i = idx - 1; i >= 0; ++i)
+            for (var i = idx - 1; i >= 0; i--)
             {
                 var candidate = candidates[i];
                 candidate.ScanPointers();
