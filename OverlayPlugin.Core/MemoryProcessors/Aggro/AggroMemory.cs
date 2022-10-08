@@ -29,14 +29,16 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
             targetMemory = container.Resolve<ITargetMemory>();
         }
 
-        private bool HasValidPointers()
-        {
-            return aggroAddress != IntPtr.Zero;
-        }
-
         private void ResetPointers()
         {
             aggroAddress = IntPtr.Zero;
+        }
+
+        private bool HasValidPointers()
+        {
+            if (aggroAddress == IntPtr.Zero)
+                return false;
+            return true;
         }
 
         public bool IsValid()

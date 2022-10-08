@@ -28,14 +28,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             this.numMemoryCombatants = numMemoryCombatants;
             logger = container.Resolve<ILogger>();
             memory = container.Resolve<FFXIVMemory>();
-            memory.RegisterOnProcessChangeHandler(ResetPointers);
         }
 
-        private void ResetPointers(object sender, Process p)
+        private void ResetPointers()
         {
             charmapAddress = IntPtr.Zero;
-            if (p != null)
-                GetPointerAddress();
         }
 
         private bool HasValidPointers()
@@ -56,10 +53,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             return true;
         }
 
-        private bool GetPointerAddress()
+        public void ScanPointers()
         {
+            ResetPointers();
             if (!memory.IsValid())
-                return false;
+                return;
 
             List<string> fail = new List<string>();
 
@@ -85,11 +83,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             if (fail.Count == 0)
             {
                 logger.Log(LogLevel.Info, $"Found combatant memory via {GetType().Name}.");
-                return true;
+                return;
             }
 
             logger.Log(LogLevel.Error, $"Failed to find combatant memory via {GetType().Name}: {string.Join(",", fail)}.");
-            return false;
+            return;
         }
 
         public Combatant GetSelfCombatant()

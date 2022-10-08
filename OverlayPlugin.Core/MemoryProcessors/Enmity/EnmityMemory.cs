@@ -22,15 +22,12 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
             this.enmitySignatureOffset = enmitySignatureOffset;
             logger = container.Resolve<ILogger>();
             memory = container.Resolve<FFXIVMemory>();
-            memory.RegisterOnProcessChangeHandler(ResetPointers);
             combatantMemory = container.Resolve<ICombatantMemory>();
         }
 
-        private void ResetPointers(object sender, Process p)
+        private void ResetPointers()
         {
             enmityAddress = IntPtr.Zero;
-            if (p != null)
-                GetPointerAddress();
         }
 
         private bool HasValidPointers()
@@ -51,10 +48,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
             return true;
         }
 
-        private bool GetPointerAddress()
+        public void ScanPointers()
         {
+            ResetPointers();
             if (!memory.IsValid())
-                return false;
+                return;
 
             List<string> fail = new List<string>();
 
@@ -74,11 +72,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
             if (fail.Count == 0)
             {
                 logger.Log(LogLevel.Info, $"Found enmity memory via {GetType().Name}.");
-                return true;
+                return;
             }
 
             logger.Log(LogLevel.Error, $"Failed to find enmity memory via {GetType().Name}: {string.Join(", ", fail)}.");
-            return false;
+            return;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = Size)]

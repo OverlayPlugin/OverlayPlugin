@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
 {
@@ -6,6 +7,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
     {
         bool GetInCombat();
 
+        void ScanPointers();
         bool IsValid();
     }
 
@@ -20,15 +22,29 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
             this.container = container;
             container.Register<IInCombatMemory61, InCombatMemory61>();
             repository = container.Resolve<FFXIVRepository>();
+
+            var memory = container.Resolve<FFXIVMemory>();
+            memory.RegisterOnProcessChangeHandler(FindMemory);
         }
 
-        private void FindMemory()
+        private void FindMemory(object sender, Process p)
+        {
+            memory = null;
+            if (p == null)
+            {
+                return;
+            }
+            ScanPointers();
+        }
+
+        public void ScanPointers()
         {
             List<IInCombatMemory> candidates = new List<IInCombatMemory>();
             candidates.Add(container.Resolve<IInCombatMemory61>());
 
             foreach (var c in candidates)
             {
+                c.ScanPointers();
                 if (c.IsValid())
                 {
                     memory = c;
@@ -39,10 +55,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
 
         public bool IsValid()
         {
-            if (memory == null)
-            {
-                FindMemory();
-            }
             if (memory == null || !memory.IsValid())
             {
                 return false;

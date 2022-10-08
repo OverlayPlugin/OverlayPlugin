@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
 {
@@ -6,6 +7,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
     {
         List<EnmityHudEntry> GetEnmityHudEntries();
 
+        void ScanPointers();
         bool IsValid();
     }
 
@@ -21,9 +23,22 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
             container.Register<IEnmityHudMemory60, EnmityHudMemory60>();
             container.Register<IEnmityHudMemory62, EnmityHudMemory62>();
             repository = container.Resolve<FFXIVRepository>();
+
+            var memory = container.Resolve<FFXIVMemory>();
+            memory.RegisterOnProcessChangeHandler(FindMemory);
         }
 
-        private void FindMemory()
+        private void FindMemory(object sender, Process p)
+        {
+            memory = null;
+            if (p == null)
+            {
+                return;
+            }
+            ScanPointers();
+        }
+
+        public void ScanPointers()
         {
             List<IEnmityHudMemory> candidates = new List<IEnmityHudMemory>();
             // For CN/KR, try the lang-specific candidate first, then fall back to intl
@@ -37,6 +52,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
 
             foreach (var c in candidates)
             {
+                c.ScanPointers();
                 if (c.IsValid())
                 {
                     memory = c;
@@ -47,15 +63,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
 
         public bool IsValid()
         {
-            if (memory == null)
-            {
-                FindMemory();
-            }
-            if (memory == null || !memory.IsValid())
-            {
-                return false;
-            }
-            return true;
+            return memory != null && memory.IsValid();
         }
 
 

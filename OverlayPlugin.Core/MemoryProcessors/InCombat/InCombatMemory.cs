@@ -22,14 +22,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
             this.inCombatRIPOffset = inCombatRIPOffset;
             logger = container.Resolve<ILogger>();
             memory = container.Resolve<FFXIVMemory>();
-            memory.RegisterOnProcessChangeHandler(ResetPointers);
         }
 
-        private void ResetPointers(object sender, Process p)
+        private void ResetPointers()
         {
             inCombatAddress = IntPtr.Zero;
-            if (p != null)
-                GetPointerAddress();
         }
 
         private bool HasValidPointers()
@@ -50,10 +47,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
             return true;
         }
 
-        protected virtual bool GetPointerAddress()
+        public void ScanPointers()
         {
+            ResetPointers();
             if (!memory.IsValid())
-                return false;
+                return;
 
             List<string> fail = new List<string>();
 
@@ -75,11 +73,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
             if (fail.Count == 0)
             {
                 logger.Log(LogLevel.Info, $"Found in combat memory via {GetType().Name}.");
-                return true;
+                return;
             }
 
             logger.Log(LogLevel.Error, $"Failed to find in combat memory via {GetType().Name}: {string.Join(", ", fail)}.");
-            return false;
+            return;
         }
 
         public bool GetInCombat()

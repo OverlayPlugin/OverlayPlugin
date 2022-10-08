@@ -28,14 +28,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
             this.enmityHudEntrySize = enmityHudEntrySize;
             logger = container.Resolve<ILogger>();
             memory = container.Resolve<FFXIVMemory>();
-            memory.RegisterOnProcessChangeHandler(ResetPointers);
         }
 
-        private void ResetPointers(object sender, Process p)
+        private void ResetPointers()
         {
             enmityHudAddress = IntPtr.Zero;
-            if (p != null)
-                GetPointerAddress();
         }
 
         private bool HasValidPointers()
@@ -56,10 +53,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
             return true;
         }
 
-        private bool GetPointerAddress()
+        public void ScanPointers()
         {
+            ResetPointers();
             if (!memory.IsValid())
-                return false;
+                return;
 
             List<string> fail = new List<string>();
 
@@ -84,11 +82,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
             if (fail.Count == 0)
             {
                 logger.Log(LogLevel.Info, $"Found enmity HUD memory via {GetType().Name}.");
-                return true;
+                return;
             }
 
             logger.Log(LogLevel.Error, $"Failed to find enmity HUD memory via {GetType().Name}: {string.Join(", ", fail)}.");
-            return false;
+            return;
         }
 
         private bool GetDynamicPointerAddress()
