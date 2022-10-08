@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Security.Permissions;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
 {
