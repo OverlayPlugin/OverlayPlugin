@@ -83,6 +83,8 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        // Should OverlayPlugin check for automatic updates?
+        // Note: this is also tied to automatically trying to fetch new opcodes.
         private bool _updateCheck;
         public bool UpdateCheck
         {
@@ -163,6 +165,35 @@ namespace RainbowMage.OverlayPlugin
             set
             {
                 _tunnelRegion = value;
+                isDirty = true;
+            }
+        }
+
+        private JToken _cachedOpcodeFile = new JObject();
+        public JToken CachedOpcodeFile
+        {
+            get
+            {
+                return _cachedOpcodeFile;
+            }
+            set
+            {
+                _cachedOpcodeFile = value;
+                isDirty = true;
+            }
+        }
+
+        // Empty string is treated as unset.
+        private string _cachedOpcodeOverlayPluginVersion = "";
+        public string CachedOpcodeOverlayPluginVersion
+        {
+            get
+            {
+                return _cachedOpcodeOverlayPluginVersion;
+            }
+            set
+            {
+                _cachedOpcodeOverlayPluginVersion = value;
                 isDirty = true;
             }
         }

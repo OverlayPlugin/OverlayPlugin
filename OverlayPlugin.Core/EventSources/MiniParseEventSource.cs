@@ -100,7 +100,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             
             RegisterEventHandler("getVersion", (msg) =>
             {
-                var version = Assembly.GetExecutingAssembly().GetName().Version;
+                var version = repository.GetOverlayPluginVersion();
                 return JObject.FromObject(new
                 {
                     version = version.ToString()
