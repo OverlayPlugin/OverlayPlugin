@@ -57,9 +57,12 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
 
         public bool IsValid()
         {
-            return memory != null && memory.IsValid();
+            if (memory == null || !memory.IsValid())
+            {
+                return false;
+            }
+            return true;
         }
-
 
         public List<AggroEntry> GetAggroList(List<Combatant.Combatant> combatantList)
         {

@@ -65,7 +65,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
         public bool IsValid()
         {
-            return memory != null && memory.IsValid();
+            if (memory == null || !memory.IsValid())
+            {
+                return false;
+            }
+            return true;
         }
 
         public Combatant GetCombatantFromAddress(IntPtr address, uint selfCharID)

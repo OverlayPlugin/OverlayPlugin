@@ -63,9 +63,12 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
 
         public bool IsValid()
         {
-            return memory != null && memory.IsValid();
+            if (memory == null || !memory.IsValid())
+            {
+                return false;
+            }
+            return true;
         }
-
 
         public List<EnmityHudEntry> GetEnmityHudEntries()
         {
