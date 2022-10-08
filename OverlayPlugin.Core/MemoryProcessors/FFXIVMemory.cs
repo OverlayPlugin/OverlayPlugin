@@ -366,7 +366,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         }
 
         // Returns the best candidate from a list of versioned memory candidates.
-        // Side effect: this function sorts the list provided in place.
         public static T FindCandidate<T>(List<T> candidates, GameRegion region) where T : IVersionedMemory
         {
             // General algorithm, for a given desired version X:
@@ -374,7 +373,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             // 2) return elements after X in ascending order
             // 3) return elements before X in descending order (just in case)
             //
-            // e.g. if X = 6.1 with [5.2, null, 5.3, 6.0, 6.2] return 6.0, 6.2, 5.3, 5.2
+            // e.g. if X = 6.1 with [5.2, 5.3, 6.0, 6.2] return 6.0, 6.2, 5.3, 5.2
 
             Version target;
             if (region == GameRegion.Chinese)
@@ -384,7 +383,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             else
                 target = globalVersion;
 
-            candidates.OrderBy(x => x.GetVersion());
+            candidates = candidates.OrderBy(x => x.GetVersion()).ToList();
             int idx = candidates.FindIndex(x => x.GetVersion() > target);
 
             // If not found, all candidates are <= target version, so walk in descending order.
