@@ -51,6 +51,13 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
             return true;
         }
 
+        Version IVersionedMemory.GetVersion()
+        {
+            if (!IsValid())
+                return null;
+            return memory.GetVersion();
+        }
+
         public List<AggroEntry> GetAggroList(List<Combatant.Combatant> combatantList)
         {
             if (!IsValid())
@@ -58,12 +65,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
                 return null;
             }
             return memory.GetAggroList(combatantList);
-        }
-
-        Version IVersionedMemory.GetVersion() {
-            if (!IsValid())
-                return null;
-            return memory.GetVersion();
         }
     }
 }

@@ -18,6 +18,10 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
             : base(container, enmityHudSignature, enmityHudPointerPath, enmityHudCountOffset, enmityHudEntryOffset, EnmityHudEntryMemory.Size)
         { }
 
+        public override Version GetVersion() {
+            return new Version(6, 0);
+        }
+
         [StructLayout(LayoutKind.Explicit, Size = Size)]
         struct EnmityHudEntryMemory
         {

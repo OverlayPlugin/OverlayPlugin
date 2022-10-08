@@ -83,6 +83,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
             return;
         }
 
+        public abstract Version GetVersion();
+
         [StructLayout(LayoutKind.Explicit, Size = Size)]
         struct MemoryAggroListEntry
         {
@@ -202,7 +204,5 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
             }
             return result;
         }
-
-        public abstract Version GetVersion();
     }
 }

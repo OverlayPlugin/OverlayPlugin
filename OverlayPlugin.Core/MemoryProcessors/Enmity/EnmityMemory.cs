@@ -79,6 +79,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
             return;
         }
 
+        public abstract Version GetVersion();
+
         [StructLayout(LayoutKind.Explicit, Size = Size)]
         struct MemoryEnmityListEntry
         {

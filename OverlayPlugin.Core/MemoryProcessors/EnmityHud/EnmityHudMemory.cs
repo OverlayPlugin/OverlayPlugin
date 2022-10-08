@@ -89,6 +89,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
             return;
         }
 
+        public abstract Version GetVersion();
+
         private bool GetDynamicPointerAddress()
         {
             if (enmityHudAddress == IntPtr.Zero) return false;

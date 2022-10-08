@@ -1,13 +1,12 @@
-﻿using System;
+﻿using RainbowMage.OverlayPlugin.MemoryProcessors.Aggro;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
-    public interface ICombatantMemory
+    public interface ICombatantMemory : IVersionedMemory
     {
-        void ScanPointers();
-        bool IsValid();
         Combatant GetSelfCombatant();
         Combatant GetCombatantFromAddress(IntPtr address, uint selfCharID);
         List<Combatant> GetCombatantList();
@@ -43,24 +42,9 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         public void ScanPointers()
         {
             List<ICombatantMemory> candidates = new List<ICombatantMemory>();
-            // For CN/KR, try the lang-specific candidate first, then fall back to intl
-            if (
-                repository.GetMachinaRegion() == GameRegion.Chinese ||
-                repository.GetMachinaRegion() == GameRegion.Korean)
-            {
-                candidates.Add(container.Resolve<ICombatantMemory61>());
-            }
+            candidates.Add(container.Resolve<ICombatantMemory61>());
             candidates.Add(container.Resolve<ICombatantMemory62>());
-
-            foreach (var c in candidates)
-            {
-                c.ScanPointers();
-                if (c.IsValid())
-                {
-                    memory = c;
-                    break;
-                }
-            }
+            memory = FFXIVMemory.FindCandidate(candidates, repository.GetMachinaRegion());
         }
 
         public bool IsValid()
@@ -70,6 +54,13 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                 return false;
             }
             return true;
+        }
+
+        Version IVersionedMemory.GetVersion()
+        {
+            if (!IsValid())
+                return null;
+            return memory.GetVersion();
         }
 
         public Combatant GetCombatantFromAddress(IntPtr address, uint selfCharID)

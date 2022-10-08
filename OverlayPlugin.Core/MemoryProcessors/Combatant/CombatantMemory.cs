@@ -90,6 +90,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             return;
         }
 
+        public abstract Version GetVersion();
+
         public Combatant GetSelfCombatant()
         {
             IntPtr address = memory.ReadIntPtr(charmapAddress);

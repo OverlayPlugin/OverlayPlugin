@@ -15,6 +15,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         {
             
         }
+
+        public override Version GetVersion() {
+            return new Version(6, 2);
+        }
+
         // Returns a combatant if the combatant is a mob or a PC.
         protected override unsafe Combatant GetMobFromByteArray(byte[] source, uint mycharID)
         {

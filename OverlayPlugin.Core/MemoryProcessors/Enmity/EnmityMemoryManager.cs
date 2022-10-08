@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
 {
-    public interface IEnmityMemory
+    public interface IEnmityMemory : IVersionedMemory
     {
         List<EnmityEntry> GetEnmityEntryList(List<Combatant.Combatant> combatantList);
-
-        void ScanPointers();
-        bool IsValid();
     }
 
     public class EnmityMemoryManager : IEnmityMemory
@@ -41,16 +39,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
         {
             List<IEnmityMemory> candidates = new List<IEnmityMemory>();
             candidates.Add(container.Resolve<IEnmityMemory60>());
-
-            foreach (var c in candidates)
-            {
-                c.ScanPointers();
-                if (c.IsValid())
-                {
-                    memory = c;
-                    break;
-                }
-            }
+            memory = FFXIVMemory.FindCandidate(candidates, repository.GetMachinaRegion());
         }
 
         public bool IsValid()
@@ -60,6 +49,13 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
                 return false;
             }
             return true;
+        }
+
+        Version IVersionedMemory.GetVersion()
+        {
+            if (!IsValid())
+                return null;
+            return memory.GetVersion();
         }
 
         public List<EnmityEntry> GetEnmityEntryList(List<Combatant.Combatant> combatantList)

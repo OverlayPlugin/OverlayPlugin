@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
 {
-    public interface IInCombatMemory
+    public interface IInCombatMemory : IVersionedMemory
     {
         bool GetInCombat();
-
-        void ScanPointers();
-        bool IsValid();
     }
 
     class InCombatMemoryManager : IInCombatMemory
@@ -41,16 +39,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
         {
             List<IInCombatMemory> candidates = new List<IInCombatMemory>();
             candidates.Add(container.Resolve<IInCombatMemory61>());
-
-            foreach (var c in candidates)
-            {
-                c.ScanPointers();
-                if (c.IsValid())
-                {
-                    memory = c;
-                    break;
-                }
-            }
+            memory = FFXIVMemory.FindCandidate(candidates, repository.GetMachinaRegion());
         }
 
         public bool IsValid()
@@ -60,6 +49,13 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
                 return false;
             }
             return true;
+        }
+
+        Version IVersionedMemory.GetVersion()
+        {
+            if (!IsValid())
+                return null;
+            return memory.GetVersion();
         }
 
         public bool GetInCombat()

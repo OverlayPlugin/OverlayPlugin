@@ -80,6 +80,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
             return;
         }
 
+        public abstract Version GetVersion();
+
         public bool GetInCombat()
         {
             if (!IsValid())
