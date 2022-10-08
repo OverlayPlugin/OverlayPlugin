@@ -139,7 +139,7 @@
     <value>Failed: {0}</value>
   </data>
   <data name="IgnoreUpdateDueToDotGitDirectoryMessage" xml:space="preserve">
-    <value>Ignoring auto-update due to OverlayPluign being a .git repo.</value>
+    <value>Ignoring auto-update due to OverlayPlugin being a .git repo.</value>
   </data>
   <data name="LaunchingInstallerFailed" xml:space="preserve">
     <value>Failed to launch installer: {0}</value>
