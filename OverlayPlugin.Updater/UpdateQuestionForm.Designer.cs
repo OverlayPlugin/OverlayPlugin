@@ -1,4 +1,4 @@
-﻿namespace RainbowMage.OverlayPlugin.Updater
+namespace RainbowMage.OverlayPlugin.Updater
 {
     partial class UpdateQuestionForm
     {

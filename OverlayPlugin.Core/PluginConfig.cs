@@ -1,4 +1,4 @@
-﻿using RainbowMage.OverlayPlugin.Overlays;
+using RainbowMage.OverlayPlugin.Overlays;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

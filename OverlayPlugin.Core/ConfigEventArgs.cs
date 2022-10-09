@@ -1,4 +1,4 @@
-﻿using RainbowMage.OverlayPlugin.EventSources;
+using RainbowMage.OverlayPlugin.EventSources;
 using System;
 using System.Collections.Generic;
 using System.Linq;

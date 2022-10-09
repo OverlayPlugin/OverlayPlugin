@@ -1,4 +1,4 @@
-﻿namespace RainbowMage.HtmlRenderer
+namespace RainbowMage.HtmlRenderer
 {
     partial class OverlayForm
     {

@@ -1,4 +1,4 @@
-﻿namespace AddonExample
+namespace AddonExample
 {
     partial class AddonExampleOverlayConfigPanel
     {
