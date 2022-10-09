@@ -1,9 +1,9 @@
 # Rules in this file were initially inferred by Visual Studio IntelliCode from the OverlayPlugin codebase based on best match to current usage at 2022-10-08
 # You can modify the rules from these initially generated values to suit your own policies
 # You can learn more about editorconfig here: https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
-[*.cs]
+[*.{cs,csproj}]
 
-
+charset = utf-8-bom
 #Core editorconfig formatting - indentation
 
 #use soft tabs (spaces) for indentation
