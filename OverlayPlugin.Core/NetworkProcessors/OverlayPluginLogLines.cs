@@ -78,7 +78,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
             try
             {
-                // TODO: is there a better way to go JSON -> Dictionary here?
+                // TODO: is there a better way to go JToken -> Dictionary here without a string intermediary?
                 opcodes = JsonConvert.DeserializeAnonymousType(config.CachedOpcodeFile.ToString(), opcodes);
             }
             catch (Exception ex)
