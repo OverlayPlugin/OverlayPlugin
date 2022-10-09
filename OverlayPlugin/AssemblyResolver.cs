@@ -63,7 +63,7 @@ namespace RainbowMage.OverlayPlugin
             foreach (var directory in this.Directories)
             {
                 var asmPath = "";
-                
+
                 if (match.Success)
                 {
                     var asmFileName = match.Groups["name"].Value + ".dll";
@@ -90,7 +90,8 @@ namespace RainbowMage.OverlayPlugin
 #endif
                         asm = Assembly.LoadFile(asmPath);
 #if !DEBUG
-                    } else
+                    }
+                    else
                     {
                         asm = Assembly.Load(File.ReadAllBytes(asmPath));
                     }
@@ -130,7 +131,7 @@ namespace RainbowMage.OverlayPlugin
 
         public class ExceptionOccuredEventArgs : EventArgs
         {
-            public Exception Exception {get; set;}
+            public Exception Exception { get; set; }
             public ExceptionOccuredEventArgs(Exception exception)
             {
                 this.Exception = exception;

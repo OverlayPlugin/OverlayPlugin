@@ -86,9 +86,6 @@
     <Compile Include="Controls\RenameOverlayDialog.Designer.cs">
       <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="EventSources\CactbotEventSource.cs" />
-    <Compile Include="EventSources\CactbotEventSourceConfig.cs" />
-    <Compile Include="EventSources\CactbotJSEvents.cs" />
     <Compile Include="EventSources\EnmityEventSource.cs" />
     <Compile Include="Integration\UnstableNewLogLines.cs" />
     <Compile Include="MemoryProcessors\Aggro\AggroMemory.cs" />
@@ -119,10 +116,6 @@
     <Compile Include="NetworkProcessors\LineFateControl.cs" />
     <Compile Include="NetworkProcessors\LineCEDirector.cs" />
     <Compile Include="NetworkProcessors\LineMapEffect.cs" />
-    <Compile Include="MemoryProcessors\FFXIVProcess.cs" />
-    <Compile Include="MemoryProcessors\FFXIVProcessCn.cs" />
-    <Compile Include="MemoryProcessors\FFXIVProcessIntl.cs" />
-    <Compile Include="MemoryProcessors\FFXIVProcessKo.cs" />
     <Compile Include="MemoryProcessors\FFXIVMemory.cs" />
     <Compile Include="Integration\FFXIVExportVariables.cs" />
     <Compile Include="Integration\FFXIVRepository.cs" />

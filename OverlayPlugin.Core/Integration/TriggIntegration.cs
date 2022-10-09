@@ -13,10 +13,12 @@ namespace RainbowMage.OverlayPlugin
         private PluginMain _plugin;
         public delegate void CustomCallbackDelegate(object o, string param);
 
-        private ActPluginData GetPluginData() {
-            return ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(plugin => {
+        private ActPluginData GetPluginData()
+        {
+            return ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(plugin =>
+            {
                 if (!plugin.cbEnabled.Checked || plugin.pluginObj == null)
-                  return false;
+                    return false;
                 return plugin.lblPluginTitle.Text == "Triggernometry.dll";
             });
         }
@@ -47,7 +49,8 @@ namespace RainbowMage.OverlayPlugin
 
                 var showDele = Delegate.CreateDelegate(deleType, this, typeof(TriggIntegration).GetMethod("ShowOverlay"));
                 registerType?.Invoke(trigg.pluginObj, new object[] { "ShowOverlay", showDele, null });
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.Log(LogLevel.Error, $"Failed to register Triggernometry callback: {ex}");
             }

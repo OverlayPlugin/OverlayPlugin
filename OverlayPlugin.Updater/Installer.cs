@@ -19,7 +19,7 @@ namespace RainbowMage.OverlayPlugin.Updater
         const int FILE_OVERWRITE_WAIT = 300;
 
         ProgressDisplay _display;
-        public string TempDir {  get; private set; }
+        public string TempDir { get; private set; }
         string _destDir = null;
         CancellationToken _token = CancellationToken.None;
 
@@ -43,7 +43,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                 {
                     Directory.Move(oldName, newName);
                     return;
-                } catch(Exception)
+                }
+                catch (Exception)
                 {
                     // Let's try again in case this is just an AV messing with us...
                     Thread.Sleep(500);
@@ -76,7 +77,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                 if (File.Exists(url))
                 {
                     archivePath = url;
-                } else
+                }
+                else
                 {
                     dlResult = inst.Download(url, archivePath);
                 }
@@ -106,7 +108,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                 }
 
                 Directory.CreateDirectory(TempDir);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _display.Log(string.Format(Resources.CreatingTempDirFailed, TempDir, ex));
                 return false;
@@ -134,7 +137,9 @@ namespace RainbowMage.OverlayPlugin.Updater
                         if (useHttpClient)
                         {
                             HttpClientWrapper.Get(url, new Dictionary<string, string>(), dest, DlProgressCallback, true);
-                        } else { 
+                        }
+                        else
+                        {
                             CurlWrapper.Get(url, new Dictionary<string, string>(), dest, DlProgressCallback, true);
                         }
 
@@ -151,7 +156,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                             // before trying again. We don't want to spam the other side with download requests.
                             if (ex.GetType() == typeof(CurlException))
                             {
-                                if (!((CurlException) ex).Retry)
+                                if (!((CurlException)ex).Retry)
                                 {
                                     // Retrying won't fix this kind of error. Abort.
                                     success = false;
@@ -307,7 +312,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                 }
 
                 success = true;
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 if (cancel.IsCancellationRequested)
                 {
@@ -430,7 +436,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                                     File.Move(item.FullName, Path.Combine(sub_destDir, item.Name));
                                     done = true;
                                     break;
-                                } catch (Exception e)
+                                }
+                                catch (Exception e)
                                 {
                                     _display.Log(string.Format(Resources.LogOverwriteRetry, item.Name, e));
                                     Thread.Sleep(FILE_OVERWRITE_WAIT);

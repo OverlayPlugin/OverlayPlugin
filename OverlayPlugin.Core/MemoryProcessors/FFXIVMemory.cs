@@ -62,10 +62,12 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
                 return;
             }
 
-            try {
+            try
+            {
                 process = proc;
                 processHandle = NativeMethods.OpenProcess(ProcessAccessFlags.VirtualMemoryRead, false, proc.Id);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 logger.Log(LogLevel.Error, "Failed to open FFXIV process: {0}", e);
 
@@ -90,7 +92,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
                 CloseProcessHandle();
                 OnProcessChange?.Invoke(this, null);
             }
-            
+
             if (processHandle != IntPtr.Zero)
                 return true;
 

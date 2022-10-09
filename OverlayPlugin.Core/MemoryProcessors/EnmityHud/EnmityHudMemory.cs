@@ -4,7 +4,8 @@ using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
 {
-    public abstract class EnmityHudMemory : IEnmityHudMemory {
+    public abstract class EnmityHudMemory : IEnmityHudMemory
+    {
         private FFXIVMemory memory;
         private ILogger logger;
 

@@ -29,7 +29,7 @@ namespace RainbowMage.OverlayPlugin
                         "Overheal",
                         "Amount of healing that made flood over 100% of health.",
                         (Data, ExtraFormat) =>
-                        { 
+                        {
                             if (!Data.Items[outH].Items.TryGetValue("All", out AttackType attack))
                             {
                                 return "0";

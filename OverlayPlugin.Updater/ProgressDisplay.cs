@@ -39,7 +39,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public void UpdateStatus(double percent, string msg)
         {
-            progressBar.Value = Math.Min(1000, (int) Math.Round(percent * 1000));
+            progressBar.Value = Math.Min(1000, (int)Math.Round(percent * 1000));
             label.Text = msg;
         }
 

@@ -45,7 +45,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             Error = 254,
             Timer = 255
         }
-        
+
         private void LogLineReader(bool isImported, LogLineEventArgs e)
         {
             if (isImported)
@@ -75,6 +75,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
             }
             catch { }
         }
-        
+
     }
 }

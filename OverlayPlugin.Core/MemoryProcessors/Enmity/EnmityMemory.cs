@@ -6,7 +6,8 @@ using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
 {
-    public abstract class EnmityMemory : IEnmityMemory {
+    public abstract class EnmityMemory : IEnmityMemory
+    {
         private FFXIVMemory memory;
         private ILogger logger;
         private ICombatantMemory combatantMemory;

@@ -23,7 +23,7 @@ namespace RainbowMage.HtmlRenderer
         protected override WindowInfo CreateWindowInfo()
         {
             var cefWindowInfo = new WindowInfo();
-            cefWindowInfo.SetAsChild(((IWinFormsTarget) _target).Handle);
+            cefWindowInfo.SetAsChild(((IWinFormsTarget)_target).Handle);
             cefWindowInfo.Width = _target.Width;
             cefWindowInfo.Height = _target.Height;
 

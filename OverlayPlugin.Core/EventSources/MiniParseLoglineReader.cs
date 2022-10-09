@@ -44,7 +44,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             Error = 254,
             Timer = 255
         }
-        
+
         private void LogLineReader(bool isImported, LogLineEventArgs e)
         {
             Log(LogLevel.Info, e.logLine);
@@ -57,8 +57,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
 
             MessageType type = (MessageType)Convert.ToInt32(d[0]);
-            
-            switch(type)
+
+            switch (type)
             {
                 case MessageType.LogLine:
                     if (d.Length < 5) // Invalid

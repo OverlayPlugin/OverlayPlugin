@@ -64,7 +64,7 @@ namespace RainbowMage.OverlayPlugin
                 { "Newtonsoft.Json", "12.0.0" },
             };
 
-            
+
             foreach (var pair in expectedVersions)
             {
                 Version asmVersion = null;

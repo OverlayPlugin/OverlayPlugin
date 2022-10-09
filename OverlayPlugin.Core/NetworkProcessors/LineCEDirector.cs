@@ -33,7 +33,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
         public override string ToString()
         {
-            return 
+            return
                 $"{popTime:X8}|" +
                 $"{timeRemaining:X4}|" +
                 $"{unk9:X4}|" +

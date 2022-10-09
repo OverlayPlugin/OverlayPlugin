@@ -306,11 +306,13 @@ namespace RainbowMage.OverlayPlugin
                 {
                     LoadJson(configPath);
                     useBackup = false;
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     logger.Log(LogLevel.Error, "LoadConfig: Failed to load configuration: {0}", ex);
                 }
-            } else
+            }
+            else
             {
                 useBackup = true;
             }
@@ -324,7 +326,8 @@ namespace RainbowMage.OverlayPlugin
                     try
                     {
                         LoadJson(configPath + BACKUP_SUFFIX);
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         logger.Log(LogLevel.Error, "LoadConfig: Failed to load backup: {0}", ex);
 
@@ -332,7 +335,8 @@ namespace RainbowMage.OverlayPlugin
                         if (dialog.ShowDialog() == DialogResult.Yes)
                         {
                             initEmpty = true;
-                        } else
+                        }
+                        else
                         {
                             throw ex;
                         }
@@ -379,7 +383,8 @@ namespace RainbowMage.OverlayPlugin
                         JToken.ReadFrom(reader);
                     }
                     oldConfigValid = true;
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     logger.Log(LogLevel.Error, "Failed to read old config. Skipping backup... {0}", ex);
                 }
@@ -438,7 +443,7 @@ namespace RainbowMage.OverlayPlugin
                         throw new Exception($"Type {typeName} not found!");
                     }
 
-                    this.Overlays.Add((IOverlayConfig) JsonConvert.DeserializeObject(
+                    this.Overlays.Add((IOverlayConfig)JsonConvert.DeserializeObject(
                         item.ToString(Formatting.None),
                         type,
                         new ConfigCreationConverter(_container)

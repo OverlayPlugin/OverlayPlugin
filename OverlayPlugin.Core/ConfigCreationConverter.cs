@@ -23,10 +23,11 @@ namespace RainbowMage.OverlayPlugin
                     throw new Exception("No valid constructor found for config type " + objectType.ToString() + "!");
                 }
 
-                return (IOverlayConfig) construct.Invoke(new object[] { null });
-            } else
+                return (IOverlayConfig)construct.Invoke(new object[] { null });
+            }
+            else
             {
-                return (IOverlayConfig) construct.Invoke(new object[] { _container, null });
+                return (IOverlayConfig)construct.Invoke(new object[] { _container, null });
             }
         }
     }

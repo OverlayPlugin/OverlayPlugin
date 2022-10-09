@@ -85,7 +85,7 @@ namespace RainbowMage.OverlayPlugin
                 logResized = Height > 500;
 
                 // Overlay tabs have been initialised, everything is fine; make the log small again.
-                splitContainer1.SplitterDistance = (int) Math.Round(Height * 0.75);
+                splitContainer1.SplitterDistance = (int)Math.Round(Height * 0.75);
             }
         }
 
@@ -110,7 +110,9 @@ namespace RainbowMage.OverlayPlugin
                 // Remove the error message about the log not being connected since it is now.
                 logConnected = true;
                 logBox.Text = "";
-            } else if (logBox.TextLength > 200 * 1024) {
+            }
+            else if (logBox.TextLength > 200 * 1024)
+            {
                 logBox.Text = "============ LOG TRUNCATED ==============\nThe log was truncated to reduce memory usage.\n=========================================\n" + msg;
                 return;
             }
@@ -170,10 +172,11 @@ namespace RainbowMage.OverlayPlugin
 
             if (_pluginMain.Overlays.Count == 0)
             {
-                ((GeneralConfigTab) _generalTab.Controls[0]).SetReadmeVisible(true);
-            } else
+                ((GeneralConfigTab)_generalTab.Controls[0]).SetReadmeVisible(true);
+            }
+            else
             {
-                ((GeneralConfigTab) _generalTab.Controls[0]).SetReadmeVisible(false);
+                ((GeneralConfigTab)_generalTab.Controls[0]).SetReadmeVisible(false);
             }
         }
 
@@ -198,7 +201,7 @@ namespace RainbowMage.OverlayPlugin
                 tabPage.Controls.Add(control);
 
                 this.tabControl.TabPages.Add(tabPage);
-                ((GeneralConfigTab) _generalTab.Controls[0]).SetReadmeVisible(false);
+                ((GeneralConfigTab)_generalTab.Controls[0]).SetReadmeVisible(false);
             }
         }
 
@@ -225,10 +228,11 @@ namespace RainbowMage.OverlayPlugin
                 var index = 0;
                 foreach (var page in this.tabControl.TabPages)
                 {
-                    if (index == 0 || ((ConfigTabPage) page).IsEventSource)
+                    if (index == 0 || ((ConfigTabPage)page).IsEventSource)
                     {
                         index++;
-                    } else
+                    }
+                    else
                     {
                         break;
                     }
@@ -260,7 +264,7 @@ namespace RainbowMage.OverlayPlugin
                         return true;
                     }
                 };
-            
+
             if (newOverlayDialog.ShowDialog(this.ParentForm) == DialogResult.OK)
             {
                 if (this.tabControl.TabCount == 1 && this.tabControl.TabPages[0].Equals(this.tabPageMain))
@@ -269,7 +273,7 @@ namespace RainbowMage.OverlayPlugin
                 }
                 CreateAndRegisterOverlay(newOverlayDialog.SelectedOverlay);
             }
-            
+
             newOverlayDialog.Dispose();
         }
 
@@ -289,7 +293,7 @@ namespace RainbowMage.OverlayPlugin
                 tabControl.SelectedTab = tabControl.TabPages[0];
 
             var subLabel = tabControl.SelectedTab.Text;
-            if (!((ConfigTabPage) tabControl.SelectedTab).IsOverlay)
+            if (!((ConfigTabPage)tabControl.SelectedTab).IsOverlay)
             {
                 return;
             }
@@ -333,7 +337,7 @@ namespace RainbowMage.OverlayPlugin
             this.tabControl.Update();
             if (_pluginMain.Overlays.Count == 0)
             {
-                ((GeneralConfigTab) _generalTab.Controls[0]).SetReadmeVisible(true);
+                ((GeneralConfigTab)_generalTab.Controls[0]).SetReadmeVisible(true);
             }
         }
 

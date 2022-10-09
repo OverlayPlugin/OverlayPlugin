@@ -2,7 +2,7 @@
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
 {
-    interface IAggroMemory60 : IAggroMemory {}
+    interface IAggroMemory60 : IAggroMemory { }
 
     class AggroMemory60 : AggroMemory, IAggroMemory60
     {
@@ -13,7 +13,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
             : base(container, Enmity.EnmityMemory60.enmitySignature, aggroEnmityOffset)
         { }
 
-        public override Version GetVersion() {
+        public override Version GetVersion()
+        {
             return new Version(6, 0);
         }
     }

@@ -14,7 +14,7 @@ using RainbowMage.HtmlRenderer;
 namespace RainbowMage.OverlayPlugin
 {
     public abstract class OverlayBase<TConfig> : IOverlay, IEventReceiver, IApiBase
-        where TConfig: OverlayConfigBase
+        where TConfig : OverlayConfigBase
     {
         private bool disableLog = false;
         private List<Action> hotKeyCallbacks = new List<Action>();
@@ -50,7 +50,8 @@ namespace RainbowMage.OverlayPlugin
         IOverlayConfig IOverlay.Config { get => Config; set => Config = (TConfig)value; }
         IntPtr IOverlay.Handle { get => Overlay == null ? IntPtr.Zero : Overlay.Handle; }
 
-        public bool Visible {
+        public bool Visible
+        {
             get
             {
                 return Overlay == null ? false : Overlay.Visible;
@@ -72,7 +73,7 @@ namespace RainbowMage.OverlayPlugin
 
             if (this.Config == null)
             {
-                var construct = typeof(TConfig).GetConstructor(new Type[] { typeof(TinyIoCContainer),  typeof(string) });
+                var construct = typeof(TConfig).GetConstructor(new Type[] { typeof(TinyIoCContainer), typeof(string) });
                 if (construct == null)
                 {
                     construct = typeof(TConfig).GetConstructor(new Type[] { typeof(string) });
@@ -81,10 +82,11 @@ namespace RainbowMage.OverlayPlugin
                         throw new Exception("No usable constructor for config type found (" + typeof(TConfig).ToString() + ")!");
                     }
 
-                    this.Config = (TConfig) construct.Invoke(new object[] { name });
-                } else
+                    this.Config = (TConfig)construct.Invoke(new object[] { name });
+                }
+                else
                 {
-                    this.Config = (TConfig) construct.Invoke(new object[] { container, name });
+                    this.Config = (TConfig)construct.Invoke(new object[] { container, name });
                 }
             }
 

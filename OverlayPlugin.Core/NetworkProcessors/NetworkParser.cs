@@ -56,10 +56,12 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 #endif
 
                 container.Resolve<FFXIVRepository>().RegisterNetworkParser(Parse);
-            } catch (System.IO.FileNotFoundException)
+            }
+            catch (System.IO.FileNotFoundException)
             {
                 logger.Log(LogLevel.Error, Resources.NetworkParserNoFfxiv);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 logger.Log(LogLevel.Error, Resources.NetworkParserInitException, e);
             }
@@ -85,7 +87,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 if (prop.FieldType.IsEnum)
                 {
                     offset += Marshal.SizeOf(Enum.GetUnderlyingType(prop.FieldType));
-                } else
+                }
+                else
                 {
                     offset += Marshal.SizeOf(prop.FieldType);
                 }
@@ -111,7 +114,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             if (MessageType.IsEnum)
             {
                 return (ushort)GetEnumValue(MessageType, name);
-            } else
+            }
+            else
             {
                 var value = MessageType.GetField(name).GetValue(null);
                 return (ushort)value.GetType().GetProperty("InternalValue").GetValue(value);

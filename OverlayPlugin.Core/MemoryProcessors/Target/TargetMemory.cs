@@ -5,7 +5,8 @@ using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Target
 {
-    public abstract class TargetMemory {
+    public abstract class TargetMemory
+    {
         private FFXIVMemory memory;
         private ILogger logger;
         private ICombatantMemory combatantMemory;

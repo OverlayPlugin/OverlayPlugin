@@ -5,7 +5,8 @@ using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
-    public abstract class CombatantMemory : ICombatantMemory {
+    public abstract class CombatantMemory : ICombatantMemory
+    {
         private FFXIVMemory memory;
         private ILogger logger;
 

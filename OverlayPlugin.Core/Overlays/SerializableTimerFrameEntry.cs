@@ -73,8 +73,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private static readonly DateTime EpochTime = new DateTime(1970, 1, 1);
 
         [DataMember(Name = "startTime")]
-        public long StartTimeLong 
-        { 
+        public long StartTimeLong
+        {
             get
             {
                 return (this.StartTime.Ticks - EpochTime.Ticks) / 10000;

@@ -169,7 +169,7 @@ namespace RainbowMage.OverlayPlugin
         }
 
         public List<GlobalHotkey> GlobalHotkeys;
-        
+
         private bool isLocked;
         public bool IsLocked
         {

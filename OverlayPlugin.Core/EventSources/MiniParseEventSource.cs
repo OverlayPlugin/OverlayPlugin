@@ -97,7 +97,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     regionId = region.ToString("d"),
                 });
             });
-            
+
             RegisterEventHandler("getVersion", (msg) =>
             {
                 var version = repository.GetOverlayPluginVersion();
@@ -217,20 +217,22 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 }
 
                 var wsServer = container.Resolve<WSServer>();
-                
+
                 if (!wsServer.IsRunning())
                 {
                     result["$error"] = "WSServer is not running";
                     return result;
                 }
 
-                try {
+                try
+                {
                     var url = wsServer.GetModernUrl(msg["url"].ToString());
                     var proc = new Process();
                     proc.StartInfo.Verb = "open";
                     proc.StartInfo.FileName = url;
                     proc.Start();
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Log(LogLevel.Error, $"Failed to to open website: {ex}");
                     result["$error"] = $"Failed to to open website: {ex}";
@@ -244,7 +246,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             try
             {
                 InitFFXIVIntegration();
-            } catch (FileNotFoundException)
+            }
+            catch (FileNotFoundException)
             {
                 // The FFXIV plugin hasn't been loaded.
             }
@@ -321,7 +324,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 {
                     var jObjCombatant = JObject.FromObject(combatant).ToObject<Dictionary<string, object>>();
                     var ID = Convert.ToUInt32(jObjCombatant["ID"]);
-                        
+
                     var pluginCombatant = pluginCombatants.FirstOrDefault((PluginCombatant c) => c.ID == ID);
                     if (pluginCombatant != null)
                     {
@@ -401,12 +404,12 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                     case LogMessageType.ChangeMap:
                         if (line.Length < 6) return;
-                        
+
                         var mapID = Convert.ToUInt32(line[2], 10);
                         var regionName = line[3];
                         var placeName = line[4];
                         var placeNameSub = line[5];
-                        
+
                         DispatchAndCacheEvent(JObject.FromObject(new
                         {
                             type = ChangeMapEvent,
@@ -416,7 +419,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                             placeNameSub
                         }));
                         break;
-                    
+
                     case LogMessageType.ChangePrimaryPlayer:
                         if (line.Length < 4) return;
 
@@ -476,7 +479,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private int GetPartyType(PluginCombatant combatant)
         {
             // The PartyTypeEnum was renamed in 2.6.0.0 to work around that, we use reflection and cast the result to int.
-            return (int) combatant.GetType().GetMethod("get_PartyType").Invoke(combatant, new object[] {});
+            return (int)combatant.GetType().GetMethod("get_PartyType").Invoke(combatant, new object[] { });
         }
 
         private string GetWorldName(uint WorldID)
@@ -534,35 +537,36 @@ namespace RainbowMage.OverlayPlugin.EventSources
             // still send *something*, since it's better than nothing.
             List<PartyMember> result = new List<PartyMember>(24);
             lock (missingPartyMembers) lock (partyList)
-            {
-                missingPartyMembers.Clear();
-
-                foreach (var id in partyList)
                 {
-                    PluginCombatant c;
-                    if (lookupTable.TryGetValue(id, out c))
-                    {
-                        result.Add(new PartyMember
-                        {
-                            id = $"{id:X}",
-                            name = c.Name,
-                            worldId = c.WorldID,
-                            job = c.Job,
-                            level = c.Level,
-                            inParty = GetPartyType(c) == 1 /* Party */,
-                        });
-                    }
-                    else
-                    {
-                        missingPartyMembers.Add(id);
-                    }
-                }
+                    missingPartyMembers.Clear();
 
-                if (missingPartyMembers.Count > 0) {
-                    Log(LogLevel.Debug, "Party changed event delayed until members are available");
-                    return;
+                    foreach (var id in partyList)
+                    {
+                        PluginCombatant c;
+                        if (lookupTable.TryGetValue(id, out c))
+                        {
+                            result.Add(new PartyMember
+                            {
+                                id = $"{id:X}",
+                                name = c.Name,
+                                worldId = c.WorldID,
+                                job = c.Job,
+                                level = c.Level,
+                                inParty = GetPartyType(c) == 1 /* Party */,
+                            });
+                        }
+                        else
+                        {
+                            missingPartyMembers.Add(id);
+                        }
+                    }
+
+                    if (missingPartyMembers.Count > 0)
+                    {
+                        Log(LogLevel.Debug, "Party changed event delayed until members are available");
+                        return;
+                    }
                 }
-            }
 
             Log(LogLevel.Debug, "party list: {0}", JObject.FromObject(new { party = result }).ToString());
 
@@ -655,7 +659,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         private void UpdateMissingPartyMembers()
         {
-            lock(missingPartyMembers)
+            lock (missingPartyMembers)
             {
                 // If we are looking for missing party members, check if they are present by now.
                 if (missingPartyMembers.Count > 0)
@@ -697,7 +701,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             Dictionary<string, string> encounter = null;
             List<KeyValuePair<CombatantData, Dictionary<string, string>>> combatant = null;
 
-            
+
             encounter = GetEncounterDictionary(allies);
             combatant = GetCombatantList(allies);
 

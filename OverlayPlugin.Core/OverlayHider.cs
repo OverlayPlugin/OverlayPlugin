@@ -36,7 +36,8 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 repository.RegisterProcessChangedHandler(UpdateFFXIVProcess);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.Log(LogLevel.Error, "Failed to register process watcher for FFXIV; this is only an issue if you're playing FFXIV. As a consequence, OverlayPlugin won't be able to hide overlays if you're not in-game.");
                 logger.Log(LogLevel.Error, "Details: " + ex.ToString());
@@ -53,7 +54,8 @@ namespace RainbowMage.OverlayPlugin
             if (p != null)
             {
                 ffxivPid = p.Id;
-            } else
+            }
+            else
             {
                 ffxivPid = -1;
             }
@@ -76,7 +78,8 @@ namespace RainbowMage.OverlayPlugin
                         overlay.Visible = gameActive && !inCutscene && (!overlay.Config.HideOutOfCombat || inCombat);
                     }
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.Log(LogLevel.Error, $"OverlayHider: Failed to update overlays: {ex}");
             }
@@ -97,7 +100,8 @@ namespace RainbowMage.OverlayPlugin
                     if (ffxivPid != -1)
                     {
                         gameActive = pid == ffxivPid || pid == Process.GetCurrentProcess().Id;
-                    } else
+                    }
+                    else
                     {
                         var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
                         var fileName = Path.GetFileName(exePath.ToString());

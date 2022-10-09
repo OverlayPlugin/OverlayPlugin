@@ -66,7 +66,8 @@ namespace RainbowMage.OverlayPlugin.Updater
         private const long CURL_GLOBAL_DEFAULT = CURL_GLOBAL_ALL;
         private const long CURL_GLOBAL_ACK_EINTR = 1 << 2;
 
-        private enum CURLcode {
+        private enum CURLcode
+        {
             CURLE_OK = 0,
             CURLE_UNSUPPORTED_PROTOCOL,    /* 1 */
             CURLE_FAILED_INIT,             /* 2 */
@@ -103,10 +104,10 @@ namespace RainbowMage.OverlayPlugin.Updater
             CURLE_UPLOAD_FAILED,           /* 25 - failed upload "command" */
             CURLE_READ_ERROR,              /* 26 - couldn't open/read from file */
             CURLE_OUT_OF_MEMORY,           /* 27 */
-                                           /* Note: CURLE_OUT_OF_MEMORY may sometimes indicate a conversion error
-                                                    instead of a memory allocation error if CURL_DOES_CONVERSIONS
-                                                    is defined
-                                           */
+            /* Note: CURLE_OUT_OF_MEMORY may sometimes indicate a conversion error
+                     instead of a memory allocation error if CURL_DOES_CONVERSIONS
+                     is defined
+            */
             CURLE_OPERATION_TIMEDOUT,      /* 28 - the timeout time was reached */
             CURLE_OBSOLETE29,              /* 29 - NOT USED */
             CURLE_FTP_PORT_FAILED,         /* 30 - FTP PORT operation failed */
@@ -232,10 +233,10 @@ namespace RainbowMage.OverlayPlugin.Updater
         private const int CURLPROTO_SMBS = (1 << 27);
         private const int CURLPROTO_ALL = (~0) /* enable everything */;
 
-        private const int CURLOPTTYPE_LONG          = 0;
-        private const int CURLOPTTYPE_OBJECTPOINT   = 10000;
+        private const int CURLOPTTYPE_LONG = 0;
+        private const int CURLOPTTYPE_OBJECTPOINT = 10000;
         private const int CURLOPTTYPE_FUNCTIONPOINT = 20000;
-        private const int CURLOPTTYPE_OFF_T         = 30000;
+        private const int CURLOPTTYPE_OFF_T = 30000;
 
         private const int CURLOPTTYPE_STRINGPOINT = CURLOPTTYPE_OBJECTPOINT;
         private const int CURLOPTTYPE_SLISTPOINT = CURLOPTTYPE_OBJECTPOINT;
@@ -1221,7 +1222,8 @@ namespace RainbowMage.OverlayPlugin.Updater
         private const int CURLINFO_MASK = 0x0fffff;
         private const int CURLINFO_TYPEMASK = 0xf00000;
 
-        private enum CURLINFO {
+        private enum CURLINFO
+        {
             NONE, /* first, never use this */
             EFFECTIVE_URL = CURLINFO_STRING + 1,
             RESPONSE_CODE = CURLINFO_LONG + 2,
@@ -1361,14 +1363,16 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 // We have to return the response later as a string so we use a StringBuilder as the download destination.
                 dlInfo.builder = new StringBuilder();
-            } else
+            }
+            else
             {
                 if (resume)
                 {
                     try
                     {
                         dlInfo.handle = File.Open(downloadDest, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
-                    } catch (FileNotFoundException)
+                    }
+                    catch (FileNotFoundException)
                     {
                         // If the file doesn't exist, we have to create it.
                         dlInfo.handle = File.Open(downloadDest, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
@@ -1378,7 +1382,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                     {
                         headers["Range"] = "bytes=" + dlInfo.handle.Position + "-";
                     }
-                } else
+                }
+                else
                 {
                     dlInfo.handle = File.Open(downloadDest, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
                 }
@@ -1409,13 +1414,13 @@ namespace RainbowMage.OverlayPlugin.Updater
                 fixed (byte* errorPtr = error)
                 {
                     curl_easy_setopt(handle, CURLoption.URL, url);
-                    curl_easy_setopt(handle, CURLoption.ERRORBUFFER, (IntPtr) errorPtr);
+                    curl_easy_setopt(handle, CURLoption.ERRORBUFFER, (IntPtr)errorPtr);
                     curl_easy_setopt(handle, CURLoption.ACCEPT_ENCODING, "");
                     curl_easy_setopt(handle, CURLoption.FOLLOWLOCATION, 1L);
                     curl_easy_setopt(handle, CURLoption.REDIR_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
                     curl_easy_setopt(handle, CURLoption.MAXREDIRS, 10L);
                     curl_easy_setopt(handle, CURLoption.USERAGENT, USER_AGENT);
-                    
+
                     // Disable ALPN since we don't need it and it breaks on Wine.
                     // Revisit once HTTP/2.0 becomes more important.
                     curl_easy_setopt(handle, CURLoption.SSL_ENABLE_ALPN, 0L);
@@ -1464,7 +1469,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                 }
 
                 return dlInfo.builder?.ToString();
-            } finally
+            }
+            finally
             {
                 writePin.Free();
                 progressPin?.Free();
@@ -1532,7 +1538,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                 try
                 {
                     return infoCallback(resumed, dltotal, dlnow, ultotal, ulnow) ? 1 : 0;
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     exception = ex;
                     return 1;

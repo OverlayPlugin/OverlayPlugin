@@ -37,7 +37,8 @@ namespace RainbowMage.OverlayPlugin.Integration
                 if (config.LogLines)
                 {
                     Enable();
-                } else
+                }
+                else
                 {
                     Disable();
                 }
@@ -82,7 +83,8 @@ namespace RainbowMage.OverlayPlugin.Integration
 
                         var data = Encoding.UTF8.GetBytes(line + "\n");
                         logFile.Write(data, 0, data.Length);
-                    } else
+                    }
+                    else
                     {
                         Thread.Sleep(500);
                     }
@@ -90,7 +92,8 @@ namespace RainbowMage.OverlayPlugin.Integration
 
                 logger.Log(LogLevel.Info, "LogWriter: Closing log.");
                 logFile.Close();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.Log(LogLevel.Error, "LogWriter: {0}", ex);
                 logQueue = null;
@@ -100,9 +103,9 @@ namespace RainbowMage.OverlayPlugin.Integration
         public void WriteLogMessage(string msg)
         {
             var time = DateTime.Now;
-            var lineParts = new string[] { "00", time.ToString(), "c0fe", "", "OPLine: " + msg, ""};
+            var lineParts = new string[] { "00", time.ToString(), "c0fe", "", "OPLine: " + msg, "" };
             var line = string.Join("|", lineParts);
-            
+
             ActGlobals.oFormActMain.ParseRawLogLine(false, time, line);
             logQueue?.Enqueue(line);
         }
@@ -121,7 +124,8 @@ namespace RainbowMage.OverlayPlugin.Integration
                 if (cutsceneStatus)
                 {
                     msg = "Entered cutscene";
-                } else
+                }
+                else
                 {
                     msg = "Left cutscene";
                 }
@@ -136,7 +140,8 @@ namespace RainbowMage.OverlayPlugin.Integration
             if (ev.InCombat)
             {
                 msg = "Entered combat";
-            } else
+            }
+            else
             {
                 msg = "Left combat";
             }

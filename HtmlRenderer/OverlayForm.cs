@@ -44,7 +44,7 @@ namespace RainbowMage.HtmlRenderer
 
         private bool isClickThru;
         public bool IsClickThru
-        { 
+        {
             get
             {
                 return this.isClickThru;
@@ -116,7 +116,8 @@ namespace RainbowMage.HtmlRenderer
             if (accept)
             {
                 ex &= ~WS_EX_NOACTIVATE;
-            } else
+            }
+            else
             {
                 ex |= WS_EX_NOACTIVATE;
             }
@@ -162,7 +163,7 @@ namespace RainbowMage.HtmlRenderer
                     return;
                 }
             }
-            
+
             if (m.Msg == NativeMethods.WM_KEYDOWN ||
                 m.Msg == NativeMethods.WM_KEYUP ||
                 m.Msg == NativeMethods.WM_CHAR ||

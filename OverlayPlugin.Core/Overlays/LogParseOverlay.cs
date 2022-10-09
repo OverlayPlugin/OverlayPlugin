@@ -147,7 +147,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
             obj["Encounter"] = JObject.FromObject(encounter);
             obj["Combatant"] = new JObject();
-            
+
             foreach (var pair in combatant)
             {
                 JObject value = new JObject();
@@ -268,7 +268,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                         "");
                     //lock (encounterDict)
                     //{
-                        encounterDict.Add(exportValuePair.Key, value);
+                    encounterDict.Add(exportValuePair.Key, value);
                     //}
                 }
                 catch (Exception e)

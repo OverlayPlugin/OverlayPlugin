@@ -8,7 +8,8 @@ using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
 {
-    public abstract class AggroMemory : IAggroMemory {
+    public abstract class AggroMemory : IAggroMemory
+    {
         private FFXIVMemory memory;
         private ILogger logger;
         private ICombatantMemory combatantMemory;

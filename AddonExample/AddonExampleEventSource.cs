@@ -28,12 +28,14 @@ namespace AddonExample
             // Register EventHandler
             // This EventHandler is called from other EventSources/Overlays
             // You can execute some process or response data.
-            
-            RegisterEventHandler("addonExampleSay", (msg) => {
+
+            RegisterEventHandler("addonExampleSay", (msg) =>
+            {
                 Advanced_Combat_Tracker.ActGlobals.oFormActMain.TTS(msg["text"].ToString());
                 return null;
             });
-            RegisterEventHandler("addonExampleCurrentTime", (msg) => {
+            RegisterEventHandler("addonExampleCurrentTime", (msg) =>
+            {
                 var ret = new JObject();
                 ret["time"] = DateTimeOffset.UtcNow.ToString();
                 return ret;

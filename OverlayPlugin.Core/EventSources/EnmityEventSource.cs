@@ -37,7 +37,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const string InCombatEvent = "InCombat";
 
         [Serializable]
-        internal class InCombatDataObject {
+        internal class InCombatDataObject
+        {
             public string type = InCombatEvent;
             public bool inACTCombat = false;
             public bool inGameCombat = false;

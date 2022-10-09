@@ -81,11 +81,13 @@ namespace RainbowMage.OverlayPlugin
                 if (cbErrorReports.Checked)
                 {
                     Renderer.EnableErrorReports(ActGlobals.oFormActMain.AppDataFolder.FullName);
-                } else
+                }
+                else
                 {
                     Renderer.DisableErrorReports(ActGlobals.oFormActMain.AppDataFolder.FullName);
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.Log(LogLevel.Error, $"Failed to switch error reports: {ex}");
                 cbErrorReports.Checked = !cbErrorReports.Checked;
@@ -157,11 +159,13 @@ namespace RainbowMage.OverlayPlugin
                 configType.GetField("LastUpdateCheck").SetValue(cactbotConfig, DateTime.MinValue);
 
                 var checker = checkerType.GetConstructor(new Type[] { loggerType }).Invoke(new object[] { logger });
-                checkerType.GetMethod("DoUpdateCheck", new Type[] {configType}).Invoke(checker, new object[] { cactbotConfig });
-            } catch(FileNotFoundException)
+                checkerType.GetMethod("DoUpdateCheck", new Type[] { configType }).Invoke(checker, new object[] { cactbotConfig });
+            }
+            catch (FileNotFoundException)
             {
                 MessageBox.Show("Could not find Cactbot!", "Error");
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Failed: " + ex.ToString(), "Error");
             }

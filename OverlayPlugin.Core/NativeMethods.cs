@@ -47,7 +47,7 @@ namespace RainbowMage.OverlayPlugin
 
         // C# compiler can't track assignments in unmanaged code and thus complains about variables that
         // are never assigned to. Disable the warning here since it's pointless.
-        #pragma warning disable 0649
+#pragma warning disable 0649
         public struct BlendFunction
         {
             public byte BlendOp;
@@ -84,11 +84,11 @@ namespace RainbowMage.OverlayPlugin
             IntPtr hWnd,
             IntPtr hdcDst,
             [In] ref Point pptDst,
-            [In]ref Size pSize,
+            [In] ref Size pSize,
             IntPtr hdcSrc,
-            [In]ref Point pptSrc,
+            [In] ref Point pptSrc,
             int crKey,
-            [In]ref BlendFunction pBlend,
+            [In] ref BlendFunction pBlend,
             uint dwFlags);
 
         public const int ULW_ALPHA = 2;
@@ -156,7 +156,7 @@ namespace RainbowMage.OverlayPlugin
             public byte rgbBlue;
             public byte rgbGreen;
             public byte rgbRed;
-            public byte rgbReserved; 
+            public byte rgbReserved;
         }
 
         [DllImport("gdi32")]
@@ -287,7 +287,7 @@ namespace RainbowMage.OverlayPlugin
         [DllImport("kernel32.dll")]
         public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, IntPtr nSize, ref IntPtr lpNumberOfBytesRead);
 
-        #pragma warning restore 0649
+#pragma warning restore 0649
     }
 
     [Flags]

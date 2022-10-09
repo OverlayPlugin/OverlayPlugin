@@ -140,7 +140,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if (int.TryParse(this.textUpdateInterval.Text, out int value))
             {
                 this.config.UpdateInterval = value;
-            } else
+            }
+            else
             {
                 this.textUpdateInterval.Text = "" + this.config.UpdateInterval;
             }

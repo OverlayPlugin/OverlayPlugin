@@ -4,7 +4,8 @@ using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
 {
-    public abstract class InCombatMemory {
+    public abstract class InCombatMemory
+    {
         protected FFXIVMemory memory;
         protected ILogger logger;
 

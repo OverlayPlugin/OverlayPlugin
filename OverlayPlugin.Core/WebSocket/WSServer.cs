@@ -120,11 +120,12 @@ namespace RainbowMage.OverlayPlugin
                 if (_cfg.WSServerIP == "*")
                 {
                     _server = new WebSocketServer((secure ? "wss://" : "ws://") + "0.0.0.0:" + _cfg.WSServerPort);
-                } else
+                }
+                else
                 {
                     _server = new WebSocketServer((secure ? "wss://" : "ws://") + _cfg.WSServerIP + ":" + _cfg.WSServerPort);
                 }
-                
+
                 if (secure)
                 {
                     Log(LogLevel.Info, Resources.WSLoadingCert, sslPath);
@@ -161,7 +162,7 @@ namespace RainbowMage.OverlayPlugin
 
                 OnStateChanged?.Invoke(this, new StateChangedArgs(true, false));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _failed = true;
                 _server = null;
@@ -183,7 +184,8 @@ namespace RainbowMage.OverlayPlugin
             if (url.Contains("?"))
             {
                 url += "&";
-            } else
+            }
+            else
             {
                 url += "?";
             }
@@ -208,7 +210,8 @@ namespace RainbowMage.OverlayPlugin
             if (url.Contains("?"))
             {
                 url += "&";
-            } else
+            }
+            else
             {
                 url += "?";
             }
@@ -435,7 +438,8 @@ namespace RainbowMage.OverlayPlugin
                     return;
                 }
 
-                try {
+                try
+                {
                     switch (e["type"].ToString())
                     {
                         case "CombatData":
@@ -451,7 +455,8 @@ namespace RainbowMage.OverlayPlugin
                             _conn.Send("{\"type\":\"broadcast\",\"msgtype\":\"SendCharName\",\"msg\":" + e.ToString(Formatting.None) + "}");
                             break;
                     }
-                } catch (InvalidOperationException ex)
+                }
+                catch (InvalidOperationException ex)
                 {
                     _logger.Log(LogLevel.Error, "Failed to send legacy WS message: {0}", ex);
                     _conn.Close();

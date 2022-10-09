@@ -133,7 +133,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             this.config.Url = textLogParseUrl.Text;
         }
-        
+
         private void ComboHotkeyMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             var value = (GlobalHotkeyType)this.comboHotkeyType.SelectedValue;

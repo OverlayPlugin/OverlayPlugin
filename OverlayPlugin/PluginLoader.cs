@@ -90,7 +90,8 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 CurlWrapper.Init(pluginDirectory);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.Log(LogLevel.Error, ex.ToString());
                 ActGlobals.oFormActMain.WriteDebugLog(ex.ToString());
@@ -110,26 +111,30 @@ namespace RainbowMage.OverlayPlugin
                     // Since this is an async method, we could have switched threds. Make sure InitPlugin() runs on the ACT main thread.
                     ActGlobals.oFormActMain.Invoke((Action)(() =>
                     {
-                        try { 
+                        try
+                        {
                             pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
                             initFailed = false;
-                        } catch (Exception ex)
+                        }
+                        catch (Exception ex)
                         {
                             // TODO: Add a log box to CefMissingTab and while CEF missing is the most likely
                             // cause for an exception here, it is not necessarily the case.
                             // logger.Log(LogLevel.Error, "Failed to init plugin: " + ex.ToString());
-                            
+
                             initFailed = true;
 
                             MessageBox.Show("Failed to init OverlayPlugin: " + ex.ToString(), "OverlayPlugin Error");
                             pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this, container));
                         }
                     }));
-                } else
+                }
+                else
                 {
                     pluginStatusText.Text = Resources.CoreOrHtmlRendererInsane;
                 }
-            } else
+            }
+            else
             {
                 pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this, container));
             }

@@ -27,7 +27,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 var jsonData = File.ReadAllText(reservedLogLinesPath);
                 var reservedData = JsonConvert.DeserializeObject<List<ConfigReservedLogLine>>(jsonData);
-                logger.Log(LogLevel.Debug, $"Parsing {reservedData.Count} reserved log line entries.");   
+                logger.Log(LogLevel.Debug, $"Parsing {reservedData.Count} reserved log line entries.");
                 foreach (var reservedDataEntry in reservedData)
                 {
                     if (reservedDataEntry.Source == null || reservedDataEntry.Version == null)
@@ -97,7 +97,8 @@ namespace RainbowMage.OverlayPlugin
                     var Name = entry.Name.Replace("\r", "\\r").Replace("\n", "\\n");
                     repository.WriteLogLineImpl(registeredCustomLogLineID, DateTime.Now, $"{registeredCustomLogLineID}|{Source}|{Name}|{entry.Version}");
                 }
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.Log(LogLevel.Error, string.Format(Resources.ErrorCouldNotLoadReservedLogLines, ex));
             }
@@ -128,7 +129,8 @@ namespace RainbowMage.OverlayPlugin
             var Name = entry.Name.Replace("\r", "\\r").Replace("\n", "\\n");
             repository.WriteLogLineImpl(registeredCustomLogLineID, DateTime.Now, $"{ID}|{Source}|{Name}|{entry.Version}");
             registry[ID] = entry;
-            return (line, timestamp) => {
+            return (line, timestamp) =>
+            {
                 if (line.Contains("\r") || line.Contains("\n"))
                 {
                     logger.Log(LogLevel.Warning, $"Attempted to write custom log line with CR or LF with ID of {ID}");

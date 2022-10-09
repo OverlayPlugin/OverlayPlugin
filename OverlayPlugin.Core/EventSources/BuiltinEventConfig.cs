@@ -17,7 +17,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public event EventHandler LogLinesChanged;
 
         private int updateInterval;
-        public int UpdateInterval {
+        public int UpdateInterval
+        {
             get
             {
                 return this.updateInterval;
@@ -173,7 +174,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if (Config.EventSourceConfigs.ContainsKey("MiniParse"))
             {
                 var obj = Config.EventSourceConfigs["MiniParse"];
-                
+
                 if (obj.TryGetValue("UpdateInterval", out JToken value))
                 {
                     result.updateInterval = value.ToObject<int>();

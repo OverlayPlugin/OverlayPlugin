@@ -48,11 +48,11 @@ namespace RainbowMage.HtmlRenderer
             IntPtr hWnd,
             IntPtr hdcDst,
             [In] ref Point pptDst,
-            [In]ref Size pSize,
+            [In] ref Size pSize,
             IntPtr hdcSrc,
-            [In]ref Point pptSrc,
+            [In] ref Point pptSrc,
             int crKey,
-            [In]ref BlendFunction pBlend,
+            [In] ref BlendFunction pBlend,
             uint dwFlags);
 
         public const int ULW_ALPHA = 2;
@@ -127,7 +127,7 @@ namespace RainbowMage.HtmlRenderer
             public byte rgbBlue;
             public byte rgbGreen;
             public byte rgbRed;
-            public byte rgbReserved; 
+            public byte rgbReserved;
         }
 
         [DllImport("gdi32")]
@@ -228,7 +228,7 @@ namespace RainbowMage.HtmlRenderer
         public static extern IntPtr GetForegroundWindow();
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern int GetModuleFileName(IntPtr hModule, StringBuilder lpFilename, int nSize); 
+        public static extern int GetModuleFileName(IntPtr hModule, StringBuilder lpFilename, int nSize);
 
         [DllImport("user32.dll")]
         public static extern short GetKeyState(int nVirtKey);

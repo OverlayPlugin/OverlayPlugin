@@ -163,7 +163,7 @@ namespace RainbowMage.HtmlRenderer
         {
             var keyEvent = new KeyEvent();
             keyEvent.WindowsKeyCode = m.WParam.ToInt32();
-            keyEvent.NativeKeyCode = (int) m.LParam.ToInt64();
+            keyEvent.NativeKeyCode = (int)m.LParam.ToInt64();
             keyEvent.IsSystemKey = m.Msg == NativeMethods.WM_SYSCHAR ||
                                    m.Msg == NativeMethods.WM_SYSKEYDOWN ||
                                    m.Msg == NativeMethods.WM_SYSKEYUP;

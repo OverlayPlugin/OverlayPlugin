@@ -34,7 +34,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                         {
                             logger.Log(LogLevel.Warning, string.Format(Resources.ActUpdateCheckFailed, options.project));
                         }
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         logger.Log(LogLevel.Error, string.Format(Resources.ActUpdateException, options.project, ex));
                     }
@@ -200,7 +201,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             if (method == null)
                 return false;
 
-            method.Invoke(form, new object[] {  showIgnoreButton, message });
+            method.Invoke(form, new object[] { showIgnoreButton, message });
             return true;
         }
 
@@ -208,7 +209,8 @@ namespace RainbowMage.OverlayPlugin.Updater
         {
             var result = false;
 
-            while (!result) {
+            while (!result)
+            {
                 result = await Installer.Run(url, options.pluginDirectory, options.project + ".tmp", options.strippedDirs, true);
 
                 if (!result)
@@ -248,9 +250,11 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 if (entry.pluginObj != null && entry.pluginObj.GetType().FullName == "RainbowMage.OverlayPlugin.PluginLoader")
                 {
-                    try { 
-                        container = (TinyIoCContainer) entry.pluginObj.GetType().GetProperty("Container").GetValue(entry.pluginObj);
-                    } catch(Exception e)
+                    try
+                    {
+                        container = (TinyIoCContainer)entry.pluginObj.GetType().GetProperty("Container").GetValue(entry.pluginObj);
+                    }
+                    catch (Exception e)
                     {
                         MessageBox.Show("Unexpected error while looking for OverlayPlugin:\n" + e.Message);
                     }
@@ -283,7 +287,8 @@ namespace RainbowMage.OverlayPlugin.Updater
             if (options.repo != null)
             {
                 (newVersion, remoteVersion, releaseNotes, downloadUrl) = await CheckForGitHubUpdate(options, container);
-            } else
+            }
+            else
             {
                 (newVersion, remoteVersion, releaseNotes, downloadUrl) = await CheckForManifestUpdate(options);
             }
@@ -309,7 +314,8 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                     return Task.CompletedTask;
                 }));
-            } else if (manualCheck && remoteVersion != null)
+            }
+            else if (manualCheck && remoteVersion != null)
             {
                 ActGlobals.oFormActMain.Invoke((Action)(() =>
                 {
@@ -354,7 +360,8 @@ namespace RainbowMage.OverlayPlugin.Updater
         }
     }
 
-    public class UpdaterOptions {
+    public class UpdaterOptions
+    {
         public string project;
         public string pluginDirectory;
         public DateTime lastCheck;

@@ -52,7 +52,8 @@ namespace RainbowMage.OverlayPlugin
         // Also handles (un)subscription to make switching between this and WS easier.
         public void callHandler(string data, object callback)
         {
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 var result = dispatcher.ProcessHandlerMessage(this, data);
                 if (callback != null)
                 {

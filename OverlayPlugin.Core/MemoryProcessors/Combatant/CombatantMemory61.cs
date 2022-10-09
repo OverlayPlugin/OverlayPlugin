@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
-    interface ICombatantMemory61 : ICombatantMemory {}
+    interface ICombatantMemory61 : ICombatantMemory { }
 
     class CombatantMemory61 : CombatantMemory, ICombatantMemory61
     {
@@ -13,10 +13,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         public CombatantMemory61(TinyIoCContainer container)
             : base(container, charmapSignature, CombatantMemory.Size, EffectMemory.Size)
         {
-            
+
         }
 
-        public override Version GetVersion() {
+        public override Version GetVersion()
+        {
             return new Version(6, 1);
         }
 

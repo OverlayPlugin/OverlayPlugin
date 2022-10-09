@@ -106,9 +106,10 @@ namespace RainbowMage.OverlayPlugin.Updater
                     Resources.ErrorTitle,
                     MessageBoxButtons.OK
                 );
-                
+
                 return false;
-            } else
+            }
+            else
             {
                 File.WriteAllText(Path.Combine(cefPath, "version.txt"), CEF_VERSION);
                 return true;

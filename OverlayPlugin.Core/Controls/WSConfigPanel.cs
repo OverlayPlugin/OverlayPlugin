@@ -55,7 +55,7 @@ namespace RainbowMage.OverlayPlugin
 
             for (var i = 0; i < regionCb.Items.Count; i++)
             {
-                if ((string) regionCb.Items[i] == _config.TunnelRegion)
+                if ((string)regionCb.Items[i] == _config.TunnelRegion)
                 {
                     regionCb.SelectedIndex = i;
                     break;
@@ -171,7 +171,7 @@ namespace RainbowMage.OverlayPlugin
         {
             genSslBtn.Enabled = false;
             logDisplay.Text = "Generating SSL Certificate. Please wait...\r\n";
-            
+
             Task.Run(GenSsl);
         }
 
@@ -330,19 +330,21 @@ namespace RainbowMage.OverlayPlugin
             if (cbOverlay.SelectedIndex == -1) return;
 
             var item = cbOverlay.Items[cbOverlay.SelectedIndex];
-            var preset = (IOverlayPreset) item.GetType().GetProperty("preset").GetValue(item);
+            var preset = (IOverlayPreset)item.GetType().GetProperty("preset").GetValue(item);
             if (preset == null) return;
 
             var hostUrl = "";
             if (_ngrokPrefix != null)
             {
                 hostUrl += _ngrokPrefix;
-            } else
+            }
+            else
             {
                 if (_config.WSServerSSL)
                 {
                     hostUrl += "wss://";
-                } else
+                }
+                else
                 {
                     hostUrl += "ws://";
                 }
@@ -350,7 +352,8 @@ namespace RainbowMage.OverlayPlugin
                 if (_config.WSServerIP == "0.0.0.0")
                 {
                     hostUrl += "127.0.0.1";
-                } else
+                }
+                else
                 {
                     hostUrl += _config.WSServerIP;
                 }
@@ -370,10 +373,12 @@ namespace RainbowMage.OverlayPlugin
             if (preset.Supports.Contains("modern"))
             {
                 query_params.Add("OVERLAY_WS", hostUrl + "/ws");
-            } else if (preset.Supports.Contains("actws"))
+            }
+            else if (preset.Supports.Contains("actws"))
             {
                 query_params.Add("HOST_PORT", hostUrl + "/");
-            } else
+            }
+            else
             {
                 url = "";
             }
@@ -407,7 +412,8 @@ namespace RainbowMage.OverlayPlugin
         {
             simpStartBtn.Enabled = false;
 
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 try
                 {
                     var ngrokPath = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "ngrok-" + (Environment.Is64BitOperatingSystem ? "x64" : "x86") + ".exe");
@@ -448,7 +454,8 @@ namespace RainbowMage.OverlayPlugin
                     if (region == null)
                     {
                         region = "us";
-                    } else
+                    }
+                    else
                     {
                         region = region.Split(' ')[0];
                     }
@@ -510,18 +517,21 @@ tunnels:
                         {
                             data = CurlWrapper.Get(apiUrl, headers, null, null, false);
                             break;
-                        } catch(CurlException ex)
+                        }
+                        catch (CurlException ex)
                         {
                             if (!ex.Retry)
                             {
                                 simpLogBox.AppendText(string.Format("Failed: {0}\r\n", ex));
                                 UpdateTunnelStatus(TunnelStatus.Error);
                                 return;
-                            } else
+                            }
+                            else
                             {
                                 Thread.Sleep(500);
                             }
-                        } catch (Exception ex)
+                        }
+                        catch (Exception ex)
                         {
                             simpLogBox.AppendText(string.Format("Failed: {0}\r\n", ex));
                             UpdateTunnelStatus(TunnelStatus.Error);
@@ -536,7 +546,7 @@ tunnels:
                         if (tun["name"] != null && tun["name"].ToString() == "wsserver" && tun["public_url"] != null)
                         {
                             _ngrokPrefix = tun["public_url"].ToString().Replace("https://", "wss://");
-                            
+
                             // Update the generated URL box
                             cbOverlay_SelectedIndexChanged(null, null);
                             done = true;
@@ -558,12 +568,14 @@ tunnels:
                         {
                             UpdateTunnelStatus(TunnelStatus.Error);
                         };
-                    } else
+                    }
+                    else
                     {
                         simpLogBox.AppendText("Failed!\r\n");
                         UpdateTunnelStatus(TunnelStatus.Error);
                     }
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     simpLogBox.AppendText(string.Format("\r\nUncaught exception: {0}\r\n\r\n", ex));
                     UpdateTunnelStatus(TunnelStatus.Error);
@@ -630,7 +642,8 @@ tunnels:
                     }
 
                     File.Delete(ngrokPath + ".zip");
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     simpLogBox.AppendText(string.Format("\r\n{0}\r\n\r\n", e));
                 }
@@ -672,7 +685,8 @@ tunnels:
 
                 simpLogBox.AppendText("Done!\r\n");
                 UpdateTunnelStatus(TunnelStatus.Inactive);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 simpLogBox.AppendText(string.Format("\r\nFailed: {0}\r\n\r\n", ex));
                 UpdateTunnelStatus(TunnelStatus.Error);
@@ -681,7 +695,7 @@ tunnels:
 
         private void regionCb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _config.TunnelRegion = (string) regionCb.SelectedItem;
+            _config.TunnelRegion = (string)regionCb.SelectedItem;
         }
     }
 }

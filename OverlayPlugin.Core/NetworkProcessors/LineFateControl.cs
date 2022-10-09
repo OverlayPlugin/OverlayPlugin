@@ -65,7 +65,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 opcode = new OpcodeConfigEntry()
                 {
                     opcode = netHelper.GetOpcode("ActorControlSelf"),
-                    size = (uint) Marshal.SizeOf(typeof(ActorControlSelf_v62)),
+                    size = (uint)Marshal.SizeOf(typeof(ActorControlSelf_v62)),
                 };
                 ffxiv.RegisterNetworkParser(MessageReceived);
             }

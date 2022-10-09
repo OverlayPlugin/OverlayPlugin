@@ -40,7 +40,7 @@ namespace RainbowMage.OverlayPlugin
 
             lock (Logs)
             {
-                
+
                 if (listener != null)
                 {
                     listener(entry);

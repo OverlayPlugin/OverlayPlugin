@@ -78,10 +78,12 @@ namespace RainbowMage.OverlayPlugin
             logger = container.Resolve<ILogger>();
         }
 
-        private ActPluginData GetPluginData() {
-            return ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(plugin => {
+        private ActPluginData GetPluginData()
+        {
+            return ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(plugin =>
+            {
                 if (!plugin.cbEnabled.Checked || plugin.pluginObj == null)
-                  return false;
+                    return false;
                 return plugin.lblPluginTitle.Text.StartsWith("FFXIV_ACT_Plugin");
             });
         }
@@ -144,7 +146,8 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 return GetCurrentFFXIVProcessImpl();
-            } catch (FileNotFoundException)
+            }
+            catch (FileNotFoundException)
             {
                 // The FFXIV plugin isn't loaded
                 return null;
@@ -162,7 +165,8 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 return IsFFXIVPluginPresentImpl();
-            } catch (FileNotFoundException)
+            }
+            catch (FileNotFoundException)
             {
                 return false;
             }
@@ -195,7 +199,8 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 return GetGameVersionImpl();
-            } catch (FileNotFoundException)
+            }
+            catch (FileNotFoundException)
             {
                 // The FFXIV plugin isn't loaded
                 return null;
@@ -217,7 +222,8 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 return GetPlayerIDImpl();
-            } catch (FileNotFoundException)
+            }
+            catch (FileNotFoundException)
             {
                 // The FFXIV plugin isn't loaded
                 return 0;
@@ -339,11 +345,13 @@ namespace RainbowMage.OverlayPlugin
                     var mach = Assembly.Load("Machina");
                     var conversionUtility = mach.GetType("Machina.Infrastructure.ConversionUtility");
                     var epochToDateTime = conversionUtility.GetMethod("EpochToDateTime");
-                    machinaEpochToDateTimeWrapper = (e) => {
+                    machinaEpochToDateTimeWrapper = (e) =>
+                    {
                         return (DateTime)epochToDateTime.Invoke(null, new object[] { e });
                     };
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     logger.Log(LogLevel.Error, e.ToString());
                 }
             }

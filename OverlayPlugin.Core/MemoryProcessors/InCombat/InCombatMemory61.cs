@@ -2,7 +2,7 @@
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
 {
-    interface IInCombatMemory61 : IInCombatMemory {}
+    interface IInCombatMemory61 : IInCombatMemory { }
 
     class InCombatMemory61 : InCombatMemory, IInCombatMemory61
     {
@@ -11,7 +11,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
         private const int inCombatRIPOffset = 1;
         public InCombatMemory61(TinyIoCContainer container) : base(container, inCombatSignature, inCombatSignatureOffset, inCombatRIPOffset) { }
 
-        public override Version GetVersion() {
+        public override Version GetVersion()
+        {
             return new Version(6, 1);
         }
 

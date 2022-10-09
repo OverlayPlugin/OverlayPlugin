@@ -54,12 +54,14 @@ namespace RainbowMage.OverlayPlugin
                         var serializer = new XmlSerializer(type);
                         var config = (T)serializer.Deserialize(reader);
                         this.Add(config);
-                    } catch (Exception e)
+                    }
+                    catch (Exception e)
                     {
                         System.Diagnostics.Trace.WriteLine(e);
                         _logger.Log(LogLevel.Error, e.ToString());
                     }
-                } else
+                }
+                else
                 {
                     reader.Skip();
                     MissingTypes++;
