@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using RainbowMage.OverlayPlugin;
 using System;
 using System.Collections.Generic;

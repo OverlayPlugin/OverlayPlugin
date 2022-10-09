@@ -1,4 +1,4 @@
-using Advanced_Combat_Tracker;
+﻿using Advanced_Combat_Tracker;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;

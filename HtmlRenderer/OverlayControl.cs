@@ -1,4 +1,4 @@
-using RainbowMage.HtmlRenderer;
+﻿using RainbowMage.HtmlRenderer;
 using System;
 using System.Diagnostics;
 using System.Drawing;

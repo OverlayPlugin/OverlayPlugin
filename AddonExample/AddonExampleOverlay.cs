@@ -1,4 +1,4 @@
-using RainbowMage.OverlayPlugin;
+﻿using RainbowMage.OverlayPlugin;
 using System.Windows.Forms;
 
 namespace AddonExample

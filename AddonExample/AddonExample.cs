@@ -1,4 +1,4 @@
-using Advanced_Combat_Tracker;
+﻿using Advanced_Combat_Tracker;
 using RainbowMage.OverlayPlugin;
 using System.Windows.Forms;
 
