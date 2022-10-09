@@ -83,7 +83,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             }
             catch (Exception ex)
             {
-                LogException($"Failed to parse cached opcodes");
+                LogException($"Failed to parse cached opcodes: {ex}");
                 ClearCachedOpcodes();
                 return false;
             }
