@@ -1,4 +1,4 @@
-using Advanced_Combat_Tracker;
+﻿using Advanced_Combat_Tracker;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
