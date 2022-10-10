@@ -39,11 +39,11 @@
         // Region CN
         // Version 6.15
         "MapEffect": {
-            "opcode": 3af,
+            "opcode": 943,
             "size": 11
         },
         "CEDirector": {
-            "opcode": D1,
+            "opcode": 209,
             "size": 16
         }
     },   
