@@ -90,7 +90,7 @@ namespace RainbowMage.OverlayPlugin
         {
             get
             {
-                return _updateCheck;
+                return false;
             }
             set
             {
@@ -294,7 +294,7 @@ namespace RainbowMage.OverlayPlugin
             this.HideOverlaysWhenNotActive = true;
             this.HideOverlayDuringCutscene = false;
             this.ErrorReports = false;
-            this.UpdateCheck = true;
+            this.UpdateCheck = false;
             this.IsFirstLaunch = true;
 
             var useBackup = true;

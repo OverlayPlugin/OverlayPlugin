@@ -130,7 +130,7 @@
     <value>3, 6</value>
   </data>
   <data name="cbErrorReports.Size" type="System.Drawing.Size, System.Drawing">
-    <value>253, 17</value>
+    <value>318, 16</value>
   </data>
   <data name="cbErrorReports.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -148,64 +148,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbErrorReports.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="cbUpdateCheck.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cbUpdateCheck.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cbUpdateCheck.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 31</value>
-  </data>
-  <data name="cbUpdateCheck.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 17</value>
-  </data>
-  <data name="cbUpdateCheck.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="cbUpdateCheck.Text" xml:space="preserve">
-    <value>Automatically check for updates</value>
-  </data>
-  <data name="&gt;&gt;cbUpdateCheck.Name" xml:space="preserve">
-    <value>cbUpdateCheck</value>
-  </data>
-  <data name="&gt;&gt;cbUpdateCheck.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cbUpdateCheck.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;cbUpdateCheck.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="btnUpdateCheck.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnUpdateCheck.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 122</value>
-  </data>
-  <data name="btnUpdateCheck.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 23</value>
-  </data>
-  <data name="btnUpdateCheck.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="btnUpdateCheck.Text" xml:space="preserve">
-    <value>Check For Updates</value>
-  </data>
-  <data name="&gt;&gt;btnUpdateCheck.Name" xml:space="preserve">
-    <value>btnUpdateCheck</value>
-  </data>
-  <data name="&gt;&gt;btnUpdateCheck.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnUpdateCheck.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnUpdateCheck.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="cbHideOverlaysWhenNotActive.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -214,10 +157,10 @@
     <value>NoControl</value>
   </data>
   <data name="cbHideOverlaysWhenNotActive.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 56</value>
+    <value>3, 28</value>
   </data>
   <data name="cbHideOverlaysWhenNotActive.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 17</value>
+    <value>396, 16</value>
   </data>
   <data name="cbHideOverlaysWhenNotActive.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -235,7 +178,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbHideOverlaysWhenNotActive.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>6</value>
   </data>
   <data name="cbHideOverlaysDuringCutscene.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -244,10 +187,10 @@
     <value>NoControl</value>
   </data>
   <data name="cbHideOverlaysDuringCutscene.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 81</value>
+    <value>3, 50</value>
   </data>
   <data name="cbHideOverlaysDuringCutscene.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 17</value>
+    <value>288, 16</value>
   </data>
   <data name="cbHideOverlaysDuringCutscene.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -265,16 +208,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbHideOverlaysDuringCutscene.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>5</value>
   </data>
   <data name="lblGithub.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lblGithub.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 173</value>
+    <value>17, 160</value>
   </data>
   <data name="lblGithub.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 13</value>
+    <value>77, 12</value>
   </data>
   <data name="lblGithub.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -298,10 +241,10 @@
     <value>True</value>
   </data>
   <data name="lnkGithubRepo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 173</value>
+    <value>95, 160</value>
   </data>
   <data name="lnkGithubRepo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 13</value>
+    <value>227, 12</value>
   </data>
   <data name="lnkGithubRepo.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -322,10 +265,10 @@
     <value>3</value>
   </data>
   <data name="lblNewUserWelcome.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 243</value>
+    <value>17, 224</value>
   </data>
   <data name="lblNewUserWelcome.Size" type="System.Drawing.Size, System.Drawing">
-    <value>501, 119</value>
+    <value>501, 110</value>
   </data>
   <data name="lblNewUserWelcome.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -355,7 +298,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>Microsoft Sans Serif, 11pt, style=Bold</value>
   </data>
   <data name="lblReadMe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 216</value>
+    <value>17, 199</value>
   </data>
   <data name="lblReadMe.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 18</value>
@@ -406,10 +349,10 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>6, 12</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>686, 397</value>
+    <value>686, 366</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>GeneralConfigTab</value>

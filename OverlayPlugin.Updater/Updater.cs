@@ -349,7 +349,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 lastCheck = config.LastUpdateCheck,
                 currentVersion = Assembly.GetExecutingAssembly().GetName().Version,
                 checkInterval = TimeSpan.FromMinutes(5),
-                repo = "OverlayPlugin/OverlayPlugin",
+                repo = "NewMoe-Technology/OverlayPlugin",
                 downloadUrl = "https://github.com/{REPO}/releases/download/v{VERSION}/OverlayPlugin-{VERSION}.zip",
                 strippedDirs = 1,
                 actPluginId = 86,
