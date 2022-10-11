@@ -31,7 +31,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
         private bool haveAttemptedOpcodeDownload = false;
 
-        private const string remoteOpcodeUrl = "https://raw.githubusercontent.com/OverlayPlugin/OverlayPlugin/main/OverlayPlugin.Core/resources/opcodes.jsonc";
+        private const string remoteOpcodeUrl = "https://assets.diemoe.net/OverlayPlugin/OverlayPlugin.Core/resources/opcodes.jsonc";
 
         public OverlayPluginLogLineConfig(TinyIoCContainer container)
         {
