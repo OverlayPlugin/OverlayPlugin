@@ -83,6 +83,10 @@
         "MapEffect": {
             "opcode": 421,
             "size": 11
+        },
+        "CEDirector": {
+            "opcode": 507,
+            "size": 16
         }
     }
 }
