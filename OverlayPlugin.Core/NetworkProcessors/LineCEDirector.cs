@@ -102,6 +102,10 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             if (opcode == null)
             {
                 opcode = opcodeConfig["CEDirector"];
+                if (opcode == null)
+                {
+                    return;
+                }
             }
 
             if (message.Length < opcode.size + offsetPacketData)
