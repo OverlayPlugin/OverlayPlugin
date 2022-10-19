@@ -94,7 +94,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 Name = "CEDirector",
                 Source = "OverlayPlugin",
                 ID = LogFileLineID,
-              Version = 1,
+                Version = 1,
             });
 
             ffxiv.RegisterZoneChangeDelegate((zoneID, zoneName) => ces.Clear());
