@@ -76,5 +76,17 @@
             "opcode": 567,
             "size": 16
         }
+    },
+    "2022.10.05.0000.0000": {
+        // Region: Global
+        // Version: 6.25
+        "MapEffect": {
+            "opcode": 421,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 507,
+            "size": 16
+        }
     }
 }
