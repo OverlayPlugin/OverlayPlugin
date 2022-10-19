@@ -1,6 +1,9 @@
 ﻿using System;
+using System.CodeDom;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
@@ -59,6 +62,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         private readonly FFXIVRepository ffxiv;
 
         private Func<string, DateTime, bool> logWriter;
+        private static Dictionary<byte, CEDirector_v62> ces = new Dictionary<byte, CEDirector_v62>();
 
         public LineCEDirector(TinyIoCContainer container)
         {
@@ -90,8 +94,10 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 Name = "CEDirector",
                 Source = "OverlayPlugin",
                 ID = LogFileLineID,
-                Version = 1,
+              Version = 1,
             });
+
+            ffxiv.RegisterZoneChangeDelegate((zoneID, zoneName) => ces.Clear());
         }
 
         private unsafe void MessageReceived(string id, long epoch, byte[] message)
@@ -116,8 +122,32 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 if (*(ushort*)&buffer[offsetMessageType] == opcode.opcode)
                 {
                     DateTime serverTime = ffxiv.EpochToDateTime(epoch);
-                    CEDirector_v62 CEDirectorPacket = *(CEDirector_v62*)&buffer[offsetPacketData];
-                    logWriter(CEDirectorPacket.ToString(), serverTime);
+                    CEDirector_v62 ceDirectorPacket = *(CEDirector_v62*)&buffer[offsetPacketData];
+                    var ceKey = ceDirectorPacket.ceKey;
+
+                    var isBeingRemoved = ceDirectorPacket.status == 0;
+                    if (isBeingRemoved)
+                    {
+                        if (!ces.Remove(ceKey))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        CEDirector_v62 oldData;
+                        if (ces.TryGetValue(ceKey, out oldData))
+                        {
+                            if (oldData.Equals(ceDirectorPacket))
+                            {
+                                return;
+                            }
+                        }
+                        ces[ceKey] = ceDirectorPacket;
+                    }
+
+
+                    logWriter(ceDirectorPacket.ToString(), serverTime);
 
                     return;
                 }
