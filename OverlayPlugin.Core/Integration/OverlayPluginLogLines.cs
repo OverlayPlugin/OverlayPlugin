@@ -97,12 +97,6 @@ namespace RainbowMage.OverlayPlugin
 
         private void SaveRemoteOpcodesToConfig()
         {
-            if (!config.UpdateCheck)
-            {
-                logger.Log(LogLevel.Debug, "Skipping remote opcode fetch due to UpdateCheck=false");
-                return;
-            }
-
             try
             {
                 var response = CurlWrapper.Get(remoteOpcodeUrl);
