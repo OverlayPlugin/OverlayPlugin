@@ -35,7 +35,14 @@
         "Comment": "Critical Engagement data"
     },
     {
-        "StartID": 260,
+        "ID": 260,
+        "Name":  "InCombat",
+        "Source": "OverlayPlugin",
+        "Version": 1,
+        "Comment": "Combat beginning / ending"
+    },
+    {
+        "StartID": 261,
         "EndID": 512,
         "Source": "OverlayPlugin",
         "Version": 0,

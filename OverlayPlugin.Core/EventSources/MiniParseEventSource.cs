@@ -355,10 +355,43 @@ namespace RainbowMage.OverlayPlugin.EventSources
             return filteredCombatants;
         }
 
+        private void StopACTCombat()
+        {
+            ActGlobals.oFormActMain.Invoke((Action)(() =>
+            {
+                ActGlobals.oFormActMain.EndCombat(true);
+            }));
+        }
+
         private void LogLineHandler(bool isImport, LogLineEventArgs args)
         {
             if (isImport)
             {
+                try
+                {
+                    var line = args.originalLogLine.Split('|');
+
+                    if (int.TryParse(line[0], out int lineTypeInt))
+                    {
+                        // If an imported log has split the encounter, also split it while importing.
+                        // TODO: should we also consider the current user's wipe config option here for splitting,
+                        // even if the original log writer did not have it set to true?
+                        LogMessageType lineType = (LogMessageType)lineTypeInt;
+                        if (lineType == LogMessageType.InCombat)
+                        {
+                            var inACTCombat = Convert.ToUInt32(line[2]);
+                            if (inACTCombat == 0)
+                            {
+                                StopACTCombat();
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+
                 lock (importedLogs)
                 {
                     importedLogs.Add(args.originalLogLine);
@@ -441,10 +474,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         // When CN/KR is on 6.2, this can be removed.
                         if (line[3] == "40000010" || line[3] == "4000000F")
                         {
-                            ActGlobals.oFormActMain.Invoke((Action)(() =>
-                            {
-                                ActGlobals.oFormActMain.EndCombat(true);
-                            }));
+                            StopACTCombat();
                         }
                         break;
                 }

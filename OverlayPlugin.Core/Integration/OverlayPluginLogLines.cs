@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RainbowMage.OverlayPlugin.MemoryProcessors.InCombat;
+using RainbowMage.OverlayPlugin.NetworkProcessors;
 using RainbowMage.OverlayPlugin.Updater;
 
-namespace RainbowMage.OverlayPlugin.NetworkProcessors
+namespace RainbowMage.OverlayPlugin
 {
     using Opcodes = Dictionary<string, Dictionary<string, OpcodeConfigEntry>>;
 
@@ -17,6 +19,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             container.Register(new LineMapEffect(container));
             container.Register(new LineFateControl(container));
             container.Register(new LineCEDirector(container));
+            container.Register(new LineInCombat(container));
         }
     }
 

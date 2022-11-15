@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RainbowMage.OverlayPlugin.MemoryProcessors.InCombat;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
+using static RainbowMage.OverlayPlugin.MemoryProcessors.InCombat.LineInCombat;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -31,7 +33,7 @@ namespace RainbowMage.OverlayPlugin
 
             container.Resolve<NativeMethods>().ActiveWindowChanged += ActiveWindowChangedHandler;
             container.Resolve<NetworkParser>().OnOnlineStatusChanged += OnlineStatusChanged;
-            container.Resolve<EventSources.EnmityEventSource>().CombatStatusChanged += CombatStatusChanged;
+            container.Resolve<LineInCombat>().OnInCombatChanged += CombatStatusChanged;
 
             try
             {
@@ -139,10 +141,14 @@ namespace RainbowMage.OverlayPlugin
             UpdateOverlays();
         }
 
-        private void CombatStatusChanged(object sender, EventSources.CombatStatusChangedArgs e)
+        private void CombatStatusChanged(object sender, InCombatArgs args)
         {
-            inCombat = e.InCombat;
-            UpdateOverlays();
+            inCombat = args.InGameCombat;
+
+            if (args.InGameCombatChanged)
+            {
+                UpdateOverlays();
+            }
         }
     }
 }

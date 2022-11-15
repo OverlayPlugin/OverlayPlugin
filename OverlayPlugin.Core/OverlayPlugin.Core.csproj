@@ -109,6 +109,7 @@
     <Compile Include="MemoryProcessors\InCombat\InCombatMemory.cs" />
     <Compile Include="MemoryProcessors\InCombat\InCombatMemory61.cs" />
     <Compile Include="MemoryProcessors\InCombat\InCombatMemoryManager.cs" />
+    <Compile Include="MemoryProcessors\InCombat\LineInCombat.cs" />
     <Compile Include="MemoryProcessors\Target\TargetMemoryManager.cs" />
     <Compile Include="MemoryProcessors\Target\TargetMemory.cs" />
     <Compile Include="MemoryProcessors\Target\TargetMemory60.cs" />
@@ -132,7 +133,7 @@
     <Compile Include="IEventReceiver.cs" />
     <Compile Include="EventSourceBase.cs" />
     <Compile Include="ConfigEventArgs.cs" />
-    <Compile Include="NetworkProcessors\OverlayPluginLogLines.cs" />
+    <Compile Include="Integration\OverlayPluginLogLines.cs" />
     <Compile Include="OverlayHider.cs" />
     <Compile Include="Overlays\LogParseConfigPanel.cs">
       <SubType>UserControl</SubType>
@@ -536,7 +537,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-      <PostBuildEvent>xcopy /d /e /i /q /r /h /y $(ProjectDir)\resources $(TargetDir)\..\resources</PostBuildEvent>
+    <PostBuildEvent>xcopy /d /e /i /q /r /h /y $(ProjectDir)\resources $(TargetDir)\..\resources</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

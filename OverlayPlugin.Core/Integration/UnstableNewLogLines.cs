@@ -8,7 +8,9 @@ using System.Threading;
 using Advanced_Combat_Tracker;
 using Markdig.Helpers;
 using RainbowMage.OverlayPlugin.EventSources;
+using RainbowMage.OverlayPlugin.MemoryProcessors.InCombat;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
+using static RainbowMage.OverlayPlugin.MemoryProcessors.InCombat.LineInCombat;
 
 namespace RainbowMage.OverlayPlugin.Integration
 {
@@ -22,6 +24,7 @@ namespace RainbowMage.OverlayPlugin.Integration
         private string logPath = null;
         private ConcurrentQueue<string> logQueue = null;
         private Thread logThread = null;
+        private LineInCombat lineInCombat = null;
 
         public UnstableNewLogLines(TinyIoCContainer container)
         {
@@ -30,8 +33,10 @@ namespace RainbowMage.OverlayPlugin.Integration
             enmitySource = container.Resolve<EnmityEventSource>();
             logger = container.Resolve<ILogger>();
             logPath = Path.GetDirectoryName(ActGlobals.oFormActMain.LogFilePath) + "_OverlayPlugin.log";
-            var config = container.Resolve<BuiltinEventConfig>();
+            lineInCombat = container.Resolve<LineInCombat>();
 
+
+            var config = container.Resolve<BuiltinEventConfig>();
             config.LogLinesChanged += (o, e) =>
             {
                 if (config.LogLines)
@@ -53,7 +58,7 @@ namespace RainbowMage.OverlayPlugin.Integration
         public void Enable()
         {
             parser.OnOnlineStatusChanged += OnOnlineStatusChange;
-            enmitySource.CombatStatusChanged += OnCombatStatusChange;
+            lineInCombat.OnInCombatChanged += OnCombatStatusChange;
 
             logThread = new Thread(new ThreadStart(WriteBackgroundLog));
             logThread.IsBackground = true;
@@ -63,7 +68,7 @@ namespace RainbowMage.OverlayPlugin.Integration
         public void Disable()
         {
             parser.OnOnlineStatusChanged -= OnOnlineStatusChange;
-            enmitySource.CombatStatusChanged -= OnCombatStatusChange;
+            lineInCombat.OnInCombatChanged -= OnCombatStatusChange;
             logQueue?.Enqueue(null);
         }
 
@@ -134,10 +139,15 @@ namespace RainbowMage.OverlayPlugin.Integration
             }
         }
 
-        private void OnCombatStatusChange(object sender, CombatStatusChangedArgs ev)
+        private void OnCombatStatusChange(object sender, InCombatArgs ev)
         {
+            if (!ev.InGameCombatChanged)
+            {
+                return;
+            }
+
             string msg;
-            if (ev.InCombat)
+            if (ev.InGameCombat)
             {
                 msg = "Entered combat";
             }

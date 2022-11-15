@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -252,7 +253,6 @@ namespace RainbowMage.OverlayPlugin
                             _container.Register(new NetworkParser(_container));
                             _container.Register(new TriggIntegration(_container));
                             _container.Register(new FFXIVCustomLogLines(_container));
-                            _container.Register(new OverlayPluginLogLines(_container));
 
                             // Register FFXIV memory reading subcomponents.
                             // Must be done before loading addons.
@@ -265,6 +265,8 @@ namespace RainbowMage.OverlayPlugin
                             _container.Register<IEnmityMemory, EnmityMemoryManager>();
                             _container.Register<IEnmityHudMemory, EnmityHudMemoryManager>();
                             _container.Register<IInCombatMemory, InCombatMemoryManager>();
+
+                            _container.Register(new OverlayPluginLogLines(_container));
 
                             // This timer runs on the UI thread (it has to since we create UI controls) but LoadAddons()
                             // can block for some time. We run it on the background thread to avoid blocking the UI.

@@ -54,7 +54,13 @@ namespace RainbowMage.OverlayPlugin
         PacketDump,
         Version,
         Error,
-        Timer
+        Timer,
+        // OverlayPlugin lines
+        RegisterLogLine = 256,
+        MapEffect,
+        FateDirector,
+        CEDirector,
+        InCombat,
     }
 
     public enum GameRegion
@@ -461,6 +467,11 @@ namespace RainbowMage.OverlayPlugin
                     if (process != null) handler(process);
                 }
             }
+        }
+
+        public DateTime GetServerTimestamp()
+        {
+            return GetRepository()?.GetServerTimestamp() ?? DateTime.Now;
         }
     }
 }
