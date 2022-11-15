@@ -34,18 +34,6 @@
             "opcode": 854,
             "size": 16
         }
-    },
-    "2022.09.28.0000.0000": {
-        // Region CN
-        // Version 6.15
-        "MapEffect": {
-            "opcode": 943,
-            "size": 11
-        },
-        "CEDirector": {
-            "opcode": 209,
-            "size": 16
-        }
     },   
     "2022.08.25.0000.0000": {
         "MapEffect": {
@@ -74,6 +62,18 @@
         },
         "CEDirector": {
             "opcode": 567,
+            "size": 16
+        }
+    },
+    "2022.09.28.0000.0000": {
+        // Region CN
+        // Version 6.15
+        "MapEffect": {
+            "opcode": 943,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 209,
             "size": 16
         }
     },
@@ -110,6 +110,18 @@
         },
         "CEDirector": {
             "opcode": 396,
+            "size": 16
+        }
+    },
+    "2022.11.01.0000.0000": {
+        // Region CN
+        // Version 6.18
+        "MapEffect": {
+            "opcode": 443,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 410,
             "size": 16
         }
     },
