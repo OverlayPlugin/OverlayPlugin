@@ -35,7 +35,9 @@ jobs:
         id: cache-dependencies
         uses: actions/cache@v2
         with:
-          path: ./Thirdparty
+          path: |
+            ./Thirdparty
+            ./OverlayPlugin.Core/Thirdparty
           key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.py', './DEPS.py') }}
           restore-keys: |
             ${{ runner.os }}-overlayplugin-

@@ -1,4 +1,5 @@
 Thirdparty/*
+OverlayPlugin.Core/Thirdparty/*
 .deps_dl/
 
 ## Ignore Visual Studio temporary files, build results, and

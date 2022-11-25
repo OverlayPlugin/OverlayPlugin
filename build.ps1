@@ -29,9 +29,109 @@ try {
         exit 1
     }
 
+    if ( -not (Test-Path "OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\Global" )) {
+        echo 'Error: Please run tools\fetch_deps.py (missing "OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\Global")'
+        exit 1
+    }
+
     $ENV:PATH = "$VS_PATH\MSBuild\Current\Bin;${ENV:PATH}";
     if (Test-Path "C:\Program Files\7-Zip\7z.exe") {
         $ENV:PATH = "C:\Program Files\7-Zip;${ENV:PATH}";
+    }
+
+    if (Test-Path "OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\*\*.sln") {
+        echo "==> Preparing FFXIVClientStructs..."
+
+        cd OverlayPlugin.Core\Thirdparty\FFXIVClientStructs
+
+        $globalUsings = "using System.Runtime.InteropServices;`nusing FFXIVClientStructs.__NSREPLACE__.STD;`nusing FFXIVClientStructs.Global.FFXIV.Client.Graphics;";
+
+        # Fix code to compile against .NET 4.8, remove partial funcs and helper funcs, we only want the struct layouts themselves
+        gci * | foreach-object {
+            $ns = $_.name
+
+            if (-not (Test-Path $ns\FFXIVClientStructs\GlobalUsings.cs)) {
+                return
+            }
+
+            # Delete files we don't need
+            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs.Generators
+            rm -ErrorAction SilentlyContinue -r $ns\ida\CExporter
+            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\Havok
+            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\Attributes
+            rm -ErrorAction SilentlyContinue -r $ns\*.csproj
+            rm -ErrorAction SilentlyContinue -r $ns\*.sln
+            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\GlobalUsings.cs
+            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\Resolver.cs
+            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\SigScanner.cs
+            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\STD\Pair.cs
+            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\FFXIV\Client\System\Memory
+            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\STD\Pointer.cs
+            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\STD\Span.cs
+
+            gci -r $ns\*.cs |
+                foreach-object {
+                    $a = $_.fullname;
+                    $b = ( get-content -Raw $a ) `
+                    -replace '(?sm)^[\t ]+\[(?:MemberFunction|StaticAddress|VirtualFunction|FixedArray)[^\]]+\][\r?\n ][^;]+;(?: //[^\r?\n]+)?[ ]*\r?\n','' `
+                    -replace '(?sm)^([\t ]+)public [^ ]+? [^ \r?\n]+?\([^\r?\n]+?\r?\n[ ]+?[^ ][^\x00]*?\r?\n\1\}\r?\n','' `
+                    -replace '(?sm)^([\t ]+)public [^ ]+? this\[[^\r?\n]+?\r?\n[ ]+?[^ ][^\x00]*?\r?\n\1\}\r?\n','' `
+                    -replace '(?sm)^([\t ]+)public [^ ]+? this\[[^\r?\n]+?\r?\n[^\x00]*?\r?\n\1\};\r?\n','' `
+                    -replace '(?sm)^\[Addon\("[^\]]+"\)\]\r?\n','' `
+                    -replace '(?sm)^\[Agent\([^\r?\n ]+\)\]\r?\n','' `
+                    -replace '(?sm)^([\t ]+)public [^ ]+? [^ \r?\n]+?(?:\r?\n\1\{\r?\n\1\1get|[ ]?\{\r?\n\1\1get)[^\x00]\r?\n\1\}\r?\n','' `
+                    -replace '(?sm)\[NoExport\] ','' `
+                    -replace ('(?sm)namespace FFXIVClientStructs((?:\.FFXIV.*?|\.STD.*?|));([^\x00]*\r?\n\})\r?\n?'),(($globalUsings -replace '__NSREPLACE__',$ns)+"`nnamespace FFXIVClientStructs."+$ns+'$1 {$2}') `
+                    -replace ('(?sm)using FFXIVClientStructs((?:\.FFXIV.*?|\.STD.*?|));'),("using FFXIVClientStructs."+$ns+'$1;') `
+                    -replace '(?sm)\(([^ ]+) is (.*?) or (.*?)\)','($1 $2 || $1 $3)' `
+                    -replace '(?sm)using CategoryMap = .*?;','' `
+                    -replace '(?sm)hk[^ ]+\*','void*' `
+                    -replace '(?sm)Pointer<[^>]+>','void*' `
+                    -replace '(?sm)using FFXIVClientStructs.Havok;','' `
+                    -replace '(?sm)\[FieldOffset\(0x0\)\] public CategoryMap\* MainMap;','' `
+                    -replace '(?sm)public ([^\n]*?) ([^ ]+) => new\(','public $1 $2 => new $1(' `
+                    -replace '(?sm)(\[FieldOffset\([^)]+\)\]) public delegate\*[^\n]+?([^ ]+);','$1 public void* $2;' `
+                    -replace 'StdVector<void\*>','StdVector<long>' `
+                    -replace 'public struct','public unsafe struct' `
+                    -replace '(?:\t|    ).*?public LuaEventHandler LuaEventHandler;','' `
+                    -replace 'StdMap<uint, void\*>','StdMap<uint, long>' `
+                    -replace '(?sm)public static implicit operator (?:NumQuaternion|Matrix4x4|NumVector3).*?}','' `
+                    -replace 'using (?:NumQuaternion|NumVector3) = System.Numerics.(?:Quaternion|Vector3);','' `
+                    -replace 'StdMap<Utf8String, void\*>','StdMap<Utf8String, long>' `
+                    -replace '(?sm)public static Utf8String\* FromString.*?\n(?:\t|    )}','' `
+                    -replace ' : ICreatable','' `
+                    -replace ('using FFXIVClientStructs.'+$ns+'.FFXIV.Client.System.Memory;'),'' `
+                    -replace 'SkeletonResourceHandle\*\* SkeletonResourceHandles','long SkeletonResourceHandles' `
+                    -replace 'StdMap<void\*, void\*>','StdMap<long, long>' `
+                    -replace 'AtkLinkedList<void\*>','AtkLinkedList<long>' `
+                    -replace 'public StatusManager\* GetStatusManager => Character.GetStatusManager\(\);','' `
+                    -replace 'public Character.CastInfo\* GetCastInfo => Character.GetCastInfo\(\);','' `
+                    -replace 'public Character.ForayInfo\* GetForayInfo => Character.GetForayInfo\(\);','' `
+                    -replace '(?sm)public (?:ReadOnly)?Span<.*?\n(?:\t|    )\}','' `
+                    -replace '(?sm)public static ulong GetBeastTribeAllowance.*?\n(?:\t|    )\}','' `
+                    -replace '    public override string ToString\(\)\r?\n    \{\r?\n        return Encoding.UTF8.GetString\(GetBytes\(\)\);\r?\n    \}','' `
+                    -replace 'public unsafe struct CVector<T> where T : unmanaged','public unsafe struct CVector' `
+                    -replace '(StdVector|StdDeque|StdMap|CVector)<[^>]+>','$1' `
+                    -replace 'public Span<ActionBarSlot> Slot => new Span<ActionBarSlot>\(ActionBarSlots, SlotCount\);','' `
+                    -replace 'AtkLinkedList<long>','AtkLinkedList' `
+                    -replace 'public [^\n]+ => (?!new).*?;','' `
+                    -replace '(?sm)public static Agent[A-Za-z]+\* Instance.*?\n(?:\t|    )\}','' `
+                    -replace '(?sm)public void OpenRecipeByRecipeId.*?;','' `
+                    -replace '(?sm)public static void PlayChatSoundEffect.*?\n(?:\t|    )\}','' `
+                    -replace '(?sm)public string Comment \{.*?\n(?:\t|    ){2}\}','' `
+                    -replace '(?sm)public static (?:ConfigModule|RaptureGearsetModule)\* Instance.*?\n(?:\t|    )\}',''
+
+                    $b | set-content $a
+                }
+
+            # Clean up the STD namespace objects
+            (get-content ..\..\MemoryProcessors\AtkStage\FFXIVClientStructs\Templates\STD.Map.cs) -replace '__NAMESPACE__',$ns | set-content $ns\FFXIVClientStructs\STD\Map.cs
+            (get-content ..\..\MemoryProcessors\AtkStage\FFXIVClientStructs\Templates\STD.Deque.cs) -replace '__NAMESPACE__',$ns | set-content $ns\FFXIVClientStructs\STD\Deque.cs
+            (get-content ..\..\MemoryProcessors\AtkStage\FFXIVClientStructs\Templates\STD.Vector.cs) -replace '__NAMESPACE__',$ns | set-content $ns\FFXIVClientStructs\STD\Vector.cs
+            (get-content ..\..\MemoryProcessors\AtkStage\FFXIVClientStructs\Templates\FFXIV.Component.GUI.AtkLinkedList.cs) -replace '__NAMESPACE__',$ns | set-content $ns\FFXIVClientStructs\FFXIV\Component\GUI\AtkLinkedList.cs
+            }
+
+        cd ..\..\..
     }
 
     if ( -not (Test-Path .\OverlayPlugin.Updater\Resources\libcurl.dll)) {
