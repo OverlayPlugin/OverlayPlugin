@@ -148,5 +148,17 @@
             "opcode": 799,
             "size": 16
         }
+    },
+    "2022.12.07.0000.0000": {
+        // Region: CN
+        // Version: 6.2
+        "MapEffect": {
+            "opcode": 777,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 140,
+            "size": 16
+        }
     }
 }
