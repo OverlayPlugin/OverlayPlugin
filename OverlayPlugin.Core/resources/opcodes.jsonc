@@ -148,5 +148,17 @@
             "opcode": 799,
             "size": 16
         }
+    },
+    "2022.12.09.0000.0000": {
+        // Region: KR
+        // Version: 6.18
+        "MapEffect": {
+            "opcode": 698,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 904,
+            "size": 16
+        }
     }
 }
