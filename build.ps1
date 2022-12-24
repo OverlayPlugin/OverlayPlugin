@@ -2,6 +2,24 @@ param (
     [switch]$ci = $false
 )
 
+function Try-Fetch-Deps {
+    param ([String]$description)
+    echo "Dependency '$description' was not found, trying to fetch"
+    if ((Get-Command "python" -ErrorAction SilentlyContinue) -eq $null)
+    {
+        Write-Host "python does not appear to be in your PATH. Please fix this or manually run tools\fetch_deps.py"
+        exit 1
+    } 
+    python tools\fetch_deps.py
+    if ($LASTEXITCODE -ne 0) {
+        echo 'Error running fetch_deps.py'
+        exit 1
+    }
+    else {
+        echo 'Fetched deps successfully'
+    }
+}
+
 try {
     # This assumes Visual Studio 2022 is installed in C:. You might have to change this depending on your system.
     $DEFAULT_VS_PATH = "C:\Program Files\Microsoft Visual Studio\2022\Community"
@@ -19,19 +37,16 @@ try {
     }
 
     if ( -not (Test-Path "Thirdparty\ACT\Advanced Combat Tracker.exe" )) {
-        echo 'Error: Please run tools\fetch_deps.py'
-        exit 1
+        Try-Fetch-Deps -description "Advanced Combat Tracker.exe"
     }
 
 
     if ( -not (Test-Path "Thirdparty\FFXIV_ACT_Plugin\SDK\FFXIV_ACT_Plugin.Common.dll" )) {
-        echo 'Error: Please run tools\fetch_deps.py'
-        exit 1
+        Try-Fetch-Deps -description "FFXIV_ACT_Plugin.Common.dll"
     }
 
     if ( -not (Test-Path "OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\Global" )) {
-        echo 'Error: Please run tools\fetch_deps.py (missing "OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\Global")'
-        exit 1
+        Try-Fetch-Deps -description "FFXIVClientStructs"
     }
 
     $ENV:PATH = "$VS_PATH\MSBuild\Current\Bin;${ENV:PATH}";
