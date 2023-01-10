@@ -179,6 +179,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 ActGlobals.oFormActMain.TTS(text);
                 return null;
             });
+            
+            RegisterEventHandler("playSound", (msg) =>
+            {
+                var file = msg["file"]?.ToString();
+                if (file == null)
+                    return null;
+
+                ActGlobals.oFormActMain.PlaySound(file);
+                return null;
+            });
 
             RegisterEventHandler("broadcast", (msg) =>
             {
