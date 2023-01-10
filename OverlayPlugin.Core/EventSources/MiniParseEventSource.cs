@@ -179,7 +179,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 ActGlobals.oFormActMain.TTS(text);
                 return null;
             });
-            
+
             RegisterEventHandler("playSound", (msg) =>
             {
                 var file = msg["file"]?.ToString();
