@@ -160,5 +160,29 @@
             "opcode": 140,
             "size": 16
         }
+    },
+    "2022.12.09.0000.0000": {
+        // Region: KR
+        // Version: 6.18
+        "MapEffect": {
+            "opcode": 698,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 904,
+            "size": 16
+        }
+    },
+    "2022.12.23.0000.0000": {
+        // Region: Global
+        // Version: 6.3
+        "MapEffect": {
+            "opcode": 548,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 617,
+            "size": 16
+        }
     }
 }
