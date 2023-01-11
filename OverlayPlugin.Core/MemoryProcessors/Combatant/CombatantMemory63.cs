@@ -191,9 +191,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0xC80)]
             public uint PCTargetID;
 
+            // TODO: this is incorrect in 6.3, please fix
             [FieldOffset(0x19C3)]
             public byte MonsterType;
 
+            // TODO: this is incorrect in 6.3, please fix
             [FieldOffset(0x19DF)]
             public byte AggressionStatus;
 
