@@ -5,8 +5,34 @@ using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
+    public enum FateCategory
+    {
+        Add,
+        Remove,
+        Update,
+    }
+
     public class LineFateControl
     {
+        private static readonly Dictionary<uint, FateCategory> FateCategories_v62 = new Dictionary<uint, FateCategory>
+        {
+            [0x935] = FateCategory.Add,
+            [0x936] = FateCategory.Remove,
+            [0x93E] = FateCategory.Update,
+        };
+        private static readonly Dictionary<uint, FateCategory> FateCategories_v63 = new Dictionary<uint, FateCategory>
+        {
+            [0x942] = FateCategory.Add,
+            [0x935] = FateCategory.Remove,
+            [0x93C] = FateCategory.Update,
+        };
+        private static readonly Dictionary<FateCategory, string> FateCategoryStrings = new Dictionary<FateCategory, string>
+        {
+            [FateCategory.Add] = "Add",
+            [FateCategory.Remove] = "Remove",
+            [FateCategory.Update] = "Update",
+        };
+
         public const uint LogFileLineID = 258;
         private ILogger logger;
         private IOpcodeConfigEntry opcode = null;
@@ -15,16 +41,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         private readonly FFXIVRepository ffxiv;
         // fates<fateID, progress>
         private static Dictionary<uint, uint> fates = new Dictionary<uint, uint>();
-
-        private const ushort FateAddCategory = 0x935;
-        private const ushort FateRemoveCategory = 0x936;
-        private const ushort FateUpdateCategory = 0x93E;
-        private static readonly Dictionary<uint, string> FateCategories = new Dictionary<uint, string>
-        {
-            [FateAddCategory] = "Add",
-            [FateRemoveCategory] = "Remove",
-            [FateUpdateCategory] = "Update",
-        };
+        private readonly Dictionary<uint, FateCategory> fateCategories;
 
         private Func<string, DateTime, bool> logWriter;
 
@@ -54,6 +71,11 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             var netHelper = container.Resolve<NetworkParser>();
             if (!ffxiv.IsFFXIVPluginPresent())
                 return;
+
+            var repository = container.Resolve<FFXIVRepository>();
+            var region = repository.GetMachinaRegion();
+            fateCategories = region == GameRegion.Global ? FateCategories_v63 : FateCategories_v62;
+
             var customLogLines = container.Resolve<FFXIVCustomLogLines>();
             this.logWriter = customLogLines.RegisterCustomLogLine(new LogLineRegistryEntry()
             {
@@ -108,18 +130,20 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 }
 
                 ActorControlSelf_v62 mapEffectPacket = *(ActorControlSelf_v62*)&buffer[offsetPacketData];
-                string categoryStr;
-                if (!FateCategories.TryGetValue(mapEffectPacket.category, out categoryStr))
+                FateCategory categoryEnum;
+                if (!fateCategories.TryGetValue(mapEffectPacket.category, out categoryEnum))
                 {
                     return;
                 }
 
+                var categoryStr = "Error";
+                FateCategoryStrings.TryGetValue(categoryEnum, out categoryStr);
                 var category = mapEffectPacket.category;
                 var fateID = mapEffectPacket.fateID;
                 var progress = mapEffectPacket.progress;
 
                 // Do some basic filtering on fate data to avoid spamming the log needlessly.
-                if (category == FateAddCategory)
+                if (categoryEnum == FateCategory.Add)
                 {
                     if (fates.ContainsKey(fateID))
                     {
@@ -127,14 +151,14 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                     }
                     fates.Add(fateID, 0);
                 }
-                else if (category == FateRemoveCategory)
+                else if (categoryEnum == FateCategory.Remove)
                 {
                     if (!fates.Remove(fateID))
                     {
                         return;
                     }
                 }
-                else if (category == FateUpdateCategory)
+                else if (categoryEnum == FateCategory.Update)
                 {
                     uint oldProgress;
                     if (fates.TryGetValue(fateID, out oldProgress))
