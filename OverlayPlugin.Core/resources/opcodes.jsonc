@@ -184,5 +184,17 @@
             "opcode": 617,
             "size": 16
         }
+    },
+    "2023.01.11.0000.0000": {
+        // Region: Global
+        // Version: 6.3 Hotfix
+        "MapEffect": {
+            "opcode": 718,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 184,
+            "size": 16
+        }
     }
 }

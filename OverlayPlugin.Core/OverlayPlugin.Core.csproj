@@ -102,6 +102,7 @@
     <Compile Include="MemoryProcessors\AtkStage\FFXIVClientStructs\Data.cs" />
     <Compile Include="MemoryProcessors\AtkStage\FFXIVClientStructs\ManagedType.cs" />
     <Compile Include="MemoryProcessors\AtkStage\FFXIVClientStructs\Utilities.cs" />
+    <Compile Include="MemoryProcessors\Combatant\CombatantMemory63.cs" />
     <Compile Include="MemoryProcessors\Combatant\Common.cs" />
     <Compile Include="MemoryProcessors\EnmityHud\Common.cs" />
     <Compile Include="MemoryProcessors\EnmityHud\EnmityHudMemory.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="MemoryProcessors\InCombat\InCombatMemory61.cs" />
     <Compile Include="MemoryProcessors\InCombat\InCombatMemoryManager.cs" />
     <Compile Include="MemoryProcessors\InCombat\LineInCombat.cs" />
+    <Compile Include="MemoryProcessors\Target\TargetMemory63.cs" />
     <Compile Include="MemoryProcessors\Target\TargetMemoryManager.cs" />
     <Compile Include="MemoryProcessors\Target\TargetMemory.cs" />
     <Compile Include="MemoryProcessors\Target\TargetMemory60.cs" />
