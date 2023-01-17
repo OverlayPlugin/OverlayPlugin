@@ -4,7 +4,7 @@ param (
 
 function Try-Fetch-Deps {
     param ([String]$description)
-    echo "Dependency '$description' was not found, trying to fetch"
+    echo "Dependency '$description' was not found, running `tools/fetch_deps.py` to fetch any missing dependencies"
     if ((Get-Command "python" -ErrorAction SilentlyContinue) -eq $null)
     {
         Write-Host "python does not appear to be in your PATH. Please fix this or manually run tools\fetch_deps.py"
