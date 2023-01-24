@@ -22,9 +22,9 @@ deps = {
         'hash': ['sha256', '032f43f2674008c761af19bf536374128c16241fb234699a55f9fb603fcfbae7'],
     },
     'FFXIVClientStructs': {
-        'url': 'https://github.com/aers/FFXIVClientStructs/archive/9cb2eb33826f62f7e3525e1f6ca08a974b35c76b.zip',
+        'url': 'https://github.com/aers/FFXIVClientStructs/archive/08e6c7ed7747ad68a38e5762863b5874fe04b8b8.zip',
         'dest': 'OverlayPlugin.Core/Thirdparty/FFXIVClientStructs/Global',
         'strip': 1,
-        'hash': ['sha256', '8c9307a01a479f6253ad205fffe8a711302d5c6418fded4b7044919f8ce42269'],
+        'hash': ['sha256', 'b6d73da57240717876eff07fca5489644698dcc894eda58b32d2852b172badac'],
     },
 }

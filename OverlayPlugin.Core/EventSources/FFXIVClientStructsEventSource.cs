@@ -39,6 +39,12 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public FFXIVClientStructsEventSource(TinyIoCContainer container) : base(container)
         {
+            var haveAtkStageMemory = container.TryResolve(out atkStageMemory);
+            if (!haveAtkStageMemory)
+            {
+                Log(LogLevel.Warning, "Could not construct FFXIVClientStructsEventSource: Missing atkStageMemory");
+                return;
+            }
             atkStageMemory = container.Resolve<IAtkStageMemory>();
             memory = container.Resolve<FFXIVMemory>();
 

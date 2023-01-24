@@ -53,7 +53,12 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public EnmityEventSource(TinyIoCContainer container) : base(container)
         {
-            combatantMemory = container.Resolve<ICombatantMemory>();
+            var haveCombatantMemory = container.TryResolve(out combatantMemory);
+            if (!haveCombatantMemory)
+            {
+                Log(LogLevel.Warning, "Could not construct EnmityEventSource: missing combatantMemory");
+                return;
+            }
             targetMemory = container.Resolve<ITargetMemory>();
             enmityMemory = container.Resolve<IEnmityMemory>();
             aggroMemory = container.Resolve<IAggroMemory>();
@@ -177,7 +182,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         protected override void Update()
         {
-            EnmityTick.Invoke();
+            if (combatantMemory != null)
+            {
+                EnmityTick.Invoke();
+            }
         }
 
         [Serializable]

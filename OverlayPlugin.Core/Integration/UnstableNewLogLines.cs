@@ -33,8 +33,7 @@ namespace RainbowMage.OverlayPlugin.Integration
             enmitySource = container.Resolve<EnmityEventSource>();
             logger = container.Resolve<ILogger>();
             logPath = Path.GetDirectoryName(ActGlobals.oFormActMain.LogFilePath) + "_OverlayPlugin.log";
-            lineInCombat = container.Resolve<LineInCombat>();
-
+            container.TryResolve(out lineInCombat);
 
             var config = container.Resolve<BuiltinEventConfig>();
             config.LogLinesChanged += (o, e) =>
@@ -58,7 +57,10 @@ namespace RainbowMage.OverlayPlugin.Integration
         public void Enable()
         {
             parser.OnOnlineStatusChanged += OnOnlineStatusChange;
-            lineInCombat.OnInCombatChanged += OnCombatStatusChange;
+            if (lineInCombat != null)
+            {
+                lineInCombat.OnInCombatChanged += OnCombatStatusChange;
+            }
 
             logThread = new Thread(new ThreadStart(WriteBackgroundLog));
             logThread.IsBackground = true;
@@ -68,7 +70,10 @@ namespace RainbowMage.OverlayPlugin.Integration
         public void Disable()
         {
             parser.OnOnlineStatusChanged -= OnOnlineStatusChange;
-            lineInCombat.OnInCombatChanged -= OnCombatStatusChange;
+            if (lineInCombat != null)
+            {
+                lineInCombat.OnInCombatChanged -= OnCombatStatusChange;
+            }
             logQueue?.Enqueue(null);
         }
 
