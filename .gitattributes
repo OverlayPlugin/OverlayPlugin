@@ -1,3 +1,4 @@
 *.cs text eol=lf
+*.Designer.cs text eol=lf
 *.csproj text eol=lf
 *.png binary
