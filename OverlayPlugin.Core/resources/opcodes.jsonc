@@ -208,5 +208,17 @@
             "opcode": 275,
             "size": 16
         }
+    },
+    "2023.01.25.0000.0000": {
+        // Region: CN
+        // Version: 6.2 Hotfix
+        "MapEffect": {
+            "opcode": 587,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 228,
+            "size": 16
+        }
     }
 }
