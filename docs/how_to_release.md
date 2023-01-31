@@ -28,7 +28,4 @@ Get review approval and merge the PR.
 
 Once the PR has landed, the `release.yml` workflow will run.
 You can check <https://github.com/OverlayPlugin/OverlayPlugin/actions/workflows/release.yml> to see the progress of this step.
-Once it finishes, the <https://github.com/OverlayPlugin/OverlayPlugin/releases> page will have a draft release.
-Any maintainer can go to that page, and hit `Publish release`.
-
-In the future, we could consider having this publish automatically as a part of the workflow if desired.
+Once it finishes, a release is published automatically.
