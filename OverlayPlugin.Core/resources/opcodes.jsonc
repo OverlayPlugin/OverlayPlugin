@@ -221,6 +221,18 @@
             "size": 16
         }
     },
+    "2023.02.01.0000.0000": {
+        // Region: KR
+        // Version: 6.2
+        "MapEffect": {
+            "opcode": 762,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 949,
+            "size": 16
+        }
+    },
     "2023.02.03.0000.0000": {
         // Region: Global
         // Version: 6.31 Hotfix
