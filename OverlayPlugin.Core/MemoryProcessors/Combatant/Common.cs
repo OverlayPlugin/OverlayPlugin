@@ -101,8 +101,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         public MonsterType MonsterType;
         public ObjectStatus Status;
         public bool IsVisible;
-        [NonSerialized]
-        public byte[] DrawObject;
         public ModelStatus ModelStatus;
         public AggressionStatus AggressionStatus;
         public uint TargetID;

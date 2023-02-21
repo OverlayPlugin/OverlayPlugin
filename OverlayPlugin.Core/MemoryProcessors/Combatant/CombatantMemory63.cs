@@ -57,7 +57,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     MonsterType = (MonsterType)mem.MonsterType,
                     Status = (ObjectStatus)mem.Status,
                     ModelStatus = (ModelStatus)mem.ModelStatus,
-                    DrawObject = GetByteArray(mem.DrawObjectAddr, DrawObject.Size),
                     // Normalize all possible aggression statuses into the basic 4 ones.
                     AggressionStatus = (AggressionStatus)(mem.AggressionStatus - (mem.AggressionStatus / 4) * 4),
                     NPCTargetID = mem.NPCTargetID,
@@ -103,9 +102,10 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     (combatant.ModelStatus == ModelStatus.Visible)
                     && ((combatant.Status == ObjectStatus.NormalActorStatus) || (combatant.Status == ObjectStatus.NormalSubActorStatus));
 
-                if (combatant.DrawObject?.Length > 0)
+                var drawObjectBytes = memory.GetByteArray(mem.DrawObjectAddr, DrawObject.Size);
+                if (drawObjectBytes?.Length > 0)
                 {
-                    fixed (byte* dptr = &combatant.DrawObject[0])
+                    fixed (byte* dptr = &drawObjectBytes[0])
                     {
                         IntPtr intPtr = new IntPtr((void*)dptr);
                         var drawObj = (DrawObject)Marshal.PtrToStructure(intPtr, typeof(DrawObject));

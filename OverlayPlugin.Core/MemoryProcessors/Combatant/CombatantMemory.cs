@@ -7,7 +7,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
     public abstract class CombatantMemory : ICombatantMemory
     {
-        private FFXIVMemory memory;
+        protected FFXIVMemory memory;
         private ILogger logger;
 
         private IntPtr charmapAddress = IntPtr.Zero;
@@ -149,11 +149,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         // Will return any kind of combatant, even if not a mob.
         // This function always returns a combatant object, even if empty.
         protected abstract unsafe Combatant GetCombatantFromByteArray(byte[] source, uint mycharID, bool isPlayer, bool exceptEffects = false);
-
-        protected unsafe byte[] GetByteArray(IntPtr address, int length)
-        {
-            return memory.GetByteArray(address, length);
-        }
 
         protected unsafe List<EffectEntry> GetEffectEntries(byte* source, ObjectType type, uint mycharID)
         {
