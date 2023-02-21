@@ -171,7 +171,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0x100)]
             public IntPtr DrawObjectAddr;
 
-            [FieldOffset(0x104)]
+            [FieldOffset(0x114)]
             public int ModelStatus;
 
             [FieldOffset(0x1C4)]
