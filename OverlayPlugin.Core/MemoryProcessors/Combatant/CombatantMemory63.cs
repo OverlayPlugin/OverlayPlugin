@@ -102,15 +102,13 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                 combatant.IsTargetable =
                     (combatant.ModelStatus == ModelStatus.Visible)
                     && ((combatant.Status == ObjectStatus.NormalActorStatus) || (combatant.Status == ObjectStatus.NormalSubActorStatus));
-
-                var drawObjectBytes = memory.GetByteArray(mem.DrawObjectAddr, DrawObject.Size);
-                if (drawObjectBytes?.Length > 0)
+                if (mem.DrawObjectAddr != IntPtr.Zero)
                 {
+                    var drawObjectBytes = memory.GetByteArray(mem.DrawObjectAddr, DrawObject.Size);
                     fixed (byte* dptr = &drawObjectBytes[0])
                     {
-                        IntPtr intPtr = new IntPtr((void*)dptr);
-                        var drawObj = (DrawObject)Marshal.PtrToStructure(intPtr, typeof(DrawObject));
-                        combatant.IsVisible = mem.DrawObjectAddr != IntPtr.Zero && (drawObj.Flags & 1UL) != 0;
+                        var drawObj = *(DrawObject*)&dptr[0];
+                        combatant.IsVisible = (drawObj.Flags & 1UL) != 0;
                     }
                 }
                 if (combatant.Type != ObjectType.PC && combatant.Type != ObjectType.Monster)
