@@ -57,6 +57,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     MonsterType = (MonsterType)mem.MonsterType,
                     Status = (ObjectStatus)mem.Status,
                     ModelStatus = (ModelStatus)mem.ModelStatus,
+                    DrawObject = GetByteArray(mem.DrawObjectAddr, DrawObject.Size),
                     // Normalize all possible aggression statuses into the basic 4 ones.
                     AggressionStatus = (AggressionStatus)(mem.AggressionStatus - (mem.AggressionStatus / 4) * 4),
                     NPCTargetID = mem.NPCTargetID,
@@ -101,6 +102,16 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                 combatant.IsTargetable =
                     (combatant.ModelStatus == ModelStatus.Visible)
                     && ((combatant.Status == ObjectStatus.NormalActorStatus) || (combatant.Status == ObjectStatus.NormalSubActorStatus));
+
+                if (combatant.DrawObject?.Length > 0)
+                {
+                    fixed (byte* dptr = &combatant.DrawObject[0])
+                    {
+                        IntPtr intPtr = new IntPtr((void*)dptr);
+                        var drawObj = (DrawObject)Marshal.PtrToStructure(intPtr, typeof(DrawObject));
+                        combatant.IsVisible = mem.DrawObjectAddr != IntPtr.Zero && (drawObj.Flags & 1UL) != 0;
+                    }
+                }
                 if (combatant.Type != ObjectType.PC && combatant.Type != ObjectType.Monster)
                 {
                     // Other types have garbage memory for hp.
@@ -157,6 +168,9 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
             [FieldOffset(0xD0)]
             public Single Radius;
+
+            [FieldOffset(0x100)]
+            public IntPtr DrawObjectAddr;
 
             [FieldOffset(0x104)]
             public int ModelStatus;
@@ -241,6 +255,15 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0x1DF8)]
             public float CastDurationMax;
             // Missing PartyType
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        private unsafe struct DrawObject
+        {
+            public static int Size => Marshal.SizeOf(typeof(DrawObject));
+
+            [FieldOffset(0x88)]
+            public byte Flags;
         }
     }
 }
