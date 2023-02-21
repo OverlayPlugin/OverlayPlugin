@@ -8,12 +8,13 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
     class CombatantMemory63 : CombatantMemory, ICombatantMemory63
     {
+        private FFXIVMemory memory;
         private const string charmapSignature = "488B5720B8000000E0483BD00F84????????488D0D";
 
         public CombatantMemory63(TinyIoCContainer container)
             : base(container, charmapSignature, CombatantMemory.Size, EffectMemory.Size)
         {
-
+            memory = container.Resolve<FFXIVMemory>();
         }
 
         public override Version GetVersion()

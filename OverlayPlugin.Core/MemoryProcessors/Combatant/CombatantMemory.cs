@@ -7,7 +7,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
     public abstract class CombatantMemory : ICombatantMemory
     {
-        protected FFXIVMemory memory;
+        private FFXIVMemory memory;
         private ILogger logger;
 
         private IntPtr charmapAddress = IntPtr.Zero;
