@@ -145,6 +145,7 @@
     <Compile Include="EventSourceBase.cs" />
     <Compile Include="ConfigEventArgs.cs" />
     <Compile Include="Integration\OverlayPluginLogLines.cs" />
+    <Compile Include="ClipboardTechSupport.cs" />
     <Compile Include="OverlayHider.cs" />
     <Compile Include="Overlays\LogParseConfigPanel.cs">
       <SubType>UserControl</SubType>
@@ -355,6 +356,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GeneralConfigTab.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GeneralConfigTab.zh-CN.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
