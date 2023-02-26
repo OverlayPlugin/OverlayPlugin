@@ -30,12 +30,6 @@ namespace RainbowMage.OverlayPlugin
             var repository = container.Resolve<FFXIVRepository>();
 
             warnings = new SimpleTable { new List<string> { "Warnings" } };
-            var opVersion = repository.GetOverlayPluginVersion();
-            if (opVersion < new Version(0, 19, 0))
-            {
-                warnings.Add(new List<string> { $"Out of date OverlayPlugin {opVersion.ToString()}, see https://overlayplugin.github.io/OverlayPlugin/fork_update.html" });
-            }
-
 
             plugins = new SimpleTable { new List<string> { "Plugin Name", "Enabled", "Version", "Path" } };
             foreach (var plugin in ActGlobals.oFormActMain.ActPlugins)
