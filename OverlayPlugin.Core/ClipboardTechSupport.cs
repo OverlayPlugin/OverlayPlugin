@@ -60,10 +60,8 @@ namespace RainbowMage.OverlayPlugin
             settings = new SimpleTable { new List<string> { "Various Settings", "Value" } };
             settings.Add(new List<string> { "Plugin Language", repository.GetLanguage().ToString() });
             settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
-            // Only available when running the game.
             string gameVersion = repository.GetGameVersion();
-            if (gameVersion != "")
-                settings.Add(new List<string> { "Game Version", gameVersion });
+            settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
 
             var cactbotConfig = GetCactbotConfig(pluginConfig);
             if (cactbotConfig != null)
