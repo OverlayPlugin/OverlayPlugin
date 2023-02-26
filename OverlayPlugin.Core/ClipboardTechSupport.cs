@@ -63,6 +63,12 @@ namespace RainbowMage.OverlayPlugin
             string gameVersion = repository.GetGameVersion();
             settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
 
+            // Note: this is a little bit of an abstraction violation to have OverlayPlugin
+            // throw up information about cactbot.  For now, this is a single one-off
+            // with no expectation that we will add more settings to this list.
+            // If other plugins(?) need this or cactbot needs more information, we should
+            // consider making this more generic and having some API here for other
+            // plugins to inject information more abstractly.
             var cactbotConfig = GetCactbotConfig(pluginConfig);
             if (cactbotConfig != null)
             {
