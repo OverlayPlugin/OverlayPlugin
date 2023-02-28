@@ -18,6 +18,9 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage.FFXIVClientStructs
         private readonly string yamlFilePath;
         private readonly Dictionary<DataNamespace, ClientStructsData> data = new Dictionary<DataNamespace, ClientStructsData>();
 
+        // @TODO: Is there some way to get this from the module instead?
+        private const long DataBaseOffset = 0x140000000;
+
         public Data(TinyIoCContainer container)
         {
             logger = container.Resolve<ILogger>();
@@ -28,6 +31,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage.FFXIVClientStructs
             yamlFilePath = Path.Combine(pluginDirectory, "resources", "FFXIVClientStructs.{0}.data.yml");
         }
 
+        // @TODO: At some point the runtime checks in this function should be moved to a compile-time test instead
+        // and this function can return `long` instead of `long?`
         public long? GetClassInstanceAddress(DataNamespace ns, string targetClass)
         {
             var curObj = GetBaseObject(ns);
@@ -49,7 +54,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage.FFXIVClientStructs
                 return null;
             }
 
-            return instances[0].ea;
+            return instances[0].ea - DataBaseOffset;
         }
 
         public ClientStructsData GetBaseObject(DataNamespace ns)

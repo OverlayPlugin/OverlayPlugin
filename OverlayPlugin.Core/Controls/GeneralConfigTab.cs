@@ -163,5 +163,11 @@ namespace RainbowMage.OverlayPlugin
                 MessageBox.Show("Failed: " + ex.ToString(), "Error");
             }
         }
+
+        private void btnClipboardTechSupport_Click(object sender, EventArgs e)
+        {
+            var info = new ClipboardTechSupport(this.container);
+            info.CopyToClipboard();
+        }
     }
 }

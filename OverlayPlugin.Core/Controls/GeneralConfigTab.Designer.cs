@@ -36,6 +36,7 @@
             this.lnkGithubRepo = new System.Windows.Forms.LinkLabel();
             this.lblNewUserWelcome = new System.Windows.Forms.Label();
             this.lblReadMe = new System.Windows.Forms.Label();
+            this.btnClipboardTechSupport = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cbErrorReports
@@ -80,11 +81,19 @@
             this.lblReadMe.ForeColor = System.Drawing.Color.Red;
             this.lblReadMe.Name = "lblReadMe";
             // 
+            // btnClipboardTechSupport
+            // 
+            resources.ApplyResources(this.btnClipboardTechSupport, "btnClipboardTechSupport");
+            this.btnClipboardTechSupport.Name = "btnClipboardTechSupport";
+            this.btnClipboardTechSupport.UseVisualStyleBackColor = true;
+            this.btnClipboardTechSupport.Click += new System.EventHandler(this.btnClipboardTechSupport_Click);
+            // 
             // GeneralConfigTab
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Controls.Add(this.btnClipboardTechSupport);
             this.Controls.Add(this.lblReadMe);
             this.Controls.Add(this.lblNewUserWelcome);
             this.Controls.Add(this.lnkGithubRepo);
@@ -106,5 +115,6 @@
         private System.Windows.Forms.LinkLabel lnkGithubRepo;
         private System.Windows.Forms.Label lblNewUserWelcome;
         private System.Windows.Forms.Label lblReadMe;
-    }
+        private System.Windows.Forms.Button btnClipboardTechSupport;
+  }
 }

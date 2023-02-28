@@ -45,7 +45,7 @@ try {
         Try-Fetch-Deps -description "FFXIV_ACT_Plugin.Common.dll"
     }
 
-    if ( -not (Test-Path "OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\Global" )) {
+    if ( -not (Test-Path "OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\Base\Global" )) {
         Try-Fetch-Deps -description "FFXIVClientStructs"
     }
 
@@ -54,76 +54,24 @@ try {
         $ENV:PATH = "C:\Program Files\7-Zip;${ENV:PATH}";
     }
 
-    if (Test-Path "OverlayPlugin.Core\Thirdparty\FFXIVClientStructs") {
+    if (Test-Path "OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\Base") {
         echo "==> Preparing FFXIVClientStructs..."
         
         echo "==> Building StripFFXIVClientStructs..."
-        msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -t:StripFFXIVClientStructs -restore:True
+        msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -t:StripFFXIVClientStructs -restore:True -v:q
 
-        cd OverlayPlugin.Core\Thirdparty\FFXIVClientStructs
-
-        $globalUsings = "using System.Runtime.InteropServices;"`
-        +"`nusing FFXIVClientStructs.__NSREPLACE__.STD;"`
-        +"`nusing FFXIVClientStructs.__NSREPLACE__.FFXIV.Client.Graphics;"`
-        +"`nusing FFXIVClientStructs.__NSREPLACE__.FFXIV.Common.Math;"
+        cd OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\Base
 
         # Fix code to compile against .NET 4.8, remove partial funcs and helper funcs, we only want the struct layouts themselves
         gci * | foreach-object {
             $ns = $_.name
 
-            if (-not (Test-Path $ns\FFXIVClientStructs\GlobalUsings.cs)) {
-                # return
-            }
-
             echo "==> Stripping FFXIVClientStructs for namespace $ns..."
 
-            ..\..\..\tools\StripFFXIVClientStructs\StripFFXIVClientStructs\bin\Release\netcoreapp3.1\StripFFXIVClientStructs.exe .
+            ..\..\..\..\tools\StripFFXIVClientStructs\StripFFXIVClientStructs\bin\Release\netcoreapp3.1\StripFFXIVClientStructs.exe $ns .\$ns ..\Transformed\$ns
+        }
 
-            # Delete files we don't need
-            rm -ErrorAction SilentlyContinue -r $ns\*.csproj
-            rm -ErrorAction SilentlyContinue -r $ns\*.sln
-            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\GlobalUsings.cs
-            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\AssemblyAttributes.cs
-            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\Interop
-            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\Attributes
-            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\Havok
-            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs.InteropSourceGenerators
-            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs.ResolverTester
-            rm -ErrorAction SilentlyContinue -r $ns\FFXIVClientStructs\STD\Pair.cs
-            rm -ErrorAction SilentlyContinue -r $ns\ida\CExporter
-
-            gci -r $ns\*.cs |
-                foreach-object {
-                    $a = $_.fullname;
-                    $b = ( get-content -Raw $a ) `
-                    -replace '(?sm)using FFXIVClientStructs.Havok;','' `
-                    -replace ('(?sm)namespace FFXIVClientStructs((?:\.FFXIV.*?|\.STD.*?|\.Havok.*?|));([^\x00]*\r?\n\})\r?\n?'),(($globalUsings -replace '__NSREPLACE__',$ns)+"`nnamespace FFXIVClientStructs."+$ns+'$1 {$2}') `
-                    -replace ('(?sm)using FFXIVClientStructs((?:\.FFXIV.*?|\.STD.*?|));'),("using FFXIVClientStructs."+$ns+'$1;') `
-                    -replace '^namespace [^;]+;$','' `
-                    -replace '(?sm)\r?\n[ \t]*\[\]\r?\n',"`n" `
-                    -replace '(?sm)\r?\n([ \t]*)\[\] \[',"$1[" `
-                    -replace 'delegate\*<[^>]*>','void*' `
-                    -replace '(?sm)Pointer<[^>]+>','void*' `
-                    -replace '(StdVector|StdDeque|StdMap|StdSet|AtkLinkedList|CVector)<[^;]+>[* ]','$1 ' `
-                    -replace '(?sm)hk[^ ]+\*','void*' `
-                    -replace '(?sm)using CategoryMap = .*?;','' `
-                    -replace '(?sm)\[FieldOffset\(0x0\)\] public CategoryMap\* MainMap;','' `
-                    -replace '([^ ]+) : IEquatable<\1>, IFormattable','$1' `
-                    -replace '([^ ]+) : IEquatable<\1>','$1' `
-                    -replace 'MathF.PI','(float)System.Math.PI'
-
-                    $b | set-content $a
-                }
-
-            # Clean up the STD namespace objects
-            (get-content ..\..\MemoryProcessors\AtkStage\FFXIVClientStructs\Templates\STD.Map.cs) -replace '__NAMESPACE__',$ns | set-content $ns\FFXIVClientStructs\STD\Map.cs
-            (get-content ..\..\MemoryProcessors\AtkStage\FFXIVClientStructs\Templates\STD.Deque.cs) -replace '__NAMESPACE__',$ns | set-content $ns\FFXIVClientStructs\STD\Deque.cs
-            (get-content ..\..\MemoryProcessors\AtkStage\FFXIVClientStructs\Templates\STD.Vector.cs) -replace '__NAMESPACE__',$ns | set-content $ns\FFXIVClientStructs\STD\Vector.cs
-            (get-content ..\..\MemoryProcessors\AtkStage\FFXIVClientStructs\Templates\STD.Set.cs) -replace '__NAMESPACE__',$ns | set-content $ns\FFXIVClientStructs\STD\Set.cs
-            (get-content ..\..\MemoryProcessors\AtkStage\FFXIVClientStructs\Templates\FFXIV.Component.GUI.AtkLinkedList.cs) -replace '__NAMESPACE__',$ns | set-content $ns\FFXIVClientStructs\FFXIV\Component\GUI\AtkLinkedList.cs
-            }
-
-        cd ..\..\..
+        cd ..\..\..\..
     }
 
     if ( -not (Test-Path .\OverlayPlugin.Updater\Resources\libcurl.dll)) {
@@ -156,8 +104,8 @@ try {
 
     echo "==> Building..."
 
-    msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -t:Restore
-    msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln"
+    msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -t:Restore -v:q
+    msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -v:q
     if (-not $?) { exit 1 }
 
     echo "==> Building archive..."

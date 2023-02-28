@@ -148,7 +148,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbErrorReports.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
   <data name="cbHideOverlaysWhenNotActive.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -178,7 +178,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbHideOverlaysWhenNotActive.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="cbHideOverlaysDuringCutscene.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -208,7 +208,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbHideOverlaysDuringCutscene.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="lblGithub.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -235,7 +235,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblGithub.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="lnkGithubRepo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -244,7 +244,7 @@
     <value>95, 160</value>
   </data>
   <data name="lnkGithubRepo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>227, 12</value>
+    <value>235, 13</value>
   </data>
   <data name="lnkGithubRepo.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -262,7 +262,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lnkGithubRepo.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="lblNewUserWelcome.Location" type="System.Drawing.Point, System.Drawing">
     <value>17, 224</value>
@@ -289,7 +289,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblNewUserWelcome.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="lblReadMe.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -319,7 +319,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblReadMe.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="btnCactbotUpdate.Location" type="System.Drawing.Point, System.Drawing">
     <value>210, 122</value>
@@ -343,6 +343,33 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnCactbotUpdate.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnClipboardTechSupport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnClipboardTechSupport.Location" type="System.Drawing.Point, System.Drawing">
+    <value>422, 122</value>
+  </data>
+  <data name="btnClipboardTechSupport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 23</value>
+  </data>
+  <data name="btnClipboardTechSupport.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="btnClipboardTechSupport.Text" xml:space="preserve">
+    <value>Copy Tech Support Info to Clipboard</value>
+  </data>
+  <data name="&gt;&gt;btnClipboardTechSupport.Name" xml:space="preserve">
+    <value>btnClipboardTechSupport</value>
+  </data>
+  <data name="&gt;&gt;btnClipboardTechSupport.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClipboardTechSupport.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnClipboardTechSupport.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

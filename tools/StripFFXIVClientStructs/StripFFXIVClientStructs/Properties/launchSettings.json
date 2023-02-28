@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "StripFFXIVClientStructs": {
+      "commandName": "Project",
+      "commandLineArgs": "Global ..\\..\\..\\..\\..\\..\\OverlayPlugin.Core\\Thirdparty\\FFXIVClientStructs\\Base\\Global ..\\..\\..\\..\\..\\..\\OverlayPlugin.Core\\Thirdparty\\FFXIVClientStructs\\Transformed\\Global"
+    }
+  }
+}

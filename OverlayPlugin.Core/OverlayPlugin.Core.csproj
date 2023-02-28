@@ -91,6 +91,8 @@
     </Compile>
     <Compile Include="EventSources\FFXIVClientStructsEventSource.cs" />
     <Compile Include="EventSources\EnmityEventSource.cs" />
+    <Compile Include="EventSources\FFXIVRequiredEventSource.cs" />
+    <Compile Include="EventSources\FFXIVOptionalEventSource.cs" />
     <Compile Include="Integration\UnstableNewLogLines.cs" />
     <Compile Include="MemoryProcessors\Aggro\AggroMemory.cs" />
     <Compile Include="MemoryProcessors\Aggro\AggroMemory60.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="EventSourceBase.cs" />
     <Compile Include="ConfigEventArgs.cs" />
     <Compile Include="Integration\OverlayPluginLogLines.cs" />
+    <Compile Include="ClipboardTechSupport.cs" />
     <Compile Include="OverlayHider.cs" />
     <Compile Include="Overlays\LogParseConfigPanel.cs">
       <SubType>UserControl</SubType>
@@ -224,7 +227,7 @@
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="WebSocket\WSServer.cs" />
-    <Compile Include="Thirdparty\**\*.cs" />
+    <Compile Include="Thirdparty\FFXIVClientStructs\Transformed\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\enmity\aggrolist.html">
@@ -312,7 +315,7 @@
     <Content Include="resources\targetbars\target_of_target.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Thirdparty\FFXIVClientStructs\Global\ida\data.yml">
+    <Content Include="Thirdparty\FFXIVClientStructs\Base\Global\ida\data.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>resources\FFXIVClientStructs.Global.data.yml</TargetPath>
     </Content>
@@ -353,6 +356,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GeneralConfigTab.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GeneralConfigTab.zh-CN.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
