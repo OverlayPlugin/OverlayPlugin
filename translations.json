@@ -84,6 +84,10 @@
             "ko-KR": "Cactbot 업데이트 확인",
             "zh-CN": "检查 Cactbot 更新"
         },
+        "btnClipboardTechSupport.Text": {
+            "en": "Copy Tech Support Info to Clipboard",
+            "zh-CN": "复制技术支持信息到剪贴板"
+        },
         "btnUpdateCheck.Text": {
             "de-DE": "Auf Updates überprüfen",
             "en": "Check For Updates",

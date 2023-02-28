@@ -147,4 +147,7 @@
   <data name="btnCactbotUpdate.Text" xml:space="preserve">
     <value>检查 Cactbot 更新</value>
   </data>
+  <data name="btnClipboardTechSupport.Text" xml:space="preserve">
+    <value>复制技术支持信息到剪贴板</value>
+  </data>
 </root>

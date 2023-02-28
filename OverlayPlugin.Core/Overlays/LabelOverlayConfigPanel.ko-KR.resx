@@ -150,4 +150,7 @@
   <data name="label5.Text" xml:space="preserve">
     <value>텍스트를 HTML로 표시</value>
   </data>
+  <data name="buttonSelectFile.Text" xml:space="preserve">
+    <value>...</value>
+  </data>
 </root>

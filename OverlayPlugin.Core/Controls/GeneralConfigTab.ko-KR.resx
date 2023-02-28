@@ -135,6 +135,21 @@
   </data>
 
   <data name="cbHideOverlaysWhenNotActive.Text" xml:space="preserve">
-    <value>게임 비활성화일 때 자동으로 오버레이 숨기기</value>
+    <value>게임이 백그라운드에 있을 때 자동으로 오버레이 숨기기</value>
+  </data>
+  <data name="lblNewUserWelcome.Text" xml:space="preserve">
+    <value>여기에서 URL 필드를 찾고 있다면 옛날 OverlayPlugin 방식을 사용하는 중이거나 오래된 가이드를 따르고 있는 것입니다. 오버레이를 띄우려면 먼저 왼쪽 하단 모서리에 있는 추가 버튼을 눌러 오버레이를 만들어야 합니다.
+여러 가지 문제를 방지할 수 있으므로 URL을 수동으로 설정하는 대신 프리셋을 사용해 보십시오.
+
+</value>
+  </data>
+  <data name="lblGithub.Text" xml:space="preserve">
+    <value>GitHub 저장소:</value>
+  </data>
+  <data name="lblReadMe.Text" xml:space="preserve">
+    <value>도움말:</value>
+  </data>
+  <data name="btnCactbotUpdate.Text" xml:space="preserve">
+    <value>Cactbot 업데이트 확인</value>
   </data>
 </root>

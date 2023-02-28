@@ -152,4 +152,7 @@
   <data name="label10.Text" xml:space="preserve">
     <value>단축키 기능</value>
   </data>
+  <data name="buttonLogParseSelectFile.Text" xml:space="preserve">
+    <value>...</value>
+  </data>
 </root>

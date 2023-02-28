@@ -149,4 +149,7 @@
   <data name="lblCutsceneDetectionLog.Text" xml:space="preserve">
     <value>컷신 감지 로그 남기기</value>
   </data>
+  <data name="lblLogLines.Text" xml:space="preserve">
+    <value>추가 로그 라인 출력</value>
+  </data>
 </root>
