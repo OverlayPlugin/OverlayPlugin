@@ -79,7 +79,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
             return await Task.Run(() =>
             {
-                if (inst.Download("https://aka.ms/vs/17/release/vc_redist.x64.exe", exePath, true))
+                if (inst.Download("https://aka.ms/vs/17/release/vc_redist.x64.exe", exePath))
                 {
                     inst.Display.UpdateStatus(0, string.Format(Resources.StatusLaunchingInstaller, 2, 2));
                     inst.Display.Log(Resources.LogLaunchingInstaller);

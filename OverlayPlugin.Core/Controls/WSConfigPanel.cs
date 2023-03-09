@@ -187,7 +187,7 @@ namespace RainbowMage.OverlayPlugin
 
                     try
                     {
-                        CurlWrapper.Get(MKCERT_DOWNLOAD, new Dictionary<string, string>(), mkcertPath, null, false);
+                        HttpClientWrapper.Get(MKCERT_DOWNLOAD, new Dictionary<string, string>(), mkcertPath, null, false);
                     }
                     catch (Exception e)
                     {
@@ -515,10 +515,10 @@ tunnels:
                     {
                         try
                         {
-                            data = CurlWrapper.Get(apiUrl, headers, null, null, false);
+                            data = HttpClientWrapper.Get(apiUrl, headers, null, null, false);
                             break;
                         }
-                        catch (CurlException ex)
+                        catch (HttpClientException ex)
                         {
                             if (!ex.Retry)
                             {
@@ -614,7 +614,7 @@ tunnels:
                 simpLogBox.AppendText("Downloading ngrok client...\r\n");
                 try
                 {
-                    CurlWrapper.Get(ngrokUrl, new Dictionary<string, string>(), ngrokPath + ".zip", NgrokProgressCallback, false);
+                    HttpClientWrapper.Get(ngrokUrl, new Dictionary<string, string>(), ngrokPath + ".zip", NgrokProgressCallback, false);
                 }
                 catch (Exception e)
                 {

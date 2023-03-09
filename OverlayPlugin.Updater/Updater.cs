@@ -45,7 +45,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 {
                     try
                     {
-                        response = CurlWrapper.Get(CHECK_URL.Replace("{REPO}", options.repo));
+                        response = HttpClientWrapper.Get(CHECK_URL.Replace("{REPO}", options.repo));
 
                         var tmp = JObject.Parse(response);
                         remoteVersion = Version.Parse(tmp["tag_name"].ToString().Substring(1));
@@ -72,7 +72,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                         return (false, remoteVersion, "", "");
                     }
 
-                    response = CurlWrapper.Get(ALL_RELEASES_URL.Replace("{REPO}", options.repo));
+                    response = HttpClientWrapper.Get(ALL_RELEASES_URL.Replace("{REPO}", options.repo));
 
                     // JObject doesn't accept arrays so we have to package the response in a JSON object.
                     var tmp = JObject.Parse("{\"content\":" + response + "}");
@@ -136,9 +136,9 @@ namespace RainbowMage.OverlayPlugin.Updater
                 string response;
                 try
                 {
-                    response = CurlWrapper.Get(options.manifestUrl);
+                    response = HttpClientWrapper.Get(options.manifestUrl);
                 }
-                catch (CurlException ex)
+                catch (HttpClientException ex)
                 {
                     MessageBox.Show(
                         string.Format(Resources.UpdateCheckException, ex.ToString()),
@@ -161,7 +161,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                         return (false, remoteVersion, "", "");
                     }
 
-                    response = CurlWrapper.Get(options.notesUrl);
+                    response = HttpClientWrapper.Get(options.notesUrl);
 
                     // JObject doesn't accept arrays so we have to package the response in a JSON object.
                     tmp = JObject.Parse("{\"content\":" + response + "}");

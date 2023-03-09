@@ -44,6 +44,7 @@ namespace StripFFXIVClientStructs
             "AssemblyTitle",
             "AssemblyConfiguration",
             "InfoProxy",
+            "VTableAddress",
         };
 
         // Files whose relative path start with an entry in this array are skipped for transformation
@@ -410,6 +411,10 @@ namespace StripFFXIVClientStructs
                 // Check to see if we should remove this field entirely
                 var nodeString = node.ToString();
                 if (nodeString.Contains(" = new("))
+                {
+                    return Visit(null);
+                }
+                if (node.AttributeLists.Any((list) => list.Attributes.Any((attr) => attr.Name.ToString().Equals("Obsolete"))))
                 {
                     return Visit(null);
                 }

@@ -133,26 +133,6 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] libcurl {
-            get {
-                object obj = ResourceManager.GetObject("libcurl", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] libcurl_x64 {
-            get {
-                object obj = ResourceManager.GetObject("libcurl_x64", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Aborted by user..
         /// </summary>
         public static string LogAbortedByUser {

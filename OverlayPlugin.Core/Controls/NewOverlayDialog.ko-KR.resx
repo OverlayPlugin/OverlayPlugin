@@ -140,7 +140,7 @@
     <value>유형</value>
   </data>
   <data name="lblTypeDesc.Text" xml:space="preserve">
-    <value>대부분의 오버레이는 MiniParse 유형을 선택합니다. cactbot 오버레이도 마찬가지로 MiniParse 유형을 필요로 합니다.
+    <value>대부분의 오버레이는 MiniParse 유형을 선택합니다. Cactbot 오버레이도 마찬가지로 MiniParse 유형을 필요로 합니다.
 
 Label 유형을 사용하면 오버레이에 텍스트나 HTML을 표시할 수 있습니다. 메모나 반복 알림 표시에 유용합니다.
 SpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스페스페와는 아무런 관련이 없습니다.
@@ -148,5 +148,17 @@ SpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>새 오버레이 생성</value>
+  </data>
+  <data name="lblPresetDescription.Text" xml:space="preserve">
+    <value>아무 프리셋을 선택하면 미리보기가 표시됩니다.
+마우스로 미리보기를 드래그하여 이동할 수 있습니다.
+미리보기의 크기를 조정하려면 오른쪽 하단 모서리를 드래그하세요.
+
+목록에 없는 오버레이를 사용하려면 커스텀을 선택하고 올바른 오버레이 유형을 선택하십시오.
+
+새 프리셋을 추가하려면 GitHub 저장소에 PR을 주세요. (일반 탭에 링크 있음).</value>
+  </data>
+  <data name="lblPreset.Text" xml:space="preserve">
+    <value>프리셋</value>
   </data>
 </root>

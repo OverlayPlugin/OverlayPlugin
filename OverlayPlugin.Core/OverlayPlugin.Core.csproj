@@ -103,7 +103,6 @@
     <Compile Include="MemoryProcessors\AtkStage\AtkStageMemoryManager.cs" />
     <Compile Include="MemoryProcessors\AtkStage\FFXIVClientStructs\Data.cs" />
     <Compile Include="MemoryProcessors\AtkStage\FFXIVClientStructs\ManagedType.cs" />
-    <Compile Include="MemoryProcessors\AtkStage\FFXIVClientStructs\Utilities.cs" />
     <Compile Include="MemoryProcessors\Combatant\CombatantMemory63.cs" />
     <Compile Include="MemoryProcessors\Combatant\Common.cs" />
     <Compile Include="MemoryProcessors\EnmityHud\Common.cs" />

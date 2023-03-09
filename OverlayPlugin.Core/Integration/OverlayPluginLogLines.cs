@@ -99,7 +99,7 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
-                var response = CurlWrapper.Get(remoteOpcodeUrl);
+                var response = HttpClientWrapper.Get(remoteOpcodeUrl);
                 var jsonData = JObject.Parse(response);
                 // Validate that this can convert properly before storing it.
                 JsonConvert.DeserializeObject<Opcodes>(response);

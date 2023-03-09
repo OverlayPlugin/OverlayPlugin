@@ -152,4 +152,7 @@
   <data name="label10.Text" xml:space="preserve">
     <value>URL</value>
   </data>
+  <data name="buttonSpellTimerSelectFile.Text" xml:space="preserve">
+    <value>...</value>
+  </data>
 </root>

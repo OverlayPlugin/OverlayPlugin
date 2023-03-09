@@ -189,4 +189,17 @@
   <data name="simpStopBtn.Text" xml:space="preserve">
     <value>중지</value>
   </data>
+  <data name="introPage.Text" xml:space="preserve">
+    <value>소개</value>
+  </data>
+  <data name="lblWsserverIntro.Text" xml:space="preserve">
+    <value>다음은 두 탭에 대한 간단한 설명입니다.
+
+Stream/Local 오버레이: 이 탭을 통해 WSServer를 시작하면 이 PC에서 생성된 URL을 사용할 수 있습니다(예: OBS, XL의 오버레이 플러그인 등). 네트워크와 SSL에 대해 조금 알고 있다면 LAN에 있는 다른 장치에서도 이 작업을 수행할 수 있지만 일반적으로 공유 오버레이 탭이 사용하기 훨씬 쉽기 때문에, 이를 위해 공유 오버레이 탭을 사용하는 것이 좋습니다.
+
+공유 오버레이: 이 탭을 통해 WSServer를 시작하면 인터넷에 연결된 모든 장치(휴대폰, 태블릿, 친구의 PC 등)에서 생성된 URL을 사용할 수 있습니다. 이 링크를 다른 사람들과 공유할 수 있습니다.
+
+마지막으로 WSServer가 Stream/Local 오버레이 탭을 통해 시작되면 ACT 시작 시 자동으로 다시 시작됩니다. 공유 오버레이 탭을 통해 시작한 경우 매번 새 URL을 받게 되므로 자동으로 시작되지 않습니다. 참고: 이것이 귀찮다면 ACT Discord(또는 OverlayPlugin의 GitHub 저장소)에서 문제를 해결하도록 요청하세요. 이 문제를 해결할 수 있는 방법이 있지만 이 기능을 원하는 사람이 몇 명인지 잘 모르겠습니다.
+</value>
+  </data>
 </root>

@@ -225,4 +225,13 @@
   <data name="hotkeyColAction.HeaderText" xml:space="preserve">
     <value>행동</value>
   </data>
+  <data name="buttonMiniParseSelectFile.Text" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="btnClearCache.Text" xml:space="preserve">
+    <value>캐시 지우기</value>
+  </data>
+  <data name="label14.Text" xml:space="preserve">
+    <value>전투 중이 아닐 때 오버레이 숨기기</value>
+  </data>
 </root>

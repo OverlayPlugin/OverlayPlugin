@@ -66,12 +66,12 @@ namespace RainbowMage.OverlayPlugin.Updater
                             var stop = false;
                             while (!stop)
                             {
-                                var read = body.Read(buffer, 0, buffer.Length);
+                                var read = await body.ReadAsync(buffer, 0, buffer.Length);
                                 if (read == 0)
                                     break;
 
                                 writer.Write(buffer, 0, read);
-                                if (infoCb(0, length, body.Position, 0, 0))
+                                if (infoCb != null && infoCb(0, length, body.Position, 0, 0))
                                     break;
                             }
                         }
@@ -111,9 +111,25 @@ namespace RainbowMage.OverlayPlugin.Updater
 
             if (error != null)
             {
-                throw new CurlException(retry, error.Message, error);
+                throw new HttpClientException(retry, error.Message, error);
             }
             return result;
+        }
+    }
+
+    [Serializable]
+    public class HttpClientException : Exception
+    {
+        public readonly bool Retry;
+
+        public HttpClientException(bool retry, string message) : base(message)
+        {
+            this.Retry = retry;
+        }
+
+        public HttpClientException(bool retry, string message, Exception innerException) : base(message, innerException)
+        {
+            this.Retry = retry;
         }
     }
 }

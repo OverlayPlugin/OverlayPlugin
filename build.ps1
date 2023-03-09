@@ -74,28 +74,6 @@ try {
         cd ..\..\..\..
     }
 
-    if ( -not (Test-Path .\OverlayPlugin.Updater\Resources\libcurl.dll)) {
-        echo "==> Building cURL..."
-
-        mkdir .\OverlayPlugin.Updater\Resources
-        cd Thirdparty\curl\winbuild
-
-        echo "@call `"$VS_PATH\VC\Auxiliary\Build\vcvarsall.bat`" amd64"           | Out-File -Encoding ascii tmp_build.bat
-        echo "nmake /f Makefile.vc mode=dll VC=16 GEN_PDB=no DEBUG=no MACHINE=x64" | Out-File -Encoding ascii -Append tmp_build.bat
-        echo "@call `"$VS_PATH\VC\Auxiliary\Build\vcvarsall.bat`" x86"             | Out-File -Encoding ascii -Append tmp_build.bat
-        echo "nmake /f Makefile.vc mode=dll VC=16 GEN_PDB=no DEBUG=no MACHINE=x86" | Out-File -Encoding ascii -Append tmp_build.bat
-
-        cmd "/c" "tmp_build.bat"
-        sleep 3
-        del tmp_build.bat
-
-        cd ..\builds
-        copy .\libcurl-vc16-x64-release-dll-ipv6-sspi-winssl\bin\libcurl.dll ..\..\..\OverlayPlugin.Updater\Resources\libcurl-x64.dll
-        copy .\libcurl-vc16-x86-release-dll-ipv6-sspi-winssl\bin\libcurl.dll ..\..\..\OverlayPlugin.Updater\Resources\libcurl.dll
-
-        cd ..\..\..
-    }
-
     if ($ci) {
         echo "==> Continuous integration flag set. Building Debug..."
         msbuild -p:Configuration=Debug -p:Platform=x64 "OverlayPlugin.sln" -t:Restore
@@ -146,6 +124,8 @@ try {
 
     if (Test-Path $archive) { rm $archive }
     7z a $archive OverlayPlugin
+
+    cd ..\..
 } catch {
     Write-Error $Error[0]
 }

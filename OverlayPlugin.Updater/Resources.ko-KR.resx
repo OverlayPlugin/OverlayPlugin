@@ -317,4 +317,10 @@ Overlay Plugin에 필요합니다. 지금 설치하시겠습니까?</value>
   <data name="LogOverwriteFailed" xml:space="preserve">
     <value>재시도 횟수 초과, 업데이트 실패.</value>
   </data>
+  <data name="UpdateSliderDetails" xml:space="preserve">
+    <value>{0} 업데이트에 성공했습니다.</value>
+  </data>
+  <data name="IgnoreUpdateDueToDotGitDirectoryMessage" xml:space="preserve">
+    <value>OverlayPlugin 폴더가 로컬 깃 저장소이므로 자동 업데이트를 건너뜁니다.</value>
+  </data>
 </root>

@@ -87,16 +87,6 @@ namespace RainbowMage.OverlayPlugin
 
             SanityChecker.CheckDependencyVersions(logger);
 
-            try
-            {
-                CurlWrapper.Init(pluginDirectory);
-            }
-            catch (Exception ex)
-            {
-                logger.Log(LogLevel.Error, ex.ToString());
-                ActGlobals.oFormActMain.WriteDebugLog(ex.ToString());
-            }
-
             await FinishInit(container);
         }
 

@@ -296,4 +296,7 @@
   <data name="NetworkParserNoFfxiv" xml:space="preserve">
     <value>Machina 혹은 FFXIV 플러그인을 발견하지 못했습니다. 이 문제는 파이널 판타지 14와 함께 ACT를 사용하는 분들께만 문제가 되는 부분입니다.</value>
   </data>
+  <data name="ErrorCouldNotLoadPresets" xml:space="preserve">
+    <value>NewOverlayDialog: 프리셋 불러오기 실패: {0}</value>
+  </data>
 </root>

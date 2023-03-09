@@ -66,7 +66,6 @@
     <Compile Include="CefMissingTab.Designer.cs">
       <DependentUpon>CefMissingTab.cs</DependentUpon>
     </Compile>
-    <Compile Include="CurlWrapper.cs" />
     <Compile Include="HttpClientWrapper.cs" />
     <Compile Include="Installer.cs" />
     <Compile Include="NativeMethods.cs" />
@@ -132,6 +131,7 @@
     <EmbeddedResource Include="Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.zh-CN.resx" />
     <EmbeddedResource Include="UpdateQuestionForm.de-DE.resx">
@@ -159,12 +159,6 @@
       <Name>OverlayPlugin.Common</Name>
       <Private>False</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\libcurl.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\libcurl-x64.dll" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Markdig.Signed">
