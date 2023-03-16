@@ -27,8 +27,6 @@ namespace RainbowMage.OverlayPlugin
 
         public ClipboardTechSupport(TinyIoCContainer container)
         {
-            var repository = container.Resolve<FFXIVRepository>();
-
             warnings = new SimpleTable { new List<string> { "Warnings" } };
 
             plugins = new SimpleTable { new List<string> { "Plugin Name", "Enabled", "Version", "Path" } };
@@ -58,10 +56,18 @@ namespace RainbowMage.OverlayPlugin
             }
 
             settings = new SimpleTable { new List<string> { "Various Settings", "Value" } };
-            settings.Add(new List<string> { "Plugin Language", repository.GetLanguage().ToString() });
-            settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
-            string gameVersion = repository.GetGameVersion();
-            settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
+            var repository = container.Resolve<FFXIVRepository>();
+            if (repository.IsFFXIVPluginPresent())
+            {
+                settings.Add(new List<string> { "Plugin Language", repository.GetLanguage().ToString() });
+                settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
+                string gameVersion = repository.GetGameVersion();
+                settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
+            }
+            else
+            {
+                warnings.Add(new List<string> { "FFXIV plugin not present" });
+            }
 
             // Note: this is a little bit of an abstraction violation to have OverlayPlugin
             // throw up information about cactbot.  For now, this is a single one-off
@@ -107,7 +113,7 @@ namespace RainbowMage.OverlayPlugin
             int numColumns = input.Select(x => x.Count).Max();
             for (int column = 0; column < numColumns; ++column)
             {
-                lengths.Add(input.Select(x => x.ElementAtOrDefault(column).Length).Max());
+                lengths.Add(input.Select(x => x.ElementAtOrDefault(column)?.Length ?? 0).Max());
             }
 
             // Construct a line of hyphens to place after the first row.
