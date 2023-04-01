@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 using Advanced_Combat_Tracker;
 using FFXIV_ACT_Plugin.Common;
 
@@ -291,6 +292,13 @@ namespace RainbowMage.OverlayPlugin
             if (repo == null) return null;
 
             return repo.GetCombatantList();
+        }
+
+        public TabPage GetPluginTabPage()
+        {
+            var plugin = GetPluginData();
+            if (plugin == null) return null;
+            return plugin.tpPluginSpace;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

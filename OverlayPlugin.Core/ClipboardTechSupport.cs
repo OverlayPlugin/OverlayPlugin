@@ -5,10 +5,8 @@ using System.Linq;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
 using Newtonsoft.Json.Linq;
-using RainbowMage.OverlayPlugin.EventSources;
 
 // TODO: print warnings on plugin ordering
-// TODO: get Ravahn to expose more settings and include them
 // TODO: print warning on cactbot plugin / url / user dir mismatch
 // TODO: include first N lines of OverlayPlugin log
 
@@ -63,6 +61,10 @@ namespace RainbowMage.OverlayPlugin
                 settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
                 string gameVersion = repository.GetGameVersion();
                 settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
+
+                var tabPage = repository.GetPluginTabPage();
+                if (tabPage != null)
+                    GetCheckboxValues(settings, warnings, tabPage.Controls);
             }
             else
             {
@@ -103,6 +105,30 @@ namespace RainbowMage.OverlayPlugin
             catch
             {
                 return null;
+            }
+        }
+
+        private static void GetCheckboxValues(SimpleTable settings, SimpleTable warnings, Control.ControlCollection controls)
+        {
+            foreach (Control control in controls)
+            {
+                if (control.GetType() == typeof(CheckBox))
+                {
+                    // TODO: should we accumulate and sort these settings?
+                    CheckBox cb = (CheckBox)control;
+                    settings.Add(new List<string> { cb.Text, cb.Checked.ToString() });
+
+                    // TODO: it's unfortunate to have to do a string comparison to find this,
+                    // but Ravahn would have to expose this more programmatically otherwise.
+                    if (cb.Text.Contains("Hide Chat Log") && cb.Checked)
+                    {
+                        warnings.Add(new List<string> { "Hide Chat Log for Privacy is enabled" });
+                    }
+                }
+                if (control.Controls.Count > 0)
+                {
+                    GetCheckboxValues(settings, warnings, control.Controls);
+                }
             }
         }
 
