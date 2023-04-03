@@ -23,6 +23,24 @@ namespace RainbowMage.OverlayPlugin
         private SimpleTable settings;
         private SimpleTable warnings;
 
+        static string hideChatLogForPrivacyName = "chkDisableCombatLog";
+
+        // A map of CheckBox names to text.  Right now this text matches what the FFXIV Plugin usues in English.
+        static List<(string, string)> pluginCheckboxMap = new List<(string, string)> {
+            ( "chkUseDeucalion", "Inject and use Deucalion for network data" ),
+            ( hideChatLogForPrivacyName, "Hide Chat Log (for privacy)" ),
+            ( "chkUsePcap", "Use WinPCap-compatible library for network data" ),
+            ( "chkDisableSocketFilter", "Disable high-performance network filter" ),
+            ( "chkDisableCombinePets", "Disable Combine Pets with Owner" ),
+            ( "chkDisableDamageShield", "Disable Damage Shield estimates" ),
+            ( "chkShowDebug", "(DEBUG) Enable Debug Options" ),
+            ( "chkLogAllNetwork", "(DEBUG) Log all Network Packets" ),
+            ( "chkShowRealDoTs", "(DEBUG) Also Show 'Real' DoT Ticks" ),
+            ( "chkSimulateDoTCrits", "(DEBUG) Simulate Individual DoT Crits" ),
+            ( "chkGraphPotency", "(DEBUG) Graph Potency, not Damage" ),
+            ( "chkEnableBenchmark", "(DEBUG) Enable Benchmark Tab" ),
+        };
+
         public ClipboardTechSupport(TinyIoCContainer container)
         {
             warnings = new SimpleTable { new List<string> { "Warnings" } };
@@ -64,7 +82,35 @@ namespace RainbowMage.OverlayPlugin
 
                 var tabPage = repository.GetPluginTabPage();
                 if (tabPage != null)
-                    GetCheckboxValues(settings, warnings, tabPage.Controls);
+                {
+                    Dictionary<string, CheckBox> checkboxes = new Dictionary<string, CheckBox>();
+                    GetCheckboxes(tabPage.Controls, checkboxes);
+
+                    // Include all known checkboxes first in order, with English text.
+                    foreach (var (cbName, settingText) in pluginCheckboxMap)
+                    {
+                        CheckBox cb;
+                        if (!checkboxes.TryGetValue(cbName, out cb))
+                        {
+                            continue;
+                        }
+
+                        settings.Add(new List<string> { settingText, cb.Checked.ToString() });
+
+                        if (cb.Name == hideChatLogForPrivacyName && cb.Checked)
+                        {
+                            warnings.Add(new List<string> { "Hide Chat Log for Privacy is enabled" });
+                        }
+
+                        checkboxes.Remove(cbName);
+                    }
+
+                    // Include any unknown checkboxes last with text as written.
+                    foreach (var cb in checkboxes.Values)
+                    {
+                        settings.Add(new List<string> { cb.Text, cb.Checked.ToString() });
+                    }
+                }
             }
             else
             {
@@ -108,26 +154,18 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        private static void GetCheckboxValues(SimpleTable settings, SimpleTable warnings, Control.ControlCollection controls)
+        private static void GetCheckboxes(Control.ControlCollection controls, Dictionary<string, CheckBox> checkboxes)
         {
             foreach (Control control in controls)
             {
                 if (control.GetType() == typeof(CheckBox))
                 {
-                    // TODO: should we accumulate and sort these settings?
                     CheckBox cb = (CheckBox)control;
-                    settings.Add(new List<string> { cb.Text, cb.Checked.ToString() });
-
-                    // TODO: it's unfortunate to have to do a string comparison to find this,
-                    // but Ravahn would have to expose this more programmatically otherwise.
-                    if (cb.Text.Contains("Hide Chat Log") && cb.Checked)
-                    {
-                        warnings.Add(new List<string> { "Hide Chat Log for Privacy is enabled" });
-                    }
+                    checkboxes.Add(cb.Name, cb);
                 }
                 if (control.Controls.Count > 0)
                 {
-                    GetCheckboxValues(settings, warnings, control.Controls);
+                    GetCheckboxes(control.Controls, checkboxes);
                 }
             }
         }
