@@ -5,7 +5,7 @@ using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage.FFXIVClientStructs
+namespace RainbowMage.OverlayPlugin.MemoryProcessors.FFXIVClientStructs
 {
     public enum DataNamespace
     {

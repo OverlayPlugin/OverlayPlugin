@@ -507,7 +507,7 @@ tunnels:
                     var apiUrl = "http://127.0.0.1:" + (_config.WSServerPort + 1) + "/api/tunnels";
                     var headers = new Dictionary<string, string>()
                     {
-                        { "Content-Type", "application/json" },
+                        { "Accept", "application/json" },
                     };
 
                     string data = null;

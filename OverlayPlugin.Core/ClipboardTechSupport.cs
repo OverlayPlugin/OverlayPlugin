@@ -5,10 +5,8 @@ using System.Linq;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
 using Newtonsoft.Json.Linq;
-using RainbowMage.OverlayPlugin.EventSources;
 
 // TODO: print warnings on plugin ordering
-// TODO: get Ravahn to expose more settings and include them
 // TODO: print warning on cactbot plugin / url / user dir mismatch
 // TODO: include first N lines of OverlayPlugin log
 
@@ -25,10 +23,26 @@ namespace RainbowMage.OverlayPlugin
         private SimpleTable settings;
         private SimpleTable warnings;
 
+        static string hideChatLogForPrivacyName = "chkDisableCombatLog";
+
+        // A map of CheckBox names to text.  Right now this text matches what the FFXIV Plugin usues in English.
+        static List<(string, string)> pluginCheckboxMap = new List<(string, string)> {
+            ( "chkUseDeucalion", "Inject and use Deucalion for network data" ),
+            ( hideChatLogForPrivacyName, "Hide Chat Log (for privacy)" ),
+            ( "chkUsePcap", "Use WinPCap-compatible library for network data" ),
+            ( "chkDisableSocketFilter", "Disable high-performance network filter" ),
+            ( "chkDisableCombinePets", "Disable Combine Pets with Owner" ),
+            ( "chkDisableDamageShield", "Disable Damage Shield estimates" ),
+            ( "chkShowDebug", "(DEBUG) Enable Debug Options" ),
+            ( "chkLogAllNetwork", "(DEBUG) Log all Network Packets" ),
+            ( "chkShowRealDoTs", "(DEBUG) Also Show 'Real' DoT Ticks" ),
+            ( "chkSimulateDoTCrits", "(DEBUG) Simulate Individual DoT Crits" ),
+            ( "chkGraphPotency", "(DEBUG) Graph Potency, not Damage" ),
+            ( "chkEnableBenchmark", "(DEBUG) Enable Benchmark Tab" ),
+        };
+
         public ClipboardTechSupport(TinyIoCContainer container)
         {
-            var repository = container.Resolve<FFXIVRepository>();
-
             warnings = new SimpleTable { new List<string> { "Warnings" } };
 
             plugins = new SimpleTable { new List<string> { "Plugin Name", "Enabled", "Version", "Path" } };
@@ -58,10 +72,50 @@ namespace RainbowMage.OverlayPlugin
             }
 
             settings = new SimpleTable { new List<string> { "Various Settings", "Value" } };
-            settings.Add(new List<string> { "Plugin Language", repository.GetLanguage().ToString() });
-            settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
-            string gameVersion = repository.GetGameVersion();
-            settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
+            var repository = container.Resolve<FFXIVRepository>();
+            if (repository.IsFFXIVPluginPresent())
+            {
+                settings.Add(new List<string> { "Plugin Language", repository.GetLanguage().ToString() });
+                settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
+                string gameVersion = repository.GetGameVersion();
+                settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
+
+                var tabPage = repository.GetPluginTabPage();
+                if (tabPage != null)
+                {
+                    Dictionary<string, CheckBox> checkboxes = new Dictionary<string, CheckBox>();
+                    GetCheckboxes(tabPage.Controls, checkboxes);
+
+                    // Include all known checkboxes first in order, with English text.
+                    foreach (var (cbName, settingText) in pluginCheckboxMap)
+                    {
+                        CheckBox cb;
+                        if (!checkboxes.TryGetValue(cbName, out cb))
+                        {
+                            continue;
+                        }
+
+                        settings.Add(new List<string> { settingText, cb.Checked.ToString() });
+
+                        if (cb.Name == hideChatLogForPrivacyName && cb.Checked)
+                        {
+                            warnings.Add(new List<string> { "Hide Chat Log for Privacy is enabled" });
+                        }
+
+                        checkboxes.Remove(cbName);
+                    }
+
+                    // Include any unknown checkboxes last with text as written.
+                    foreach (var cb in checkboxes.Values)
+                    {
+                        settings.Add(new List<string> { cb.Text, cb.Checked.ToString() });
+                    }
+                }
+            }
+            else
+            {
+                warnings.Add(new List<string> { "FFXIV plugin not present" });
+            }
 
             // Note: this is a little bit of an abstraction violation to have OverlayPlugin
             // throw up information about cactbot.  For now, this is a single one-off
@@ -100,6 +154,22 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        private static void GetCheckboxes(Control.ControlCollection controls, Dictionary<string, CheckBox> checkboxes)
+        {
+            foreach (Control control in controls)
+            {
+                if (control.GetType() == typeof(CheckBox))
+                {
+                    CheckBox cb = (CheckBox)control;
+                    checkboxes.Add(cb.Name, cb);
+                }
+                if (control.Controls.Count > 0)
+                {
+                    GetCheckboxes(control.Controls, checkboxes);
+                }
+            }
+        }
+
         private string TableToString(SimpleTable input)
         {
             // Find the maximum length of each column.
@@ -107,7 +177,7 @@ namespace RainbowMage.OverlayPlugin
             int numColumns = input.Select(x => x.Count).Max();
             for (int column = 0; column < numColumns; ++column)
             {
-                lengths.Add(input.Select(x => x.ElementAtOrDefault(column).Length).Max());
+                lengths.Add(input.Select(x => x.ElementAtOrDefault(column)?.Length ?? 0).Max());
             }
 
             // Construct a line of hyphens to place after the first row.
@@ -135,7 +205,7 @@ namespace RainbowMage.OverlayPlugin
 
         public void CopyToClipboard()
         {
-            string text = "";
+            string text = "```\n";
             if (warnings.Count > 1)
             {
                 text += TableToString(warnings);
@@ -147,6 +217,7 @@ namespace RainbowMage.OverlayPlugin
             text += TableToString(overlays);
             text += "\n\n";
             text += TableToString(settings);
+            text += "```\n";
 
             Clipboard.SetText(text);
         }

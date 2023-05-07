@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
 
-namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkGui.FFXIVClientStructs
+namespace RainbowMage.OverlayPlugin.MemoryProcessors.FFXIVClientStructs
 {
     /// <summary>
     /// This class acts as a proxy to FFXIV process memory, based on a struct.
@@ -348,7 +348,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkGui.FFXIVClientStructs
                     var array = Array.CreateInstance(fixedBuffer.ElementType, elementCount);
                     fixed (void* tPtr = &rawObject)
                     {
-                        byte* fixedPtr = ((byte*)tPtr) + offset;
+                        byte* fixedPtr = (byte*)tPtr + offset;
                         for (int i = 0; i < elementCount; ++i)
                         {
                             // Cast this pointer to the correct type and add it to the array at the correct position
@@ -361,7 +361,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkGui.FFXIVClientStructs
                 {
                     object str = field.GetValue(rawObject);
                     long strPtr = (long)Pointer.Unbox(str.GetType().GetField("StringPtr").GetValue(str));
-                    long strLen = ((long)str.GetType().GetField("BufUsed").GetValue(str)) - 1;
+                    long strLen = (long)str.GetType().GetField("BufUsed").GetValue(str) - 1;
                     var bytes = memory.GetByteArray(new IntPtr(strPtr), (int)strLen);
                     valMap[field.Name] = System.Text.Encoding.UTF8.GetString(bytes);
                 }
@@ -397,33 +397,33 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkGui.FFXIVClientStructs
             switch (elementType.Name)
             {
                 case "Boolean":
-                    return *(Boolean*)v;
+                    return *(bool*)v;
                 case "Byte":
-                    return *(Byte*)v;
+                    return *v;
                 case "SByte":
-                    return *(SByte*)v;
+                    return *(sbyte*)v;
                 case "Int16":
-                    return *(Int16*)v;
+                    return *(short*)v;
                 case "UInt16":
-                    return *(UInt16*)v;
+                    return *(ushort*)v;
                 case "Int32":
-                    return *(Int32*)v;
+                    return *(int*)v;
                 case "UInt32":
-                    return *(UInt32*)v;
+                    return *(uint*)v;
                 case "Int64":
-                    return *(Int64*)v;
+                    return *(long*)v;
                 case "UInt64":
-                    return *(UInt64*)v;
+                    return *(ulong*)v;
                 case "IntPtr":
                     return *(IntPtr*)v;
                 case "UIntPtr":
                     return *(UIntPtr*)v;
                 case "Char":
-                    return *(Char*)v;
+                    return *(char*)v;
                 case "Double":
-                    return *(Double*)v;
+                    return *(double*)v;
                 case "Single":
-                    return *(Single*)v;
+                    return *(float*)v;
                 default:
                     // Should be impossible
                     return null;
@@ -476,7 +476,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkGui.FFXIVClientStructs
                 ReadBaseObjFromMemory();
             }
 
-            return (T)rawObject;
+            return rawObject;
         }
 
         [IgnoreDataMember]
@@ -585,7 +585,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkGui.FFXIVClientStructs
 
             for (int i = 0; i < count; ++i)
             {
-                IntPtr objPtr = new IntPtr(((long)firstPtr) + (objSize * i));
+                IntPtr objPtr = new IntPtr((long)firstPtr + objSize * i);
                 dynamic obj = ManagedType<int>.GetDynamicManagedTypeFromIntPtr(objPtr, memory, objType, readPtrMap);
                 list.Add(obj.ToType());
             }

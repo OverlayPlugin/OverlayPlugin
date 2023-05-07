@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using RainbowMage.OverlayPlugin.MemoryProcessors;
-using RainbowMage.OverlayPlugin.MemoryProcessors.AtkGui.FFXIVClientStructs;
 using RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage;
 
 namespace RainbowMage.OverlayPlugin.EventSources

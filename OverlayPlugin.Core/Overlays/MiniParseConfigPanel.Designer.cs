@@ -1,4 +1,4 @@
-﻿namespace RainbowMage.OverlayPlugin.Overlays
+namespace RainbowMage.OverlayPlugin.Overlays
 {
     partial class MiniParseConfigPanel
     {

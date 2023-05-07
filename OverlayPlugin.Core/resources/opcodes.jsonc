@@ -207,6 +207,10 @@
         "CEDirector": {
             "opcode": 275,
             "size": 16
+        },
+        "RSVData": {
+            "opcode": 631,
+            "size": 1080
         }
     },
     "2023.01.25.0000.0000": {
@@ -266,6 +270,34 @@
         },
         "CEDirector": {
             "opcode": 647,
+            "size": 16
+        }
+    },
+    "2023.03.24.0000.0000": {
+        // Region: Global
+        // Version: 6.38
+        "MapEffect": {
+            "opcode": 280,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 685,
+            "size": 16
+        },
+        "RSVData": {
+            "opcode": 239,
+            "size": 1080
+        }
+    },
+    "2023.03.30.0000.0000": {
+        // Region: KR
+        // Version: 6.25
+        "MapEffect": {
+            "opcode": 744,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 869,
             "size": 16
         }
     }

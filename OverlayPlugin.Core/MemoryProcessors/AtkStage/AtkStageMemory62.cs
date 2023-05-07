@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using FFXIVClientStructs.Global.FFXIV.Component.GUI;
-using RainbowMage.OverlayPlugin.MemoryProcessors.AtkGui.FFXIVClientStructs;
+using RainbowMage.OverlayPlugin.MemoryProcessors.FFXIVClientStructs;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage
 {
@@ -14,8 +14,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage
     {
         private static long GetAtkStageSingletonAddress(TinyIoCContainer container)
         {
-            var data = container.Resolve<FFXIVClientStructs.Data>();
-            return (long)data.GetClassInstanceAddress(FFXIVClientStructs.DataNamespace.Global, "Component::GUI::AtkStage");
+            var data = container.Resolve<Data>();
+            return (long)data.GetClassInstanceAddress(DataNamespace.Global, "Component::GUI::AtkStage");
         }
 
         public AtkStageMemory62(TinyIoCContainer container) : base(container, GetAtkStageSingletonAddress(container)) { }

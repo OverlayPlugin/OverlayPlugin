@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
 using RainbowMage.OverlayPlugin.MemoryProcessors.InCombat;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
 using RainbowMage.OverlayPlugin.Updater;
@@ -20,6 +21,8 @@ namespace RainbowMage.OverlayPlugin
             container.Register(new LineFateControl(container));
             container.Register(new LineCEDirector(container));
             container.Register(new LineInCombat(container));
+            container.Register(new LineCombatant(container));
+            container.Register(new LineRSV(container));
         }
     }
 

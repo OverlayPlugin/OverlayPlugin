@@ -45,6 +45,7 @@ namespace StripFFXIVClientStructs
             "AssemblyConfiguration",
             "InfoProxy",
             "VTableAddress",
+            "FixedString",
         };
 
         // Files whose relative path start with an entry in this array are skipped for transformation
@@ -327,7 +328,7 @@ namespace StripFFXIVClientStructs
             private Dictionary<string, string> remapUsingAliases = new Dictionary<string, string>();
 
             /// <param name="ns">Top-level namespace, e.g. `Global`</param>
-            public SyntaxRewriter(string ns)
+            public SyntaxRewriter(string ns) : base(true)
             {
                 structsNS = ns;
             }
@@ -363,6 +364,16 @@ namespace StripFFXIVClientStructs
                 }
 
                 return base.Visit(node);
+            }
+
+            public override SyntaxNode VisitRegionDirectiveTrivia(RegionDirectiveTriviaSyntax node)
+            {
+                return SyntaxFactory.SkippedTokensTrivia();
+            }
+
+            public override SyntaxNode VisitEndRegionDirectiveTrivia(EndRegionDirectiveTriviaSyntax node)
+            {
+                return SyntaxFactory.SkippedTokensTrivia();
             }
 
             public override SyntaxNode VisitUsingDirective(UsingDirectiveSyntax node)
