@@ -498,9 +498,20 @@ version: 2
                     p.StartInfo.RedirectStandardError = true;
                     p.StartInfo.RedirectStandardOutput = true;
 
+                    var ngrokTooOld = false;
+
                     DataReceivedEventHandler showLine = (_, ev) =>
                     {
-                        if (ev.Data != null) simpLogBox.AppendText(ev.Data.Replace("\n", "\r\n") + "\r\n");
+                        if (ev.Data != null)
+                        {
+                            simpLogBox.AppendText(ev.Data.Replace("\n", "\r\n") + "\r\n");
+                            // ERR_NGROK_120  Your ngrok agent version "<VERSION>" is no longer supported.
+                            // ERR_NGROK_121  Your ngrok agent version "<VERSION>" is too old.
+                            if (Regex.IsMatch(ev.Data, "\\bERR_NGROK_12[01]\\b"))
+                            {
+                                ngrokTooOld = true;
+                            }
+                        }
                     };
 
                     p.OutputDataReceived += showLine;
@@ -512,8 +523,16 @@ version: 2
 
                     if (p.WaitForExit(3000))
                     {
+                        // Ensure OutputDataReceived and ErrorDataReceived have finished processing so that ngrokTooOld is reliable
+                        p.WaitForExit();
                         simpLogBox.AppendText("ngrok crashed!\r\n");
                         UpdateTunnelStatus(TunnelStatus.Error);
+                        if (ngrokTooOld)
+                        {
+                            simpLogBox.AppendText("ngrok version is too old!\r\n");
+                            simpLogBox.AppendText("Deleting old version. Start again to redownload.\r\n");
+                            File.Delete(ngrokPath);
+                        }
                         return;
                     }
 
