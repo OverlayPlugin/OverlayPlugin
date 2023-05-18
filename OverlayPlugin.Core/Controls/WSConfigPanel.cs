@@ -418,6 +418,19 @@ namespace RainbowMage.OverlayPlugin
                 try
                 {
                     var ngrokPath = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "ngrok-" + (Environment.Is64BitOperatingSystem ? "x64" : "x86") + ".exe");
+                    var ngrokConfigPath = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "ngrok.yml");
+
+                    if (File.Exists(ngrokConfigPath))
+                    {
+                        var oldConfig = File.ReadAllText(ngrokConfigPath);
+                        if (!Regex.IsMatch(oldConfig, "^version: 2$", RegexOptions.Multiline))
+                        {
+                            simpLogBox.AppendText("Old config file found. Updating ngrok...\r\n");
+                            File.Delete(ngrokPath);
+                            File.Delete(ngrokConfigPath);
+                        }
+                    }
+
                     if (!File.Exists(ngrokPath))
                     {
                         if (!FetchNgrok(ngrokPath)) return;
@@ -471,9 +484,10 @@ tunnels:
         proto: http
         addr: 127.0.0.1:" + _config.WSServerPort + @"
         inspect: false
-        bind_tls: true
-    ";
-                    var ngrokConfigPath = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "ngrok.yml");
+        schemes:
+            - https
+version: 2
+";
                     File.WriteAllText(ngrokConfigPath, config);
 
                     var p = new Process();
