@@ -20,6 +20,7 @@ namespace RainbowMage.OverlayPlugin
     public partial class WSConfigPanel : UserControl
     {
         const string MKCERT_DOWNLOAD = "https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-windows-amd64.exe";
+        const string NGROK_CHOCO_SCRIPT = "https://raw.githubusercontent.com/ngrok/choco-ngrok/main/tools/chocolateyinstall.ps1";
 
         IPluginConfig _config;
         WSServer _server;
@@ -605,11 +606,28 @@ tunnels:
             {
                 UpdateTunnelStatus(TunnelStatus.Downloading);
 
-                // Use latest known 2.x because 3.x is incompatible
-                // URLs from https://dl.equinox.io/ngrok/ngrok/stable/archive
-                var ngrokUrl = Environment.Is64BitOperatingSystem ?
-                    "https://bin.equinox.io/a/8exBtGpBr59/ngrok-2.3.40-windows-amd64.zip" :
-                    "https://bin.equinox.io/a/cfjNxTRk1tM/ngrok-2.3.40-windows-386.zip";
+                simpLogBox.AppendText("Fetching latest ngrok version...\r\n");
+                string ngrokScript;
+                try
+                {
+                    ngrokScript = HttpClientWrapper.Get(NGROK_CHOCO_SCRIPT);
+                }
+                catch (Exception e)
+                {
+                    simpLogBox.AppendText(string.Format("\r\nFailed: {0}\r\n\r\n", e));
+                    return false;
+                }
+
+                //  url           = 'https://bin.equinox.io/a/dpwUDwNBzwV/ngrok-v3-3.3.0-windows-386.zip'
+                //  url64bit      = 'https://bin.equinox.io/a/516AtQ83xaN/ngrok-v3-3.3.0-windows-amd64.zip'
+                var urlKey = Environment.Is64BitOperatingSystem ? "url64bit" : "url";
+                var match = Regex.Match(ngrokScript, "^\\s*" + urlKey + "\\s*=\\s*'(https://[^']+)'\\s*$", RegexOptions.Multiline);
+                if (match == Match.Empty)
+                {
+                    simpLogBox.AppendText("Failed to find download URL in the install script! Please notify OverlayPlugin devs.\r\n");
+                    return false;
+                }
+                var ngrokUrl = match.Groups[1].Captures[0].Value;
 
                 simpLogBox.AppendText("Downloading ngrok client...\r\n");
                 try
