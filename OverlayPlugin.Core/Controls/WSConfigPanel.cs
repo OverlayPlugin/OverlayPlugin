@@ -413,7 +413,8 @@ namespace RainbowMage.OverlayPlugin
         {
             simpStartBtn.Enabled = false;
 
-            Task.Run(() =>
+            // Named helper function to allow recursion/retry
+            void StartTunnel()
             {
                 try
                 {
@@ -431,9 +432,11 @@ namespace RainbowMage.OverlayPlugin
                         }
                     }
 
+                    var fetchedNgrok = false; // Used to prevent infinite recursion in case ngrok reports too old version but redownloading doesn't fix it
                     if (!File.Exists(ngrokPath))
                     {
                         if (!FetchNgrok(ngrokPath)) return;
+                        fetchedNgrok = true;
                     }
 
                     UpdateTunnelStatus(TunnelStatus.Launching);
@@ -530,9 +533,19 @@ version: 2
                         UpdateTunnelStatus(TunnelStatus.Error);
                         if (ngrokTooOld)
                         {
-                            simpLogBox.AppendText("ngrok version is too old!\r\n");
-                            simpLogBox.AppendText("Deleting old version. Start again to redownload.\r\n");
-                            File.Delete(ngrokPath);
+                            if (!fetchedNgrok)
+                            {
+                                simpLogBox.AppendText("ngrok version is too old!\r\n");
+                                simpLogBox.AppendText("Deleting old version and retrying...\r\n");
+                                File.Delete(ngrokPath);
+                                // The inner StartTunnel call will try to download and either succeed and set fetchedNgrok = true,
+                                // or fail and not reach here, either way avoiding infinite recursion.
+                                StartTunnel();
+                            }
+                            else
+                            {
+                                simpLogBox.AppendText("Downloaded ngrok version is too old. Please notify OverlayPlugin devs.\r\n");
+                            }
                         }
                         return;
                     }
@@ -615,7 +628,9 @@ version: 2
                     simpLogBox.AppendText(string.Format("\r\nUncaught exception: {0}\r\n\r\n", ex));
                     UpdateTunnelStatus(TunnelStatus.Error);
                 }
-            });
+            }
+
+            Task.Run(StartTunnel);
         }
 
         private bool NgrokProgressCallback(long resumed, long dltotal, long dlnow, long ultotal, long ulnow)
