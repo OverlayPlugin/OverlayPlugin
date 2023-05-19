@@ -435,7 +435,11 @@ namespace RainbowMage.OverlayPlugin
                     var fetchedNgrok = false; // Used to prevent infinite recursion in case ngrok reports too old version but redownloading doesn't fix it
                     if (!File.Exists(ngrokPath))
                     {
-                        if (!FetchNgrok(ngrokPath)) return;
+                        if (!FetchNgrok(ngrokPath))
+                        {
+                            UpdateTunnelStatus(TunnelStatus.Error);
+                            return;
+                        }
                         fetchedNgrok = true;
                     }
 
