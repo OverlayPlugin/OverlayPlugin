@@ -505,6 +505,7 @@ version: 2
                         if (ev.Data != null)
                         {
                             simpLogBox.AppendText(ev.Data.Replace("\n", "\r\n") + "\r\n");
+                            // From https://ngrok.com/docs/errors/
                             // ERR_NGROK_120  Your ngrok agent version "<VERSION>" is no longer supported.
                             // ERR_NGROK_121  Your ngrok agent version "<VERSION>" is too old.
                             if (Regex.IsMatch(ev.Data, "\\bERR_NGROK_12[01]\\b"))
@@ -657,12 +658,12 @@ version: 2
                 var match = Regex.Match(ngrokScript, "^\\s*" + urlKey + "\\s*=\\s*'(https://[^']+)'\\s*$", RegexOptions.Multiline);
                 if (match == Match.Empty)
                 {
-                    simpLogBox.AppendText("Failed to find download URL in the install script! Please notify OverlayPlugin devs.\r\n");
+                    simpLogBox.AppendText("Failed to find download URL in ngrok install script! Please notify OverlayPlugin devs.\r\n");
                     return false;
                 }
                 var ngrokUrl = match.Groups[1].Captures[0].Value;
 
-                simpLogBox.AppendText("Downloading ngrok client...\r\n");
+                simpLogBox.AppendText(string.Format("Downloading ngrok client from {0}\r\n", ngrokUrl));
                 try
                 {
                     HttpClientWrapper.Get(ngrokUrl, new Dictionary<string, string>(), ngrokPath + ".zip", NgrokProgressCallback, false);
