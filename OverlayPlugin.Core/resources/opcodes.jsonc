@@ -321,7 +321,7 @@
         // Region: Global
         // Version: 6.40
         "MapEffect": {
-            "opcode": 502,
+            "opcode": 264,
             "size": 11
         },
         "CEDirector": {
