@@ -150,4 +150,7 @@
   <data name="btnClipboardTechSupport.Text" xml:space="preserve">
     <value>复制技术支持信息到剪贴板</value>
   </data>
+  <data name="btnClearCEFCache.Text" xml:space="preserve">
+    <value>重启时清除 CEF 缓存</value>
+  </data>
 </root>
