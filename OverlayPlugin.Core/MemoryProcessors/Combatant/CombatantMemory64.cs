@@ -18,7 +18,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
         public override Version GetVersion()
         {
-            return new Version(6, 3);
+            return new Version(6, 4);
         }
 
         // Returns a combatant if the combatant is a mob or a PC.
