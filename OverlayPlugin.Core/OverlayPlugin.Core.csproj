@@ -101,6 +101,7 @@
     <Compile Include="MemoryProcessors\AtkStage\AtkStageMemory.cs" />
     <Compile Include="MemoryProcessors\AtkStage\AtkStageMemory62.cs" />
     <Compile Include="MemoryProcessors\AtkStage\AtkStageMemoryManager.cs" />
+    <Compile Include="MemoryProcessors\Combatant\CombatantMemory64.cs" />
     <Compile Include="MemoryProcessors\FFXIVClientStructs\Data.cs" />
     <Compile Include="MemoryProcessors\FFXIVClientStructs\ManagedType.cs" />
     <Compile Include="MemoryProcessors\Combatant\LineCombatant.cs" />
