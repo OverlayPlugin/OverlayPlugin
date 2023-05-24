@@ -205,7 +205,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0x19DF)]
             public byte AggressionStatus;
 
-            [FieldOffset(0x1A88)]
+            [FieldOffset(0x1AB8)]
             public uint NPCTargetID;
 
             [FieldOffset(0x1B00)]
