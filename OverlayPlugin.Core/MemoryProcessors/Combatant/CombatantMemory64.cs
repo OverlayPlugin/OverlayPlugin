@@ -194,7 +194,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0x1E3)]
             public byte Level;
 
-            [FieldOffset(0xC80)]
+            [FieldOffset(0xCB0)]
             public uint PCTargetID;
 
             // TODO: this is incorrect in 6.3, please fix
