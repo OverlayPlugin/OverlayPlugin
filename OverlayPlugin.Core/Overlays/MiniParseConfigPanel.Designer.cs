@@ -1,4 +1,4 @@
-namespace RainbowMage.OverlayPlugin.Overlays
+﻿namespace RainbowMage.OverlayPlugin.Overlays
 {
     partial class MiniParseConfigPanel
     {
@@ -79,7 +79,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.buttonMiniParseOpenDevTools = new System.Windows.Forms.Button();
             this.buttonMiniParseReloadBrowser = new System.Windows.Forms.Button();
             this.buttonResetOverlayPosition = new System.Windows.Forms.Button();
-            this.btnClearCache = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -106,7 +105,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
             // tabGeneral
             // 
             resources.ApplyResources(this.tabGeneral, "tabGeneral");
-            this.tabGeneral.Controls.Add(this.btnClearCache);
             this.tabGeneral.Controls.Add(this.label14);
             this.tabGeneral.Controls.Add(this.cbHideOutOfCombat);
             this.tabGeneral.Controls.Add(this.applyPresetCombo);
@@ -470,13 +468,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.buttonResetOverlayPosition.UseVisualStyleBackColor = true;
             this.buttonResetOverlayPosition.Click += new System.EventHandler(this.buttonResetOverlayPosition_Click);
             // 
-            // btnClearCache
-            // 
-            resources.ApplyResources(this.btnClearCache, "btnClearCache");
-            this.btnClearCache.Name = "btnClearCache";
-            this.btnClearCache.UseVisualStyleBackColor = true;
-            this.btnClearCache.Click += new System.EventHandler(this.btnClearCache_Click);
-            // 
             // MiniParseConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -556,6 +547,5 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private System.Windows.Forms.ComboBox applyPresetCombo;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.CheckBox cbHideOutOfCombat;
-        private System.Windows.Forms.Button btnClearCache;
     }
 }

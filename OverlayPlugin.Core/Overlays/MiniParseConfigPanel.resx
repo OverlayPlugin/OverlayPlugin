@@ -126,30 +126,6 @@
     <value>True</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnClearCache.Location" type="System.Drawing.Point, System.Drawing">
-    <value>190, 505</value>
-  </data>
-  <data name="btnClearCache.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 37</value>
-  </data>
-  <data name="btnClearCache.TabIndex" type="System.Int32, mscorlib">
-    <value>44</value>
-  </data>
-  <data name="btnClearCache.Text" xml:space="preserve">
-    <value>Clear Cache</value>
-  </data>
-  <data name="&gt;&gt;btnClearCache.Name" xml:space="preserve">
-    <value>btnClearCache</value>
-  </data>
-  <data name="&gt;&gt;btnClearCache.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnClearCache.Parent" xml:space="preserve">
-    <value>tabGeneral</value>
-  </data>
-  <data name="&gt;&gt;btnClearCache.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="label14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>

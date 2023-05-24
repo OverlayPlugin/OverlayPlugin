@@ -400,33 +400,6 @@ namespace RainbowMage.HtmlRenderer
             return null;
         }
 
-        public async void ClearCache()
-        {
-            try
-            {
-                if (_browser == null) return;
-
-                // Find the first / after https://
-                var slashAfterHost = lastUrl.IndexOf("/", 9);
-
-                // If we can't build an origin, there's nothing we can do.
-                if (slashAfterHost < 0) return;
-
-                var origin = lastUrl.Substring(0, slashAfterHost);
-                var dtc = DevToolsExtensions.GetDevToolsClient(_browser);
-                var result = await dtc.Storage.ClearDataForOriginAsync(origin, "appcache,cookies,file_systems,cache_storage");
-
-                BrowserConsoleLog?.Invoke(null, new BrowserConsoleLogEventArgs(result.Success ? result.ResponseAsJsonString : "fail", "", 0));
-
-                // Reload the overlay to refill the cache and replace that potentially corrupted resources.
-                Reload();
-            }
-            catch (Exception ex)
-            {
-                BrowserConsoleLog?.Invoke(null, new BrowserConsoleLogEventArgs($"Failed to clear cache: {ex}", "", 0));
-            }
-        }
-
         public void Dispose()
         {
             if (this._browser != null)
@@ -437,6 +410,10 @@ namespace RainbowMage.HtmlRenderer
         }
 
         static bool initialized = false;
+        private static string CachePath = null;
+
+        // Delete all folders which don't potentially contain overlay configuration information
+        private static readonly string[] CacheFolders = new string[] { "Cache", "Code Cache", "GPUCache" };
 
         public static void Initialize(string pluginDirectory, string appDataDirectory, bool reportErrors)
         {
@@ -470,11 +447,13 @@ namespace RainbowMage.HtmlRenderer
                     lang = "en-US";
                 }
 
+                CachePath = Path.Combine(appDataDirectory, "OverlayPluginCache");
+
                 var cefSettings = new CefSettings
                 {
                     WindowlessRenderingEnabled = true,
                     Locale = lang,
-                    CachePath = Path.Combine(appDataDirectory, "OverlayPluginCache"),
+                    CachePath = CachePath,
                     MultiThreadedMessageLoop = true,
                     LogFile = Path.Combine(appDataDirectory, "OverlayPluginCEF.log"),
 #if DEBUG
@@ -514,12 +493,14 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
-        public static void Shutdown()
+        public static bool Shutdown()
         {
             if (initialized)
             {
                 Cef.Shutdown();
+                return true;
             }
+            return false;
         }
 
         public static void EnableErrorReports(string appDataDirectory)
@@ -556,6 +537,21 @@ MaxUploadsPerDay=0
 ";
             File.WriteAllText(cfgPath, cfgText);
             File.WriteAllText(subCfgPath, cfgText);
+        }
+
+        public static void ClearCache()
+        {
+            if (CachePath != null)
+            {
+                foreach (var folder in CacheFolders)
+                {
+                    var fullPath = Path.Combine(CachePath, folder);
+                    if (Directory.Exists(fullPath))
+                    {
+                        Directory.Delete(fullPath, true);
+                    }
+                }
+            }
         }
 
         public static void DisableErrorReports(string appDataDirectory)

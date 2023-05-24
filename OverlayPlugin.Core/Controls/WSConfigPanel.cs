@@ -20,6 +20,7 @@ namespace RainbowMage.OverlayPlugin
     public partial class WSConfigPanel : UserControl
     {
         const string MKCERT_DOWNLOAD = "https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-windows-amd64.exe";
+        const string NGROK_CHOCO_SCRIPT = "https://raw.githubusercontent.com/ngrok/choco-ngrok/main/tools/chocolateyinstall.ps1";
 
         IPluginConfig _config;
         WSServer _server;
@@ -412,14 +413,34 @@ namespace RainbowMage.OverlayPlugin
         {
             simpStartBtn.Enabled = false;
 
-            Task.Run(() =>
+            // Named helper function to allow recursion/retry
+            void StartTunnel()
             {
                 try
                 {
                     var ngrokPath = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "ngrok-" + (Environment.Is64BitOperatingSystem ? "x64" : "x86") + ".exe");
+                    var ngrokConfigPath = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "ngrok.yml");
+
+                    if (File.Exists(ngrokConfigPath))
+                    {
+                        var oldConfig = File.ReadAllText(ngrokConfigPath);
+                        if (!Regex.IsMatch(oldConfig, "^version: 2$", RegexOptions.Multiline))
+                        {
+                            simpLogBox.AppendText("Old config file found. Updating ngrok...\r\n");
+                            File.Delete(ngrokPath);
+                            File.Delete(ngrokConfigPath);
+                        }
+                    }
+
+                    var fetchedNgrok = false; // Used to prevent infinite recursion in case ngrok reports too old version but redownloading doesn't fix it
                     if (!File.Exists(ngrokPath))
                     {
-                        if (!FetchNgrok(ngrokPath)) return;
+                        if (!FetchNgrok(ngrokPath))
+                        {
+                            UpdateTunnelStatus(TunnelStatus.Error);
+                            return;
+                        }
+                        fetchedNgrok = true;
                     }
 
                     UpdateTunnelStatus(TunnelStatus.Launching);
@@ -470,9 +491,10 @@ tunnels:
         proto: http
         addr: 127.0.0.1:" + _config.WSServerPort + @"
         inspect: false
-        bind_tls: true
-    ";
-                    var ngrokConfigPath = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "ngrok.yml");
+        schemes:
+            - https
+version: 2
+";
                     File.WriteAllText(ngrokConfigPath, config);
 
                     var p = new Process();
@@ -483,9 +505,21 @@ tunnels:
                     p.StartInfo.RedirectStandardError = true;
                     p.StartInfo.RedirectStandardOutput = true;
 
+                    var ngrokTooOld = false;
+
                     DataReceivedEventHandler showLine = (_, ev) =>
                     {
-                        if (ev.Data != null) simpLogBox.AppendText(ev.Data.Replace("\n", "\r\n") + "\r\n");
+                        if (ev.Data != null)
+                        {
+                            simpLogBox.AppendText(ev.Data.Replace("\n", "\r\n") + "\r\n");
+                            // From https://ngrok.com/docs/errors/
+                            // ERR_NGROK_120  Your ngrok agent version "<VERSION>" is no longer supported.
+                            // ERR_NGROK_121  Your ngrok agent version "<VERSION>" is too old.
+                            if (Regex.IsMatch(ev.Data, "\\bERR_NGROK_12[01]\\b"))
+                            {
+                                ngrokTooOld = true;
+                            }
+                        }
                     };
 
                     p.OutputDataReceived += showLine;
@@ -497,8 +531,26 @@ tunnels:
 
                     if (p.WaitForExit(3000))
                     {
+                        // Ensure OutputDataReceived and ErrorDataReceived have finished processing so that ngrokTooOld is reliable
+                        p.WaitForExit();
                         simpLogBox.AppendText("ngrok crashed!\r\n");
                         UpdateTunnelStatus(TunnelStatus.Error);
+                        if (ngrokTooOld)
+                        {
+                            if (!fetchedNgrok)
+                            {
+                                simpLogBox.AppendText("ngrok version is too old!\r\n");
+                                simpLogBox.AppendText("Deleting old version and retrying...\r\n");
+                                File.Delete(ngrokPath);
+                                // The inner StartTunnel call will try to download and either succeed and set fetchedNgrok = true,
+                                // or fail and not reach here, either way avoiding infinite recursion.
+                                StartTunnel();
+                            }
+                            else
+                            {
+                                simpLogBox.AppendText("Downloaded ngrok version is too old. Please notify OverlayPlugin devs.\r\n");
+                            }
+                        }
                         return;
                     }
 
@@ -580,7 +632,9 @@ tunnels:
                     simpLogBox.AppendText(string.Format("\r\nUncaught exception: {0}\r\n\r\n", ex));
                     UpdateTunnelStatus(TunnelStatus.Error);
                 }
-            });
+            }
+
+            Task.Run(StartTunnel);
         }
 
         private bool NgrokProgressCallback(long resumed, long dltotal, long dlnow, long ultotal, long ulnow)
@@ -605,13 +659,30 @@ tunnels:
             {
                 UpdateTunnelStatus(TunnelStatus.Downloading);
 
-                // Use latest known 2.x because 3.x is incompatible
-                // URLs from https://dl.equinox.io/ngrok/ngrok/stable/archive
-                var ngrokUrl = Environment.Is64BitOperatingSystem ?
-                    "https://bin.equinox.io/a/8exBtGpBr59/ngrok-2.3.40-windows-amd64.zip" :
-                    "https://bin.equinox.io/a/cfjNxTRk1tM/ngrok-2.3.40-windows-386.zip";
+                simpLogBox.AppendText("Fetching latest ngrok version...\r\n");
+                string ngrokScript;
+                try
+                {
+                    ngrokScript = HttpClientWrapper.Get(NGROK_CHOCO_SCRIPT);
+                }
+                catch (Exception e)
+                {
+                    simpLogBox.AppendText(string.Format("\r\nFailed: {0}\r\n\r\n", e));
+                    return false;
+                }
 
-                simpLogBox.AppendText("Downloading ngrok client...\r\n");
+                //  url           = 'https://bin.equinox.io/a/dpwUDwNBzwV/ngrok-v3-3.3.0-windows-386.zip'
+                //  url64bit      = 'https://bin.equinox.io/a/516AtQ83xaN/ngrok-v3-3.3.0-windows-amd64.zip'
+                var urlKey = Environment.Is64BitOperatingSystem ? "url64bit" : "url";
+                var match = Regex.Match(ngrokScript, "^\\s*" + urlKey + "\\s*=\\s*'(https://[^']+)'\\s*$", RegexOptions.Multiline);
+                if (match == Match.Empty)
+                {
+                    simpLogBox.AppendText("Failed to find download URL in ngrok install script! Please notify OverlayPlugin devs.\r\n");
+                    return false;
+                }
+                var ngrokUrl = match.Groups[1].Captures[0].Value;
+
+                simpLogBox.AppendText(string.Format("Downloading ngrok client from {0}\r\n", ngrokUrl));
                 try
                 {
                     HttpClientWrapper.Get(ngrokUrl, new Dictionary<string, string>(), ngrokPath + ".zip", NgrokProgressCallback, false);

@@ -192,7 +192,10 @@ namespace RainbowMage.OverlayPlugin
                     if (column != 0)
                         text += " ";
                     var elem = row.ElementAtOrDefault(column);
-                    text += String.Format($"{{0, {-lengths[column]}}}", elem);
+                    var padLength = -lengths[column];
+                    if (column == numColumns - 1)
+                        padLength = 0;
+                    text += String.Format($"{{0, {padLength}}}", elem);
                 }
                 text += "\n";
 

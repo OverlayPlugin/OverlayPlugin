@@ -137,20 +137,12 @@ namespace RainbowMage.OverlayPlugin
                 pluginMain.DeInitPlugin();
             }
 
-            // We can't re-init CEF after shutting it down. So let's only do that when ACT closes to avoid unexpected behaviour (crash when re-enabling the plugin).
-            // TODO: Figure out how to detect disabling plugin vs ACT shutting down.
-            // ShutdownRenderer(null, null);
+            if (ActGlobals.oFormActMain.IsActClosing)
+            {
+                // We can only dispose the resolver once the HtmlRenderer is shut down. HtmlRenderer is only shut down if ACT is closing.
+                asmResolver.Dispose();
+            }
         }
-
-        /*
-        public void ShutdownRenderer(object sender, EventArgs e)
-        {
-            Renderer.Shutdown();
-
-            // We can only dispose the resolver once the HtmlRenderer is shut down.
-            asmResolver.Dispose();
-        }
-        */
 
         private string GetPluginDirectory()
         {

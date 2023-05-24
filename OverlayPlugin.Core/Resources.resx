@@ -302,4 +302,7 @@
     <value>ERROR: Log not connected.</value>
     <comment>This error appears in the log box when it wasn't connected to the overlay log. This should never happen and indicates that something went really wrong during plugin startup.</comment>
   </data>
+  <data name="ClearCacheRestart" xml:space="preserve">
+    <value>Please restart ACT to clear the CEF cache</value>
+  </data>
 </root>

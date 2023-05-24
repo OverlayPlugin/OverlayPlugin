@@ -38,6 +38,7 @@ namespace RainbowMage.OverlayPlugin
 
         Timer initTimer;
         Timer configSaveTimer;
+        private bool clearCache = false;
 
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
@@ -345,6 +346,11 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        internal void ClearCacheOnRestart()
+        {
+            this.clearCache = true;
+        }
+
         private void FailWithLog()
         {
             // If the tab hasn't been initialized, yet, make sure we show at least the log.
@@ -440,6 +446,16 @@ namespace RainbowMage.OverlayPlugin
 
             if (this.wsTabPage != null && this.wsTabPage.Parent != null)
                 ((TabControl)this.wsTabPage.Parent).TabPages.Remove(this.wsTabPage);
+
+            // Can only shut down CEF if ACT is closing
+            if (ActGlobals.oFormActMain.IsActClosing)
+            {
+                var shutdown = Renderer.Shutdown();
+
+                // Can only clear cache if CEF is shut down, otherwise some cache files are still in use.
+                if (shutdown && this.clearCache == true)
+                    Renderer.ClearCache();
+            }
 
             _logger.Log(LogLevel.Info, "DeInitPlugin: Finalized.");
             if (this.label != null) this.label.Text = "Finalized.";

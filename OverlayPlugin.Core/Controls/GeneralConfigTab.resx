@@ -148,7 +148,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbErrorReports.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="cbHideOverlaysWhenNotActive.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -178,7 +178,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbHideOverlaysWhenNotActive.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="cbHideOverlaysDuringCutscene.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -208,13 +208,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbHideOverlaysDuringCutscene.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="lblGithub.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lblGithub.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 160</value>
+    <value>17, 186</value>
   </data>
   <data name="lblGithub.Size" type="System.Drawing.Size, System.Drawing">
     <value>77, 12</value>
@@ -235,13 +235,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblGithub.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="lnkGithubRepo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lnkGithubRepo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 160</value>
+    <value>95, 186</value>
   </data>
   <data name="lnkGithubRepo.Size" type="System.Drawing.Size, System.Drawing">
     <value>235, 13</value>
@@ -262,10 +262,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lnkGithubRepo.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="lblNewUserWelcome.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 224</value>
+    <value>17, 256</value>
   </data>
   <data name="lblNewUserWelcome.Size" type="System.Drawing.Size, System.Drawing">
     <value>501, 110</value>
@@ -289,7 +289,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblNewUserWelcome.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="lblReadMe.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -298,7 +298,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>Microsoft Sans Serif, 11pt, style=Bold</value>
   </data>
   <data name="lblReadMe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 199</value>
+    <value>17, 229</value>
   </data>
   <data name="lblReadMe.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 18</value>
@@ -319,10 +319,10 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblReadMe.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="btnCactbotUpdate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>210, 122</value>
+    <value>241, 116</value>
   </data>
   <data name="btnCactbotUpdate.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 23</value>
@@ -343,13 +343,13 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnCactbotUpdate.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="btnClipboardTechSupport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnClipboardTechSupport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>422, 122</value>
+    <value>20, 145</value>
   </data>
   <data name="btnClipboardTechSupport.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 23</value>
@@ -370,6 +370,33 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnClipboardTechSupport.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnClearCEFCache.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnClearCEFCache.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 145</value>
+  </data>
+  <data name="btnClearCEFCache.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 23</value>
+  </data>
+  <data name="btnClearCEFCache.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="btnClearCEFCache.Text" xml:space="preserve">
+    <value>Clear CEF Cache on Restart</value>
+  </data>
+  <data name="&gt;&gt;btnClearCEFCache.Name" xml:space="preserve">
+    <value>btnClearCEFCache</value>
+  </data>
+  <data name="&gt;&gt;btnClearCEFCache.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClearCEFCache.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnClearCEFCache.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

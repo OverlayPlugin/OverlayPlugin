@@ -169,5 +169,12 @@ namespace RainbowMage.OverlayPlugin
             var info = new ClipboardTechSupport(this.container);
             info.CopyToClipboard();
         }
+
+        private void btnClearCEFCache_Click(object sender, EventArgs e)
+        {
+            container.Resolve<PluginMain>().ClearCacheOnRestart();
+            btnClearCEFCache.Enabled = false;
+            Updater.Updater.TryRestartACT(true, Resources.ClearCacheRestart);
+        }
     }
 }

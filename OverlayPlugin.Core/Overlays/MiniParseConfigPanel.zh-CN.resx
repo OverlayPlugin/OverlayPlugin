@@ -331,9 +331,6 @@
   <data name="tabACTWS.Text" xml:space="preserve">
     <value>ACTWS</value>
   </data>
-  <data name="btnClearCache.Text" xml:space="preserve">
-    <value>清除缓存</value>
-  </data>
   <data name="label14.Text" xml:space="preserve">
     <value>脱战后隐藏悬浮窗</value>
   </data>
