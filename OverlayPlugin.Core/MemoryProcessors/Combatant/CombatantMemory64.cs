@@ -217,7 +217,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0x1B1E)]
             public ushort WorldID;
 
-            [FieldOffset(0x1B0A)]
+            [FieldOffset(0x1B2C)]
             public byte WeaponId;
 
             [FieldOffset(0x1B68)]
