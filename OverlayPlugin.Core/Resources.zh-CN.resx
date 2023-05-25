@@ -292,4 +292,7 @@
   <data name="ErrorCouldNotLoadReservedLogLines" xml:space="preserve">
     <value>FFXIV 自定义日志行: 加载保留日志行失败。{0}</value>
   </data>
+  <data name="ClearCacheRestart" xml:space="preserve">
+    <value>请重启 ACT 以清除 CEF 缓存</value>
+  </data>
 </root>

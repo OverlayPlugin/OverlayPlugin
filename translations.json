@@ -84,6 +84,10 @@
             "ko-KR": "Cactbot 업데이트 확인",
             "zh-CN": "检查 Cactbot 更新"
         },
+        "btnClearCEFCache.Text": {
+            "en": "Clear CEF Cache on Restart",
+            "zh-CN": "重启时清除 CEF 缓存"
+        },
         "btnClipboardTechSupport.Text": {
             "en": "Copy Tech Support Info to Clipboard",
             "zh-CN": "复制技术支持信息到剪贴板"
@@ -684,11 +688,6 @@
             "ko-KR": "수정 내용 적용",
             "zh-CN": "应用更改"
         },
-        "btnClearCache.Text": {
-            "en": "Clear Cache",
-            "ko-KR": "캐시 지우기",
-            "zh-CN": "清除缓存"
-        },
         "btnRemoveHotkey.Text": {
             "de-DE": "Entferne selektierten Hotkey",
             "en": "Remove Selected Hotkey",
@@ -1038,6 +1037,10 @@
             "fr-FR": "Compatibilité ACTWS activé.",
             "ko-KR": "ACT 웹소켓 호환성을 활성화",
             "zh-CN": "ACTWS兼容性功能已启用。"
+        },
+        "ClearCacheRestart": {
+            "en": "Please restart ACT to clear the CEF cache",
+            "zh-CN": "请重启 ACT 以清除 CEF 缓存"
         },
         "CustomPresetLabel": {
             "#comment": "This is the name for the preset entry that allows the user to select a custom overlay type instead of using a preset.",
