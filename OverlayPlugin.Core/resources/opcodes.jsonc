@@ -348,5 +348,21 @@
             "opcode": 651,
             "size": 1080
         }
+    },
+    "2023.05.31.0000.0000": {
+        // Region: Global
+        // Version: 6.40 Hotfix
+        "MapEffect": {
+            "opcode": 249,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 878,
+            "size": 16
+        },
+        "RSVData": {
+            "opcode": 430,
+            "size": 1080
+        }
     }
 }
