@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
-using System.Windows.Forms;
 using Advanced_Combat_Tracker;
-using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin
 {
-    using SimpleTable = List<List<string>>;
-
     // Helper class to send a warning when cactbot paths don't match.
     // Yes, it's not great to have this in OverlayPlugin, but cactbot doesn't
     // know about overlay urls and so this is the best place to figure out
