@@ -43,16 +43,6 @@ namespace RainbowMage.OverlayPlugin
             return overlays;
         }
 
-        private static string GetStartThroughSubstring(string fullPath, string substring)
-        {
-            var idx = fullPath.LastIndexOf(substring);
-            if (idx == -1)
-                return null;
-
-            var substringLen = substring.Length;
-            return fullPath.Substring(0, idx + substringLen);
-        }
-
         private static string GetGoodCactbotDirWithForwardSlashes(string fullPath)
         {
             var fullPathForwardSlash = fullPath.Replace('\\', '/');
