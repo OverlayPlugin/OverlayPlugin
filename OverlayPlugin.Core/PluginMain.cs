@@ -274,6 +274,8 @@ namespace RainbowMage.OverlayPlugin
                                 _container.Register<IAtkStageMemory, AtkStageMemoryManager>();
 
                                 _container.Register(new OverlayPluginLogLines(_container));
+
+                                _container.Register(new CactbotPathWarning(_container));
                             }
                             catch (Exception ex)
                             {

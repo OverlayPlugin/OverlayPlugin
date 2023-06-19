@@ -305,4 +305,11 @@
   <data name="ClearCacheRestart" xml:space="preserve">
     <value>Please restart ACT to clear the CEF cache</value>
   </data>
+  <data name="CactbotPathWarning" xml:space="preserve">
+    <value>These overlay(s) appear to be using an out of date cactbot path and likely are no longer receiving updates and working with new content: {0}
+To fix this, you should remove and then re-add all of your cactbot overlays listed above.  To remove an overlay, go to ACT -&gt; Plugins -&gt; OverlayPlugin.dll -&gt; (overlay name).  Select the overlay, and click the Remove button.  Once removed, click the New button, select cactbot overlay type, and re-add it.</value>
+  </data>
+  <data name="CactbotPathWarningTitle" xml:space="preserve">
+    <value>Broken Cactbot Overlay Paths</value>
+  </data>
 </root>
