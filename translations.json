@@ -822,7 +822,7 @@
         },
         "label14.Text": {
             "en": "Hide overlay outside combat",
-            "ko-KR": "전투 중이 아닐 때 오버레이 숨기기",
+            "ko-KR": "비전투 시 오버레이 숨기기",
             "zh-CN": "脱战后隐藏悬浮窗"
         },
         "label15.Text": {
@@ -854,7 +854,7 @@
             "en": "Force white background",
             "fr-FR": "Forcer le fond en blanc",
             "ja-JP": "オーバーレイの背景を白にする",
-            "ko-KR": "오버레이 배경을 흰색으로 변경",
+            "ko-KR": "배경을 흰색으로 변경",
             "zh-CN": "在悬浮窗下强制启用白色背景"
         },
         "label5.Text": {

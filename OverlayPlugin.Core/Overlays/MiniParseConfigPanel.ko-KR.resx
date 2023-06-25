@@ -145,7 +145,7 @@
   </data>
 
   <data name="label4.Text" xml:space="preserve">
-    <value>오버레이 배경을 흰색으로 변경</value>
+    <value>배경을 흰색으로 변경</value>
   </data>
 
   <data name="checkLogConsoleMessages.Text" xml:space="preserve">
@@ -229,6 +229,6 @@
     <value>...</value>
   </data>
   <data name="label14.Text" xml:space="preserve">
-    <value>전투 중이 아닐 때 오버레이 숨기기</value>
+    <value>비전투 시 오버레이 숨기기</value>
   </data>
 </root>
