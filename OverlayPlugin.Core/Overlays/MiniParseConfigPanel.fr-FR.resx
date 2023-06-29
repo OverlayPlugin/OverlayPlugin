@@ -216,4 +216,7 @@ Cacher un overlay le rend invisible. Il reste en fonctionnement en arrière plan
   <data name="label13.Text" xml:space="preserve">
     <value>Aucun son si caché</value>
   </data>
+  <data name="label14.Text" xml:space="preserve">
+    <value>Cacher l'overlay hors combat</value>
+  </data>
 </root>
