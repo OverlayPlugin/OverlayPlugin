@@ -74,7 +74,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
             var repository = container.Resolve<FFXIVRepository>();
             var region = repository.GetMachinaRegion();
-            fateCategories = region == GameRegion.Global ? FateCategories_v63 : FateCategories_v62;
+            fateCategories = FateCategories_v63;
 
             var customLogLines = container.Resolve<FFXIVCustomLogLines>();
             this.logWriter = customLogLines.RegisterCustomLogLine(new LogLineRegistryEntry()
