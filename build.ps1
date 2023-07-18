@@ -68,7 +68,7 @@ try {
 
             echo "==> Stripping FFXIVClientStructs for namespace $ns..."
 
-            ..\..\..\..\tools\StripFFXIVClientStructs\StripFFXIVClientStructs\bin\Release\netcoreapp3.1\StripFFXIVClientStructs.exe $ns .\$ns ..\Transformed\$ns
+            ..\..\..\..\tools\StripFFXIVClientStructs\StripFFXIVClientStructs\bin\Release\net6.0\StripFFXIVClientStructs.exe $ns .\$ns ..\Transformed\$ns
         }
 
         cd ..\..\..\..
