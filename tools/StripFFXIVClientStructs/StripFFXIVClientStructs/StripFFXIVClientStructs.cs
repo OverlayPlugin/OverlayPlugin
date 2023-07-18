@@ -292,7 +292,7 @@ namespace StripFFXIVClientStructs
                 catch (Exception e)
                 {
                     Console.WriteLine(file);
-                    throw e;
+                    throw;
                 }
             }
             return;
