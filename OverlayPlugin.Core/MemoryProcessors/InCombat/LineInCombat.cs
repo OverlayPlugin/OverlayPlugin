@@ -66,16 +66,24 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
             // always set this to true if lastEventArgs == null so that if ACT is started while out of combat,
             // the overlays are hidden/shown appropriately.
             bool inGameCombatChanged = lastEventArgs == null ? inGameCombat : lastEventArgs.InGameCombat != inGameCombat;
+
+            // Add two boolean variables into the logline to indicate exactly which part was changed.
+            // Useful if a plugin only cares about the change of in-game or ACT combat state to trigger other events.
+            bool isACTChanged = lastEventArgs != null && lastEventArgs.InACTCombat != inACTCombat;
+            bool isGameChanged = lastEventArgs != null && lastEventArgs.InGameCombat != inGameCombat;
+
             lastEventArgs = new InCombatArgs(inACTCombat, inGameCombat, inGameCombatChanged);
-            WriteLine(inACTCombat, inGameCombat);
+            WriteLine(inACTCombat, inGameCombat, isACTChanged, isGameChanged);
             OnInCombatChanged?.Invoke(this, lastEventArgs);
         }
 
-        public void WriteLine(bool inACTCombat, bool inGameCombat)
+        public void WriteLine(bool inACTCombat, bool inGameCombat, bool isACTChanged, bool isGameChanged)
         {
             var inACTCombatDecimal = inACTCombat ? 1 : 0;
             var inGameCombatDecimal = inGameCombat ? 1 : 0;
-            var line = $"{inACTCombatDecimal}|{inGameCombatDecimal}";
+            var isACTChangedDecimal = isACTChanged ? 1 : 0;
+            var isGameChangedDecimal = isGameChanged ? 1 : 0;
+            var line = $"{inACTCombatDecimal}|{inGameCombatDecimal}|Changed|{isACTChangedDecimal}|{isGameChangedDecimal}";
             logWriter(line, ffxiv.GetServerTimestamp());
         }
     }
