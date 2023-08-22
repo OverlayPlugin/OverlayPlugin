@@ -83,7 +83,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
             var inGameCombatDecimal = inGameCombat ? 1 : 0;
             var isACTChangedDecimal = isACTChanged ? 1 : 0;
             var isGameChangedDecimal = isGameChanged ? 1 : 0;
-            var line = $"{inACTCombatDecimal}|{inGameCombatDecimal}|Changed|{isACTChangedDecimal}|{isGameChangedDecimal}";
+            var line = $"{inACTCombatDecimal}|{inGameCombatDecimal}|{isACTChangedDecimal}|{isGameChangedDecimal}";
             logWriter(line, ffxiv.GetServerTimestamp());
         }
     }
