@@ -487,6 +487,10 @@
         "CEDirector": {
             "opcode": 601,
             "size": 16
+        },
+        "RSVData": {
+            "opcode": 458,
+            "size": 1080
         }
     }
 }
