@@ -14,12 +14,6 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
     public class LineFateControl
     {
-        private static readonly Dictionary<uint, FateCategory> FateCategories_v62 = new Dictionary<uint, FateCategory>
-        {
-            [0x935] = FateCategory.Add,
-            [0x936] = FateCategory.Remove,
-            [0x93E] = FateCategory.Update,
-        };
         private static readonly Dictionary<uint, FateCategory> FateCategories_v63 = new Dictionary<uint, FateCategory>
         {
             [0x942] = FateCategory.Add,
@@ -74,7 +68,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
             var repository = container.Resolve<FFXIVRepository>();
             var region = repository.GetMachinaRegion();
-            fateCategories = region == GameRegion.Global ? FateCategories_v63 : FateCategories_v62;
+            fateCategories = FateCategories_v63;
 
             var customLogLines = container.Resolve<FFXIVCustomLogLines>();
             this.logWriter = customLogLines.RegisterCustomLogLine(new LogLineRegistryEntry()
