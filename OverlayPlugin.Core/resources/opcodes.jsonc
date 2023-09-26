@@ -508,5 +508,21 @@
             "opcode": 364,
             "size": 1080
         }
+    },
+    "2023.09.08.0000.0000": {
+        // Region: KR
+        // Version: 6.38
+        "MapEffect": {
+            "opcode": 812,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 211,
+            "size": 16
+        },
+        "RSVData": {
+            "opcode": 961,
+            "size": 1080
+        }
     }
 }
