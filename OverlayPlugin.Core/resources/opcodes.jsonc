@@ -524,5 +524,21 @@
             "opcode": 961,
             "size": 1080
         }
+    },
+    "2023.09.28.0000.0000": {
+        // Region: Global
+        // Version: 6.50
+        "MapEffect": {
+            "opcode": 340,
+            "size": 11
+        },
+        "CEDirector": {
+            "opcode": 432,
+            "size": 16
+        },
+        "RSVData": {
+            "opcode": 464,
+            "size": 1080
+        }
     }
 }
