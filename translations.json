@@ -11,7 +11,7 @@
     "OverlayPlugin.Core/Controls/ConfigErrorPrompt": {
         "errorExplanation.Text": {
             "en": "Failed to load the plugin configuration. This usually happens because the PC wasn't shut down properly which can cause the config file to become corrupted. You can either reset the plugin config or disable OverlayPlugin for now (in the latter case this prompt will reappear the next time you launch ACT).",
-            "fr-FR": "Échec du chargement de la configuration du plugin. Cela se produit généralement parce que l'ordinateur n'a pas été éteint correctement, ce qui peut entraîner la corruption du fichier de configuration. Vous pouvez soit réinitialiser la configuration du plugin, soit désactiver OverlayPlugin pour l'instant (dans ce dernier cas, cette invite réapparaîtra lors du prochain lancement d'ACT)."
+            "fr-FR": "Échec du chargement de la configuration du plugin. Cela se produit généralement parce que l'ordinateur n'a pas été éteint correctement, ce qui peut entraîner la corruption du fichier de configuration. Vous pouvez soit réinitialiser la configuration du plugin, soit désactiver OverlayPlugin pour l'instant (dans ce dernier cas, cette invite réapparaîtra lors du prochain lancement d'ACT).",
             "zh-CN": "加载插件配置失败, 插件配置可能因 ACT 不正常关闭而损坏, 请重新设置插件。"
         }
     },

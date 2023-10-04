@@ -253,4 +253,28 @@
   <data name="NetworkParserNoFfxiv" xml:space="preserve">
     <value>Impossible de trouver le plugin FFXIV ou Machina. C'est seulement un problème si vous utilisez ACT avec FFXIV.</value>
   </data>
+  <data name="HotkeyActionToggleEnabled" xml:space="preserve">
+    <value>Changement de mode activé</value>
+  </data>
+  <data name="ClearCacheRestart" xml:space="preserve">
+    <value>Veuillez redémarrer ACT pour effacer le cache CEF</value>
+  </data>
+  <data name="WSHandlerException" xml:space="preserve">
+    <value>WS : L'appel du gestionnaire a échoué : {0}</value>
+  </data>
+  <data name="ErrorCouldNotLoadReservedLogLines" xml:space="preserve">
+    <value>FFXIVCustomLogLines: Échec du chargement de la ligne du log réservé</value>
+  </data>
+  <data name="TabsESLabel" xml:space="preserve">
+    <value>Source de l'événement</value>
+  </data>
+  <data name="EventConfigTab" xml:space="preserve">
+    <value>Paramètres de l'événement</value>
+  </data>
+  <data name="LogNotConnectedError" xml:space="preserve">
+    <value>Erreur : Log non connecté</value>
+  </data>
+  <data name="MapESMiniParse" xml:space="preserve">
+    <value>MiniParseEventSource</value>
+  </data>
 </root>

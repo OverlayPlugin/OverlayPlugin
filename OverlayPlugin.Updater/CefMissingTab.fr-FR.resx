@@ -147,4 +147,10 @@
   <data name="btnOpenManual.Text" xml:space="preserve">
     <value>Extraction du fichier téléchargé</value>
   </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Arrêter de parser si hors-combat</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Arrêter le combat ACT après un wipe</value>
+  </data>
 </root>
