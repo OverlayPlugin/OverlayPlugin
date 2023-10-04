@@ -132,4 +132,25 @@
   </data>
   <data name="cbHideOverlaysDuringCutscene.Text" xml:space="preserve">
     <value>Cacher automatiquement les overlays lors des cinématiques</value>
-  </data></root>
+  </data>  <data name="btnCactbotUpdate.Text" xml:space="preserve">
+    <value>Vérifier les mises à jour de Cactbot</value>
+  </data>
+  <data name="btnClearCEFCache.Text" xml:space="preserve">
+    <value>Vider le cache CEF au démarrage</value>
+  </data>
+  <data name="lblGithub.Text" xml:space="preserve">
+    <value>Repo GitHub :</value>
+  </data>
+  <data name="btnClipboardTechSupport.Text" xml:space="preserve">
+    <value>Copier les informations techniques</value>
+  </data>
+  <data name="lblReadMe.Text" xml:space="preserve">
+    <value>Lisez ceci :</value>
+  </data>
+  <data name="lblNewUserWelcome.Text" xml:space="preserve">
+    <value>Si vous cherchez un champ URL ici, vous êtes soit habitué à l'ancien OverlayPlugin, soit vous suivez un guide obsolète. Vous devez créer un overlay en utilisant le bouton Nouveau dans le coin inférieur gauche avant de voir les overlays d'OverlayPlugin.
+Veuillez essayer d'utiliser les presets au lieu de définir manuellement l'URL car cela peut éviter de nombreux problèmes.
+
+</value>
+  </data>
+</root>
