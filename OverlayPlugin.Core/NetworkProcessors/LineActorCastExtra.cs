@@ -16,6 +16,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         private readonly Type headerType;
         private readonly Type actorCastType;
         private readonly FieldInfo fieldCastSourceId;
+        private readonly FieldInfo fieldAbilityId;
         private readonly FieldInfo fieldX;
         private readonly FieldInfo fieldY;
         private readonly FieldInfo fieldZ;
@@ -37,6 +38,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 headerType = mach.GetType("Machina.FFXIV.Headers.Server_MessageHeader");
                 actorCastType = mach.GetType("Machina.FFXIV.Headers.Server_ActorCast");
                 fieldCastSourceId = headerType.GetField("ActorID");
+                fieldAbilityId = actorCastType.GetField("ActionID");
                 fieldX = actorCastType.GetField("PosX");
                 fieldY = actorCastType.GetField("PosY");
                 fieldZ = actorCastType.GetField("PosZ");
@@ -78,6 +80,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                     UInt32 sourceId = (UInt32)fieldCastSourceId.GetValue(header);
 
                     object packet = Marshal.PtrToStructure(new IntPtr(buffer), actorCastType);
+                    UInt16 abilityId = (UInt16)fieldAbilityId.GetValue(packet);
                     DateTime serverTime = ffxiv.EpochToDateTime(epoch);
                     // for x/y/x, subtract 7FFF then divide by (2^15 - 1) / 100
                     float x = ffxiv.ConvertUInt16Coordinate((UInt16)fieldX.GetValue(packet));
@@ -94,8 +97,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
 
                     string line = string.Format(CultureInfo.InvariantCulture,
-                        "{0:X8}|{1:F3}|{2:F3}|{3:F3}|{4:F3}",
-                        sourceId, x, y, z, h);
+                        "{0:X8}|{1:X4}|{2:F3}|{3:F3}|{4:F3}|{5:F3}",
+                        sourceId, abilityId, x, y, z, h);
 
                     logWriter(line, serverTime);
                 }

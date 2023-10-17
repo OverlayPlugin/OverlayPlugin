@@ -25,6 +25,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             new Dictionary<int, ActionEffectTypeInfo>();
 
         private readonly FieldInfo fieldCastSourceId;
+        private readonly FieldInfo fieldAbilityId;
         private readonly FieldInfo fieldGlobalEffectCounter;
         private readonly FieldInfo fieldR;
 
@@ -33,7 +34,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             public int actionEffectSize;
             public int packetSize;
             public Type extraType;
-            public bool hasError = false;
+            public bool hasError;
         }
 
         interface IActionEffectExtra
@@ -134,6 +135,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 fieldCastSourceId = headerType.GetField("ActorID");
 
                 actionEffectHeaderType = mach.GetType("Machina.FFXIV.Headers.Server_ActionEffectHeader");
+                fieldAbilityId = actionEffectHeaderType.GetField("actionId");
                 fieldR = actionEffectHeaderType.GetField("rotation");
                 fieldGlobalEffectCounter = actionEffectHeaderType.GetField("globalEffectCounter");
 
@@ -148,7 +150,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                         packetSize = machinaTypeSize,
                     };
                     minSize = Math.Min(machinaTypeSize, minSize);
-                    logger.Log(LogLevel.Debug, "ActionEffect Size {0} -> {1:X4}", size, actionEffectTypeInfo.packetSize);
+                    logger.Log(LogLevel.Debug, "ActionEffect Size {0} -> {1:X4}", size,
+                        actionEffectTypeInfo.packetSize);
                     switch (size)
                     {
                         case 8:
@@ -172,11 +175,16 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                                 break;
                             }
                     }
-                    int extraSize = Marshal.SizeOf(actionEffectTypeInfo.extraType);
-                    if (machinaTypeSize != extraSize)
+
+                    if (size != 1)
                     {
-                        logger.Log(LogLevel.Error, "ActionEffect size mismatch! {} -> {}", machinaTypeSize, extraSize);
-                        actionEffectTypeInfo.hasError = true;
+                        int extraSize = Marshal.SizeOf(actionEffectTypeInfo.extraType);
+                        if (machinaTypeSize != extraSize)
+                        {
+                            logger.Log(LogLevel.Error, "ActionEffect size mismatch! {} -> {}", machinaTypeSize,
+                                extraSize);
+                            actionEffectTypeInfo.hasError = true;
+                        }
                     }
                     opcodeToType.Add(netHelper.GetOpcode("Ability" + size), actionEffectTypeInfo);
                 }
@@ -226,6 +234,9 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                     UInt32 sourceId = (UInt32)fieldCastSourceId.GetValue(header);
 
                     object aeHeader = Marshal.PtrToStructure(new IntPtr(buffer), actionEffectHeaderType);
+                    // Ability ID is really 16-bit, so it is formatted as such, but we will get an
+                    // exception if we try to prematurely cast it to UInt16
+                    UInt32 abilityId = (UInt32)fieldAbilityId.GetValue(aeHeader);
                     UInt32 globalEffectCounter = (UInt32)fieldGlobalEffectCounter.GetValue(aeHeader);
 
                     if (info.actionEffectSize == 1)
@@ -233,20 +244,21 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                         // AE1 is not useful. It does not contain this data. But we still need to write something
                         // to indicate that a proper line will not be happening.
                         logWriter(string.Format(CultureInfo.InvariantCulture,
-                            "{0:X8}|{1:X8}|{2}||||",
-                            sourceId, globalEffectCounter, (int)LineSubType.NO_DATA), serverTime);
+                            "{0:X8}|{1:X4}|{2:X8}|{3}||||",
+                            sourceId, abilityId, globalEffectCounter, (int)LineSubType.NO_DATA), serverTime);
                         return;
                     }
 
                     if (info.hasError)
                     {
                         logWriter(string.Format(CultureInfo.InvariantCulture,
-                            "{0:X8}|{1:X8}|{2}||||",
+                            "{0:X8}|{1:X4}|{2:X8}|{3}||||",
                             sourceId, globalEffectCounter, (int)LineSubType.ERROR), serverTime);
                         return;
                     }
 
-                    IActionEffectExtra aeExtra = (IActionEffectExtra)Marshal.PtrToStructure(new IntPtr(buffer), info.extraType);
+                    IActionEffectExtra aeExtra =
+                        (IActionEffectExtra)Marshal.PtrToStructure(new IntPtr(buffer), info.extraType);
 
                     float x = ffxiv.ConvertUInt16Coordinate(aeExtra.x);
                     float y = ffxiv.ConvertUInt16Coordinate(aeExtra.y);
@@ -254,8 +266,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
                     double h = ffxiv.ConvertHeading((ushort)fieldR.GetValue(aeHeader));
                     string line = string.Format(CultureInfo.InvariantCulture,
-                        "{0:X8}|{1:X8}|{2}|{3:F3}|{4:F3}|{5:F3}|{6:F3}",
-                        sourceId, globalEffectCounter, (int)LineSubType.DATA_PRESENT, x, y, z, h);
+                        "{0:X8}|{1:X4}|{2:X8}|{3}|{4:F3}|{5:F3}|{6:F3}|{7:F3}",
+                        sourceId, abilityId, globalEffectCounter, (int)LineSubType.DATA_PRESENT, x, y, z, h);
 
                     logWriter(line, serverTime);
                 }
