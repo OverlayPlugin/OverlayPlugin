@@ -130,6 +130,7 @@
     <Compile Include="MemoryProcessors\Combatant\CombatantMemory62.cs" />
     <Compile Include="MemoryProcessors\Combatant\CombatantMemory.cs" />
     <Compile Include="NetworkProcessors\FateWatcher.cs" />
+    <Compile Include="NetworkProcessors\LineAbilityExtra.cs" />
     <Compile Include="NetworkProcessors\LineActorCastExtra.cs" />
     <Compile Include="NetworkProcessors\LineRSV.cs" />
     <Compile Include="NetworkProcessors\LineFateControl.cs" />
