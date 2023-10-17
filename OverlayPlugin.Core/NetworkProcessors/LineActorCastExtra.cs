@@ -78,24 +78,24 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 switch (region)
                 {
                     case GameRegion.Global:
-                    {
-                        actorCastTypeStr = "Machina.FFXIV.Headers.Server_ActorCast";
-                        break;
-                    }
+                        {
+                            actorCastTypeStr = "Machina.FFXIV.Headers.Server_ActorCast";
+                            break;
+                        }
                     case GameRegion.Korean:
-                    {
-                        actorCastTypeStr = "Machina.FFXIV.Headers.Korean.Server_ActorCast";
-                        break;
-                    }
+                        {
+                            actorCastTypeStr = "Machina.FFXIV.Headers.Korean.Server_ActorCast";
+                            break;
+                        }
                     case GameRegion.Chinese:
-                    {
-                        actorCastTypeStr = "Machina.FFXIV.Headers.Chinese.Server_ActorCast";
-                        break;
-                    }
+                        {
+                            actorCastTypeStr = "Machina.FFXIV.Headers.Chinese.Server_ActorCast";
+                            break;
+                        }
                     default:
-                    {
-                        return;
-                    }
+                        {
+                            return;
+                        }
                 }
 
                 Type actorCastType = mach.GetType(actorCastTypeStr);

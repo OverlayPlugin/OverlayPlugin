@@ -71,7 +71,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 fieldR = actionEffectHeaderType.GetField("rotation");
                 fieldGlobalEffectCounter = actionEffectHeaderType.GetField("globalEffectCounter");
 
-                int[] sizes = {1, 8, 16, 24, 32};
+                int[] sizes = { 1, 8, 16, 24, 32 };
                 foreach (int size in sizes)
                 {
                     Type aeType = mach.GetType(actionEffectTypesTemplate(size));
@@ -90,25 +90,25 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                     switch (size)
                     {
                         case 8:
-                        {
-                            actionEffectTypeInfo.extraType = typeof(Server_ActionEffect8_Extra);
-                            break;
-                        }
+                            {
+                                actionEffectTypeInfo.extraType = typeof(Server_ActionEffect8_Extra);
+                                break;
+                            }
                         case 16:
-                        {
-                            actionEffectTypeInfo.extraType = typeof(Server_ActionEffect16_Extra);
-                            break;
-                        }
+                            {
+                                actionEffectTypeInfo.extraType = typeof(Server_ActionEffect16_Extra);
+                                break;
+                            }
                         case 24:
-                        {
-                            actionEffectTypeInfo.extraType = typeof(Server_ActionEffect24_Extra);
-                            break;
-                        }
+                            {
+                                actionEffectTypeInfo.extraType = typeof(Server_ActionEffect24_Extra);
+                                break;
+                            }
                         case 32:
-                        {
-                            actionEffectTypeInfo.extraType = typeof(Server_ActionEffect32_Extra);
-                            break;
-                        }
+                            {
+                                actionEffectTypeInfo.extraType = typeof(Server_ActionEffect32_Extra);
+                                break;
+                            }
                     }
 
                     if (size != 1)
