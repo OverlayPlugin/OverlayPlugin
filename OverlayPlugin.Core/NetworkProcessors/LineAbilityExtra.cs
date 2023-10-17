@@ -8,13 +8,6 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
     /**
      * Class for position/angle info from ActionEffect (i.e. line 21/22).
-     *
-     * This one is implemented different than LineActorCast. ActionEffect has several variants with different
-     * sizes to support different maximum numbers of targets. They have a common header, which contains the angle of
-     * the cast. However, the x/y/z coordinates are *after* the variable-size portion, so those are accessed by negative
-     * indexing from the end of the packet rather than reflectively via Machina definitions.
-     *
-     * Despite this, we still need to pull out the types from Machina because we need to know the minimum sizes.
      */
     public class LineAbilityExtra
     {
