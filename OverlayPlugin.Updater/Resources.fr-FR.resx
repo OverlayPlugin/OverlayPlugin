@@ -276,4 +276,7 @@ Relancez la mise à jour ou réinstallez le plugin, sinon il pourrait ne pas sur
     <value>La version de SharpCompress actuellement chargée est dépassée !
 Soyez sûr de charger OverlayPlugin avant d'autres plugins qui pourraient également l'utiliser (comme ACTWebSocket)</value>
   </data>
+  <data name="IgnoreUpdateDueToDotGitDirectoryMessage" xml:space="preserve">
+    <value>Ignore la mise à jour automatique car OverlayPlugin est un dépôt .git</value>
+  </data>
 </root>
