@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Advanced_Combat_Tracker;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -117,35 +118,49 @@ namespace RainbowMage.OverlayPlugin
                 return;
             }
 
-            if (checkBoxFollowLog.Checked)
+            Action appendText = () =>
             {
-                logBox.AppendText(msg);
+                if (checkBoxFollowLog.Checked)
+                {
+                    logBox.AppendText(msg);
+                }
+                else
+                {
+                    // This is based on https://stackoverflow.com/q/1743448
+                    bool bottomFlag = false;
+                    int sbOffset;
+                    int savedVpos;
+
+                    // Win32 magic to keep the textbox scrolling to the newest append to the textbox unless
+                    // the user has moved the scrollbox up
+                    sbOffset = (int)((logBox.ClientSize.Height - SystemInformation.HorizontalScrollBarHeight) / (logBox.Font.Height));
+                    savedVpos = NativeMethods.GetScrollPos(logBox.Handle, NativeMethods.SB_VERT);
+                    NativeMethods.GetScrollRange(logBox.Handle, NativeMethods.SB_VERT, out _, out int VSmax);
+
+                    if (savedVpos >= (VSmax - sbOffset - 1))
+                        bottomFlag = true;
+
+                    logBox.AppendText(msg);
+
+                    if (bottomFlag)
+                    {
+                        NativeMethods.GetScrollRange(logBox.Handle, NativeMethods.SB_VERT, out _, out VSmax);
+                        savedVpos = VSmax - sbOffset;
+                    }
+                    NativeMethods.SetScrollPos(logBox.Handle, NativeMethods.SB_VERT, savedVpos, true);
+                    NativeMethods.PostMessageA(logBox.Handle, NativeMethods.WM_VSCROLL, NativeMethods.SB_THUMBPOSITION + 0x10000 * savedVpos, 0);
+                }
+            };
+
+            // Invoke in UI thread if needed to avoid WinForms issues.
+            // See https://github.com/OverlayPlugin/OverlayPlugin/issues/254
+            if (ActGlobals.oFormActMain.InvokeRequired)
+            {
+                ActGlobals.oFormActMain.Invoke(appendText);
             }
             else
             {
-                // This is based on https://stackoverflow.com/q/1743448
-                bool bottomFlag = false;
-                int sbOffset;
-                int savedVpos;
-
-                // Win32 magic to keep the textbox scrolling to the newest append to the textbox unless
-                // the user has moved the scrollbox up
-                sbOffset = (int)((logBox.ClientSize.Height - SystemInformation.HorizontalScrollBarHeight) / (logBox.Font.Height));
-                savedVpos = NativeMethods.GetScrollPos(logBox.Handle, NativeMethods.SB_VERT);
-                NativeMethods.GetScrollRange(logBox.Handle, NativeMethods.SB_VERT, out _, out int VSmax);
-
-                if (savedVpos >= (VSmax - sbOffset - 1))
-                    bottomFlag = true;
-
-                logBox.AppendText(msg);
-
-                if (bottomFlag)
-                {
-                    NativeMethods.GetScrollRange(logBox.Handle, NativeMethods.SB_VERT, out _, out VSmax);
-                    savedVpos = VSmax - sbOffset;
-                }
-                NativeMethods.SetScrollPos(logBox.Handle, NativeMethods.SB_VERT, savedVpos, true);
-                NativeMethods.PostMessageA(logBox.Handle, NativeMethods.WM_VSCROLL, NativeMethods.SB_THUMBPOSITION + 0x10000 * savedVpos, 0);
+                appendText();
             }
         }
 
