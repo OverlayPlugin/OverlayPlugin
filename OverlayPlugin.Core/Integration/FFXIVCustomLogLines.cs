@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin
 {
-    class FFXIVCustomLogLines
+    public class FFXIVCustomLogLines
     {
         private ILogger logger;
         private FFXIVRepository repository;
@@ -142,7 +142,7 @@ namespace RainbowMage.OverlayPlugin
         }
     }
 
-    interface ILogLineRegistryEntry
+    public interface ILogLineRegistryEntry
     {
         uint ID { get; }
         string Name { get; }
@@ -150,7 +150,7 @@ namespace RainbowMage.OverlayPlugin
         uint Version { get; }
     }
 
-    class LogLineRegistryEntry : ILogLineRegistryEntry
+    public class LogLineRegistryEntry : ILogLineRegistryEntry
     {
         public uint ID { get; set; }
         public string Name { get; set; }

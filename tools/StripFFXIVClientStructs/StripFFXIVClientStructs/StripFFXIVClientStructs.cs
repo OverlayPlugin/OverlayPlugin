@@ -289,7 +289,7 @@ namespace StripFFXIVClientStructs
                     // The documentation doesn't indicate why, but sometimes it randomly returned old node text instead of replaced/updated text?
                     File.WriteAllText(destFile, outTree.NormalizeWhitespace().ToFullString());
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.WriteLine(file);
                     throw;

@@ -71,7 +71,7 @@ namespace RainbowMage.OverlayPlugin
         Korean = 3
     }
 
-    class FFXIVRepository
+    public class FFXIVRepository
     {
         private readonly ILogger logger;
         private IDataRepository repository;
@@ -411,39 +411,51 @@ namespace RainbowMage.OverlayPlugin
             return BitConverter.ToUInt16(BitConverter.GetBytes(value), 0);
         }
 
+        internal object GetFFXIVACTPluginIOCService(string parentAssemblyName, string type)
+        {
+            var plugin = GetPluginData();
+            if (plugin == null) return false;
+            var field = plugin.pluginObj.GetType().GetField("_iocContainer", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (field == null)
+            {
+                logger.Log(LogLevel.Error, "Unable to retrieve _iocContainer field information from FFXIV_ACT_Plugin");
+                return null;
+            }
+            var iocContainer = field.GetValue(plugin.pluginObj);
+            if (iocContainer == null)
+            {
+                logger.Log(LogLevel.Error, "Unable to retrieve _iocContainer field value from FFXIV_ACT_Plugin");
+                return null;
+            }
+            var getServiceMethod = iocContainer.GetType().GetMethod("GetService");
+            if (getServiceMethod == null)
+            {
+                logger.Log(LogLevel.Error, "Unable to retrieve _iocContainer field value from FFXIV_ACT_Plugin");
+                return null;
+            }
+            var parentAssembly = AppDomain.CurrentDomain.GetAssemblies().
+                SingleOrDefault(assembly => assembly.GetName().Name == parentAssemblyName);
+            if (parentAssembly == null)
+            {
+                logger.Log(LogLevel.Error, $"Unable to retrieve {parentAssemblyName} assembly");
+                return null;
+            }
+            var returnObject = getServiceMethod.Invoke(iocContainer, new object[] { parentAssembly.GetType(type) });
+            if (returnObject == null)
+            {
+                logger.Log(LogLevel.Error, $"Unable to retrieve {type} singleton from FFXIV_ACT_Plugin IOC");
+                return null;
+            }
+
+            return returnObject;
+        }
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         internal bool WriteLogLineImpl(uint ID, DateTime timestamp, string line)
         {
             if (logOutputWriteLineFunc == null)
             {
-                var plugin = GetPluginData();
-                if (plugin == null) return false;
-                var field = plugin.pluginObj.GetType().GetField("_iocContainer", BindingFlags.NonPublic | BindingFlags.Instance);
-                if (field == null)
-                {
-                    logger.Log(LogLevel.Error, "Unable to retrieve _iocContainer field information from FFXIV_ACT_Plugin");
-                    return false;
-                }
-                var iocContainer = field.GetValue(plugin.pluginObj);
-                if (iocContainer == null)
-                {
-                    logger.Log(LogLevel.Error, "Unable to retrieve _iocContainer field value from FFXIV_ACT_Plugin");
-                    return false;
-                }
-                var getServiceMethod = iocContainer.GetType().GetMethod("GetService");
-                if (getServiceMethod == null)
-                {
-                    logger.Log(LogLevel.Error, "Unable to retrieve _iocContainer field value from FFXIV_ACT_Plugin");
-                    return false;
-                }
-                var logfileAssembly = AppDomain.CurrentDomain.GetAssemblies().
-                    SingleOrDefault(assembly => assembly.GetName().Name == "FFXIV_ACT_Plugin.Logfile");
-                if (logfileAssembly == null)
-                {
-                    logger.Log(LogLevel.Error, "Unable to retrieve FFXIV_ACT_Plugin.Logfile assembly");
-                    return false;
-                }
-                logOutput = getServiceMethod.Invoke(iocContainer, new object[] { logfileAssembly.GetType("FFXIV_ACT_Plugin.Logfile.ILogOutput") });
+                logOutput = GetFFXIVACTPluginIOCService("FFXIV_ACT_Plugin.Logfile", "FFXIV_ACT_Plugin.Logfile.ILogOutput");
                 if (logOutput == null)
                 {
                     logger.Log(LogLevel.Error, "Unable to retrieve LogOutput singleton from FFXIV_ACT_Plugin IOC");

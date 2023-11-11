@@ -38,14 +38,13 @@ namespace RainbowMage.OverlayPlugin
 
             var entry = new LogEntry(level, DateTime.Now, message);
 
-            lock (Logs)
+            if (listener != null)
             {
-
-                if (listener != null)
-                {
-                    listener(entry);
-                }
-                else
+                listener(entry);
+            }
+            else
+            {
+                lock (Logs)
                 {
                     Logs.Add(entry);
                 }
