@@ -19,18 +19,18 @@
         }
     },
     // Global region
-    "2023.10.23.0000.0000": {
-        // Version: 6.51
+    "2023.11.09.0000.0000": {
+        // Version: 6.51 Hotfix
         "MapEffect": {
-            "opcode": 331,
+            "opcode": 581,
             "size": 11
         },
         "CEDirector": {
-            "opcode": 316,
+            "opcode": 907,
             "size": 16
         },
         "RSVData": {
-            "opcode": 445,
+            "opcode": 653,
             "size": 1080
         }
     },
