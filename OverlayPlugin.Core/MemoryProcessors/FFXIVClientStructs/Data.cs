@@ -33,7 +33,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.FFXIVClientStructs
 
         // @TODO: At some point the runtime checks in this function should be moved to a compile-time test instead
         // and this function can return `long` instead of `long?`
-        public long? GetClassInstanceAddress(DataNamespace ns, string targetClass)
+        public long? GetClassInstanceAddress(DataNamespace ns, string targetClass, int index = 0)
         {
             var curObj = GetBaseObject(ns);
             if (curObj == null)
@@ -54,7 +54,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.FFXIVClientStructs
                 return null;
             }
 
-            return instances[0].ea - DataBaseOffset;
+            return instances[index].ea - DataBaseOffset;
         }
 
         public ClientStructsData GetBaseObject(DataNamespace ns)

@@ -23,10 +23,6 @@ namespace RainbowMage.OverlayPlugin
         private readonly EventDispatcher dispatcher;
 
         protected System.Timers.Timer timer;
-        /// <summary>
-        /// オーバーレイがログを出力したときに発生します。
-        /// </summary>
-        public event EventHandler<LogEventArgs> OnLog;
 
         /// <summary>
         /// ユーザーが設定したオーバーレイの名前を取得します。

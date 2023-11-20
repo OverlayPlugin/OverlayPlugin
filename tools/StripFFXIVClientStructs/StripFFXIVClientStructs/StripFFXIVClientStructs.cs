@@ -46,6 +46,7 @@ namespace StripFFXIVClientStructs
             "InfoProxy",
             "VTableAddress",
             "FixedString",
+            "CExportIgnore",
         };
 
         // Files whose relative path start with an entry in this array are skipped for transformation
@@ -479,6 +480,35 @@ namespace StripFFXIVClientStructs
                 if (newNode.ChildNodes().Count() == 0)
                 {
                     return Visit(null);
+                }
+
+                // To prevent a bug with Roslyn not prepending newline properly in the case of a block comment right before
+                // an attribute list, convert leading trivia from a block comment to a set of single-line comments
+                if (newNode.HasLeadingTrivia)
+                {
+                    var origTrivia = newNode.GetLeadingTrivia();
+                    var newTrivia = SyntaxFactory.TriviaList();
+                    foreach (var trivia in origTrivia)
+                    {
+                        if (!trivia.IsKind(SyntaxKind.MultiLineCommentTrivia))
+                        {
+                            newTrivia.Add(trivia);
+                        }
+                        else
+                        {
+                            var text = trivia.ToString();
+                            var lines = text.Substring(2, text.Length - 4).Split('\n');
+                            foreach (var line in lines)
+                            {
+                                var trimmedLine = line.Trim().TrimStart('/');
+                                if (trimmedLine.Length > 0)
+                                {
+                                    newTrivia.Add(SyntaxFactory.Comment(trimmedLine));
+                                }
+                            }
+                        }
+                    }
+                    newNode = newNode.WithLeadingTrivia(newTrivia);
                 }
 
                 return newNode;

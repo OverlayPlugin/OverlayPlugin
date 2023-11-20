@@ -94,8 +94,6 @@
     }
   }
 
-  window.dispatchOverlayEvent = processEvent;
-
   window.addOverlayListener = (event, cb) => {
     if (eventsStarted && subscribers[event]) {
       console.warn(`A new listener for ${event} has been registered after event transmission has already begun.

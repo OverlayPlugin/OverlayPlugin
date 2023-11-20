@@ -31,11 +31,6 @@ namespace RainbowMage.OverlayPlugin
         Control CreateConfigControl();
 
         /// <summary>
-        /// オーバーレイがログを出力したときに発生します。
-        /// </summary>
-        event EventHandler<LogEventArgs> OnLog;
-
-        /// <summary>
         /// オーバーレイの更新を開始します。
         /// </summary>
         void Start();
