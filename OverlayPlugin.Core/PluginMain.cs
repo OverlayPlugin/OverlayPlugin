@@ -27,7 +27,7 @@ using RainbowMage.OverlayPlugin.Overlays;
 
 namespace RainbowMage.OverlayPlugin
 {
-    public class PluginMain
+    public class PluginMain : IDisposable
     {
         private TinyIoCContainer _container;
         private ILogger _logger;
@@ -41,6 +41,7 @@ namespace RainbowMage.OverlayPlugin
         Timer initTimer;
         Timer configSaveTimer;
         private bool clearCache = false;
+        private bool _disposed;
 
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
@@ -586,6 +587,30 @@ namespace RainbowMage.OverlayPlugin
                 "RainbowMage.OverlayPlugin.config." + (xml ? "xml" : "json"));
 
             return path;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    controlPanel?.Dispose();
+                    wsTabPage?.Dispose();
+                    wsConfigPanel?.Dispose();
+                    initTimer?.Stop();
+                    initTimer?.Dispose();
+                    configSaveTimer?.Stop();
+                    configSaveTimer?.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

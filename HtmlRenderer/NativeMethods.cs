@@ -227,7 +227,7 @@ namespace RainbowMage.HtmlRenderer
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
 
-        [DllImport("kernel32.dll", SetLastError = true)]
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int GetModuleFileName(IntPtr hModule, StringBuilder lpFilename, int nSize);
 
         [DllImport("user32.dll")]
