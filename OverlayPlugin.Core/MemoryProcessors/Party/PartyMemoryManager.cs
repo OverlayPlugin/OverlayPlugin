@@ -53,7 +53,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Party
             return true;
         }
 
-        Version IVersionedMemory.GetVersion()
+        public Version GetVersion()
         {
             if (!IsValid())
                 return null;

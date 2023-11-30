@@ -17,6 +17,10 @@ namespace RainbowMage.OverlayPlugin
     {
         TinyIoCContainer _container;
         ILogger _logger;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "CA2213:Disposable fields should be disposed",
+            Justification = "_pluginMain is disposed of by TinyIoCContainer")]
         PluginMain _pluginMain;
         IPluginConfig _config;
         Registry _registry;
@@ -94,7 +98,9 @@ namespace RainbowMage.OverlayPlugin
         {
             if (disposing)
             {
-                if (components != null) components.Dispose();
+                components?.Dispose();
+                _generalTab?.Dispose();
+                _eventTab?.Dispose();
                 _registry.EventSourceRegistered -= AddEventSourceTab;
                 _logger.ClearListener();
             }

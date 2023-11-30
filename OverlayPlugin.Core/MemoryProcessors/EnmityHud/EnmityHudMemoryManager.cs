@@ -53,7 +53,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
             return true;
         }
 
-        Version IVersionedMemory.GetVersion()
+        public Version GetVersion()
         {
             if (!IsValid())
                 return null;

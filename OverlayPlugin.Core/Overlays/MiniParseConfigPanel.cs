@@ -14,6 +14,10 @@ namespace RainbowMage.OverlayPlugin.Overlays
     {
         private MiniParseOverlayConfig config;
         private MiniParseOverlay overlay;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "CA2213:Disposable fields should be disposed",
+            Justification = "keyboardHook is disposed of by TinyIoCContainer")]
         private readonly KeyboardHook keyboardHook;
 
         static readonly List<KeyValuePair<string, GlobalHotkeyType>> hotkeyTypeDict = new List<KeyValuePair<string, GlobalHotkeyType>>()

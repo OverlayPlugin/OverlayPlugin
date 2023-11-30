@@ -23,7 +23,15 @@ namespace RainbowMage.OverlayPlugin
         const string NGROK_CHOCO_SCRIPT = "https://raw.githubusercontent.com/ngrok/choco-ngrok/main/tools/chocolateyinstall.ps1";
 
         IPluginConfig _config;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "CA2213:Disposable fields should be disposed",
+            Justification = "_server is disposed of by TinyIoCContainer")]
         WSServer _server;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "CA2213:Disposable fields should be disposed",
+            Justification = "_plugin is disposed of by TinyIoCContainer")]
         PluginMain _plugin;
         Registry _registry;
         Process _ngrok;
