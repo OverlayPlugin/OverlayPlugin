@@ -81,7 +81,7 @@ namespace RainbowMage.OverlayPlugin
 
                 _logger.Log(LogLevel.Info, "InitPlugin: PluginDirectory = {0}", PluginDirectory);
 
-#if DEBUG
+#if TRACEPERF
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
 #endif
@@ -113,7 +113,7 @@ namespace RainbowMage.OverlayPlugin
                 this.label.Text = "Init Phase 1: WSServer";
                 _container.Register(new WSServer(_container));
 
-#if DEBUG
+#if TRACEPERF
                 _logger.Log(LogLevel.Debug, "Component init and config load took {0}s.", watch.Elapsed.TotalSeconds);
                 watch.Reset();
 #endif
@@ -128,7 +128,7 @@ namespace RainbowMage.OverlayPlugin
                     _logger.Log(LogLevel.Error, "InitPlugin: {0}", e);
                 }
 
-#if DEBUG
+#if TRACEPERF
                 _logger.Log(LogLevel.Debug, "CEF init took {0}s.", watch.Elapsed.TotalSeconds);
                 watch.Reset();
 #endif
@@ -168,7 +168,7 @@ namespace RainbowMage.OverlayPlugin
                     });
                 };
 
-#if DEBUG
+#if TRACEPERF
                 watch.Reset();
 #endif
 

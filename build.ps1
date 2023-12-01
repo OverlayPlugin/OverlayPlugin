@@ -4,15 +4,10 @@ param (
 
 function Try-Fetch-Deps {
     param ([String]$description)
-    echo "Dependency '$description' was not found, running `tools/fetch_deps.py` to fetch any missing dependencies"
-    if ((Get-Command "python" -ErrorAction SilentlyContinue) -eq $null)
-    {
-        Write-Host "python does not appear to be in your PATH. Please fix this or manually run tools\fetch_deps.py"
-        exit 1
-    } 
-    python tools\fetch_deps.py
+    echo "Dependency '$description' was not found, running ``tools/fetch_deps.ps1` to fetch any missing dependencies"
+    .\tools\fetch_deps.ps1
     if ($LASTEXITCODE -ne 0) {
-        echo 'Error running fetch_deps.py'
+        echo 'Error running fetch_deps.ps1'
         exit 1
     }
     else {
@@ -54,36 +49,19 @@ try {
         $ENV:PATH = "C:\Program Files\7-Zip;${ENV:PATH}";
     }
 
-    if (Test-Path "OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\Base") {
-        echo "==> Preparing FFXIVClientStructs..."
-        
-        echo "==> Building StripFFXIVClientStructs..."
-        msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -t:StripFFXIVClientStructs -restore:True -v:q
-
-        cd OverlayPlugin.Core\Thirdparty\FFXIVClientStructs\Base
-
-        # Fix code to compile against .NET 4.8, remove partial funcs and helper funcs, we only want the struct layouts themselves
-        gci * | foreach-object {
-            $ns = $_.name
-
-            echo "==> Stripping FFXIVClientStructs for namespace $ns..."
-
-            ..\..\..\..\tools\StripFFXIVClientStructs\StripFFXIVClientStructs\bin\Release\net6.0\StripFFXIVClientStructs.exe $ns .\$ns ..\Transformed\$ns
-        }
-
-        cd ..\..\..\..
-    }
+    .\tools\strip-clientstructs.ps1
 
     if ($ci) {
         echo "==> Continuous integration flag set. Building Debug..."
-        msbuild -p:Configuration=Debug -p:Platform=x64 "OverlayPlugin.sln" -t:Restore
-        msbuild -p:Configuration=Debug -p:Platform=x64 "OverlayPlugin.sln"    
+        dotnet publish -v quiet -c debug
+        
+        if (-not $?) { exit 1 }
     }
 
     echo "==> Building..."
 
-    msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -t:Restore -v:q
-    msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -v:q
+    dotnet publish -v quiet -c release
+    
     if (-not $?) { exit 1 }
 
     echo "==> Building archive..."
@@ -103,16 +81,9 @@ try {
     cp -Recurse @("libs\de-DE", "libs\fr-FR", "libs\ja-JP", "libs\ko-KR", "libs\zh-CN") OverlayPlugin\libs
 
 
-    $text = [System.IO.File]::ReadAllText("$PWD\..\..\OverlayPlugin\Properties\AssemblyInfo.cs");
-    $regex = [regex]::New('\[assembly: AssemblyVersion\("([0-9]+\.[0-9]+\.[0-9]+)\.[0-9]+"\)');
-    $m = $regex.Match($text);
-
-    if (-not $m) {
-        echo "Error: Version number not found in the AssemblyInfo.cs!"
-        exit 1
-    }
-
-    $version = $m.Groups[1]
+    [xml]$csprojcontents = Get-Content -Path "$PWD\..\..\Directory.Build.props";
+    $version = $csprojcontents.Project.PropertyGroup.AssemblyVersion;
+    $version = ($version | Out-String).Trim()
     $archive = "..\OverlayPlugin-$version.7z"
 
     if (Test-Path $archive) { rm $archive }

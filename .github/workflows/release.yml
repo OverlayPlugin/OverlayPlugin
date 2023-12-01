@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '**/AssemblyInfo.cs'
+      - 'Directory.Build.props'
 
 jobs:
   validate_tag:
@@ -21,14 +21,9 @@ jobs:
         id: determine_version
         shell: pwsh
         run: |
-          $text = [System.IO.File]::ReadAllText("OverlayPlugin\Properties\AssemblyInfo.cs");
-          $regex = [regex]::New('\[assembly: AssemblyVersion\("([0-9]+\.[0-9]+\.[0-9]+)\.[0-9]+"\)');
-          $m = $regex.Match($text);
-          if (-not $m) {
-              echo "Error: Version number not found in the AssemblyInfo.cs!"
-              exit 1
-          }
-          $version = $m.Groups[1]
+          [xml]$csprojcontents = Get-Content -Path "Directory.Build.props";
+          $version = $csprojcontents.Project.PropertyGroup.AssemblyVersion;
+          $version = ($version | Out-String).Trim()
           echo "::set-output name=version::$version"
 
       - name: Check Tag Exists
@@ -39,22 +34,8 @@ jobs:
               exit 1
           fi
 
-  validate_version:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Validate AssemblyInfo Versions
-        run: |
-          python tools/validate_versions.py
-
   create_release:
-    needs: [validate_tag, validate_version]
+    needs: [validate_tag]
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -66,21 +47,19 @@ jobs:
           path: |
             ./Thirdparty
             ./OverlayPlugin.Core/Thirdparty
-          key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.py', './DEPS.py') }}
+          key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.ps1', './DEPS.json') }}
           restore-keys: |
             ${{ runner.os }}-overlayplugin-
-
       # Fetch dependencies only if cache-hit is false
-      - name: Set up Python 3.8
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
       - name: Fetch dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        shell: pwsh
         run: |
-          python .\tools\fetch_deps.py
+          .\tools\fetch_deps.ps1
+
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7'
 
       - name: Set up msbuild
         uses: microsoft/setup-msbuild@v1.0.2

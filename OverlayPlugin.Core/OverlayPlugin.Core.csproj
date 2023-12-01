@@ -1,240 +1,118 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <CefSharpAnyCpuSupport>true</CefSharpAnyCpuSupport>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DD6D2A9A-4AD4-47B8-A1D0-C8608EA37092}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RainbowMage.OverlayPlugin</RootNamespace>
-    <AssemblyName>OverlayPlugin.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\out\Debug\libs\</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
-    <DebugType>portable</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AssemblyTitle>OverlayPlugin.Core</AssemblyTitle>
+    <Product>OverlayPlugin.Core</Product>
+    <OutputPath>..\out\$(Configuration)\libs\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>..\out\Release\libs\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PostBuildEvent>xcopy /d /e /i /q /r /h /y $(MSBuildProjectDirectory)\resources $(MSBuildProjectDirectory)\$(OutputPath)\..\resources</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker, Version=3.4.9.271, Culture=neutral, PublicKeyToken=a946b61e93d97868, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Thirdparty\ACT\Advanced Combat Tracker.exe</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="FFXIV_ACT_Plugin.Common">
       <HintPath>..\Thirdparty\FFXIV_ACT_Plugin\SDK\FFXIV_ACT_Plugin.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigCreationConverter.cs" />
-    <Compile Include="Controls\ConfigErrorPrompt.cs">
+    <Compile Update="Controls\ConfigErrorPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\ConfigErrorPrompt.Designer.cs">
+    <Compile Update="Controls\ConfigErrorPrompt.Designer.cs">
       <DependentUpon>ConfigErrorPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\GeneralConfigTab.cs">
+    <Compile Update="Controls\GeneralConfigTab.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\GeneralConfigTab.Designer.cs">
+    <Compile Update="Controls\GeneralConfigTab.Designer.cs">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LogPanel.cs">
+    <Compile Update="Controls\LogPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\LogPanel.Designer.cs">
+    <Compile Update="Controls\LogPanel.Designer.cs">
       <DependentUpon>LogPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RenameOverlayDialog.cs">
+    <Compile Update="Controls\RenameOverlayDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\RenameOverlayDialog.Designer.cs">
+    <Compile Update="Controls\RenameOverlayDialog.Designer.cs">
       <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="EventSources\FFXIVClientStructsEventSource.cs" />
-    <Compile Include="EventSources\EnmityEventSource.cs" />
-    <Compile Include="EventSources\FFXIVRequiredEventSource.cs" />
-    <Compile Include="EventSources\FFXIVOptionalEventSource.cs" />
-    <Compile Include="Integration\UnstableNewLogLines.cs" />
-    <Compile Include="MemoryProcessors\Aggro\AggroMemory.cs" />
-    <Compile Include="MemoryProcessors\Aggro\AggroMemory60.cs" />
-    <Compile Include="MemoryProcessors\Aggro\AggroMemoryManager.cs" />
-    <Compile Include="MemoryProcessors\Aggro\Common.cs" />
-    <Compile Include="MemoryProcessors\AtkStage\AtkStageMemory.cs" />
-    <Compile Include="MemoryProcessors\AtkStage\AtkStageMemory62.cs" />
-    <Compile Include="MemoryProcessors\AtkStage\AtkStageMemoryManager.cs" />
-    <Compile Include="MemoryProcessors\Combatant\CombatantMemory65.cs" />
-    <Compile Include="MemoryProcessors\Combatant\CombatantMemory64.cs" />
-    <Compile Include="MemoryProcessors\FFXIVClientStructs\Data.cs" />
-    <Compile Include="MemoryProcessors\FFXIVClientStructs\ManagedType.cs" />
-    <Compile Include="MemoryProcessors\Combatant\LineCombatant.cs" />
-    <Compile Include="MemoryProcessors\Combatant\CombatantMemory63.cs" />
-    <Compile Include="MemoryProcessors\Combatant\Common.cs" />
-    <Compile Include="MemoryProcessors\EnmityHud\Common.cs" />
-    <Compile Include="MemoryProcessors\EnmityHud\EnmityHudMemory.cs" />
-    <Compile Include="MemoryProcessors\EnmityHud\EnmityHudMemory60.cs" />
-    <Compile Include="MemoryProcessors\EnmityHud\EnmityHudMemory62.cs" />
-    <Compile Include="MemoryProcessors\EnmityHud\EnmityHudMemoryManager.cs" />
-    <Compile Include="MemoryProcessors\Enmity\Common.cs" />
-    <Compile Include="MemoryProcessors\Enmity\EnmityMemory.cs" />
-    <Compile Include="MemoryProcessors\Enmity\EnmityMemory60.cs" />
-    <Compile Include="MemoryProcessors\Enmity\EnmityMemoryManager.cs" />
-    <Compile Include="MemoryProcessors\Combatant\CombatantMemoryManager.cs" />
-    <Compile Include="MemoryProcessors\InCombat\InCombatMemory.cs" />
-    <Compile Include="MemoryProcessors\InCombat\InCombatMemory61.cs" />
-    <Compile Include="MemoryProcessors\InCombat\InCombatMemoryManager.cs" />
-    <Compile Include="MemoryProcessors\InCombat\LineInCombat.cs" />
-    <Compile Include="MemoryProcessors\Party\PartyMemory.cs" />
-    <Compile Include="MemoryProcessors\Party\PartyMemory65.cs" />
-    <Compile Include="MemoryProcessors\Party\PartyMemory64.cs" />
-    <Compile Include="MemoryProcessors\Party\PartyMemoryManager.cs" />
-    <Compile Include="MemoryProcessors\Target\TargetMemory63.cs" />
-    <Compile Include="MemoryProcessors\Target\TargetMemoryManager.cs" />
-    <Compile Include="MemoryProcessors\Target\TargetMemory.cs" />
-    <Compile Include="MemoryProcessors\Target\TargetMemory60.cs" />
-    <Compile Include="MemoryProcessors\Combatant\CombatantMemory.cs" />
-    <Compile Include="NetworkProcessors\FateWatcher.cs" />
-    <Compile Include="NetworkProcessors\LineAbilityExtra.cs" />
-    <Compile Include="NetworkProcessors\LineActorCastExtra.cs" />
-    <Compile Include="NetworkProcessors\LineRSV.cs" />
-    <Compile Include="NetworkProcessors\LineFateControl.cs" />
-    <Compile Include="NetworkProcessors\LineCEDirector.cs" />
-    <Compile Include="NetworkProcessors\LineMapEffect.cs" />
-    <Compile Include="MemoryProcessors\FFXIVMemory.cs" />
-    <Compile Include="Integration\FFXIVExportVariables.cs" />
-    <Compile Include="Integration\FFXIVRepository.cs" />
-    <Compile Include="Integration\FFXIVCustomLogLines.cs" />
-    <Compile Include="JSApi\IApiBase.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="JSApi\MinimalApi.cs" />
-    <Compile Include="NetworkProcessors\NetworkParser.cs" />
-    <Compile Include="JSApi\OverlayApi.cs" />
-    <Compile Include="EventDispatcher.cs" />
-    <Compile Include="IEventReceiver.cs" />
-    <Compile Include="EventSourceBase.cs" />
-    <Compile Include="ConfigEventArgs.cs" />
-    <Compile Include="Integration\OverlayPluginLogLines.cs" />
-    <Compile Include="ClipboardTechSupport.cs" />
-    <Compile Include="OverlayHider.cs" />
-    <Compile Include="Overlays\LogParseConfigPanel.cs">
+    <Compile Update="Overlays\LogParseConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Overlays\LogParseConfigPanel.Designer.cs">
+    <Compile Update="Overlays\LogParseConfigPanel.Designer.cs">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Overlays\LogParseLoglineReader.cs" />
-    <Compile Include="Overlays\LogParseOverlay.cs" />
-    <Compile Include="Overlays\LogParseOverlayConfig.cs" />
-    <Compile Include="EventSources\BuiltinEventConfigPanel.cs">
+    <Compile Update="EventSources\BuiltinEventConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EventSources\BuiltinEventConfigPanel.Designer.cs">
+    <Compile Update="EventSources\BuiltinEventConfigPanel.Designer.cs">
       <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="EventSources\MiniParseEventSource.cs" />
-    <Compile Include="Overlays\MiniParseOverlayConfig.cs" />
-    <Compile Include="Controls\TabControlExt.cs">
+    <Compile Update="Controls\TabControlExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\ControlPanel.cs">
+    <Compile Update="Controls\ControlPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlPanel.Designer.cs">
+    <Compile Update="Controls\ControlPanel.Designer.cs">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="KeyboardHook.cs" />
-    <Compile Include="EventSources\MiniParseLoglineReader.cs" />
-    <Compile Include="Overlays\LabelOverlay.cs" />
-    <Compile Include="Overlays\LabelOverlayConfig.cs" />
-    <Compile Include="Overlays\LabelOverlayConfigPanel.cs">
+    <Compile Update="Overlays\LabelOverlayConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Overlays\LabelOverlayConfigPanel.Designer.cs">
+    <Compile Update="Overlays\LabelOverlayConfigPanel.Designer.cs">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Overlays\MiniParseConfigPanel.cs">
+    <Compile Update="Overlays\MiniParseConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Overlays\MiniParseConfigPanel.Designer.cs">
+    <Compile Update="Overlays\MiniParseConfigPanel.Designer.cs">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Overlays\MiniParseOverlay.cs" />
-    <Compile Include="EventSources\BuiltinEventConfig.cs" />
-    <Compile Include="NativeMethods.cs" />
-    <Compile Include="Controls\NewOverlayDialog.cs">
+    <Compile Update="Controls\NewOverlayDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\NewOverlayDialog.Designer.cs">
+    <Compile Update="Controls\NewOverlayDialog.Designer.cs">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="OverlayBase.cs" />
-    <Compile Include="OverlayConfigBase.cs" />
-    <Compile Include="OverlayZCorrector.cs" />
-    <Compile Include="PluginConfig.cs" />
-    <Compile Include="PluginMain.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Overlays\SerializableTimerFrameEntry.cs" />
-    <Compile Include="Overlays\SpellTimerOverlayConfig.cs" />
-    <Compile Include="Overlays\SpellTimerOverlay.cs" />
-    <Compile Include="Overlays\SpellTimerConfigPanel.cs">
+    <Compile Update="Overlays\SpellTimerConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Overlays\SpellTimerConfigPanel.Designer.cs">
+    <Compile Update="Overlays\SpellTimerConfigPanel.Designer.cs">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources.Designer.cs">
+    <Compile Update="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Integration\TriggIntegration.cs" />
-    <Compile Include="Util.cs" />
-    <Compile Include="Controls\WSConfigPanel.cs">
+    <Compile Update="Controls\WSConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\WSConfigPanel.Designer.cs">
+    <Compile Update="Controls\WSConfigPanel.Designer.cs">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="WebSocket\WSServer.cs" />
-    <Compile Include="Thirdparty\FFXIVClientStructs\Transformed\**\*.cs" />
+    <Content Remove="Thirdparty\FFXIVClientStructs\Base\**" />
+    <Compile Remove="Thirdparty\FFXIVClientStructs\Base\**" />
+    <EmbeddedResource Remove="Thirdparty\FFXIVClientStructs\Base\**" />
+    <None Remove="Thirdparty\FFXIVClientStructs\Base\**" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\enmity\aggrolist.html">
@@ -328,216 +206,194 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\ConfigErrorPrompt.resx">
+    <EmbeddedResource Update="Controls\ConfigErrorPrompt.resx">
       <DependentUpon>ConfigErrorPrompt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlPanel.de-DE.resx">
+    <EmbeddedResource Update="Controls\ControlPanel.de-DE.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlPanel.fr-FR.resx">
+    <EmbeddedResource Update="Controls\ControlPanel.fr-FR.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlPanel.ja-JP.resx">
+    <EmbeddedResource Update="Controls\ControlPanel.ja-JP.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlPanel.ko-KR.resx">
+    <EmbeddedResource Update="Controls\ControlPanel.ko-KR.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlPanel.resx">
+    <EmbeddedResource Update="Controls\ControlPanel.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlPanel.zh-CN.resx">
+    <EmbeddedResource Update="Controls\ControlPanel.zh-CN.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GeneralConfigTab.de-DE.resx">
+    <EmbeddedResource Update="Controls\GeneralConfigTab.de-DE.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GeneralConfigTab.fr-FR.resx">
+    <EmbeddedResource Update="Controls\GeneralConfigTab.fr-FR.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GeneralConfigTab.ja-JP.resx">
+    <EmbeddedResource Update="Controls\GeneralConfigTab.ja-JP.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GeneralConfigTab.ko-KR.resx">
+    <EmbeddedResource Update="Controls\GeneralConfigTab.ko-KR.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GeneralConfigTab.resx">
+    <EmbeddedResource Update="Controls\GeneralConfigTab.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GeneralConfigTab.zh-CN.resx">
+    <EmbeddedResource Update="Controls\GeneralConfigTab.zh-CN.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\LogPanel.resx">
+    <EmbeddedResource Update="Controls\LogPanel.resx">
       <DependentUpon>LogPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NewOverlayDialog.de-DE.resx">
+    <EmbeddedResource Update="Controls\NewOverlayDialog.de-DE.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NewOverlayDialog.fr-FR.resx">
+    <EmbeddedResource Update="Controls\NewOverlayDialog.fr-FR.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NewOverlayDialog.ja-JP.resx">
+    <EmbeddedResource Update="Controls\NewOverlayDialog.ja-JP.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NewOverlayDialog.ko-KR.resx">
+    <EmbeddedResource Update="Controls\NewOverlayDialog.ko-KR.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NewOverlayDialog.zh-CN.resx">
+    <EmbeddedResource Update="Controls\NewOverlayDialog.zh-CN.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RenameOverlayDialog.de-DE.resx">
+    <EmbeddedResource Update="Controls\RenameOverlayDialog.de-DE.resx">
       <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RenameOverlayDialog.fr-FR.resx">
+    <EmbeddedResource Update="Controls\RenameOverlayDialog.fr-FR.resx">
       <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RenameOverlayDialog.resx">
+    <EmbeddedResource Update="Controls\RenameOverlayDialog.resx">
       <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RenameOverlayDialog.zh-CN.resx">
+    <EmbeddedResource Update="Controls\RenameOverlayDialog.zh-CN.resx">
       <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WSConfigPanel.de-DE.resx">
+    <EmbeddedResource Update="Controls\WSConfigPanel.de-DE.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WSConfigPanel.fr-FR.resx">
+    <EmbeddedResource Update="Controls\WSConfigPanel.fr-FR.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WSConfigPanel.ja-JP.resx">
+    <EmbeddedResource Update="Controls\WSConfigPanel.ja-JP.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WSConfigPanel.ko-KR.resx">
+    <EmbeddedResource Update="Controls\WSConfigPanel.ko-KR.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WSConfigPanel.zh-CN.resx">
+    <EmbeddedResource Update="Controls\WSConfigPanel.zh-CN.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.de-DE.resx">
+    <EmbeddedResource Update="EventSources\BuiltinEventConfigPanel.de-DE.resx">
       <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.fr-FR.resx">
+    <EmbeddedResource Update="EventSources\BuiltinEventConfigPanel.fr-FR.resx">
       <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.zh-CN.resx">
+    <EmbeddedResource Update="EventSources\BuiltinEventConfigPanel.zh-CN.resx">
       <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.de-DE.resx">
+    <EmbeddedResource Update="Overlays\LabelOverlayConfigPanel.de-DE.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.fr-FR.resx">
+    <EmbeddedResource Update="Overlays\LabelOverlayConfigPanel.fr-FR.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.ja-JP.resx">
+    <EmbeddedResource Update="Overlays\LabelOverlayConfigPanel.ja-JP.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.ko-KR.resx">
+    <EmbeddedResource Update="Overlays\LabelOverlayConfigPanel.ko-KR.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.resx">
+    <EmbeddedResource Update="Overlays\LabelOverlayConfigPanel.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.zh-CN.resx">
+    <EmbeddedResource Update="Overlays\LabelOverlayConfigPanel.zh-CN.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LogParseConfigPanel.de-DE.resx">
+    <EmbeddedResource Update="Overlays\LogParseConfigPanel.de-DE.resx">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LogParseConfigPanel.fr-FR.resx">
+    <EmbeddedResource Update="Overlays\LogParseConfigPanel.fr-FR.resx">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LogParseConfigPanel.ja-JP.resx">
+    <EmbeddedResource Update="Overlays\LogParseConfigPanel.ja-JP.resx">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LogParseConfigPanel.ko-KR.resx">
+    <EmbeddedResource Update="Overlays\LogParseConfigPanel.ko-KR.resx">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LogParseConfigPanel.resx">
+    <EmbeddedResource Update="Overlays\LogParseConfigPanel.resx">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.ja-JP.resx">
+    <EmbeddedResource Update="EventSources\BuiltinEventConfigPanel.ja-JP.resx">
       <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.ko-KR.resx">
+    <EmbeddedResource Update="EventSources\BuiltinEventConfigPanel.ko-KR.resx">
       <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.resx">
+    <EmbeddedResource Update="EventSources\BuiltinEventConfigPanel.resx">
       <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LogParseConfigPanel.zh-CN.resx">
+    <EmbeddedResource Update="Overlays\LogParseConfigPanel.zh-CN.resx">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\MiniParseConfigPanel.de-DE.resx">
+    <EmbeddedResource Update="Overlays\MiniParseConfigPanel.de-DE.resx">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\MiniParseConfigPanel.fr-FR.resx">
+    <EmbeddedResource Update="Overlays\MiniParseConfigPanel.fr-FR.resx">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\MiniParseConfigPanel.ja-JP.resx">
+    <EmbeddedResource Update="Overlays\MiniParseConfigPanel.ja-JP.resx">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\MiniParseConfigPanel.ko-KR.resx">
+    <EmbeddedResource Update="Overlays\MiniParseConfigPanel.ko-KR.resx">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\MiniParseConfigPanel.resx">
+    <EmbeddedResource Update="Overlays\MiniParseConfigPanel.resx">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NewOverlayDialog.resx">
+    <EmbeddedResource Update="Controls\NewOverlayDialog.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\MiniParseConfigPanel.zh-CN.resx">
+    <EmbeddedResource Update="Overlays\MiniParseConfigPanel.zh-CN.resx">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.de-DE.resx">
+    <EmbeddedResource Update="Overlays\SpellTimerConfigPanel.de-DE.resx">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.fr-FR.resx">
+    <EmbeddedResource Update="Overlays\SpellTimerConfigPanel.fr-FR.resx">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.ko-KR.resx">
+    <EmbeddedResource Update="Overlays\SpellTimerConfigPanel.ko-KR.resx">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.ja-JP.resx">
+    <EmbeddedResource Update="Overlays\SpellTimerConfigPanel.ja-JP.resx">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.resx">
+    <EmbeddedResource Update="Overlays\SpellTimerConfigPanel.resx">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WSConfigPanel.resx">
+    <EmbeddedResource Update="Controls\WSConfigPanel.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.zh-CN.resx">
+    <EmbeddedResource Update="Overlays\SpellTimerConfigPanel.zh-CN.resx">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources.de-DE.resx" />
-    <EmbeddedResource Include="Resources.fr-FR.resx" />
-    <EmbeddedResource Include="Resources.ja-JP.resx" />
-    <EmbeddedResource Include="Resources.ko-KR.resx" />
-    <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HtmlRenderer\HtmlRenderer.csproj">
-      <Project>{e2bc6483-b966-4a4a-b4cc-d50a4bd73af3}</Project>
-      <Name>HtmlRenderer</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj">
-      <Project>{423fcbfc-dd3b-415f-be29-7a4a46614b79}</Project>
-      <Name>OverlayPlugin.Common</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\OverlayPlugin.Updater\OverlayPlugin.Updater.csproj">
-      <Project>{82b1d288-51a6-411f-a5f9-e37c6a72e7da}</Project>
-      <Name>OverlayPlugin.Updater</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <ProjectReference Include="..\HtmlRenderer\HtmlRenderer.csproj" />
+    <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj" />
+    <ProjectReference Include="..\OverlayPlugin.Updater\OverlayPlugin.Updater.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <Content Include="resources\presets.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -552,26 +408,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Fleck">
-      <Version>1.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="YamlDotNet">
-      <Version>12.0.2</Version>
-    </PackageReference>
+    <PackageReference Include="Fleck" Version="1.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="YamlDotNet" Version="12.0.2" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy /d /e /i /q /r /h /y $(ProjectDir)\resources $(TargetDir)\..\resources</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

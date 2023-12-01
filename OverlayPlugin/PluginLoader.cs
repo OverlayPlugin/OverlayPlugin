@@ -36,7 +36,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     Path.Combine(pluginDirectory, "libs"),
                     Path.Combine(pluginDirectory, "addons"),
-#if DEBUG
+#if TRACEPERF
                     Path.Combine(pluginDirectory, "libs", Environment.Is64BitProcess ? "x64" : "x86"),
 #else
                     GetCefPath()

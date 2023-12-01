@@ -35,7 +35,7 @@ ACT에서 `Plugins` 탭으로 이동한 다음 `OverlayPlugin.dll` 탭으로 이
 
 * 설치 프로그램을 통해 Visual Studio 2019와 .NET 데스크톱 구성 요소를 설치합니다. (이전 버전도 동작할 수 있으나 테스트되지 않음)
 * git으로 소스 코드를 가져오거나 ZIP으로 소스 코드를 다운로드하고 압축을 풉니다.
-* `tools/fetch_deps.py`를 실행합니다.
+* `tools/fetch_deps.ps1`를 실행합니다.
 * `build.bat`를 실행합니다.
 
 완료되면 플러그인 파일 `OverlayPlugin.dll`이 `out` 폴더에 생성됩니다. 빌드 설정에 따라 `Release` 또는 `Debug` 하위 폴더에 있습니다.

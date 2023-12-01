@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-#if TRACE
+#if TRACEPERF
 using System.Diagnostics;
 #endif
 using System.Linq;
@@ -148,7 +148,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             try
             {
-#if TRACE
+#if TRACEPERF
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 #endif
@@ -170,7 +170,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 {
                     DispatchEvent(CreateTargetableEnemyList(combatants));
                 }
-#if TRACE
+#if TRACEPERF
                 Log(LogLevel.Trace, "UpdateEnmity: {0}ms", stopwatch.ElapsedMilliseconds);
 #endif
             }

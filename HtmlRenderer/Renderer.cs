@@ -433,7 +433,7 @@ namespace RainbowMage.HtmlRenderer
                 }
 
 #if DEBUG
-                var cefPath = Path.Combine(pluginDirectory, "libs", Environment.Is64BitProcess ? "x64" : "x86");
+                var cefPath = Path.Combine(pluginDirectory, "libs");
 #else
                 var cefPath = Path.Combine(appDataDirectory, "OverlayPluginCef", Environment.Is64BitProcess ? "x64" : "x86");
 #endif

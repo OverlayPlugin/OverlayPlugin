@@ -1,182 +1,118 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{82B1D288-51A6-411F-A5F9-E37C6A72E7DA}</ProjectGuid>
-    <OutputType>Library</OutputType>
     <RootNamespace>RainbowMage.OverlayPlugin.Updater</RootNamespace>
-    <AssemblyName>OverlayPlugin.Updater</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\out\Debug\libs\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <AssemblyTitle>OverlayPlugin.Updater</AssemblyTitle>
+    <Product>OverlayPlugin.Updater</Product>
+    <OutputPath>..\out\$(Configuration)\libs\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\out\Release\libs\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
       <HintPath>..\Thirdparty\ACT\Advanced Combat Tracker.exe</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CefInstaller.cs" />
-    <Compile Include="CefMissingTab.cs">
+    <Compile Update="CefMissingTab.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CefMissingTab.Designer.cs">
+    <Compile Update="CefMissingTab.Designer.cs">
       <DependentUpon>CefMissingTab.cs</DependentUpon>
     </Compile>
-    <Compile Include="HttpClientWrapper.cs" />
-    <Compile Include="Installer.cs" />
-    <Compile Include="NativeMethods.cs" />
-    <Compile Include="ProgressDisplay.cs">
+    <Compile Update="ProgressDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProgressDisplay.Designer.cs">
+    <Compile Update="ProgressDisplay.Designer.cs">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources.Designer.cs">
+    <Compile Update="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UpdateQuestionForm.cs">
+    <Compile Update="UpdateQuestionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpdateQuestionForm.Designer.cs">
+    <Compile Update="UpdateQuestionForm.Designer.cs">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Updater.cs" />
-    <EmbeddedResource Include="CefMissingTab.de-DE.resx">
+    <EmbeddedResource Update="CefMissingTab.de-DE.resx">
       <DependentUpon>CefMissingTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CefMissingTab.fr-FR.resx">
+    <EmbeddedResource Update="CefMissingTab.fr-FR.resx">
       <DependentUpon>CefMissingTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CefMissingTab.ja-JP.resx">
+    <EmbeddedResource Update="CefMissingTab.ja-JP.resx">
       <DependentUpon>CefMissingTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CefMissingTab.ko-KR.resx">
+    <EmbeddedResource Update="CefMissingTab.ko-KR.resx">
       <DependentUpon>CefMissingTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CefMissingTab.resx">
+    <EmbeddedResource Update="CefMissingTab.resx">
       <DependentUpon>CefMissingTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CefMissingTab.zh-CN.resx">
+    <EmbeddedResource Update="CefMissingTab.zh-CN.resx">
       <DependentUpon>CefMissingTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProgressDisplay.de-DE.resx">
+    <EmbeddedResource Update="ProgressDisplay.de-DE.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProgressDisplay.fr-FR.resx">
+    <EmbeddedResource Update="ProgressDisplay.fr-FR.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProgressDisplay.ja-JP.resx">
+    <EmbeddedResource Update="ProgressDisplay.ja-JP.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProgressDisplay.ko-KR.resx">
+    <EmbeddedResource Update="ProgressDisplay.ko-KR.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProgressDisplay.resx">
+    <EmbeddedResource Update="ProgressDisplay.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProgressDisplay.zh-CN.resx">
+    <EmbeddedResource Update="ProgressDisplay.zh-CN.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources.de-DE.resx" />
-    <EmbeddedResource Include="Resources.fr-FR.resx" />
-    <EmbeddedResource Include="Resources.ja-JP.resx" />
-    <EmbeddedResource Include="Resources.ko-KR.resx" />
-    <EmbeddedResource Include="Resources.resx">
+    <EmbeddedResource Update="Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources.zh-CN.resx" />
-    <EmbeddedResource Include="UpdateQuestionForm.de-DE.resx">
+    <EmbeddedResource Update="UpdateQuestionForm.de-DE.resx">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateQuestionForm.fr-FR.resx">
+    <EmbeddedResource Update="UpdateQuestionForm.fr-FR.resx">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateQuestionForm.ja-JP.resx">
+    <EmbeddedResource Update="UpdateQuestionForm.ja-JP.resx">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateQuestionForm.ko-KR.resx">
+    <EmbeddedResource Update="UpdateQuestionForm.ko-KR.resx">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateQuestionForm.resx">
+    <EmbeddedResource Update="UpdateQuestionForm.resx">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateQuestionForm.zh-CN.resx">
+    <EmbeddedResource Update="UpdateQuestionForm.zh-CN.resx">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj">
-      <Project>{423fcbfc-dd3b-415f-be29-7a4a46614b79}</Project>
-      <Name>OverlayPlugin.Common</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Markdig.Signed">
-      <Version>0.18.3</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="SharpCompress">
-      <Version>0.24.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.ValueTuple">
-      <Version>4.5.0</Version>
-    </PackageReference>
+    <PackageReference Include="Markdig.Signed" Version="0.18.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="SharpCompress" Version="0.24.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>

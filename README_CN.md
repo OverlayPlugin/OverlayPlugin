@@ -30,7 +30,7 @@
 这些说明仅在您要修改此插件时才对您有意义。要安装此插件，请转至[release page](https://github.com/OverlayPlugin/OverlayPlugin/releases)。
 * 安装Visual Studio 2019（早期版本未经测试但可能可以工作）和.NET桌面工作负载工具
 * 用git查看源代码，或将源代码下载为ZIP文件并解压缩。
-* 运行`tools/fetch_deps.py`
+* 运行`tools/fetch_deps.ps1`
 * 运行`build.bat`
 
 完成后, 插件文件`OverlayPlugin.dll`将出现在`out`文件夹中。根据您设定的构建配置，它将位于`Release`或`Debug`子文件夹中。

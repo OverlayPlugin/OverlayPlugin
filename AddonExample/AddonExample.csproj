@@ -1,120 +1,48 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B9BBE478-8FD7-43D9-BD50-C806B1EC672F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AddonExample</RootNamespace>
-    <AssemblyName>AddonExample</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\out\Debug\addons\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
+    <AssemblyTitle>AddonExample</AssemblyTitle>
+    <Product>AddonExample</Product>
+    <Copyright>Copyright ©  2015</Copyright>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\out\Release\addons\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\OverlayPlugin\bin\x86\Debug\addons\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <OutputPath>..\out\$(Configuration)\addons\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
       <HintPath>..\Thirdparty\ACT\Advanced Combat Tracker.exe</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddonExampleEventSource.cs" />
-    <Compile Include="AddonExampleEventSourceConfig.cs" />
-    <Compile Include="AddonExampleEventSourceConfigPanel.cs">
+    <Compile Update="AddonExampleEventSourceConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AddonExampleEventSourceConfigPanel.Designer.cs">
+    <Compile Update="AddonExampleEventSourceConfigPanel.Designer.cs">
       <DependentUpon>AddonExampleEventSourceConfigPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddonExampleOverlay.cs" />
-    <Compile Include="AddonExampleOverlayConfig.cs" />
-    <Compile Include="AddonExampleOverlayConfigPanel.cs">
+    <Compile Update="AddonExampleOverlayConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AddonExampleOverlayConfigPanel.Designer.cs">
+    <Compile Update="AddonExampleOverlayConfigPanel.Designer.cs">
       <DependentUpon>AddonExampleOverlayConfigPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddonExample.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj">
-      <Project>{423fcbfc-dd3b-415f-be29-7a4a46614b79}</Project>
-      <Name>OverlayPlugin.Common</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\OverlayPlugin.Core\OverlayPlugin.Core.csproj">
-      <Project>{dd6d2a9a-4ad4-47b8-a1d0-c8608ea37092}</Project>
-      <Name>OverlayPlugin.Core</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj" />
+    <ProjectReference Include="..\OverlayPlugin.Core\OverlayPlugin.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AddonExampleEventSourceConfigPanel.resx">
+    <EmbeddedResource Update="AddonExampleEventSourceConfigPanel.resx">
       <DependentUpon>AddonExampleEventSourceConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddonExampleOverlayConfigPanel.resx">
+    <EmbeddedResource Update="AddonExampleOverlayConfigPanel.resx">
       <DependentUpon>AddonExampleOverlayConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
-    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

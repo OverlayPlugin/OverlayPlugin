@@ -75,7 +75,6 @@ namespace StripFFXIVClientStructs
             "System.Runtime.InteropServices",
             "FFXIVClientStructs.{0}.STD",
             "FFXIVClientStructs.{0}.FFXIV.Client.Graphics",
-            "FFXIVClientStructs.{0}.FFXIV.Common.Math",
         };
 
         // Entries in this dictionary will have their types remapped to concrete types.

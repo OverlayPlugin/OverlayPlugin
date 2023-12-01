@@ -37,7 +37,7 @@ These instructions are only relevant to you if you want to modify the plugin. To
 
 * Install Visual Studio 2019 (earlier versions might work as well but haven't been tested) and the .NET desktop workload through its installer
 * Checkout source codes with git, or download source code as ZIP and extract.
-* Run `tools/fetch_deps.py`
+* Run `tools/fetch_deps.ps1`
 * Run `build.bat`
 
 Once finished, the plugin file `OverlayPlugin.dll` will appear in the `out` folder. It will either be in the `Release` or `Debug` subfolder depending on which configuration you built.

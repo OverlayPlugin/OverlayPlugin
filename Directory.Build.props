@@ -1,0 +1,26 @@
+<Project>
+    <!-- These properties get imported for subprojects to reduce boilerplate -->
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <Copyright>Copyright © RainbowMage 2015, Kuriyama hibiya 2016, ngld 2019, OverlayPlugin Team 2022</Copyright>
+        <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+        <AssemblyVersion>0.19.23</AssemblyVersion>
+        <FileVersion>0.19.23</FileVersion>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <DebugType>full</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <DebugType>pdbonly</DebugType>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Remove="obj\**\*.AssemblyAttributes.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
+    </ItemGroup>
+</Project>

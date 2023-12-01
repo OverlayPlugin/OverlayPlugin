@@ -3,12 +3,12 @@ try {
     $VS_PATH = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community"
 
     if ( -not (Test-Path "Thirdparty\ACT\Advanced Combat Tracker.exe" )) {
-        echo 'Error: Please run tools\fetch_deps.py'
+        echo 'Error: Please run tools\fetch_deps.ps1'
         exit 1
     }
 
     if ( -not (Test-Path "Thirdparty\FFXIV_ACT_Plugin\SDK\FFXIV_ACT_Plugin.Common.dll" )) {
-        echo 'Error: Please run tools\fetch_deps.py'
+        echo 'Error: Please run tools\fetch_deps.ps1'
         exit 1
     }
 
