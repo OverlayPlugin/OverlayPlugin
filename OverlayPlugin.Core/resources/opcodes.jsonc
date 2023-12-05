@@ -3,18 +3,18 @@
 // For more information, see comments on https://github.com/OverlayPlugin/OverlayPlugin/issues/235
 {
     // CN region
-    "2023.09.06.0000.0000": {
-        // Version: 6.4
+    "2023.11.27.0000.0000": {
+        // Version: 6.45
         "MapEffect": {
-            "opcode": 286,
+            "opcode": 378,
             "size": 11
         },
         "CEDirector": {
-            "opcode": 847,
+            "opcode": 763,
             "size": 16
         },
         "RSVData": {
-            "opcode": 364,
+            "opcode": 335,
             "size": 1080
         }
     },
