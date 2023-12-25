@@ -485,7 +485,7 @@ namespace RainbowMage.OverlayPlugin
 region: " + region + @"
 console_ui: false
 web_addr: 127.0.0.1:" + (_config.WSServerPort + 1) + @"
-
+authtoken: " + (this.txtNgrokToken.Text) + @"
 tunnels:
     wsserver:
         proto: http
