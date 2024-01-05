@@ -179,6 +179,26 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private uint? GetCurrentTerritoryIDImpl()
+        {
+            return GetRepository()?.GetCurrentTerritoryID();
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public uint? GetCurrentTerritoryID()
+        {
+            try
+            {
+                return GetCurrentTerritoryIDImpl();
+            }
+            catch (FileNotFoundException)
+            {
+                // The FFXIV plugin isn't loaded
+                return null;
+            }
+        }
+
         public Version GetOverlayPluginVersion()
         {
             return Assembly.GetExecutingAssembly().GetName().Version;
