@@ -17,6 +17,7 @@ namespace RainbowMage.OverlayPlugin
         bool WSServerSSL { get; set; }
         bool WSServerRunning { get; set; }
         string TunnelRegion { get; set; }
+        string Token { get; set; }
         Version Version { get; set; }
         DateTime LastUpdateCheck { get; set; }
         bool IsFirstLaunch { get; set; }

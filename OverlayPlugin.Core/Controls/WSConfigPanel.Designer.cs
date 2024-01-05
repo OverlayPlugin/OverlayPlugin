@@ -55,6 +55,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
             this.tunnelPage = new System.Windows.Forms.TabPage();
+            this.tokenLabel = new System.Windows.Forms.Label();
+            this.txtNgrokToken = new System.Windows.Forms.TextBox();
             this.simpStopBtn = new System.Windows.Forms.Button();
             this.simpStartBtn = new System.Windows.Forms.Button();
             this.simpLogBox = new System.Windows.Forms.TextBox();
@@ -62,8 +64,6 @@
             this.regionCb = new System.Windows.Forms.ComboBox();
             this.regionLabel = new System.Windows.Forms.Label();
             this.simpStatusLabel = new System.Windows.Forms.Label();
-            this.txtNgrokToken = new System.Windows.Forms.TextBox();
-            this.tokenLabel = new System.Windows.Forms.Label();
             this.urlGeneratorBox.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.introPage.SuspendLayout();
@@ -235,6 +235,17 @@
             this.tunnelPage.Name = "tunnelPage";
             this.tunnelPage.UseVisualStyleBackColor = true;
             // 
+            // tokenLabel
+            // 
+            resources.ApplyResources(this.tokenLabel, "tokenLabel");
+            this.tokenLabel.Name = "tokenLabel";
+            // 
+            // txtNgrokToken
+            // 
+            resources.ApplyResources(this.txtNgrokToken, "txtNgrokToken");
+            this.txtNgrokToken.Name = "txtNgrokToken";
+            this.txtNgrokToken.TextChanged += new System.EventHandler(this.txtNgrokTokenChanged);
+            // 
             // simpStopBtn
             // 
             resources.ApplyResources(this.simpStopBtn, "simpStopBtn");
@@ -285,16 +296,6 @@
             // 
             resources.ApplyResources(this.simpStatusLabel, "simpStatusLabel");
             this.simpStatusLabel.Name = "simpStatusLabel";
-            // 
-            // txtNgrokToken
-            // 
-            resources.ApplyResources(this.txtNgrokToken, "txtNgrokToken");
-            this.txtNgrokToken.Name = "txtNgrokToken";
-            // 
-            // tokenLabel
-            // 
-            resources.ApplyResources(this.tokenLabel, "tokenLabel");
-            this.tokenLabel.Name = "tokenLabel";
             // 
             // WSConfigPanel
             // 

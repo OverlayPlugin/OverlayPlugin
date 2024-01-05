@@ -169,6 +169,20 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        private string _token;
+        public string Token
+        {
+            get
+            {
+                return _token;
+            }
+            set
+            {
+                _token = value;
+                isDirty = true;
+            }
+        }
+
         private JToken _cachedOpcodeFile = new JObject();
         public JToken CachedOpcodeFile
         {
