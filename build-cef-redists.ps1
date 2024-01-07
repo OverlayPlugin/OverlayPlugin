@@ -14,15 +14,20 @@ try {
     dotnet build -c release -t:PrintCEFDir .\HtmlRenderer\HtmlRenderer.csproj
     if (-not $?) { exit 1 }
 
-    $CEFDir = Join-Path ([System.IO.File]::ReadAllText("$OutDir\Release\CEFPath.txt")).Trim() CEF;
+    $CEFRedistDir = Join-Path ([System.IO.File]::ReadAllText("$OutDir\Release\cef.redist.x64.Path.txt")).Trim() CEF;
+    $CEFSharpCommonDir = Join-Path ([System.IO.File]::ReadAllText("$OutDir\Release\CefSharp.Common.Path.txt")).Trim() "lib\net462";
+    $CEFSharpCommonDepsDir = Join-Path ([System.IO.File]::ReadAllText("$OutDir\Release\CefSharp.Common.Path.txt")).Trim() "CefSharp\x64";
+    $CEFSharpOffscreenDir = Join-Path ([System.IO.File]::ReadAllText("$OutDir\Release\CefSharp.OffScreen.Path.txt")).Trim() "lib\net462";
 
-    echo "==> Building CEF archive from contents of $CEFDir..."
-
-    Push-Location $CEFDir
+    echo "==> Building CEF archive from contents of:"
+    echo "`$CEFRedistDir = $CEFRedistDir"
+    echo "`$CEFSharpCommonDir = $CEFSharpCommonDir"
+    echo "`$CEFSharpCommonDepsDir = $CEFSharpCommonDepsDir"
+    echo "`$CEFSharpOffscreenDir = $CEFSharpOffscreenDir"
 
     Write-Host $PWD
 
-    $text = [System.IO.File]::ReadAllText("$CEFDir\README.txt");
+    $text = [System.IO.File]::ReadAllText("$CEFRedistDir\README.txt");
     $regex = [regex]::New("CEF Version:\s*([0-9.]+)");
     $m = $regex.Match($text);
 
@@ -35,7 +40,7 @@ try {
     $archive = Join-Path $OutDir "CefSharp-$version-x64.7z"
 
     if (Test-Path $archive) { rm $archive }
-    7z a $archive "-x!*.xml" "-x!*.pdb" .
+    7z a $archive "-x!*.xml" "-x!*.pdb" "$CEFRedistDir\*" "$CEFSharpCommonDir\*" "$CEFSharpOffscreenDir\*" "$CEFSharpCommonDepsDir\*"
 
     Pop-Location
 } catch {

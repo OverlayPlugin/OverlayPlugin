@@ -9,7 +9,9 @@
     <OutputPath>..\out\$(Configuration)\libs\</OutputPath>
   </PropertyGroup>
   <Target Name="PrintCEFDir" Condition=" '$(PrintCEFDir)'!='false' " BeforeTargets="PrepareForBuild">
-    <WriteLinesToFile File="..\out\$(Configuration)\CefPath.txt" Overwrite="true" Lines="$(Pkgcef_redist_x64)" />
+    <WriteLinesToFile File="..\out\$(Configuration)\cef.redist.x64.Path.txt" Overwrite="true" Lines="$(Pkgcef_redist_x64)" />
+    <WriteLinesToFile File="..\out\$(Configuration)\CefSharp.Common.Path.txt" Overwrite="true" Lines="$(PkgCefSharp_Common)" />
+    <WriteLinesToFile File="..\out\$(Configuration)\CefSharp.OffScreen.Path.txt" Overwrite="true" Lines="$(PkgCefSharp_OffScreen)" />
   </Target>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
@@ -50,14 +52,16 @@
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
-    <PackageReference Include="CefSharp.Common" Version="120.1.110" Condition="'$(Configuration)' == 'Debug'" />
-    <PackageReference Include="CefSharp.OffScreen" Version="120.1.110" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="CefSharp.Common" Version="120.1.110" Condition="'$(Configuration)' == 'Debug'" GeneratePathProperty="true" />
+    <PackageReference Include="CefSharp.OffScreen" Version="120.1.110" Condition="'$(Configuration)' == 'Debug'" GeneratePathProperty="true" />
     <PackageReference Include="CefSharp.Common" Version="120.1.110" Condition="'$(Configuration)' == 'Release'">
+      <GeneratePathProperty>true</GeneratePathProperty>
       <IncludeAssets>compile</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="CefSharp.OffScreen" Version="120.1.110" Condition="'$(Configuration)' == 'Release'">
+      <GeneratePathProperty>true</GeneratePathProperty>
       <IncludeAssets>compile</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
