@@ -8,6 +8,9 @@
     <Description>HTML based offscreen rendering library for the OverlayPlugin.</Description>
     <OutputPath>..\out\$(Configuration)\libs\</OutputPath>
   </PropertyGroup>
+  <Target Name="PrintCEFDir" Condition=" '$(PrintCEFDir)'!='false' " BeforeTargets="PrepareForBuild">
+    <WriteLinesToFile File="..\out\$(Configuration)\CefPath.txt" Overwrite="true" Lines="$(Pkgcef_redist_x64)" />
+  </Target>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,15 +44,20 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="cef.redist.x64" Version="95.7.14" />
-    <PackageReference Include="CefSharp.Common" Version="95.7.141" Condition="'$(Configuration)' == 'Debug'" />
-    <PackageReference Include="CefSharp.OffScreen" Version="95.7.141" Condition="'$(Configuration)' == 'Debug'" />
-    <PackageReference Include="CefSharp.Common" Version="95.7.141" Condition="'$(Configuration)' == 'Release'">
+    <PackageReference Include="cef.redist.x64" Version="120.1.10">
+      <GeneratePathProperty>true</GeneratePathProperty>
       <IncludeAssets>compile</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
-    <PackageReference Include="CefSharp.OffScreen" Version="95.7.141" Condition="'$(Configuration)' == 'Release'">
+    <PackageReference Include="CefSharp.Common" Version="120.1.110" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="CefSharp.OffScreen" Version="120.1.110" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="CefSharp.Common" Version="120.1.110" Condition="'$(Configuration)' == 'Release'">
+      <IncludeAssets>compile</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+    <PackageReference Include="CefSharp.OffScreen" Version="120.1.110" Condition="'$(Configuration)' == 'Release'">
       <IncludeAssets>compile</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
