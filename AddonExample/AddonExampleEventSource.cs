@@ -106,9 +106,14 @@ namespace AddonExample
             }));
         }
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            base.Dispose();
+            if (disposing && originalTimer != null)
+            {
+                originalTimer.Dispose();
+                originalTimer = null;
+            }
+            base.Dispose(disposing);
         }
 
         // Sends an event called |event_name| to javascript, with an event.detail that contains

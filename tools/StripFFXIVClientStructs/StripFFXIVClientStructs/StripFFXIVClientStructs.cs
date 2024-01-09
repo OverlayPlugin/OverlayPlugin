@@ -74,7 +74,6 @@ namespace StripFFXIVClientStructs
         private static string[] GlobalUsings = new string[] {
             "System.Runtime.InteropServices",
             "FFXIVClientStructs.{0}.STD",
-            "FFXIVClientStructs.{0}.FFXIV.Client.Graphics",
         };
 
         // Entries in this dictionary will have their types remapped to concrete types.
@@ -99,11 +98,6 @@ namespace StripFFXIVClientStructs
     {{
         public Node* Head;
         public ulong Count;
-        public ref struct Enumerator
-        {{
-            private readonly Node* _head;
-            private Node* _current;
-        }}
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Node
@@ -138,11 +132,6 @@ namespace StripFFXIVClientStructs
     {{
         public Node* Head;
         public ulong Count;
-        public ref struct Enumerator
-        {{
-            private readonly Node* _head;
-            private Node* _current;
-        }}
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Node

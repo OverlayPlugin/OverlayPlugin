@@ -12,17 +12,22 @@ using static RainbowMage.OverlayPlugin.MemoryProcessors.InCombat.LineInCombat;
 
 namespace RainbowMage.OverlayPlugin
 {
-    class OverlayHider
+    class OverlayHider : IDisposable
     {
         private bool gameActive = true;
         private bool inCutscene = false;
         private bool inCombat = false;
         private IPluginConfig config;
         private ILogger logger;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "CA2213:Disposable fields should be disposed",
+            Justification = "main is disposed of by TinyIoCContainer")]
         private PluginMain main;
         private FFXIVRepository repository;
         private int ffxivPid = -1;
         private Timer focusTimer;
+        private bool _disposed;
 
         public OverlayHider(TinyIoCContainer container)
         {
@@ -153,6 +158,26 @@ namespace RainbowMage.OverlayPlugin
             {
                 UpdateOverlays();
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    focusTimer?.Stop();
+                    focusTimer?.Dispose();
+                    focusTimer = null;
+                }
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

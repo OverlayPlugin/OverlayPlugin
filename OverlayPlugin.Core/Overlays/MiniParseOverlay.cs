@@ -97,10 +97,13 @@ namespace RainbowMage.OverlayPlugin.Overlays
             Overlay.Renderer.BrowserConsoleLog += Renderer_BrowserConsoleLog;
         }
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            base.Dispose();
-            previewTimer?.Dispose();
+            if (disposing)
+            {
+                previewTimer?.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         public override Control CreateConfigControl()

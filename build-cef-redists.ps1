@@ -2,33 +2,32 @@ try {
     # This assumes Visual Studio 2019 is installed in C:. You might have to change this depending on your system.
     $VS_PATH = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community"
 
-    if ( -not (Test-Path "Thirdparty\ACT\Advanced Combat Tracker.exe" )) {
-        echo 'Error: Please run tools\fetch_deps.ps1'
-        exit 1
-    }
-
-    if ( -not (Test-Path "Thirdparty\FFXIV_ACT_Plugin\SDK\FFXIV_ACT_Plugin.Common.dll" )) {
-        echo 'Error: Please run tools\fetch_deps.ps1'
-        exit 1
-    }
-
     $ENV:PATH = "$VS_PATH\MSBuild\Current\Bin;${ENV:PATH}";
     if (Test-Path "C:\Program Files\7-Zip\7z.exe") {
         $ENV:PATH = "C:\Program Files\7-Zip;${ENV:PATH}";
     }
 
-    echo "==> Building..."
+    $OutDir = Join-Path $PWD out
 
-    msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -t:Restore
-    msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -t:Rebuild
+    echo "==> Building PrintCEFDir to find CEF redist path..."
+
+    dotnet build -c release -t:PrintCEFDir .\HtmlRenderer\HtmlRenderer.csproj
     if (-not $?) { exit 1 }
 
-    echo "==> Building CEF archives..."
+    $CEFRedistDir = Join-Path ([System.IO.File]::ReadAllText("$OutDir\Release\cef.redist.x64.Path.txt")).Trim() CEF;
+    $CEFSharpCommonDir = Join-Path ([System.IO.File]::ReadAllText("$OutDir\Release\CefSharp.Common.Path.txt")).Trim() "lib\net462";
+    $CEFSharpCommonDepsDir = Join-Path ([System.IO.File]::ReadAllText("$OutDir\Release\CefSharp.Common.Path.txt")).Trim() "CefSharp\x64";
+    $CEFSharpOffscreenDir = Join-Path ([System.IO.File]::ReadAllText("$OutDir\Release\CefSharp.OffScreen.Path.txt")).Trim() "lib\net462";
 
-    cd out\Release\libs\x64
-    copy ..\CefSharp* .
+    echo "==> Building CEF archive from contents of:"
+    echo "`$CEFRedistDir = $CEFRedistDir"
+    echo "`$CEFSharpCommonDir = $CEFSharpCommonDir"
+    echo "`$CEFSharpCommonDepsDir = $CEFSharpCommonDepsDir"
+    echo "`$CEFSharpOffscreenDir = $CEFSharpOffscreenDir"
 
-    $text = [System.IO.File]::ReadAllText("$PWD\README.txt");
+    Write-Host $PWD
+
+    $text = [System.IO.File]::ReadAllText("$CEFRedistDir\README.txt");
     $regex = [regex]::New("CEF Version:\s*([0-9.]+)");
     $m = $regex.Match($text);
 
@@ -38,26 +37,12 @@ try {
     }
 
     $version = $m.Groups[1]
-    $archive = "..\..\..\CefSharp-$version-x64.7z"
+    $archive = Join-Path $OutDir "CefSharp-$version-x64.7z"
 
     if (Test-Path $archive) { rm $archive }
-    7z a $archive "-x!*.xml" "-x!*.pdb" .
+    7z a $archive "-x!*.xml" "-x!*.pdb" "$CEFRedistDir\*" "$CEFSharpCommonDir\*" "$CEFSharpOffscreenDir\*" "$CEFSharpCommonDepsDir\*"
 
-    # Rename the archive here so I don't have to before uploading.
-    # If you're wondering why I change the extension: People don't read. This seems like the easiest way to force them to.
-    #mv $archive "..\..\..\CefSharp-$version-x64.DO_NOT_DOWNLOAD"
-
-    cd ..\..\libs\x86
-    copy ..\CefSharp* .
-
-    $archive = "..\..\..\CefSharp-$version-x86.7z"
-
-    if (Test-Path $archive) { rm $archive }
-    7z a $archive "-x!*.xml" "-x!*.pdb" .
-
-    #mv $archive "..\..\..\CefSharp-$version-x86.DO_NOT_DOWNLOAD"
-
-    cd ..\..
+    Pop-Location
 } catch {
     Write-Error $Error[0]
 }

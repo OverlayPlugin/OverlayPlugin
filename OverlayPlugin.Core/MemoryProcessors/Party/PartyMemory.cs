@@ -49,7 +49,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Party
 
         protected IntPtr partyInstanceAddress = IntPtr.Zero;
 
-        private long partySingletonAddressInstance;
         protected Func<IntPtr> GetGroupManagerAddress;
 
 

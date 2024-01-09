@@ -311,7 +311,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                     {
                         logWriter(string.Format(CultureInfo.InvariantCulture,
                             "{0:X8}|{1:X4}|{2:X8}|{3}||||",
-                            sourceId, globalEffectCounter, (int)LineSubType.ERROR), serverTime);
+                            sourceId, abilityId, globalEffectCounter, (int)LineSubType.ERROR), serverTime);
                         return;
                     }
 

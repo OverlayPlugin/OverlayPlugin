@@ -13,7 +13,7 @@ using SharpCompress.Archives;
 
 namespace RainbowMage.OverlayPlugin.Updater
 {
-    public class Installer
+    public class Installer : IDisposable
     {
         const uint FILE_OVERWRITE_RETRIES = 10;
         const int FILE_OVERWRITE_WAIT = 300;
@@ -22,6 +22,7 @@ namespace RainbowMage.OverlayPlugin.Updater
         public string TempDir { get; private set; }
         string _destDir = null;
         CancellationToken _token = CancellationToken.None;
+        private bool _disposed;
 
         public ProgressDisplay Display => _display;
 
@@ -482,6 +483,25 @@ namespace RainbowMage.OverlayPlugin.Updater
                     }
                 }
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _display?.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
