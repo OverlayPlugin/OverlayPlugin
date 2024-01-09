@@ -389,6 +389,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\tools\VSBuildDeps\VSBuildDeps.csproj" Private="False" />
     <ProjectReference Include="..\HtmlRenderer\HtmlRenderer.csproj" />
     <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj" />
     <ProjectReference Include="..\OverlayPlugin.Updater\OverlayPlugin.Updater.csproj" />

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{6AF411B1-CD1C-4A96-8CC1-E33EB06ADE2A}</ProjectGuid>
+    <AssemblyTitle>OverlayPlugin.VSBuildDepsNewtonsoftJson</AssemblyTitle>
+    <Product>OverlayPlugin.VSBuildDepsNewtonsoftJson</Product>
+  </PropertyGroup>
+  <Target Name="CoreCompile" />
+  <PropertyGroup>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+</Project>
