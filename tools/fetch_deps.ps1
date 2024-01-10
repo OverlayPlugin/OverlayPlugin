@@ -29,10 +29,21 @@ try {
     $assemblyLocations = (Get-ChildItem -Path $base -Filter Newtonsoft.Json.dll -Recurse -ErrorAction SilentlyContinue -Force)
 
     if ($assemblyLocations.Length -lt 1) {
-        throw "Could not load Newtonsoft.Json library"
+        # If we still can't find a Newtonsoft.Json dll, as a last resort manually "build" our dummy project to force dotnet to fetch it for us
+        $csprojVSBuildDeps = (Join-Path $base "tools\VSBuildDeps\VSBuildDepsNewtonsoftJson.csproj")
+        Write-Host "Could not find Newtonsoft.Json library, fetching via $csprojVSBuildDeps"
+        dotnet build $csprojVSBuildDeps
+        $assemblyLocations = (Get-ChildItem -Path $base -Filter Newtonsoft.Json.dll -Recurse -ErrorAction SilentlyContinue -Force)
+    
+        if ($assemblyLocations.Length -lt 1) {
+            Write-Host "Could not load Newtonsoft.Json library"
+            throw "Could not load Newtonsoft.Json library"
+        } else {
+            Add-Type -LiteralPath $assemblyLocations[0].FullName
+        }
+    } else {
+        Add-Type -LiteralPath $assemblyLocations[0].FullName
     }
-
-    Add-Type -LiteralPath $assemblyLocations[0].FullName
 }
 
 $JsonConvert = [Newtonsoft.Json.JsonConvert]
@@ -44,6 +55,7 @@ $dl_path = Join-Path $base ".deps_dl"
 $deps_path = (Join-Path $base "DEPS.json")
 
 if (-not (Test-Path $deps_path)) {
+    Write-Host "Could not find DEPS.json at $deps_path"
     throw "Could not find DEPS.json at $deps_path"
 }
 
@@ -204,6 +216,7 @@ if (Test-Path $dl_path) {
     Remove-Item $dl_path -Recurse -Force
 
     if (Test-Path $dl_path) {
+        Write-Host "Failed to remove files at $dl_path"
         Throw "Failed to remove files at $dl_path"
     }
 }

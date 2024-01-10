@@ -8,6 +8,9 @@
     <OutputPath>..\out\$(Configuration)\libs\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\tools\VSBuildDeps\VSBuildDeps.csproj" Private="False" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
       <HintPath>..\Thirdparty\ACT\Advanced Combat Tracker.exe</HintPath>
       <Private>False</Private>

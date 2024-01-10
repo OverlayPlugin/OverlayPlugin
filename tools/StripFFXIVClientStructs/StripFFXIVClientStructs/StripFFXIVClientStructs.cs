@@ -341,7 +341,6 @@ namespace StripFFXIVClientStructs
             /// Technically this isn't required for `return null` cases, but in any situation where that doesn't result
             /// in an NPE it should be done as well.
             /// </summary>
-            [return: NotNullIfNotNull("node")]
             public override SyntaxNode Visit(SyntaxNode node)
             {
                 if (node == null)
@@ -632,7 +631,7 @@ namespace StripFFXIVClientStructs
                 // Strip off base types that don't exist on older language versions
                 var types = node.Types.Where((type) =>
                 {
-                    switch (type.ToString().Split("<")[0])
+                    switch (type.ToString().Split('<')[0])
                     {
                         case "IEquatable":
                         case "IFormattable":
