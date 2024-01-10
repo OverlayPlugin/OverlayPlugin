@@ -122,7 +122,7 @@
     <value>117, 15</value>
   </data>
   <data name="ipTxt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 19</value>
+    <value>144, 20</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ipTxt.TabIndex" type="System.Int32, mscorlib">
@@ -144,7 +144,7 @@
     <value>117, 41</value>
   </data>
   <data name="portTxt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 19</value>
+    <value>144, 20</value>
   </data>
   <data name="portTxt.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -168,7 +168,7 @@
     <value>11, 22</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 12</value>
+    <value>61, 13</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -195,7 +195,7 @@
     <value>11, 44</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>28, 12</value>
+    <value>29, 13</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -249,7 +249,7 @@
     <value>14, 94</value>
   </data>
   <data name="sslBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 16</value>
+    <value>82, 17</value>
   </data>
   <data name="sslBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -363,7 +363,7 @@ Afterwards, you should be able to enable SSL.</value>
     <value>6, 19</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 12</value>
+    <value>46, 13</value>
   </data>
   <data name="label4.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -390,7 +390,7 @@ Afterwards, you should be able to enable SSL.</value>
     <value>6, 44</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 12</value>
+    <value>32, 13</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -414,7 +414,7 @@ Afterwards, you should be able to enable SSL.</value>
     <value>58, 16</value>
   </data>
   <data name="cbOverlay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 20</value>
+    <value>179, 21</value>
   </data>
   <data name="cbOverlay.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -438,7 +438,7 @@ Afterwards, you should be able to enable SSL.</value>
     <value>55, 72</value>
   </data>
   <data name="lblUrlConfidentWarning.Size" type="System.Drawing.Size, System.Drawing">
-    <value>372, 12</value>
+    <value>346, 13</value>
   </data>
   <data name="lblUrlConfidentWarning.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -465,7 +465,7 @@ Afterwards, you should be able to enable SSL.</value>
     <value>58, 44</value>
   </data>
   <data name="txtOverlayUrl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>557, 19</value>
+    <value>557, 20</value>
   </data>
   <data name="txtOverlayUrl.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -580,7 +580,7 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>334, 75</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 12</value>
+    <value>40, 13</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -610,7 +610,7 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>389, 75</value>
   </data>
   <data name="statusLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 12</value>
+    <value>53, 13</value>
   </data>
   <data name="statusLabel.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -661,10 +661,10 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>True</value>
   </data>
   <data name="tokenLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>24, 48</value>
+    <value>20, 51</value>
   </data>
   <data name="tokenLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 12</value>
+    <value>41, 13</value>
   </data>
   <data name="tokenLabel.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -685,10 +685,10 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>0</value>
   </data>
   <data name="txtNgrokToken.Location" type="System.Drawing.Point, System.Drawing">
-    <value>98, 45</value>
+    <value>98, 48</value>
   </data>
   <data name="txtNgrokToken.Size" type="System.Drawing.Size, System.Drawing">
-    <value>483, 19</value>
+    <value>483, 20</value>
   </data>
   <data name="txtNgrokToken.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -709,7 +709,7 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>False</value>
   </data>
   <data name="simpStopBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 64</value>
+    <value>119, 74</value>
   </data>
   <data name="simpStopBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>118, 36</value>
@@ -736,7 +736,7 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>False</value>
   </data>
   <data name="simpStartBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 64</value>
+    <value>9, 74</value>
   </data>
   <data name="simpStartBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 36</value>
@@ -763,13 +763,13 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="simpLogBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 106</value>
+    <value>9, 116</value>
   </data>
   <data name="simpLogBox.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="simpLogBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>598, 255</value>
+    <value>598, 245</value>
   </data>
   <data name="simpLogBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -793,7 +793,7 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>96, 7</value>
   </data>
   <data name="simpStatusLbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 12</value>
+    <value>53, 13</value>
   </data>
   <data name="simpStatusLbl.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -835,10 +835,10 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>in - India (Mumbai)</value>
   </data>
   <data name="regionCb.Location" type="System.Drawing.Point, System.Drawing">
-    <value>98, 22</value>
+    <value>98, 26</value>
   </data>
   <data name="regionCb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>247, 20</value>
+    <value>247, 21</value>
   </data>
   <data name="regionCb.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -862,7 +862,7 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>20, 29</value>
   </data>
   <data name="regionLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 12</value>
+    <value>44, 13</value>
   </data>
   <data name="regionLabel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -889,7 +889,7 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
     <value>20, 7</value>
   </data>
   <data name="simpStatusLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 12</value>
+    <value>40, 13</value>
   </data>
   <data name="simpStatusLabel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
