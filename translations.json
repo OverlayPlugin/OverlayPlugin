@@ -400,6 +400,10 @@
             "ko-KR": "중지",
             "zh-CN": "停止"
         },
+        "tokenLabel.Text": {
+            "en": "Token:",
+            "zh-CN": "令牌:"
+        },
         "tunnelPage.Text": {
             "en": "Shared Overlay",
             "fr-FR": "Overlay Partagé",
