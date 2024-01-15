@@ -1973,7 +1973,7 @@
             "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)\nThis text is displayed in ACT's restart prompt. ACT already asks the user to restart so we don't have to.",
             "de-DE": "{0} wurde erfolgreich geupdatet.",
             "en": "{0} was updated successfully.",
-            "fr-FR": "{0} a été mis à jour avec succès.',
+            "fr-FR": "{0} a été mis à jour avec succès.",
             "ko-KR": "{0} 업데이트에 성공했습니다.",
             "zh-CN": "{0} 已更新成功。"
         },
