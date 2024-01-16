@@ -198,4 +198,7 @@ SSL 功能仅在你拥有 SSL 证书的情况下才能启用, 可以点击上方
   <data name="urlGeneratorBox.Text" xml:space="preserve">
     <value>链接生成器</value>
   </data>
+  <data name="tokenLabel.Text" xml:space="preserve">
+    <value>令牌:</value>
+  </data>
 </root>

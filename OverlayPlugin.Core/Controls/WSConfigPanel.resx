@@ -570,393 +570,6 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
   <data name="&gt;&gt;introPage.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>settingsPage</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;statusLabel.Name" xml:space="preserve">
-    <value>statusLabel</value>
-  </data>
-  <data name="&gt;&gt;statusLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;statusLabel.Parent" xml:space="preserve">
-    <value>settingsPage</value>
-  </data>
-  <data name="&gt;&gt;statusLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="settingsPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="settingsPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="settingsPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>613, 367</value>
-  </data>
-  <data name="settingsPage.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="settingsPage.Text" xml:space="preserve">
-    <value>Stream/Local Overlay</value>
-  </data>
-  <data name="&gt;&gt;settingsPage.Name" xml:space="preserve">
-    <value>settingsPage</value>
-  </data>
-  <data name="&gt;&gt;settingsPage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;settingsPage.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;settingsPage.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;simpStopBtn.Name" xml:space="preserve">
-    <value>simpStopBtn</value>
-  </data>
-  <data name="&gt;&gt;simpStopBtn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;simpStopBtn.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;simpStopBtn.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;simpStartBtn.Name" xml:space="preserve">
-    <value>simpStartBtn</value>
-  </data>
-  <data name="&gt;&gt;simpStartBtn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;simpStartBtn.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;simpStartBtn.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;simpLogBox.Name" xml:space="preserve">
-    <value>simpLogBox</value>
-  </data>
-  <data name="&gt;&gt;simpLogBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;simpLogBox.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;simpLogBox.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLbl.Name" xml:space="preserve">
-    <value>simpStatusLbl</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLbl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLbl.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLbl.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;regionCb.Name" xml:space="preserve">
-    <value>regionCb</value>
-  </data>
-  <data name="&gt;&gt;regionCb.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;regionCb.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;regionCb.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;regionLabel.Name" xml:space="preserve">
-    <value>regionLabel</value>
-  </data>
-  <data name="&gt;&gt;regionLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;regionLabel.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;regionLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLabel.Name" xml:space="preserve">
-    <value>simpStatusLabel</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLabel.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLabel.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="tunnelPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tunnelPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tunnelPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>613, 367</value>
-  </data>
-  <data name="tunnelPage.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="tunnelPage.Text" xml:space="preserve">
-    <value>Shared Overlay</value>
-  </data>
-  <data name="&gt;&gt;tunnelPage.Name" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;tunnelPage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tunnelPage.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;tunnelPage.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 3</value>
-  </data>
-  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>621, 393</value>
-  </data>
-  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="simpStopBtn.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="simpStopBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 64</value>
-  </data>
-  <data name="simpStopBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 36</value>
-  </data>
-  <data name="simpStopBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="simpStopBtn.Text" xml:space="preserve">
-    <value>Stop</value>
-  </data>
-  <data name="&gt;&gt;simpStopBtn.Name" xml:space="preserve">
-    <value>simpStopBtn</value>
-  </data>
-  <data name="&gt;&gt;simpStopBtn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;simpStopBtn.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;simpStopBtn.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="simpStartBtn.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="simpStartBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 64</value>
-  </data>
-  <data name="simpStartBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 36</value>
-  </data>
-  <data name="simpStartBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="simpStartBtn.Text" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="&gt;&gt;simpStartBtn.Name" xml:space="preserve">
-    <value>simpStartBtn</value>
-  </data>
-  <data name="&gt;&gt;simpStartBtn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;simpStartBtn.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;simpStartBtn.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="simpLogBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="simpLogBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 106</value>
-  </data>
-  <data name="simpLogBox.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="simpLogBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>598, 255</value>
-  </data>
-  <data name="simpLogBox.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;simpLogBox.Name" xml:space="preserve">
-    <value>simpLogBox</value>
-  </data>
-  <data name="&gt;&gt;simpLogBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;simpLogBox.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;simpLogBox.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="simpStatusLbl.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="simpStatusLbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>96, 7</value>
-  </data>
-  <data name="simpStatusLbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 13</value>
-  </data>
-  <data name="simpStatusLbl.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="simpStatusLbl.Text" xml:space="preserve">
-    <value>Unknown</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLbl.Name" xml:space="preserve">
-    <value>simpStatusLbl</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLbl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLbl.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLbl.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="regionCb.Items" xml:space="preserve">
-    <value>us - United States (Ohio)</value>
-  </data>
-  <data name="regionCb.Items1" xml:space="preserve">
-    <value>eu - Europe (Frankfurt)</value>
-  </data>
-  <data name="regionCb.Items2" xml:space="preserve">
-    <value>ap - Asia/Pacific (Singapore)</value>
-  </data>
-  <data name="regionCb.Items3" xml:space="preserve">
-    <value>au - Australia (Sydney)</value>
-  </data>
-  <data name="regionCb.Items4" xml:space="preserve">
-    <value>sa - South America (Sao Paulo)</value>
-  </data>
-  <data name="regionCb.Items5" xml:space="preserve">
-    <value>jp - Japan (Tokyo)</value>
-  </data>
-  <data name="regionCb.Items6" xml:space="preserve">
-    <value>in - India (Mumbai)</value>
-  </data>
-  <data name="regionCb.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 29</value>
-  </data>
-  <data name="regionCb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>247, 21</value>
-  </data>
-  <data name="regionCb.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;regionCb.Name" xml:space="preserve">
-    <value>regionCb</value>
-  </data>
-  <data name="&gt;&gt;regionCb.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;regionCb.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;regionCb.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="regionLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="regionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 32</value>
-  </data>
-  <data name="regionLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
-  </data>
-  <data name="regionLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="regionLabel.Text" xml:space="preserve">
-    <value>Region:</value>
-  </data>
-  <data name="&gt;&gt;regionLabel.Name" xml:space="preserve">
-    <value>regionLabel</value>
-  </data>
-  <data name="&gt;&gt;regionLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;regionLabel.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;regionLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="simpStatusLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="simpStatusLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 7</value>
-  </data>
-  <data name="simpStatusLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 13</value>
-  </data>
-  <data name="simpStatusLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="simpStatusLabel.Text" xml:space="preserve">
-    <value>Status:</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLabel.Name" xml:space="preserve">
-    <value>simpStatusLabel</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLabel.Parent" xml:space="preserve">
-    <value>tunnelPage</value>
-  </data>
-  <data name="&gt;&gt;simpStatusLabel.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1016,6 +629,333 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
   </data>
   <data name="&gt;&gt;statusLabel.ZOrder" xml:space="preserve">
     <value>7</value>
+  </data>
+  <data name="settingsPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="settingsPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="settingsPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>613, 367</value>
+  </data>
+  <data name="settingsPage.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="settingsPage.Text" xml:space="preserve">
+    <value>Stream/Local Overlay</value>
+  </data>
+  <data name="&gt;&gt;settingsPage.Name" xml:space="preserve">
+    <value>settingsPage</value>
+  </data>
+  <data name="&gt;&gt;settingsPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;settingsPage.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;settingsPage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tokenLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tokenLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 51</value>
+  </data>
+  <data name="tokenLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 13</value>
+  </data>
+  <data name="tokenLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="tokenLabel.Text" xml:space="preserve">
+    <value>Token:</value>
+  </data>
+  <data name="&gt;&gt;tokenLabel.Name" xml:space="preserve">
+    <value>tokenLabel</value>
+  </data>
+  <data name="&gt;&gt;tokenLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tokenLabel.Parent" xml:space="preserve">
+    <value>tunnelPage</value>
+  </data>
+  <data name="&gt;&gt;tokenLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtNgrokToken.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 48</value>
+  </data>
+  <data name="txtNgrokToken.Size" type="System.Drawing.Size, System.Drawing">
+    <value>483, 20</value>
+  </data>
+  <data name="txtNgrokToken.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;txtNgrokToken.Name" xml:space="preserve">
+    <value>txtNgrokToken</value>
+  </data>
+  <data name="&gt;&gt;txtNgrokToken.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtNgrokToken.Parent" xml:space="preserve">
+    <value>tunnelPage</value>
+  </data>
+  <data name="&gt;&gt;txtNgrokToken.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="simpStopBtn.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="simpStopBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>119, 74</value>
+  </data>
+  <data name="simpStopBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 36</value>
+  </data>
+  <data name="simpStopBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="simpStopBtn.Text" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="&gt;&gt;simpStopBtn.Name" xml:space="preserve">
+    <value>simpStopBtn</value>
+  </data>
+  <data name="&gt;&gt;simpStopBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;simpStopBtn.Parent" xml:space="preserve">
+    <value>tunnelPage</value>
+  </data>
+  <data name="&gt;&gt;simpStopBtn.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="simpStartBtn.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="simpStartBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 74</value>
+  </data>
+  <data name="simpStartBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 36</value>
+  </data>
+  <data name="simpStartBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="simpStartBtn.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="&gt;&gt;simpStartBtn.Name" xml:space="preserve">
+    <value>simpStartBtn</value>
+  </data>
+  <data name="&gt;&gt;simpStartBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;simpStartBtn.Parent" xml:space="preserve">
+    <value>tunnelPage</value>
+  </data>
+  <data name="&gt;&gt;simpStartBtn.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="simpLogBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="simpLogBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 116</value>
+  </data>
+  <data name="simpLogBox.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="simpLogBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>598, 245</value>
+  </data>
+  <data name="simpLogBox.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;simpLogBox.Name" xml:space="preserve">
+    <value>simpLogBox</value>
+  </data>
+  <data name="&gt;&gt;simpLogBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;simpLogBox.Parent" xml:space="preserve">
+    <value>tunnelPage</value>
+  </data>
+  <data name="&gt;&gt;simpLogBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="simpStatusLbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="simpStatusLbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>96, 7</value>
+  </data>
+  <data name="simpStatusLbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 13</value>
+  </data>
+  <data name="simpStatusLbl.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="simpStatusLbl.Text" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="&gt;&gt;simpStatusLbl.Name" xml:space="preserve">
+    <value>simpStatusLbl</value>
+  </data>
+  <data name="&gt;&gt;simpStatusLbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;simpStatusLbl.Parent" xml:space="preserve">
+    <value>tunnelPage</value>
+  </data>
+  <data name="&gt;&gt;simpStatusLbl.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="regionCb.Items" xml:space="preserve">
+    <value>us - United States (Ohio)</value>
+  </data>
+  <data name="regionCb.Items1" xml:space="preserve">
+    <value>eu - Europe (Frankfurt)</value>
+  </data>
+  <data name="regionCb.Items2" xml:space="preserve">
+    <value>ap - Asia/Pacific (Singapore)</value>
+  </data>
+  <data name="regionCb.Items3" xml:space="preserve">
+    <value>au - Australia (Sydney)</value>
+  </data>
+  <data name="regionCb.Items4" xml:space="preserve">
+    <value>sa - South America (Sao Paulo)</value>
+  </data>
+  <data name="regionCb.Items5" xml:space="preserve">
+    <value>jp - Japan (Tokyo)</value>
+  </data>
+  <data name="regionCb.Items6" xml:space="preserve">
+    <value>in - India (Mumbai)</value>
+  </data>
+  <data name="regionCb.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 26</value>
+  </data>
+  <data name="regionCb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>247, 21</value>
+  </data>
+  <data name="regionCb.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;regionCb.Name" xml:space="preserve">
+    <value>regionCb</value>
+  </data>
+  <data name="&gt;&gt;regionCb.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;regionCb.Parent" xml:space="preserve">
+    <value>tunnelPage</value>
+  </data>
+  <data name="&gt;&gt;regionCb.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="regionLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="regionLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 29</value>
+  </data>
+  <data name="regionLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 13</value>
+  </data>
+  <data name="regionLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="regionLabel.Text" xml:space="preserve">
+    <value>Region:</value>
+  </data>
+  <data name="&gt;&gt;regionLabel.Name" xml:space="preserve">
+    <value>regionLabel</value>
+  </data>
+  <data name="&gt;&gt;regionLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;regionLabel.Parent" xml:space="preserve">
+    <value>tunnelPage</value>
+  </data>
+  <data name="&gt;&gt;regionLabel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="simpStatusLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="simpStatusLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 7</value>
+  </data>
+  <data name="simpStatusLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 13</value>
+  </data>
+  <data name="simpStatusLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="simpStatusLabel.Text" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="&gt;&gt;simpStatusLabel.Name" xml:space="preserve">
+    <value>simpStatusLabel</value>
+  </data>
+  <data name="&gt;&gt;simpStatusLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;simpStatusLabel.Parent" xml:space="preserve">
+    <value>tunnelPage</value>
+  </data>
+  <data name="&gt;&gt;simpStatusLabel.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="tunnelPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tunnelPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tunnelPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>613, 367</value>
+  </data>
+  <data name="tunnelPage.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tunnelPage.Text" xml:space="preserve">
+    <value>Shared Overlay</value>
+  </data>
+  <data name="&gt;&gt;tunnelPage.Name" xml:space="preserve">
+    <value>tunnelPage</value>
+  </data>
+  <data name="&gt;&gt;tunnelPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tunnelPage.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tunnelPage.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 3</value>
+  </data>
+  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>621, 393</value>
+  </data>
+  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

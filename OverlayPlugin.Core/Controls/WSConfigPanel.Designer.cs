@@ -49,7 +49,14 @@
             this.txtOverlayUrl = new System.Windows.Forms.TextBox();
             this.urlGeneratorBox = new System.Windows.Forms.GroupBox();
             this.tabControl = new System.Windows.Forms.TabControl();
+            this.introPage = new System.Windows.Forms.TabPage();
+            this.lblWsserverIntro = new System.Windows.Forms.Label();
+            this.settingsPage = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.statusLabel = new System.Windows.Forms.Label();
             this.tunnelPage = new System.Windows.Forms.TabPage();
+            this.tokenLabel = new System.Windows.Forms.Label();
+            this.txtNgrokToken = new System.Windows.Forms.TextBox();
             this.simpStopBtn = new System.Windows.Forms.Button();
             this.simpStartBtn = new System.Windows.Forms.Button();
             this.simpLogBox = new System.Windows.Forms.TextBox();
@@ -57,16 +64,11 @@
             this.regionCb = new System.Windows.Forms.ComboBox();
             this.regionLabel = new System.Windows.Forms.Label();
             this.simpStatusLabel = new System.Windows.Forms.Label();
-            this.settingsPage = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
-            this.statusLabel = new System.Windows.Forms.Label();
-            this.lblWsserverIntro = new System.Windows.Forms.Label();
-            this.introPage = new System.Windows.Forms.TabPage();
             this.urlGeneratorBox.SuspendLayout();
             this.tabControl.SuspendLayout();
-            this.tunnelPage.SuspendLayout();
-            this.settingsPage.SuspendLayout();
             this.introPage.SuspendLayout();
+            this.settingsPage.SuspendLayout();
+            this.tunnelPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // ipTxt
@@ -179,8 +181,49 @@
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             // 
+            // introPage
+            // 
+            this.introPage.Controls.Add(this.lblWsserverIntro);
+            resources.ApplyResources(this.introPage, "introPage");
+            this.introPage.Name = "introPage";
+            this.introPage.UseVisualStyleBackColor = true;
+            // 
+            // lblWsserverIntro
+            // 
+            resources.ApplyResources(this.lblWsserverIntro, "lblWsserverIntro");
+            this.lblWsserverIntro.Name = "lblWsserverIntro";
+            // 
+            // settingsPage
+            // 
+            this.settingsPage.Controls.Add(this.logDisplay);
+            this.settingsPage.Controls.Add(this.label1);
+            this.settingsPage.Controls.Add(this.label3);
+            this.settingsPage.Controls.Add(this.ipTxt);
+            this.settingsPage.Controls.Add(this.portTxt);
+            this.settingsPage.Controls.Add(this.genSslBtn);
+            this.settingsPage.Controls.Add(this.sslBox);
+            this.settingsPage.Controls.Add(this.statusLabel);
+            this.settingsPage.Controls.Add(this.label2);
+            this.settingsPage.Controls.Add(this.startBtn);
+            this.settingsPage.Controls.Add(this.stopBtn);
+            resources.ApplyResources(this.settingsPage, "settingsPage");
+            this.settingsPage.Name = "settingsPage";
+            this.settingsPage.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // statusLabel
+            // 
+            resources.ApplyResources(this.statusLabel, "statusLabel");
+            this.statusLabel.Name = "statusLabel";
+            // 
             // tunnelPage
             // 
+            this.tunnelPage.Controls.Add(this.tokenLabel);
+            this.tunnelPage.Controls.Add(this.txtNgrokToken);
             this.tunnelPage.Controls.Add(this.simpStopBtn);
             this.tunnelPage.Controls.Add(this.simpStartBtn);
             this.tunnelPage.Controls.Add(this.simpLogBox);
@@ -191,6 +234,17 @@
             resources.ApplyResources(this.tunnelPage, "tunnelPage");
             this.tunnelPage.Name = "tunnelPage";
             this.tunnelPage.UseVisualStyleBackColor = true;
+            // 
+            // tokenLabel
+            // 
+            resources.ApplyResources(this.tokenLabel, "tokenLabel");
+            this.tokenLabel.Name = "tokenLabel";
+            // 
+            // txtNgrokToken
+            // 
+            resources.ApplyResources(this.txtNgrokToken, "txtNgrokToken");
+            this.txtNgrokToken.Name = "txtNgrokToken";
+            this.txtNgrokToken.TextChanged += new System.EventHandler(this.txtNgrokTokenChanged);
             // 
             // simpStopBtn
             // 
@@ -243,45 +297,6 @@
             resources.ApplyResources(this.simpStatusLabel, "simpStatusLabel");
             this.simpStatusLabel.Name = "simpStatusLabel";
             // 
-            // settingsPage
-            // 
-            this.settingsPage.Controls.Add(this.logDisplay);
-            this.settingsPage.Controls.Add(this.label1);
-            this.settingsPage.Controls.Add(this.label3);
-            this.settingsPage.Controls.Add(this.ipTxt);
-            this.settingsPage.Controls.Add(this.portTxt);
-            this.settingsPage.Controls.Add(this.genSslBtn);
-            this.settingsPage.Controls.Add(this.sslBox);
-            this.settingsPage.Controls.Add(this.statusLabel);
-            this.settingsPage.Controls.Add(this.label2);
-            this.settingsPage.Controls.Add(this.startBtn);
-            this.settingsPage.Controls.Add(this.stopBtn);
-            resources.ApplyResources(this.settingsPage, "settingsPage");
-            this.settingsPage.Name = "settingsPage";
-            this.settingsPage.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
-            // 
-            // statusLabel
-            // 
-            resources.ApplyResources(this.statusLabel, "statusLabel");
-            this.statusLabel.Name = "statusLabel";
-            // 
-            // lblWsserverIntro
-            // 
-            resources.ApplyResources(this.lblWsserverIntro, "lblWsserverIntro");
-            this.lblWsserverIntro.Name = "lblWsserverIntro";
-            // 
-            // introPage
-            // 
-            this.introPage.Controls.Add(this.lblWsserverIntro);
-            resources.ApplyResources(this.introPage, "introPage");
-            this.introPage.Name = "introPage";
-            this.introPage.UseVisualStyleBackColor = true;
-            // 
             // WSConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -292,11 +307,11 @@
             this.urlGeneratorBox.ResumeLayout(false);
             this.urlGeneratorBox.PerformLayout();
             this.tabControl.ResumeLayout(false);
-            this.tunnelPage.ResumeLayout(false);
-            this.tunnelPage.PerformLayout();
+            this.introPage.ResumeLayout(false);
             this.settingsPage.ResumeLayout(false);
             this.settingsPage.PerformLayout();
-            this.introPage.ResumeLayout(false);
+            this.tunnelPage.ResumeLayout(false);
+            this.tunnelPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -332,5 +347,7 @@
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.TabPage introPage;
         private System.Windows.Forms.Label lblWsserverIntro;
+        private System.Windows.Forms.Label tokenLabel;
+        private System.Windows.Forms.TextBox txtNgrokToken;
     }
 }

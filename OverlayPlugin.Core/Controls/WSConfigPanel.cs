@@ -63,6 +63,8 @@ namespace RainbowMage.OverlayPlugin
                 }
             }
 
+            txtNgrokToken.Text = _config.Token;
+
             UpdateStatus(null, new WSServer.StateChangedArgs(_server.IsRunning(), _server.IsFailed()));
             _server.OnStateChanged += UpdateStatus;
 
@@ -482,10 +484,10 @@ namespace RainbowMage.OverlayPlugin
                     }
 
                     var config = @"
+authtoken: " + (this.txtNgrokToken.Text) + @"
 region: " + region + @"
 console_ui: false
 web_addr: 127.0.0.1:" + (_config.WSServerPort + 1) + @"
-
 tunnels:
     wsserver:
         proto: http
@@ -767,6 +769,11 @@ version: 2
         private void regionCb_SelectedIndexChanged(object sender, EventArgs e)
         {
             _config.TunnelRegion = (string)regionCb.SelectedItem;
+        }
+
+        private void txtNgrokTokenChanged(object sender, EventArgs e)
+        {
+            _config.Token = txtNgrokToken.Text;
         }
     }
 }
