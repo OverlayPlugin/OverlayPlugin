@@ -13,6 +13,7 @@ using Advanced_Combat_Tracker;
 using FFXIV_ACT_Plugin.Common;
 using Newtonsoft.Json.Linq;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
+using RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Party;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
 using PluginCombatant = FFXIV_ACT_Plugin.Common.Models.Combatant;
@@ -35,10 +36,12 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         private const string OnlineStatusChangedEvent = "OnlineStatusChanged";
         private const string PartyChangedEvent = "PartyChanged";
+        private const string JobGaugeChangedEvent = "JobGaugeChanged";
 
         private FFXIVRepository repository;
         private ICombatantMemory combatantMemory;
         private IPartyMemory partyMemory;
+        private IJobGaugeMemory jobGaugeMemory;
 
         // Event Source
 
@@ -57,10 +60,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     Log(LogLevel.Error, "Could not construct FFXIVRequiredEventSource: Missing partyMemory");
                 }
 
+                if (!container.TryResolve(out jobGaugeMemory))
+                {
+                    Log(LogLevel.Error, "Could not construct FFXIVRequiredEventSource: Missing jobGaugeMemory");
+                }
+
                 // These events need to deliver cached values to new subscribers.
                 RegisterCachedEventTypes(new List<string> {
                     OnlineStatusChangedEvent,
                     PartyChangedEvent,
+                    JobGaugeChangedEvent,
                 });
 
                 RegisterEventHandler("getLanguage", (msg) =>
@@ -131,6 +140,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     obj["target"] = e.Target;
                     obj["rawStatus"] = e.Status;
                     obj["status"] = StatusMap.ContainsKey(e.Status) ? StatusMap[e.Status] : "Unknown";
+
+                    DispatchAndCacheEvent(obj);
+                };
+
+                // TODO: This is a bit hacky, figure out a better way to handle this.
+                ((JobGaugeMemoryManager)jobGaugeMemory).OnJobGaugeChanged += (o, e) => {
+                    var obj = JObject.FromObject(e);
+                    obj["type"] = JobGaugeChangedEvent;
 
                     DispatchAndCacheEvent(obj);
                 };
