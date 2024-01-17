@@ -145,7 +145,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 };
 
                 // TODO: This is a bit hacky, figure out a better way to handle this.
-                ((JobGaugeMemoryManager)jobGaugeMemory).OnJobGaugeChanged += (o, e) => {
+                ((JobGaugeMemoryManager)jobGaugeMemory).OnJobGaugeChanged += (o, e) =>
+                {
                     var obj = JObject.FromObject(e);
                     obj["type"] = JobGaugeChangedEvent;
 
