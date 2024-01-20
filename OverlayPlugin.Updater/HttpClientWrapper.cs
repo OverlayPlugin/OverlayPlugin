@@ -12,6 +12,10 @@ namespace RainbowMage.OverlayPlugin.Updater
         public delegate bool ProgressInfoCallback(long resumed, long dltotal, long dlnow, long ultotal, long ulnow);
         private static readonly HttpClient client = new HttpClient();
         private static object lockGet = new object();
+        static HttpClientWrapper()
+        {
+            client.DefaultRequestHeaders.Add("User-Agent", "OverlayPlugin/OverlayPlugin v" + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+        }
 
         public static void Init(string pluginDirectory)
         {
@@ -26,93 +30,92 @@ namespace RainbowMage.OverlayPlugin.Updater
         public static string Get(string url, Dictionary<string, string> headers, string downloadDest,
             ProgressInfoCallback infoCb, bool resume)
         {
+            var completionLock = new object();
             string result = null;
             Exception error = null;
             var retry = false;
 
-            lock (lockGet)
+            var request = new HttpRequestMessage()
             {
-                var completionLock = new object();
+                RequestUri = new Uri(url),
+                Method = HttpMethod.Get,
+            };
 
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Add("User-Agent", "OverlayPlugin/OverlayPlugin v" + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            foreach (var key in headers.Keys)
+            {
+                request.Headers.Add(key, headers[key]);
+            }
 
-                foreach (var key in headers.Keys)
+            Action action = (async () =>
+            {
+                try
                 {
-                    client.DefaultRequestHeaders.Add(key, headers[key]);
+                    var response = await client.SendAsync(request);
+
+                    if (downloadDest == null)
+                    {
+                        result = await response.Content.ReadAsStringAsync();
+                    }
+                    else
+                    {
+                        var buffer = new byte[40 * 1024];
+                        var length = 0;
+
+                        IEnumerable<string> lengthValues;
+                        if (response.Headers.TryGetValues("Content-Length", out lengthValues))
+                        {
+                            int.TryParse(lengthValues.GetEnumerator().Current, out length);
+                        }
+
+                        using (var writer = File.Open(downloadDest, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
+                        // FIXME: ReadAsStreamAsync() waits until the download finishes before returning.
+                        //        This breaks progress reporting and makes it impossible to abort running downloads.
+                        using (var body = await response.Content.ReadAsStreamAsync())
+                        {
+                            var stop = false;
+                            while (!stop)
+                            {
+                                var read = await body.ReadAsync(buffer, 0, buffer.Length);
+                                if (read == 0)
+                                    break;
+
+                                writer.Write(buffer, 0, read);
+                                if (infoCb != null && infoCb(0, length, body.Position, 0, 0))
+                                    break;
+                            }
+                        }
+                    }
                 }
-
-                Action action = (async () =>
+                catch (IOException e)
                 {
-                    try
-                    {
-                        var response = await client.GetAsync(url);
-
-                        if (downloadDest == null)
-                        {
-                            result = await response.Content.ReadAsStringAsync();
-                        }
-                        else
-                        {
-                            var buffer = new byte[40 * 1024];
-                            var length = 0;
-
-                            IEnumerable<string> lengthValues;
-                            if (response.Headers.TryGetValues("Content-Length", out lengthValues))
-                            {
-                                int.TryParse(lengthValues.GetEnumerator().Current, out length);
-                            }
-
-                            using (var writer = File.Open(downloadDest, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
-                            // FIXME: ReadAsStreamAsync() waits until the download finishes before returning.
-                            //        This breaks progress reporting and makes it impossible to abort running downloads.
-                            using (var body = await response.Content.ReadAsStreamAsync())
-                            {
-                                var stop = false;
-                                while (!stop)
-                                {
-                                    var read = await body.ReadAsync(buffer, 0, buffer.Length);
-                                    if (read == 0)
-                                        break;
-
-                                    writer.Write(buffer, 0, read);
-                                    if (infoCb != null && infoCb(0, length, body.Position, 0, 0))
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                    catch (IOException e)
-                    {
-                        error = e;
-                        retry = true;
-                    }
-                    catch (UnauthorizedAccessException e)
-                    {
-                        error = e;
-                        retry = true;
-                    }
-                    catch (HttpRequestException e)
-                    {
-                        error = e;
-                        retry = true;
-                    }
-                    catch (Exception e)
-                    {
-                        error = e;
-                    }
-
-                    lock (completionLock)
-                    {
-                        Monitor.Pulse(completionLock);
-                    }
-                });
-                action();
+                    error = e;
+                    retry = true;
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    error = e;
+                    retry = true;
+                }
+                catch (HttpRequestException e)
+                {
+                    error = e;
+                    retry = true;
+                }
+                catch (Exception e)
+                {
+                    error = e;
+                }
 
                 lock (completionLock)
                 {
-                    Monitor.Wait(completionLock);
+                    Monitor.Pulse(completionLock);
                 }
+            });
+            action();
+
+            lock (completionLock)
+            {
+                Monitor.Wait(completionLock);
             }
 
             if (error != null)
