@@ -11,7 +11,6 @@ namespace RainbowMage.OverlayPlugin.Updater
     {
         public delegate bool ProgressInfoCallback(long resumed, long dltotal, long dlnow, long ultotal, long ulnow);
         private static readonly HttpClient client = new HttpClient();
-        private static object lockGet = new object();
         static HttpClientWrapper()
         {
             client.DefaultRequestHeaders.Add("User-Agent", "OverlayPlugin/OverlayPlugin v" + Assembly.GetExecutingAssembly().GetName().Version.ToString());
