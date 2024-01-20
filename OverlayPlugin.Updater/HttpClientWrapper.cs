@@ -10,6 +10,7 @@ namespace RainbowMage.OverlayPlugin.Updater
     public static class HttpClientWrapper
     {
         public delegate bool ProgressInfoCallback(long resumed, long dltotal, long dlnow, long ultotal, long ulnow);
+        private static readonly HttpClient client = new HttpClient();
 
         public static void Init(string pluginDirectory)
         {
@@ -24,7 +25,7 @@ namespace RainbowMage.OverlayPlugin.Updater
         public static string Get(string url, Dictionary<string, string> headers, string downloadDest,
             ProgressInfoCallback infoCb, bool resume)
         {
-            var client = new HttpClient();
+            client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Add("User-Agent", "OverlayPlugin/OverlayPlugin v" + Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             foreach (var key in headers.Keys)
