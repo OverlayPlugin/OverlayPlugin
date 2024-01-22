@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading;
@@ -49,7 +51,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 try
                 {
-                    var response = await client.SendAsync(request);
+                    var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
 
                     if (downloadDest == null)
                     {
@@ -58,28 +60,24 @@ namespace RainbowMage.OverlayPlugin.Updater
                     else
                     {
                         var buffer = new byte[40 * 1024];
-                        var length = 0;
-
-                        IEnumerable<string> lengthValues;
-                        if (response.Headers.TryGetValues("Content-Length", out lengthValues))
-                        {
-                            int.TryParse(lengthValues.GetEnumerator().Current, out length);
-                        }
+                        var length = (long)response.Content.Headers.ContentLength;
 
                         using (var writer = File.Open(downloadDest, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
-                        // FIXME: ReadAsStreamAsync() waits until the download finishes before returning.
-                        //        This breaks progress reporting and makes it impossible to abort running downloads.
                         using (var body = await response.Content.ReadAsStreamAsync())
                         {
                             var stop = false;
+                            var pos = 0;
                             while (!stop)
                             {
                                 var read = await body.ReadAsync(buffer, 0, buffer.Length);
-                                if (read == 0)
+                                if (read != 0)
+                                {
+                                    writer.Write(buffer, 0, read);
+                                    pos += read;
+                                } else
                                     break;
 
-                                writer.Write(buffer, 0, read);
-                                if (infoCb != null && infoCb(0, length, body.Position, 0, 0))
+                                if (infoCb != null && infoCb(0, length, pos, 0, 0))
                                     break;
                             }
                         }
