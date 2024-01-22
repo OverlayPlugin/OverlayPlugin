@@ -74,10 +74,9 @@ namespace RainbowMage.OverlayPlugin.Updater
                                 {
                                     writer.Write(buffer, 0, read);
                                     pos += read;
-                                } else
-                                {
-                                    break;
                                 }
+                                else
+                                    break;
 
                                 if (infoCb != null && infoCb(0, length, pos, 0, 0))
                                     break;
