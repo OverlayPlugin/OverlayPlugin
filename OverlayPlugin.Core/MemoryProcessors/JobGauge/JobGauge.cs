@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
@@ -19,7 +20,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 
             public JobGaugeJob Job => job;
             public BaseJobGauge Data => data;
-            public byte[] RawData => rawData;
+            public int[] RawData => rawData.Select((b) => (int)b).ToArray();
             public object BaseObject => baseObject;
 
             public bool Equals(JobGauge obj)

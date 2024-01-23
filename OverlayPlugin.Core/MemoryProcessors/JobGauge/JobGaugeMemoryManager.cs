@@ -60,7 +60,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
     {
         JobGaugeJob Job { get; }
         BaseJobGauge Data { get; }
-        byte[] RawData { get; }
+        int[] RawData { get; }
 #if !DEBUG
             [JsonIgnore]
 #endif
