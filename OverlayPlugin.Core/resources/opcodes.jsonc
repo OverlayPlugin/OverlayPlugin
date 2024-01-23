@@ -35,18 +35,18 @@
         }
     },
     // KR region
-    "2023.11.01.0000.0000":{
-        // Version: 6.40 Hotfix
+    "2023.12.18.0000.0000":{
+        // Version: 6.45
         "MapEffect": {
-            "opcode": 217,
+            "opcode": 978,
             "size": 11
         },
         "CEDirector": {
-            "opcode": 398,
+            "opcode": 540,
             "size": 16
         },
         "RSVData": {
-            "opcode": 199,
+            "opcode": 168,
             "size": 1080
         }
     }
