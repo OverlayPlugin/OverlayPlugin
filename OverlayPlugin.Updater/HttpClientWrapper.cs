@@ -67,9 +67,13 @@ namespace RainbowMage.OverlayPlugin.Updater
                         {
                             long.TryParse(lengthValues.GetEnumerator().Current, out length);
                         }
-                        if (length == 0)
+                        else
                         {
-                            length = (long)response.Content.Headers.ContentLength;
+                            long? @long = response.Content.Headers.ContentLength;
+                            if (@long.HasValue)
+                            {
+                                length = @long.Value;
+                            }
                         }
 
                         using (var writer = File.Open(downloadDest, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
