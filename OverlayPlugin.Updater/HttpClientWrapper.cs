@@ -62,18 +62,10 @@ namespace RainbowMage.OverlayPlugin.Updater
                         var buffer = new byte[40 * 1024];
                         long length = 0;
 
-                        IEnumerable<string> lengthValues;
-                        if (response.Headers.TryGetValues("Content-Length", out lengthValues))
+                        long? nLength = response.Content.Headers.ContentLength;
+                        if (nLength.HasValue)
                         {
-                            long.TryParse(lengthValues.GetEnumerator().Current, out length);
-                        }
-                        else
-                        {
-                            long? @long = response.Content.Headers.ContentLength;
-                            if (@long.HasValue)
-                            {
-                                length = @long.Value;
-                            }
+                            length = nLength.Value;
                         }
 
                         using (var writer = File.Open(downloadDest, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
