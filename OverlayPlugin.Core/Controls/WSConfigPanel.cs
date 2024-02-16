@@ -352,7 +352,7 @@ namespace RainbowMage.OverlayPlugin
                     hostUrl += "ws://";
                 }
 
-                if (_config.WSServerIP == "0.0.0.0")
+                if (_config.WSServerIP == "0.0.0.0" || _config.WSServerIP == "*")
                 {
                     hostUrl += "127.0.0.1";
                 }
