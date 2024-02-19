@@ -7,23 +7,23 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 {
     public abstract class JobGaugeMemory : IJobGaugeMemory
     {
-        public struct JobGaugeImpl : JobGauge
+        public struct JobGaugeImpl : IJobGauge
         {
             [JsonIgnore]
             public JobGaugeJob job;
             [JsonIgnore]
-            public BaseJobGauge data;
+            public IBaseJobGauge data;
             [JsonIgnore]
             public byte[] rawData;
             [JsonIgnore]
             public object baseObject;
 
             public JobGaugeJob Job => job;
-            public BaseJobGauge Data => data;
+            public IBaseJobGauge Data => data;
             public int[] RawData => rawData.Select((b) => (int)b).ToArray();
             public object BaseObject => baseObject;
 
-            public bool Equals(JobGauge obj)
+            public bool Equals(IJobGauge obj)
             {
                 if (obj == null || GetType() != obj.GetType())
                 {
@@ -115,6 +115,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         }
 
         public abstract Version GetVersion();
-        public abstract JobGauge GetJobGauge();
+        public abstract IJobGauge GetJobGauge();
     }
 }

@@ -56,10 +56,10 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         SGE = 40,
     }
 
-    public interface JobGauge : IEquatable<JobGauge>
+    public interface IJobGauge : IEquatable<IJobGauge>
     {
         JobGaugeJob Job { get; }
-        BaseJobGauge Data { get; }
+        IBaseJobGauge Data { get; }
         int[] RawData { get; }
 #if !DEBUG
             [JsonIgnore]
@@ -69,7 +69,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 
     public interface IJobGaugeMemory : IVersionedMemory
     {
-        JobGauge GetJobGauge();
+        IJobGauge GetJobGauge();
     }
 
     class JobGaugeMemoryManager : IJobGaugeMemory
@@ -83,7 +83,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         // In milliseconds
         private const int PollingRate = 50;
 
-        public event EventHandler<JobGauge> OnJobGaugeChanged;
+        public event EventHandler<IJobGauge> OnJobGaugeChanged;
 
         public JobGaugeMemoryManager(TinyIoCContainer container)
         {
@@ -141,7 +141,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
             return memory.GetVersion();
         }
 
-        public JobGauge GetJobGauge()
+        public IJobGauge GetJobGauge()
         {
             if (!IsValid())
                 return null;
@@ -150,7 +150,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 
         private void PollJobGauge()
         {
-            JobGauge lastJobGauge = null;
+            IJobGauge lastJobGauge = null;
             while (!cancellationToken.IsCancellationRequested)
             {
                 var now = DateTime.Now;
@@ -158,7 +158,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
                 {
                     try
                     {
-                        JobGauge jobGauge = GetJobGauge();
+                        IJobGauge jobGauge = GetJobGauge();
 
                         if (!jobGauge.Equals(lastJobGauge))
                         {
@@ -188,20 +188,20 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 
     }
 
-    public interface BaseJobGauge
+    public interface IBaseJobGauge
     {
     }
 
     #region Healer
 
-    public interface BaseWhiteMageGauge : BaseJobGauge
+    public interface IBaseWhiteMageGauge : IBaseJobGauge
     {
         short LilyTimer { get; }
         byte Lily { get; }
         byte BloodLily { get; }
     }
 
-    public interface BaseScholarGauge : BaseJobGauge
+    public interface IBaseScholarGauge : IBaseJobGauge
     {
         byte Aetherflow { get; }
         byte FairyGauge { get; }
@@ -209,7 +209,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         byte DismissedFairy { get; }
     }
 
-    public interface BaseAstrologianGauge : BaseJobGauge
+    public interface IBaseAstrologianGauge : IBaseJobGauge
     {
         short Timer { get; }
         byte Card { get; }
@@ -220,7 +220,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         AstrologianSeal[] CurrentSeals { get; }
     }
 
-    public interface BaseSageGauge : BaseJobGauge
+    public interface IBaseSageGauge : IBaseJobGauge
     {
         short AddersgallTimer { get; }
         byte Addersgall { get; }
@@ -234,7 +234,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 
     #region MagicDPS
 
-    public interface BaseBlackMageGauge : BaseJobGauge
+    public interface IBaseBlackMageGauge : IBaseJobGauge
     {
         short EnochianTimer { get; }
         short ElementTimeRemaining { get; }
@@ -249,7 +249,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         bool ParadoxActive { get; }
     }
 
-    public interface BaseSummonerGauge : BaseJobGauge
+    public interface IBaseSummonerGauge : IBaseJobGauge
     {
         ushort SummonTimer { get; }
         ushort AttunementTimer { get; }
@@ -259,7 +259,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         AetherFlags AetherFlags { get; }
     }
 
-    public interface BaseRedMageGauge : BaseJobGauge
+    public interface IBaseRedMageGauge : IBaseJobGauge
     {
         byte WhiteMana { get; }
         byte BlackMana { get; }
@@ -270,7 +270,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 
     #region RangeDPS
 
-    public interface BaseBardGauge : BaseJobGauge
+    public interface IBaseBardGauge : IBaseJobGauge
     {
         ushort SongTimer { get; }
         byte Repertoire { get; }
@@ -278,7 +278,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         SongFlags SongFlags { get; }
     }
 
-    public interface BaseMachinistGauge : BaseJobGauge
+    public interface IBaseMachinistGauge : IBaseJobGauge
     {
         short OverheatTimeRemaining { get; }
         short SummonTimeRemaining { get; }
@@ -288,7 +288,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         byte TimerActive { get; }
     }
 
-    public interface BaseDancerGauge : BaseJobGauge
+    public interface IBaseDancerGauge : IBaseJobGauge
     {
         byte Feathers { get; }
         byte Esprit { get; }
@@ -302,7 +302,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 
     #region MeleeDPS
 
-    public interface BaseMonkGauge : BaseJobGauge
+    public interface IBaseMonkGauge : IBaseJobGauge
     {
         byte Chakra { get; }
 
@@ -318,7 +318,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         BeastChakraType[] BeastChakra { get; }
     }
 
-    public interface BaseDragoonGauge : BaseJobGauge
+    public interface IBaseDragoonGauge : IBaseJobGauge
     {
         short LotdTimer { get; }
         byte LotdState { get; }
@@ -326,14 +326,14 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         byte FirstmindsFocusCount { get; }
     }
 
-    public interface BaseNinjaGauge : BaseJobGauge
+    public interface IBaseNinjaGauge : IBaseJobGauge
     {
         ushort HutonTimer { get; }
         byte Ninki { get; }
         byte HutonManualCasts { get; }
     }
 
-    public interface BaseSamuraiGauge : BaseJobGauge
+    public interface IBaseSamuraiGauge : IBaseJobGauge
     {
         KaeshiAction Kaeshi { get; }
         byte Kenki { get; }
@@ -341,7 +341,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         SenFlags SenFlags { get; }
     }
 
-    public interface BaseReaperGauge : BaseJobGauge
+    public interface IBaseReaperGauge : IBaseJobGauge
     {
         byte Soul { get; }
         byte Shroud { get; }
@@ -354,7 +354,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 
     #region Tanks
 
-    public interface BaseDarkKnightGauge : BaseJobGauge
+    public interface IBaseDarkKnightGauge : IBaseJobGauge
     {
         byte Blood { get; }
         ushort DarksideTimer { get; }
@@ -362,17 +362,17 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         ushort ShadowTimer { get; }
     }
 
-    public interface BasePaladinGauge : BaseJobGauge
+    public interface IBasePaladinGauge : IBaseJobGauge
     {
         byte OathGauge { get; }
     }
 
-    public interface BaseWarriorGauge : BaseJobGauge
+    public interface IBaseWarriorGauge : IBaseJobGauge
     {
         byte BeastGauge { get; }
     }
 
-    public interface BaseGunbreakerGauge : BaseJobGauge
+    public interface IBaseGunbreakerGauge : IBaseJobGauge
     {
         byte Ammo { get; }
         short MaxTimerDuration { get; }
