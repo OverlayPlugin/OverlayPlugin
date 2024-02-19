@@ -12,6 +12,7 @@ jobs:
     runs-on: windows-latest
     outputs:
       version: ${{ steps.determine_version.outputs.version }}
+      do_release: ${{ steps.check_tag.outputs.do_release }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -27,16 +28,20 @@ jobs:
           echo "::set-output name=version::$version"
 
       - name: Check Tag Exists
+        id: check_tag
         shell: bash
         run: |
           if [ $(git tag -l "v${{ steps.determine_version.outputs.version }}") ]; then
-              echo "Error: Existing git tag found. Exiting..."
-              exit 1
+              echo "Existing git tag found. Exiting..."
+          else
+              echo "Version bump detected - ${{ steps.determine_version.outputs.version }}"
+              echo "::set-output name=do_release::true"
           fi
 
   create_release:
     needs: [validate_tag]
     runs-on: windows-latest
+    if: ${{ github.repository == 'OverlayPlugin/OverlayPlugin' && needs.validate_tag.outputs.do_release == 'true' }}
     steps:
       - uses: actions/checkout@v2
 
