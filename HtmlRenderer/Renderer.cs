@@ -417,6 +417,7 @@ namespace RainbowMage.HtmlRenderer
                     this._browser?.Dispose();
                     this._browser = null;
                 }
+                _disposed = true;
             }
         }
 
