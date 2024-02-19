@@ -23,12 +23,15 @@ try {
         $ENV:PATH = "C:\Program Files\7-Zip;${ENV:PATH}";
     }
 
+    if ($ENV:CI -eq "true" -and $ENV:GITHUB_RUN_ID -ne $null) {
+        echo "==> Running as a GitHub Action, pre-running clientstructs scripts"
+
+        .\tools\strip-clientstructs.ps1
+    }
+
     if ($ci) {
         echo "==> Continuous integration flag set. Building Debug..."
         dotnet publish -c debug
-
-        echo "`$ENV:CI=$ENV:CI"
-        echo "`$ENV:GITHUB_RUN_ID=$ENV:GITHUB_RUN_ID"
         
         if (-not $?) { exit 1 }
     }
