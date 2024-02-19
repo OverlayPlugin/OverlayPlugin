@@ -104,22 +104,22 @@ namespace RainbowMage.OverlayPlugin
 
         private void AddLogEntry(LogEntry entry)
         {
-            var msg = $"[{entry.Time}] {entry.Level}: {entry.Message}" + Environment.NewLine;
-
-            if (!logConnected)
-            {
-                // Remove the error message about the log not being connected since it is now.
-                logConnected = true;
-                logBox.Text = "";
-            }
-            else if (logBox.TextLength > 200 * 1024)
-            {
-                logBox.Text = "============ LOG TRUNCATED ==============\nThe log was truncated to reduce memory usage.\n=========================================\n" + msg;
-                return;
-            }
-
             Action appendText = () =>
             {
+                var msg = $"[{entry.Time}] {entry.Level}: {entry.Message}" + Environment.NewLine;
+
+                if (!logConnected)
+                {
+                    // Remove the error message about the log not being connected since it is now.
+                    logConnected = true;
+                    logBox.Text = "";
+                }
+                else if (logBox.TextLength > 200 * 1024)
+                {
+                    logBox.Text = "============ LOG TRUNCATED ==============\nThe log was truncated to reduce memory usage.\n=========================================\n" + msg;
+                    return;
+                }
+
                 if (checkBoxFollowLog.Checked)
                 {
                     logBox.AppendText(msg);
