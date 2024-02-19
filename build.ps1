@@ -26,6 +26,9 @@ try {
     if ($ci) {
         echo "==> Continuous integration flag set. Building Debug..."
         dotnet publish -c debug
+
+        echo "`$ENV:CI=$ENV:CI"
+        echo "`$ENV:GITHUB_RUN_ID=$ENV:GITHUB_RUN_ID"
         
         if (-not $?) { exit 1 }
     }
