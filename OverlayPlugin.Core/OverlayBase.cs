@@ -43,8 +43,13 @@ namespace RainbowMage.OverlayPlugin
         /// プラグインの設定を取得します。
         /// </summary>
         public IPluginConfig PluginConfig { get; private set; }
+
+        // TODO: Disable CA1033 due to potentially requiring a breaking change?
+        // See https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1033
+#pragma warning disable CA1033
         IOverlayConfig IOverlay.Config { get => Config; set => Config = (TConfig)value; }
         IntPtr IOverlay.Handle { get => Overlay == null ? IntPtr.Zero : Overlay.Handle; }
+#pragma warning restore CA1033
 
         public bool Visible
         {
@@ -86,9 +91,12 @@ namespace RainbowMage.OverlayPlugin
                 }
             }
 
+            // TODO: Disable CA2214 for now, due to potential breaking change required to fix it
+#pragma warning disable CA2214 // Do not call overridable methods in constructors
             InitializeOverlay();
             InitializeTimer();
             InitializeConfigHandlers();
+#pragma warning restore CA2214 // Do not call overridable methods in constructors
             UpdateHotKey();
         }
 
@@ -304,32 +312,46 @@ namespace RainbowMage.OverlayPlugin
         /// <summary>
         /// オーバーレイのインスタンスを破棄します。
         /// </summary>
-        public virtual void Dispose()
+        public void Dispose()
         {
-            try
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        private bool _disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
             {
-                dispatcher.UnsubscribeAll(this);
+                return;
+            }
 
-                if (this.timer != null)
+            if (disposing)
+            {
+                try
                 {
-                    this.timer.Stop();
-                }
-                if (this.Overlay != null)
-                {
-                    this.Overlay.Close();
-                    this.Overlay.Dispose();
-                }
+                    dispatcher.UnsubscribeAll(this);
 
-                var hook = container.Resolve<KeyboardHook>();
-                foreach (var cb in hotKeyCallbacks)
+                    timer?.Stop();
+                    timer?.Dispose();
+
+                    Overlay?.Close();
+                    Overlay?.Dispose();
+
+                    var hook = container.Resolve<KeyboardHook>();
+                    foreach (var cb in hotKeyCallbacks)
+                    {
+                        hook.UnregisterHotKey(cb);
+                    }
+                }
+                catch (Exception ex)
                 {
-                    hook.UnregisterHotKey(cb);
+                    Log(LogLevel.Error, "Dispose: {0}", ex);
                 }
             }
-            catch (Exception ex)
-            {
-                Log(LogLevel.Error, "Dispose: {0}", ex);
-            }
+
+            _disposed = true;
         }
 
         public virtual void Navigate(string url)

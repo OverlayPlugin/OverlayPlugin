@@ -7,15 +7,6 @@ namespace RainbowMage.OverlayPlugin
 {
     public sealed class KeyboardHook : NativeWindow, IDisposable
     {
-        // Registers a hot key with Windows.
-        [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-        // Unregisters the hot key with Windows.
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
-        private static int WM_HOTKEY = 0x0312;
-
         private Dictionary<int, HotKeyInfo> _hotkeys = new Dictionary<int, HotKeyInfo>();
         private ILogger _logger;
 
@@ -28,7 +19,7 @@ namespace RainbowMage.OverlayPlugin
             base.WndProc(ref m);
 
             // check if we got a hot key pressed.
-            if (m.Msg == WM_HOTKEY && _hotkeys.TryGetValue((int)m.LParam, out HotKeyInfo info))
+            if (m.Msg == NativeMethods.WM_HOTKEY && _hotkeys.TryGetValue((int)m.LParam, out HotKeyInfo info))
             {
                 foreach (var cb in info.Callbacks)
                 {
@@ -58,7 +49,7 @@ namespace RainbowMage.OverlayPlugin
                 _hotkeys[lookupKey] = new HotKeyInfo();
 
                 // register the hot key.
-                if (!RegisterHotKey(Handle, _hotkeys[lookupKey].Id, (uint)modifier, (uint)key))
+                if (!NativeMethods.RegisterHotKey(Handle, _hotkeys[lookupKey].Id, (uint)modifier, (uint)key))
                 {
                     _hotkeys.Remove(lookupKey);
                     throw new InvalidOperationException("Couldn’t register the hot key.");
@@ -77,7 +68,7 @@ namespace RainbowMage.OverlayPlugin
 
                 if (info.Callbacks.Count < 1)
                 {
-                    if (UnregisterHotKey(Handle, info.Id))
+                    if (NativeMethods.UnregisterHotKey(Handle, info.Id))
                     {
                         _hotkeys.Remove(lookupKey);
                     }
@@ -96,7 +87,7 @@ namespace RainbowMage.OverlayPlugin
                     pair.Value.Callbacks.Remove(callback);
                     if (pair.Value.Callbacks.Count < 1)
                     {
-                        if (UnregisterHotKey(Handle, pair.Value.Id))
+                        if (NativeMethods.UnregisterHotKey(Handle, pair.Value.Id))
                         {
                             toRemove.Add(pair.Key);
                         }
@@ -114,7 +105,7 @@ namespace RainbowMage.OverlayPlugin
         {
             foreach (var pair in _hotkeys)
             {
-                if (!UnregisterHotKey(Handle, pair.Value.Id))
+                if (!NativeMethods.UnregisterHotKey(Handle, pair.Value.Id))
                 {
                     _logger.Log(LogLevel.Error, Resources.UnregisterHotkeyError, pair.Key);
                 }
@@ -128,7 +119,7 @@ namespace RainbowMage.OverlayPlugin
                 uint modifier = (uint)pair.Key & 0xFFFF;
                 uint key = (uint)(pair.Key >> 16) & 0xFFFF;
 
-                if (!RegisterHotKey(Handle, pair.Value.Id, modifier, key))
+                if (!NativeMethods.RegisterHotKey(Handle, pair.Value.Id, modifier, key))
                 {
                     _logger.Log(LogLevel.Error, Resources.RegisterHotkeyError, modifier, key);
                 }
@@ -142,7 +133,7 @@ namespace RainbowMage.OverlayPlugin
             // unregister all the registered hot keys.
             foreach (var info in _hotkeys)
             {
-                UnregisterHotKey(Handle, info.Value.Id);
+                NativeMethods.UnregisterHotKey(Handle, info.Value.Id);
             }
 
             // dispose the native window.

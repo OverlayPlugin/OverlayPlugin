@@ -17,6 +17,10 @@ namespace RainbowMage.OverlayPlugin
         public ValidateNameDelegate NameValidator { get; set; }
         public IOverlay SelectedOverlay { get; private set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "CA2213:Disposable fields should be disposed",
+            Justification = "pluginMain is disposed of by TinyIoCContainer")]
         private PluginMain pluginMain;
         private Registry registry;
         private ILogger logger;

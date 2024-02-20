@@ -5,7 +5,6 @@ using RainbowMage.OverlayPlugin.MemoryProcessors;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    [Serializable]
     [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
     internal unsafe struct RSV_v62
     {

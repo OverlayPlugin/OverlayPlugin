@@ -14,6 +14,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
     {
         private LabelOverlayConfig config;
         private LabelOverlay overlay;
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "CA2213:Disposable fields should be disposed",
+            Justification = "keyboardHook is disposed of by TinyIoCContainer")]
         private readonly KeyboardHook keyboardHook;
 
         public LabelOverlayConfigPanel(TinyIoCContainer container, LabelOverlay overlay)

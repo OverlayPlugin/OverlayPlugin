@@ -47,7 +47,7 @@ jobs:
           path: |
             ./Thirdparty
             ./OverlayPlugin.Core/Thirdparty
-          key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.ps1', './DEPS.json') }}
+          key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.ps1', './DEPS.json', './tools/StripFFXIVClientStructs/StripFFXIVClientStructs/StripFFXIVClientStructs.cs') }}
           restore-keys: |
             ${{ runner.os }}-overlayplugin-
       # Fetch dependencies only if cache-hit is false
