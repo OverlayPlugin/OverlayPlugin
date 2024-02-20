@@ -15,17 +15,17 @@ using RainbowMage.OverlayPlugin.Overlays;
 
 namespace RainbowMage.OverlayPlugin
 {
-    public class WSServer
+    public class WSServer : IDisposable
     {
         TinyIoCContainer _container;
         ILogger _logger;
         WebSocketServer _server;
         IPluginConfig _cfg;
-        PluginMain _plugin;
         List<IWSConnection> _connections = new List<IWSConnection>();
         bool _failed = false;
 
         public EventHandler<StateChangedArgs> OnStateChanged;
+        private bool _disposed;
 
         interface IWSConnection : IEventReceiver
         {
@@ -77,7 +77,6 @@ namespace RainbowMage.OverlayPlugin
             _container = container;
             _logger = container.Resolve<ILogger>();
             _cfg = container.Resolve<IPluginConfig>();
-            _plugin = container.Resolve<PluginMain>();
         }
 
         public void Start()
@@ -520,6 +519,24 @@ namespace RainbowMage.OverlayPlugin
                 this.Running = Running;
                 this.Failed = Failed;
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _server?.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -12,7 +12,7 @@ using RainbowMage.OverlayPlugin.NetworkProcessors;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
-    public class LineCombatant
+    public class LineCombatant : IDisposable
     {
         public const uint LogFileLineID = 261;
         private ILogger logger;
@@ -169,6 +169,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         private Func<string, DateTime, bool> logWriter;
 
         private CancellationTokenSource cancellationToken;
+        private bool _disposed;
 
         public LineCombatant(TinyIoCContainer container)
         {
@@ -218,10 +219,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
         ~LineCombatant()
         {
-            if (cancellationToken != null)
-            {
-                cancellationToken.Cancel();
-            }
+            Dispose(false);
         }
 
         private void PollCombatants()
@@ -474,6 +472,25 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             Add,
             Remove,
             Change,
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    cancellationToken?.Cancel();
+                    cancellationToken?.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

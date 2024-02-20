@@ -400,12 +400,24 @@ namespace RainbowMage.HtmlRenderer
             return null;
         }
 
+        private bool _disposed = false;
+
         public void Dispose()
         {
-            if (this._browser != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
             {
-                this._browser.Dispose();
-                this._browser = null;
+                if (disposing)
+                {
+                    this._browser?.Dispose();
+                    this._browser = null;
+                }
+                _disposed = true;
             }
         }
 

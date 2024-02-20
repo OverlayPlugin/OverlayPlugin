@@ -4,7 +4,6 @@
     <AssemblyTitle>AddonExample</AssemblyTitle>
     <Product>AddonExample</Product>
     <Copyright>Copyright ©  2015</Copyright>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <OutputPath>..\out\$(Configuration)\addons\</OutputPath>
   </PropertyGroup>
   <ItemGroup>

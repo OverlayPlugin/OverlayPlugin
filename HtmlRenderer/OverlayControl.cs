@@ -131,14 +131,14 @@ namespace RainbowMage.HtmlRenderer
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (this.Renderer != null)
+            if (disposing)
             {
-                this.Renderer.Dispose();
-            }
-
-            if (disposing && (components != null))
-            {
-                components.Dispose();
+                Renderer?.Dispose();
+                Renderer = null;
+                components?.Dispose();
+                components = null;
+                surfaceBuffer?.Dispose();
+                surfaceBuffer = null;
             }
             base.Dispose(disposing);
         }

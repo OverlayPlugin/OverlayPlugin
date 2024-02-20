@@ -71,9 +71,19 @@ namespace RainbowMage.OverlayPlugin
             logger.Log(level, message, args);
         }
 
-        public virtual void Dispose()
+        public void Dispose()
         {
-            timer?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && timer != null)
+            {
+                timer.Dispose();
+                timer = null;
+            }
         }
 
         public virtual void Start()

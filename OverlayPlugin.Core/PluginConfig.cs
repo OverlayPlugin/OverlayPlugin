@@ -19,6 +19,8 @@ namespace RainbowMage.OverlayPlugin
     public class PluginConfig : IPluginConfig
     {
         const string BACKUP_SUFFIX = ".backup";
+        [NonSerialized]
+        [JsonIgnore]
         private TinyIoCContainer _container;
 
         [JsonIgnore]
@@ -183,6 +185,9 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        // TODO: This isn't being serialized to JSON (and JToken isn't serializable directly)
+        // so this isn't being cached locally anymore?
+        [NonSerialized]
         private JToken _cachedOpcodeFile = new JObject();
         public JToken CachedOpcodeFile
         {
@@ -352,7 +357,7 @@ namespace RainbowMage.OverlayPlugin
                         }
                         else
                         {
-                            throw ex;
+                            throw;
                         }
                     }
                 }
