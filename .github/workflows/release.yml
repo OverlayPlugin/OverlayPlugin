@@ -25,7 +25,7 @@ jobs:
           [xml]$csprojcontents = Get-Content -Path "Directory.Build.props";
           $version = $csprojcontents.Project.PropertyGroup.AssemblyVersion;
           $version = ($version | Out-String).Trim()
-          echo "::set-output name=version::$version"
+          echo "version=$version" >> $env:GITHUB_OUTPUT
 
       - name: Check Tag Exists
         id: check_tag
@@ -33,15 +33,18 @@ jobs:
         run: |
           if [ $(git tag -l "v${{ steps.determine_version.outputs.version }}") ]; then
               echo "Existing git tag found. Exiting..."
+              echo "do_release=false" >> $GITHUB_OUTPUT
           else
               echo "Version bump detected - ${{ steps.determine_version.outputs.version }}"
-              echo "::set-output name=do_release::true"
+              echo "do_release=true" >> $GITHUB_OUTPUT
           fi
 
   create_release:
     needs: [validate_tag]
     runs-on: windows-latest
-    if: ${{ github.repository == 'OverlayPlugin/OverlayPlugin' && needs.validate_tag.outputs.do_release == 'true' }}
+    if: |
+      github.repository == 'OverlayPlugin/OverlayPlugin' &&
+      needs.validate_tag.outputs.do_release == 'true'
     steps:
       - uses: actions/checkout@v2
 
