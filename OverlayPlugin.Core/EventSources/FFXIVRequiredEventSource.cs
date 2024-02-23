@@ -7,6 +7,7 @@ using System.Linq;
 // For some reason this using is required by the github build?
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
@@ -42,6 +43,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private ICombatantMemory combatantMemory;
         private IPartyMemory partyMemory;
         private IJobGaugeMemory jobGaugeMemory;
+
+        private CancellationTokenSource cancellationToken;
+
+        // In milliseconds
+        private const int PollingRate = 50;
 
         // Event Source
 
@@ -144,14 +150,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     DispatchAndCacheEvent(obj);
                 };
 
-                // TODO: This is a bit hacky, figure out a better way to handle this.
-                ((JobGaugeMemoryManager)jobGaugeMemory).OnJobGaugeChanged += (o, e) =>
-                {
-                    var obj = JObject.FromObject(e);
-                    obj["type"] = JobGaugeChangedEvent;
+                cancellationToken = new CancellationTokenSource();
 
-                    DispatchAndCacheEvent(obj);
-                };
+                Task.Run(PollJobGauge, cancellationToken.Token);
             }
         }
 
@@ -419,6 +420,53 @@ namespace RainbowMage.OverlayPlugin.EventSources
             var updateInterval = Math.Min(5000, this.Config.UpdateInterval * 1000);
             this.timer.Change(0, updateInterval);
         }
+
+        public override void Stop()
+        {
+            base.Stop();
+            if (cancellationToken != null)
+            {
+                cancellationToken.Cancel();
+            }
+        }
+        private void PollJobGauge()
+        {
+            IJobGauge lastJobGauge = null;
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var now = DateTime.Now;
+
+                if (HasSubscriber(JobGaugeChangedEvent))
+                {
+                    var jobGauge = jobGaugeMemory.GetJobGauge();
+
+                    if (jobGauge != null)
+                    {
+                        if (!jobGauge.Equals(lastJobGauge))
+                        {
+                            lastJobGauge = jobGauge;
+                            var obj = JObject.FromObject(jobGauge);
+                            obj["type"] = JobGaugeChangedEvent;
+
+                            DispatchAndCacheEvent(obj);
+                        }
+                    }
+                }
+
+                // Wait for next poll
+                var delay = PollingRate - (int)Math.Ceiling((DateTime.Now - now).TotalMilliseconds);
+                if (delay > 0)
+                {
+                    Thread.Sleep(delay);
+                }
+                else
+                {
+                    // If we're lagging enough to not have a sleep duration, delay by PollingRate to reduce lag
+                    Thread.Sleep(PollingRate);
+                }
+            }
+        }
+
 
         protected override void Update()
         {

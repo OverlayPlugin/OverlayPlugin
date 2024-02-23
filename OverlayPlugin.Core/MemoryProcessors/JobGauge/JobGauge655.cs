@@ -19,7 +19,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
             return new Version(6, 5, 5);
         }
 
-        public override RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge.IJobGauge GetJobGauge()
+        public override IJobGauge GetJobGauge()
         {
             if (!IsValid()) return null;
 

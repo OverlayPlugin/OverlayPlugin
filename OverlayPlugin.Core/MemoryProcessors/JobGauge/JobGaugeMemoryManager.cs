@@ -78,12 +78,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         private readonly FFXIVRepository repository;
         protected readonly ILogger logger;
         private IJobGaugeMemory memory = null;
-        private CancellationTokenSource cancellationToken;
-
-        // In milliseconds
-        private const int PollingRate = 50;
-
-        public event EventHandler<IJobGauge> OnJobGaugeChanged;
 
         public JobGaugeMemoryManager(TinyIoCContainer container)
         {
@@ -94,18 +88,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 
             var memory = container.Resolve<FFXIVMemory>();
             memory.RegisterOnProcessChangeHandler(FindMemory);
-
-            cancellationToken = new CancellationTokenSource();
-
-            Task.Run(PollJobGauge, cancellationToken.Token);
-        }
-
-        ~JobGaugeMemoryManager()
-        {
-            if (cancellationToken != null)
-            {
-                cancellationToken.Cancel();
-            }
         }
 
         private void FindMemory(object sender, Process p)
@@ -147,45 +129,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
                 return null;
             return memory.GetJobGauge();
         }
-
-        private void PollJobGauge()
-        {
-            IJobGauge lastJobGauge = null;
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                var now = DateTime.Now;
-                if (IsValid())
-                {
-                    try
-                    {
-                        IJobGauge jobGauge = GetJobGauge();
-
-                        if (!jobGauge.Equals(lastJobGauge))
-                        {
-                            lastJobGauge = jobGauge;
-                            OnJobGaugeChanged.Invoke(this, jobGauge);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        logger.Log(LogLevel.Debug, $"JobGaugeMemoryManager: Exception: {e}");
-                    }
-                }
-
-                // Wait for next poll
-                var delay = PollingRate - (int)Math.Ceiling((DateTime.Now - now).TotalMilliseconds);
-                if (delay > 0)
-                {
-                    Thread.Sleep(delay);
-                }
-                else
-                {
-                    // If we're lagging enough to not have a sleep duration, delay by PollingRate to reduce lag
-                    Thread.Sleep(PollingRate);
-                }
-            }
-        }
-
     }
 
     public interface IBaseJobGauge
