@@ -203,6 +203,7 @@ namespace RainbowMage.OverlayPlugin
             }
             else
             {
+                warnings.Add(new List<string> { "Game running in Full Screen mode." });
                 return "Full Screen";
             }
         }
