@@ -23,8 +23,11 @@ namespace RainbowMage.OverlayPlugin
         private SimpleTable settings;
         private SimpleTable warnings;
 
+        private const ulong WS_POPUP = 0x80000000L;
+        private const ulong WS_CAPTION = 0x00C00000L;
+
         [DllImport("user32.dll")]
-        static extern long GetWindowLongPtr(IntPtr hWnd, int nIndex);
+        static extern ulong GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
         static string hideChatLogForPrivacyName = "chkDisableCombatLog";
 
@@ -181,9 +184,6 @@ namespace RainbowMage.OverlayPlugin
 
         private string GetFFXIVScreenMode(Process process)
         {
-            long WS_POPUP = 0x80000000L;
-            long WS_CAPTION = 0x00C00000L;
-
             if (process == null)
                 return "(not running)";
 
@@ -191,7 +191,7 @@ namespace RainbowMage.OverlayPlugin
             if (mainWindowHandle == IntPtr.Zero)
                 return "(not running)";
 
-            long style = GetWindowLongPtr(mainWindowHandle, -16);
+            ulong style = GetWindowLongPtr(mainWindowHandle, -16);
 
             if ((style & WS_POPUP) != 0)
             {
