@@ -117,6 +117,13 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 if (*(ushort*)&buffer[offsetMessageType] == opcode.opcode)
                 {
                     uint actorID = *(uint*)&buffer[offsetHeaderActorID];
+
+                    // Only emit for non-player actors
+                    if (actorID < 0x40000000)
+                    {
+                        return;
+                    }
+
                     DateTime serverTime = ffxiv.EpochToDateTime(epoch);
                     ActorMove_v655 actorMovePacket = *(ActorMove_v655*)&buffer[offsetPacketData];
                     logWriter(actorMovePacket.ToString(actorID, ffxiv), serverTime);
