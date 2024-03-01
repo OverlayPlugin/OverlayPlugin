@@ -15,7 +15,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         // 0x80034E2B = instance content ID
         // 0x2CE = entry on `BNpcName` table
         // 33804 = entry on `InstanceContentTextData` table
-        // 5000 = display time in ms?
+        // 5000 = display time in ms
         // 2 = some sort of flags for display settings?
 
         public const int structSize = 40;
