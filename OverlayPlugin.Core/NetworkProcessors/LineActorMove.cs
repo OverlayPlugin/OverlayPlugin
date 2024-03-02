@@ -19,7 +19,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         public const int structSize = 16;
 
         [FieldOffset(0x0)]
-        public ushort heading;
+        public ushort rotation;
 
         [FieldOffset(0x2)]
         public ushort unknown1;
@@ -36,12 +36,13 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         public string ToString(uint actorID, FFXIVRepository ffxiv)
         {
             return $"{actorID:X8}|" +
-                $"{ffxiv.ConvertHeading(heading):F4}|" +
+                $"{ffxiv.ConvertHeading(rotation):F4}|" +
                 $"{unknown1:X4}|" +
                 $"{unknown2:X4}|" +
                 $"{ffxiv.ConvertUInt16Coordinate(x):F4}|" +
-                $"{ffxiv.ConvertUInt16Coordinate(y):F4}|" +
-                $"{ffxiv.ConvertUInt16Coordinate(z):F4}";
+                // y and z are intentionally flipped to match other log lines
+                $"{ffxiv.ConvertUInt16Coordinate(z):F4}|" +
+                $"{ffxiv.ConvertUInt16Coordinate(y):F4}";
         }
     }
 
