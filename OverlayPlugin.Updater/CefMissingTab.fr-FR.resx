@@ -148,9 +148,12 @@
     <value>Extraction du fichier téléchargé</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
-    <value>Arrêter de parser si hors-combat</value>
+    <value>Arrêter le log si hors combat</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
-    <value>Arrêter le combat ACT après un wipe</value>
+    <value>Fin du combat après un wipe</value>
+  </data>
+  <data name="tabPage3.Text" xml:space="preserve">
+    <value>Log :</value>
   </data>
 </root>

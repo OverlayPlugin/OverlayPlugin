@@ -14,7 +14,7 @@ using RainbowMage.OverlayPlugin.Updater;
 
 namespace RainbowMage.OverlayPlugin
 {
-    public class PluginLoader : IActPluginV1
+    public class PluginLoader : IActPluginV1, IDisposable
     {
         PluginMain pluginMain;
         Logger logger;
@@ -23,6 +23,7 @@ namespace RainbowMage.OverlayPlugin
         TabPage pluginScreenSpace;
         Label pluginStatusText;
         bool initFailed = false;
+        private bool _disposed;
 
         public TinyIoCContainer Container { get; private set; }
 
@@ -162,6 +163,25 @@ namespace RainbowMage.OverlayPlugin
         private string GetCefPath()
         {
             return Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "OverlayPluginCef", Environment.Is64BitProcess ? "x64" : "x86");
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    pluginMain.Dispose();
+                    Container.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

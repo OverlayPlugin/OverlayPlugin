@@ -146,7 +146,7 @@
     <value>Ouvrir DevTools</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
-    <value>Activer cliquer à travers</value>
+    <value>Cliquer à travers</value>
   </data>
   <data name="buttonLogParseReloadBrowser.Text" xml:space="preserve">
     <value>Recharger l'overlay</value>

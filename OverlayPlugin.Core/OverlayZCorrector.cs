@@ -8,13 +8,18 @@ using System.Threading.Tasks;
 
 namespace RainbowMage.OverlayPlugin
 {
-    class OverlayZCorrector
+    class OverlayZCorrector : IDisposable
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "CA2213:Disposable fields should be disposed",
+            Justification = "main is disposed of by TinyIoCContainer")]
         private PluginMain main;
         private ILogger logger;
         private Timer timer;
         private FFXIVRepository repository;
         private Process xivProc;
+        private bool _disposed;
 
         public OverlayZCorrector(TinyIoCContainer container)
         {
@@ -72,6 +77,26 @@ namespace RainbowMage.OverlayPlugin
             }
 
             // logger.Log(LogLevel.Debug, $"ZReorder: Took {watch.Elapsed.TotalSeconds}s.");
+        }
+
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    timer?.Dispose();
+                    timer = null;
+                }
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

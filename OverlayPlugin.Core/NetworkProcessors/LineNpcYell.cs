@@ -6,46 +6,35 @@ using RainbowMage.OverlayPlugin.MemoryProcessors;
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
     [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
-    internal unsafe struct RSV_v62
+    internal unsafe struct NpcYell_v655
     {
-        public const int structSize = 1080;
-        public const int keySize = 0x30;
-        public const int valueSize = 0x404;
+        // 00|2024-02-22T22:35:03.0000000-05:00|0044|Shanoa|Meow!♪|1d173e4a0eacfd95
+        // 6.5.5 packet data (minus header):
+        // 8A6B0140 00000000 0624 0000 D624 00000000 00000000 00000000 00000000 0000
+        // AAAAAAAA BBBBBBBB CCCC DDDD EEEE FFFFFFFF GGGGGGGG HHHHHHHH IIIIIIII JJJJ
+        // 0x0      0x4      0x8  0xA  0xC
+        // Actor ID          NameID    YellID
+
+        public const int structSize = 32;
         [FieldOffset(0x0)]
-        public uint unknown1;
-        [FieldOffset(0x4)]
-        public fixed byte key[keySize];
-        [FieldOffset(0x34)]
-        public fixed byte value[valueSize];
+        public uint actorID;
+        [FieldOffset(0x8)]
+        public ushort nameID;
+        [FieldOffset(0xC)]
+        public ushort yellID;
 
         public override string ToString()
         {
-            fixed (byte* key = this.key) fixed (byte* value = this.value)
-            {
-                return
-                    $"|" +
-                    $"{unknown1:X8}|" +
-                    $"{FFXIVMemory.GetStringFromBytes(key, keySize).Replace("\r", "\\r").Replace("\n", "\\n")}|" +
-                    $"{FFXIVMemory.GetStringFromBytes(value, valueSize).Replace("\r", "\\r").Replace("\n", "\\n")}";
-            }
-        }
-
-        public string ToString(string locale)
-        {
-            fixed (byte* key = this.key) fixed (byte* value = this.value)
-            {
-                return
-                    $"{locale}|" +
-                    $"{unknown1:X8}|" +
-                    $"{FFXIVMemory.GetStringFromBytes(key, keySize).Replace("\r", "\\r").Replace("\n", "\\n")}|" +
-                    $"{FFXIVMemory.GetStringFromBytes(value, valueSize).Replace("\r", "\\r").Replace("\n", "\\n")}";
-            }
+            return
+                $"{actorID:X8}|" +
+                $"{nameID:X4}|" +
+                $"{yellID:X4}";
         }
     }
 
-    public class LineRSV
+    public class LineNpcYell
     {
-        public const uint LogFileLineID = 262;
+        public const uint LogFileLineID = 266;
         private ILogger logger;
         private OverlayPluginLogLineConfig opcodeConfig;
         private IOpcodeConfigEntry opcode = null;
@@ -55,7 +44,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
         private Func<string, DateTime, bool> logWriter;
 
-        public LineRSV(TinyIoCContainer container)
+        public LineNpcYell(TinyIoCContainer container)
         {
             logger = container.Resolve<ILogger>();
             ffxiv = container.Resolve<FFXIVRepository>();
@@ -82,7 +71,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             var customLogLines = container.Resolve<FFXIVCustomLogLines>();
             this.logWriter = customLogLines.RegisterCustomLogLine(new LogLineRegistryEntry()
             {
-                Name = "RSVData",
+                Name = "NpcYell",
                 Source = "OverlayPlugin",
                 ID = LogFileLineID,
                 Version = 1,
@@ -96,7 +85,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             // if the player is currently logged in/a network connection is active
             if (opcode == null)
             {
-                opcode = opcodeConfig["RSVData"];
+                opcode = opcodeConfig["NpcYell"];
                 if (opcode == null)
                 {
                     return;
@@ -111,8 +100,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 if (*(ushort*)&buffer[offsetMessageType] == opcode.opcode)
                 {
                     DateTime serverTime = ffxiv.EpochToDateTime(epoch);
-                    RSV_v62 RSVPacket = *(RSV_v62*)&buffer[offsetPacketData];
-                    logWriter(RSVPacket.ToString(ffxiv.GetLocaleString()), serverTime);
+                    NpcYell_v655 yellPacket = *(NpcYell_v655*)&buffer[offsetPacketData];
+                    logWriter(yellPacket.ToString(), serverTime);
 
                     return;
                 }

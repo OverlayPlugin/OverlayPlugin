@@ -6,56 +6,63 @@ using RainbowMage.OverlayPlugin.MemoryProcessors;
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
     [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
-    internal unsafe struct RSV_v62
+    internal unsafe struct ActorSetPos_v655
     {
-        public const int structSize = 1080;
-        public const int keySize = 0x30;
-        public const int valueSize = 0x404;
+        // 6.5.5 packet data (minus header):
+        // 6AD3 0F  02  00000000 233E3BC1 00000000 D06AF840 00000000
+        // AAAA BB  CC  DDDDDDDD EEEEEEEE FFFFFFFF GGGGGGGG HHHHHHHH
+        // 0x0  0x2 0x3 0x4      0x8      0xC      0x10     0x14
+        // Rot  unk unk unk      X        Y        Z        unk
+
+        // Have never seen data in 0x4 or 0x14, probably just padding?
+
+        public const int structSize = 24;
         [FieldOffset(0x0)]
-        public uint unknown1;
-        [FieldOffset(0x4)]
-        public fixed byte key[keySize];
-        [FieldOffset(0x34)]
-        public fixed byte value[valueSize];
+        public ushort rotation;
 
-        public override string ToString()
-        {
-            fixed (byte* key = this.key) fixed (byte* value = this.value)
-            {
-                return
-                    $"|" +
-                    $"{unknown1:X8}|" +
-                    $"{FFXIVMemory.GetStringFromBytes(key, keySize).Replace("\r", "\\r").Replace("\n", "\\n")}|" +
-                    $"{FFXIVMemory.GetStringFromBytes(value, valueSize).Replace("\r", "\\r").Replace("\n", "\\n")}";
-            }
-        }
+        [FieldOffset(0x2)]
+        public byte unknown1;
 
-        public string ToString(string locale)
+        [FieldOffset(0x3)]
+        public byte unknown2;
+
+        // Yes, these are actually floats, and not some janky ushort that needs converted through ConvertUInt16Coordinate
+        [FieldOffset(0x8)]
+        public float x;
+        [FieldOffset(0xC)]
+        public float y;
+        [FieldOffset(0x10)]
+        public float z;
+
+        public string ToString(uint actorID, FFXIVRepository ffxiv)
         {
-            fixed (byte* key = this.key) fixed (byte* value = this.value)
-            {
-                return
-                    $"{locale}|" +
-                    $"{unknown1:X8}|" +
-                    $"{FFXIVMemory.GetStringFromBytes(key, keySize).Replace("\r", "\\r").Replace("\n", "\\n")}|" +
-                    $"{FFXIVMemory.GetStringFromBytes(value, valueSize).Replace("\r", "\\r").Replace("\n", "\\n")}";
-            }
+            return $"{actorID:X8}|" +
+                $"{ffxiv.ConvertHeading(rotation):F4}|" +
+                $"{unknown1:X2}|" +
+                $"{unknown2:X2}|" +
+                $"{x:F4}|" +
+                // y and z are intentionally flipped to match other log lines
+                $"{z:F4}|" +
+                $"{y:F4}";
         }
     }
 
-    public class LineRSV
+    public class LineActorSetPos
     {
-        public const uint LogFileLineID = 262;
+        public const uint LogFileLineID = 271;
         private ILogger logger;
         private OverlayPluginLogLineConfig opcodeConfig;
         private IOpcodeConfigEntry opcode = null;
+
+        private readonly int offsetHeaderActorID;
         private readonly int offsetMessageType;
         private readonly int offsetPacketData;
+
         private readonly FFXIVRepository ffxiv;
 
         private Func<string, DateTime, bool> logWriter;
 
-        public LineRSV(TinyIoCContainer container)
+        public LineActorSetPos(TinyIoCContainer container)
         {
             logger = container.Resolve<ILogger>();
             ffxiv = container.Resolve<FFXIVRepository>();
@@ -67,6 +74,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             {
                 var mach = Assembly.Load("Machina.FFXIV");
                 var msgHeaderType = mach.GetType("Machina.FFXIV.Headers.Server_MessageHeader");
+                offsetHeaderActorID = netHelper.GetOffset(msgHeaderType, "ActorID");
                 offsetMessageType = netHelper.GetOffset(msgHeaderType, "MessageType");
                 offsetPacketData = Marshal.SizeOf(msgHeaderType);
                 ffxiv.RegisterNetworkParser(MessageReceived);
@@ -82,7 +90,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             var customLogLines = container.Resolve<FFXIVCustomLogLines>();
             this.logWriter = customLogLines.RegisterCustomLogLine(new LogLineRegistryEntry()
             {
-                Name = "RSVData",
+                Name = "ActorSetPos",
                 Source = "OverlayPlugin",
                 ID = LogFileLineID,
                 Version = 1,
@@ -96,7 +104,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             // if the player is currently logged in/a network connection is active
             if (opcode == null)
             {
-                opcode = opcodeConfig["RSVData"];
+                opcode = opcodeConfig["ActorSetPos"];
                 if (opcode == null)
                 {
                     return;
@@ -110,9 +118,10 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             {
                 if (*(ushort*)&buffer[offsetMessageType] == opcode.opcode)
                 {
+                    uint actorID = *(uint*)&buffer[offsetHeaderActorID];
                     DateTime serverTime = ffxiv.EpochToDateTime(epoch);
-                    RSV_v62 RSVPacket = *(RSV_v62*)&buffer[offsetPacketData];
-                    logWriter(RSVPacket.ToString(ffxiv.GetLocaleString()), serverTime);
+                    ActorSetPos_v655 actorSetPosPacket = *(ActorSetPos_v655*)&buffer[offsetPacketData];
+                    logWriter(actorSetPosPacket.ToString(actorID, ffxiv), serverTime);
 
                     return;
                 }

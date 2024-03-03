@@ -12,6 +12,7 @@ jobs:
     runs-on: windows-latest
     outputs:
       version: ${{ steps.determine_version.outputs.version }}
+      do_release: ${{ steps.check_tag.outputs.do_release }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -24,19 +25,26 @@ jobs:
           [xml]$csprojcontents = Get-Content -Path "Directory.Build.props";
           $version = $csprojcontents.Project.PropertyGroup.AssemblyVersion;
           $version = ($version | Out-String).Trim()
-          echo "::set-output name=version::$version"
+          echo "version=$version" >> $env:GITHUB_OUTPUT
 
       - name: Check Tag Exists
+        id: check_tag
         shell: bash
         run: |
           if [ $(git tag -l "v${{ steps.determine_version.outputs.version }}") ]; then
-              echo "Error: Existing git tag found. Exiting..."
-              exit 1
+              echo "Existing git tag found. Exiting..."
+              echo "do_release=false" >> $GITHUB_OUTPUT
+          else
+              echo "Version bump detected - ${{ steps.determine_version.outputs.version }}"
+              echo "do_release=true" >> $GITHUB_OUTPUT
           fi
 
   create_release:
     needs: [validate_tag]
     runs-on: windows-latest
+    if: |
+      github.repository == 'OverlayPlugin/OverlayPlugin' &&
+      needs.validate_tag.outputs.do_release == 'true'
     steps:
       - uses: actions/checkout@v2
 
@@ -47,7 +55,7 @@ jobs:
           path: |
             ./Thirdparty
             ./OverlayPlugin.Core/Thirdparty
-          key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.ps1', './DEPS.json') }}
+          key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.ps1', './DEPS.json', './tools/StripFFXIVClientStructs/StripFFXIVClientStructs/StripFFXIVClientStructs.cs') }}
           restore-keys: |
             ${{ runner.os }}-overlayplugin-
       # Fetch dependencies only if cache-hit is false

@@ -122,10 +122,10 @@
     <value>...</value>
   </data>
   <data name="label11.Text" xml:space="preserve">
-    <value>Cette option est seulement nécessaire si la skin de l'overlay n'est pas compatible d'origine avec OverlayPlugin</value>
+    <value>Cette option est seulement nécessaire si l'apparence (skin) de l'overlay n'est pas compatible d'origine avec OverlayPlugin.</value>
   </data>
   <data name="label12.Text" xml:space="preserve">
-    <value>Utilisez cette option si vous ne trouvez ou ne pouvez pas redimensionner l'overlay</value>
+    <value>Utilisez cette option si vous ne trouvez ou ne pouvez pas redimensionner l'overlay.</value>
   </data>
   <data name="buttonMiniParseOpenDevTools.Text" xml:space="preserve">
     <value>Ouvrir DevTools</value>
@@ -146,13 +146,13 @@
     <value>Forcer le fond en blanc</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
-    <value>Activer cliquer à travers</value>
+    <value>Cliquer à travers</value>
   </data>
   <data name="checkNoFocus.Text" xml:space="preserve">
     <value>Ne pas accepter le focus pour cet overlay</value>
   </data>
   <data name="buttonResetOverlayPosition.Text" xml:space="preserve">
-    <value>RAZ Position</value>
+    <value>Remise à zéro de la position</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>Rafraichissement max.</value>
@@ -170,7 +170,7 @@
     <value>Cet overlay nécessite ACTWebSocket</value>
   </data>
   <data name="btnResetZoom.Text" xml:space="preserve">
-    <value>RAZ</value>
+    <value>Remise à zéro</value>
   </data>
   <data name="hotkeyColHotkey.HeaderText" xml:space="preserve">
     <value>Raccourci</value>
@@ -203,7 +203,7 @@
     <value>Zoom</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
-    <value>Si un overlay est bloqué, sa position devient fixe et vous ne pourrez pas le bouger avant de l'avoir débloqué</value>
+    <value>Si un overlay est bloqué, sa position devient fixe et vous ne pourrez pas le bouger avant de l'avoir débloqué.</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
     <value>Désactiver un overlay réduit la charge CPU mais arrête également toutes ses fonctionnalités (sons, etc.).

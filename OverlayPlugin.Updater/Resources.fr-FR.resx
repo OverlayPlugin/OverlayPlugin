@@ -128,7 +128,7 @@
     <value>Mise à jour réalisée avec succès. Redémarrez ACT pour charger la nouvelle version.</value>
   </data>
   <data name="UpdateAlreadyLatest" xml:space="preserve">
-    <value>Vous êtes déjà sur la dernière version.</value>
+    <value>Vous utilisez déjà la dernière version.</value>
   </data>
   <data name="LogExtractingFiles" xml:space="preserve">
     <value>Extraction des fichiers ...</value>
@@ -152,7 +152,7 @@
     <value>[{0}/{1}] : Démarrage du téléchargement ...</value>
   </data>
   <data name="LogResumingDownload" xml:space="preserve">
-    <value>Reprise du téléchargement</value>
+    <value>Reprise du téléchargement ...</value>
   </data>
   <data name="LogDownloadFailed" xml:space="preserve">
     <value>Téléchargement échoué : {0}</value>
@@ -184,7 +184,7 @@
 Ce composant est nécessaire pour OverlayPlugin. L'installer maintenant ?</value>
   </data>
   <data name="UpdateParseVersionError" xml:space="preserve">
-    <value>Impossible de détecter la version :
+    <value>Impossible de détecter la version : 
 {0}</value>
   </data>
   <data name="Exception" xml:space="preserve">
@@ -197,7 +197,7 @@ Ce composant est nécessaire pour OverlayPlugin. L'installer maintenant ?</value
     <value>Téléchargement de "{0}" dans {1} ...</value>
   </data>
   <data name="LogRetryAfter1s" xml:space="preserve">
-    <value>Nouvel essai dans 1 seconde.</value>
+    <value>Nouvel essai dans une seconde.</value>
   </data>
   <data name="StatusDone" xml:space="preserve">
     <value>[{0}/{1}] : Effectué.</value>
@@ -215,7 +215,7 @@ Ce composant est nécessaire pour OverlayPlugin. L'installer maintenant ?</value
     <value>Impossible de mettre à jour le plugin. Il est possible qu'il ne démarre pas au prochain lancement d'ACT. Réessayer ?</value>
   </data>
   <data name="LogFailedReplaceDirectory" xml:space="preserve">
-    <value>Impossible de remplacer l'ancier répertoire : {0}</value>
+    <value>Impossible de remplacer l'ancien répertoire : {0}</value>
   </data>
   <data name="LogBackingUpOldFiles" xml:space="preserve">
     <value>Sauvegarde des anciens fichiers ...</value>
@@ -224,7 +224,7 @@ Ce composant est nécessaire pour OverlayPlugin. L'installer maintenant ?</value
     <value>[{0}/{1}] : Préparation de l'extraction ...</value>
   </data>
   <data name="LogOverwritingOldFiles" xml:space="preserve">
-    <value>Ecrasement des anciens fichiers ...</value>
+    <value>Écrasement des anciens fichiers ...</value>
   </data>
   <data name="LogInstallerWaiting" xml:space="preserve">
     <value>En attente de l'installeur pour quitter ...</value>
@@ -256,7 +256,7 @@ Relancez la mise à jour ou réinstallez le plugin, sinon il pourrait ne pas sur
     <value>Suppression du répertoire de sauvegarde ...</value>
   </data>
   <data name="OutOfRetries" xml:space="preserve">
-    <value>Nombre maximum d'essais dépassés</value>
+    <value>Nombre de tentative maximum dépassé.</value>
   </data>
   <data name="StatusCancelling" xml:space="preserve">
     <value>Annulation ...</value>
@@ -278,5 +278,15 @@ Soyez sûr de charger OverlayPlugin avant d'autres plugins qui pourraient égale
   </data>
   <data name="IgnoreUpdateDueToDotGitDirectoryMessage" xml:space="preserve">
     <value>Ignore la mise à jour automatique car OverlayPlugin est un dépôt .git</value>
+  </data>
+  <data name="LogOverwriteFailed" xml:space="preserve">
+    <value>Aucune tentative restante, la mise à jour a échoué.</value>
+  </data>
+  <data name="LogOverwriteRetry" xml:space="preserve">
+    <value>Impossible d'écraser {0}, nouvelle tentative...
+{1}</value>
+  </data>
+  <data name="UpdateSliderDetails" xml:space="preserve">
+    <value>{0} a été mis à jour avec succès.</value>
   </data>
 </root>

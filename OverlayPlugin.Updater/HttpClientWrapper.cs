@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Threading;
 
 namespace RainbowMage.OverlayPlugin.Updater
@@ -144,5 +145,7 @@ namespace RainbowMage.OverlayPlugin.Updater
         {
             this.Retry = retry;
         }
+
+        protected HttpClientException(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext) { }
     }
 }

@@ -119,7 +119,7 @@
   </resheader>
 
   <data name="label7.Text" xml:space="preserve">
-    <value>Activer raccourci</value>
+    <value>Activer le raccourci</value>
   </data>
   <data name="buttonReloadBrowser.Text" xml:space="preserve">
     <value>Recharger l'overlay</value>
@@ -134,7 +134,7 @@
     <value>Ouvrir DevTools</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>Afficher texte en tant qu'HTML</value>
+    <value>Afficher le texte en tant qu'HTML</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
     <value>Bloquer l'overlay</value>
@@ -149,7 +149,7 @@
     <value>URL</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
-    <value>Activer cliquer à travers</value>
+    <value>Cliquer à travers</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
     <value>Touche de raccourci</value>

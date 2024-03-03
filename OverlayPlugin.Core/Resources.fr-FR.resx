@@ -125,13 +125,13 @@
     <value>Souscription pour un évènement manquant "{0}"!</value>
   </data>
   <data name="FFXIVDataRepositoryException" xml:space="preserve">
-    <value>Impossible de récupérer FFXIV DataRepository: {0}</value>
+    <value>Impossible de récupérer FFXIV DataRepository : {0}</value>
   </data>
   <data name="WSShutdownError" xml:space="preserve">
     <value>WS : L'arrêt a échoué. {0}</value>
   </data>
   <data name="InitOverlayLocalFileIsMissing" xml:space="preserve">
-    <value>InitializeOverlay: Le fichier local {0} n'existe pas !</value>
+    <value>InitializeOverlay : Le fichier local {0} n'existe pas !</value>
   </data>
   <data name="WSUnsubFail" xml:space="preserve">
     <value>Impossible de procéder à la déinscription : {0}</value>
@@ -164,13 +164,13 @@
     <value>Clic à travers</value>
   </data>
   <data name="OverlayApiSubscribed" xml:space="preserve">
-    <value>{0}: Souscription à {1}</value>
+    <value>{0} : Souscription à {1}</value>
   </data>
   <data name="ActwsShimEnabled" xml:space="preserve">
     <value>Compatibilité ACTWS activé.</value>
   </data>
   <data name="ErrorOverlayNameNotUnique" xml:space="preserve">
-    <value>Le nom doit être unique</value>
+    <value>Le nom doit être unique.</value>
   </data>
   <data name="PromptSelectOverlayType" xml:space="preserve">
     <value>Sélectionnez un type d'overlay.</value>
@@ -185,22 +185,22 @@
     <value>Impossible d'enoyer le message : {0}</value>
   </data>
   <data name="ErrorOverlayNameEmpty" xml:space="preserve">
-    <value>Le nom ne doit pas être vide ou composé seulement d'espaces</value>
+    <value>Le nom ne doit pas être vide ou composé seulement d'espaces.</value>
   </data>
   <data name="ListSortFailed" xml:space="preserve">
-    <value>Impossible de trier la liste par {0}: {1}</value>
+    <value>Impossible de trier la liste par {0} : {1}</value>
   </data>
   <data name="MissingHandlerError" xml:space="preserve">
     <value>Appel à un handler manquant "{0}"!</value>
   </data>
   <data name="WSLoadingCert" xml:space="preserve">
-    <value>WS : Chargement du certificat SSL  {0}...</value>
+    <value>WS : Chargement du certificat SSL {0}...</value>
   </data>
   <data name="UnregisterHotkeyError" xml:space="preserve">
     <value>Impossible de supprimer le raccourci {0} dans DisableHotKeys() !</value>
   </data>
   <data name="NetworkParserInitException" xml:space="preserve">
-    <value>Echec de la configuration réseau du parser : {0}</value>
+    <value>Échec de la configuration réseau du parser : {0}</value>
   </data>
   <data name="OverlayBaseRegisterHotkeyError" xml:space="preserve">
     <value>Impossible d'enregistrer le raccourci : {0}!</value>
@@ -216,16 +216,16 @@
         &lt;/p&gt;</value>
   </data>
   <data name="WSStartFailed" xml:space="preserve">
-    <value>WS : Impossible de démarrer : {0}</value>
+    <value>WS : Démarrage impossible : {0}</value>
   </data>
   <data name="WSInvalidDataRecv" xml:space="preserve">
     <value>Données non valides reçues : {0}; {1}</value>
   </data>
   <data name="FFXIVDataSubscriptionException" xml:space="preserve">
-    <value>Impossible de récupérer FFXIV DataSubscription: {0}</value>
+    <value>Impossible de récupérer FFXIV DataSubscription : {0}</value>
   </data>
   <data name="InitOverlayUrlError" xml:space="preserve">
-    <value>InitializeOverlay: erreur d'analyse URI ! Reconfigurez l'URL. (Config.Url = {0}): {1}</value>
+    <value>InitializeOverlay : Erreur d'analyse URI ! Reconfigurez l'URL. (Config.Url = {0}): {1}</value>
   </data>
   <data name="IncompatibleAddon" xml:space="preserve">
     <value>Addon {0} incompatible. Mettez à jour dès que possible !</value>
@@ -251,7 +251,7 @@
     <value>Ce lien peut ne pas fonctionner si l'overlay ne supporte pas ACTWebSocket.</value>
   </data>
   <data name="NetworkParserNoFfxiv" xml:space="preserve">
-    <value>Impossible de trouver le plugin FFXIV ou Machina. C'est seulement un problème si vous utilisez ACT avec FFXIV.</value>
+    <value>Impossible de trouver le plugin FFXIV ou Machina. C'est un problème seulement si vous utilisez ACT avec FFXIV.</value>
   </data>
   <data name="HotkeyActionToggleEnabled" xml:space="preserve">
     <value>Changement de mode activé</value>
@@ -263,7 +263,7 @@
     <value>WS : L'appel du gestionnaire a échoué : {0}</value>
   </data>
   <data name="ErrorCouldNotLoadReservedLogLines" xml:space="preserve">
-    <value>FFXIVCustomLogLines: Échec du chargement de la ligne du log réservé</value>
+    <value>FFXIVCustomLogLines: Échec du chargement de la ligne du log réservé : {0}</value>
   </data>
   <data name="TabsESLabel" xml:space="preserve">
     <value>Source de l'événement</value>

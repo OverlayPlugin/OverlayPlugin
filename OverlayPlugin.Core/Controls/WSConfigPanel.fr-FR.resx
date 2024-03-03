@@ -191,4 +191,7 @@ Overlay Partagé : Si vous démarrez WSServer via cet onglet, vous pouvez utilis
   <data name="simpStopBtn.Text" xml:space="preserve">
     <value>Stop</value>
   </data>
+  <data name="tokenLabel.Text" xml:space="preserve">
+    <value>Jeton :</value>
+  </data>
 </root>

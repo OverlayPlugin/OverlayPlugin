@@ -2,9 +2,13 @@
 
 Plugin to show customizable overlays for Advanced Combat Tracker.
 
-## Download
+## Download / Installation
 
-You can download release and pre-release archives from the [release page][releases].
+To install OverlayPlugin, please use the `Get Plugins` button in ACT.
+For more detailed instructions, please consult the [FFXIV ACT Setup Guide](https://overlayplugin.github.io/docs/setup/).
+
+If you want to download current or prior versions of OverlayPlugin,
+binaries and source code are available on the [release page][releases].
 
 ## System requirements
 
@@ -23,13 +27,13 @@ We also have [instructions for users who want to display their overlay in OBS](h
 
 ## Overlays
 
-* [A list of popular overlays](https://gist.github.com/ngld/e2217563bbbe1750c0917217f136687d#overlays)
+* [A list of popular overlays](https://overlayplugin.github.io/docs/faq/#overlays)
 * [Documentation for creating your own](https://overlayplugin.github.io/OverlayPlugin/devs/)
 
 
 ## Troubleshooting
 
-[Check the ACT Discord's FAQ for troubleshooting steps](https://gist.github.com/ngld/e2217563bbbe1750c0917217f136687d)
+[Check the ACT Discord's FAQ for troubleshooting steps](https://overlayplugin.github.io/docs/faq/)
 
 ## How to build
 

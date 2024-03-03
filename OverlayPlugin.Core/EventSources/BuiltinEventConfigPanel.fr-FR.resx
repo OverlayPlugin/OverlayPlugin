@@ -133,15 +133,18 @@
   <data name="label1.Text" xml:space="preserve">
     <value>Trier par</value>
   </data>  <data name="label6.Text" xml:space="preserve">
-    <value>Arrêt du log après un wipe</value>
+    <value>Fin du combat après un wipe</value>
   </data>
   <data name="experimentalWarning.Text" xml:space="preserve">
     <value>AVERTISSEMENT : Options expérimentales ci-dessous - Si vous y touchez, vous confirmez que vous pouvez résoudre vous-même les problèmes que vous rencontrez et que vous ne demanderez pas d'aide.</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
-    <value>Arrêt du log si hors combat</value>
+    <value>Arrêter le log si hors combat</value>
   </data>
   <data name="lblCutsceneDetectionLog.Text" xml:space="preserve">
     <value>Écrire les lignes de détection des cinématiques</value>
+  </data>
+  <data name="lblLogLines.Text" xml:space="preserve">
+    <value>Écrire des lignes de log additionnelles</value>
   </data>
 </root>

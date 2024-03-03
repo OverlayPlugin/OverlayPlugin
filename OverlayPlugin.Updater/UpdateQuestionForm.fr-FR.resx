@@ -125,7 +125,7 @@
     <value>Installer la mise à jour</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>{0}: Une nouvelle version est disponible. Voulez-vous l'installer maintenant ?</value>
+    <value>Une nouvelle version de {0} est disponible. Voulez-vous l'installer maintenant ?</value>
   </data>
   <data name="btnDeny.Text" xml:space="preserve">
     <value>Annuler</value>

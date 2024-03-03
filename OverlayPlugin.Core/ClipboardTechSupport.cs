@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
 using Newtonsoft.Json.Linq;
 
-// TODO: print warnings on plugin ordering
 // TODO: print warning on cactbot plugin / url / user dir mismatch
 // TODO: include first N lines of OverlayPlugin log
 
@@ -22,6 +22,12 @@ namespace RainbowMage.OverlayPlugin
         private SimpleTable overlays;
         private SimpleTable settings;
         private SimpleTable warnings;
+
+        private const ulong WS_POPUP = 0x80000000L;
+        private const ulong WS_CAPTION = 0x00C00000L;
+
+        [DllImport("user32.dll")]
+        static extern ulong GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
         static string hideChatLogForPrivacyName = "chkDisableCombatLog";
 
@@ -46,6 +52,10 @@ namespace RainbowMage.OverlayPlugin
             warnings = new SimpleTable { new List<string> { "Warnings" } };
 
             plugins = new SimpleTable { new List<string> { "Plugin Name", "Enabled", "Version", "Path" } };
+
+            bool foundFFIXVActPlugin = false;
+            bool foundOverlayPlugin = false;
+
             foreach (var plugin in ActGlobals.oFormActMain.ActPlugins)
             {
                 // TODO: plugin.pluginVersion has FileVersion, ProductVersion, etc, but all as a string.
@@ -59,6 +69,23 @@ namespace RainbowMage.OverlayPlugin
                     version?.FileVersion?.ToString() ?? "",
                     fullPath,
                 });
+
+                if (plugin.pluginFile.Name == "FFXIV_ACT_Plugin.dll")
+                {
+                    foundFFIXVActPlugin = true;
+                }
+                else if (plugin.pluginFile.Name == "OverlayPlugin.dll")
+                {
+                    foundOverlayPlugin = true;
+                    if (!foundFFIXVActPlugin)
+                    {
+                        warnings.Add(new List<string> { "OverlayPlugin.dll loaded before FFXIV_ACT_Plugin.dll" });
+                    }
+                }
+                else if (!foundFFIXVActPlugin || !foundOverlayPlugin)
+                {
+                    warnings.Add(new List<string> { $"{plugin.pluginFile.Name} loaded before FFXIV_ACT_Plugin.dll or OverlayPlugion.dll" });
+                }
             }
 
             var pluginConfig = container.Resolve<IPluginConfig>();
@@ -79,6 +106,7 @@ namespace RainbowMage.OverlayPlugin
                 settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
                 string gameVersion = repository.GetGameVersion();
                 settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
+                settings.Add(new List<string> { "Screen Mode", GetFFXIVScreenMode(repository.GetCurrentFFXIVProcess()) });
 
                 var tabPage = repository.GetPluginTabPage();
                 if (tabPage != null)
@@ -151,6 +179,32 @@ namespace RainbowMage.OverlayPlugin
             catch
             {
                 return null;
+            }
+        }
+
+        private string GetFFXIVScreenMode(Process process)
+        {
+            if (process == null)
+                return "(not running)";
+
+            IntPtr mainWindowHandle = process.MainWindowHandle;
+            if (mainWindowHandle == IntPtr.Zero)
+                return "(not running)";
+
+            ulong style = GetWindowLongPtr(mainWindowHandle, -16);
+
+            if ((style & WS_POPUP) != 0)
+            {
+                return "Borderless Windowed";
+            }
+            else if ((style & WS_CAPTION) != 0)
+            {
+                return "Windowed";
+            }
+            else
+            {
+                warnings.Add(new List<string> { "Game running in Full Screen mode." });
+                return "Full Screen";
             }
         }
 
