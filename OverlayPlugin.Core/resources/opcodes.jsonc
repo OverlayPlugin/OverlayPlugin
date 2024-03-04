@@ -3,19 +3,43 @@
 // For more information, see comments on https://github.com/OverlayPlugin/OverlayPlugin/issues/235
 {
     // CN region
-    "2023.12.07.0000.0000": {
-        // Version: 6.45 Hotfix
+    "2024.02.21.0000.0000": {
+        // Version: 6.5
         "MapEffect": {
-            "opcode": 888,
+            "opcode": 939,
             "size": 11
         },
         "CEDirector": {
-            "opcode": 866,
+            "opcode": 208,
             "size": 16
         },
         "RSVData": {
-            "opcode": 582,
+            "opcode": 496,
             "size": 1080
+        },
+        "NpcYell": {
+            "opcode": 578,
+            "size": 32
+        },
+        "BattleTalk2": {
+            "opcode": 436,
+            "size": 40
+        },
+        "Countdown": {
+            "opcode": 935,
+            "size": 48
+        },
+        "CountdownCancel": {
+            "opcode": 559,
+            "size": 40
+        },
+        "ActorMove": {
+            "opcode": 547,
+            "size": 16
+        },
+        "ActorSetPos": {
+            "opcode": 792,
+            "size": 24
         }
     },
     // Global region
