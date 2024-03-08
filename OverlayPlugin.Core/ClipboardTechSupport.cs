@@ -26,6 +26,8 @@ namespace RainbowMage.OverlayPlugin
         private const ulong WS_POPUP = 0x80000000L;
         private const ulong WS_CAPTION = 0x00C00000L;
 
+        private string screenMode = "(unknown)";
+
         [DllImport("user32.dll")]
         static extern ulong GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
@@ -106,7 +108,8 @@ namespace RainbowMage.OverlayPlugin
                 settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
                 string gameVersion = repository.GetGameVersion();
                 settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
-                settings.Add(new List<string> { "Screen Mode", GetFFXIVScreenMode(repository.GetCurrentFFXIVProcess()) });
+                repository.RegisterProcessChangedHandler(GetFFXIVScreenMode);
+                settings.Add(new List<string> { "Screen Mode", screenMode });
 
                 var tabPage = repository.GetPluginTabPage();
                 if (tabPage != null)
@@ -182,30 +185,37 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        private string GetFFXIVScreenMode(Process process)
+        private void GetFFXIVScreenMode(Process process)
         {
             if (process == null)
-                return "(not running)";
-
+            {
+                screenMode = "(not running)";
+                return;
+            }
+            
             IntPtr mainWindowHandle = process.MainWindowHandle;
             if (mainWindowHandle == IntPtr.Zero)
-                return "(not running)";
+            {
+                screenMode = "(not running)";
+                return;
+            }
 
             ulong style = GetWindowLongPtr(mainWindowHandle, -16);
 
             if ((style & WS_POPUP) != 0)
             {
-                return "Borderless Windowed";
+                screenMode = "Borderless Windowed";
             }
             else if ((style & WS_CAPTION) != 0)
             {
-                return "Windowed";
+                screenMode = "Windowed";
             }
             else
             {
                 warnings.Add(new List<string> { "Game running in Full Screen mode." });
-                return "Full Screen";
+                screenMode = "Full Screen";
             }
+            return;
         }
 
         private static void GetCheckboxes(Control.ControlCollection controls, Dictionary<string, CheckBox> checkboxes)
