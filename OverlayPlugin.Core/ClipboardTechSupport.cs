@@ -192,7 +192,7 @@ namespace RainbowMage.OverlayPlugin
                 screenMode = "(not running)";
                 return;
             }
-            
+
             IntPtr mainWindowHandle = process.MainWindowHandle;
             if (mainWindowHandle == IntPtr.Zero)
             {
