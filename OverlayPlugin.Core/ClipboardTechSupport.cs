@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
 using Newtonsoft.Json.Linq;
@@ -26,7 +27,7 @@ namespace RainbowMage.OverlayPlugin
         private const ulong WS_POPUP = 0x80000000L;
         private const ulong WS_CAPTION = 0x00C00000L;
 
-        private string screenMode = "(unknown)";
+        private static string screenMode = null;
 
         [DllImport("user32.dll")]
         static extern ulong GetWindowLongPtr(IntPtr hWnd, int nIndex);
@@ -108,7 +109,11 @@ namespace RainbowMage.OverlayPlugin
                 settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
                 string gameVersion = repository.GetGameVersion();
                 settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
-                repository.RegisterProcessChangedHandler(GetFFXIVScreenMode);
+
+                if (screenMode == null)
+                {
+                    repository.RegisterProcessChangedHandler(GetFFXIVScreenMode);
+                }
                 settings.Add(new List<string> { "Screen Mode", screenMode });
 
                 var tabPage = repository.GetPluginTabPage();
@@ -193,11 +198,19 @@ namespace RainbowMage.OverlayPlugin
                 return;
             }
 
+            // If a handler exists when the game is closed and later re-opened, GetFFXIVScreenMode()
+            // will be called with the new process before a main window handle is available.
+            // In this case, just sleep for 15 seconds and try again.
             IntPtr mainWindowHandle = process.MainWindowHandle;
             if (mainWindowHandle == IntPtr.Zero)
             {
-                screenMode = "(not running)";
-                return;
+                Thread.Sleep(15000);
+                mainWindowHandle = process.MainWindowHandle;
+                if (mainWindowHandle == IntPtr.Zero)
+                {
+                    screenMode = "(not running)";
+                    return;
+                }
             }
 
             ulong style = GetWindowLongPtr(mainWindowHandle, -16);
