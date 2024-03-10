@@ -27,7 +27,7 @@ namespace RainbowMage.OverlayPlugin
         private const ulong WS_POPUP = 0x80000000L;
         private const ulong WS_CAPTION = 0x00C00000L;
 
-        private static string screenMode = null;
+        private static string screenMode = "(unknown)";
 
         [DllImport("user32.dll")]
         static extern ulong GetWindowLongPtr(IntPtr hWnd, int nIndex);
@@ -110,7 +110,7 @@ namespace RainbowMage.OverlayPlugin
                 string gameVersion = repository.GetGameVersion();
                 settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
 
-                if (screenMode == null)
+                if (screenMode == "(unknown)")
                 {
                     repository.RegisterProcessChangedHandler(GetFFXIVScreenMode);
                 }
