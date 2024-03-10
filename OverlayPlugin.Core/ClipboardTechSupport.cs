@@ -112,6 +112,7 @@ namespace RainbowMage.OverlayPlugin
 
                 if (screenMode == null)
                 {
+                    screenMode = "(unknown)";
                     repository.RegisterProcessChangedHandler(GetFFXIVScreenMode);
                 }
                 settings.Add(new List<string> { "Screen Mode", screenMode });
