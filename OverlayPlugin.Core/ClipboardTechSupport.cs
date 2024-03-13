@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
@@ -26,11 +27,25 @@ namespace RainbowMage.OverlayPlugin
 
         private const ulong WS_POPUP = 0x80000000L;
         private const ulong WS_CAPTION = 0x00C00000L;
+        private const uint TOKEN_QUERY = 0x0008;
 
+        private static IntPtr ph = IntPtr.Zero;
+        private static WindowsIdentity actWi = null;
+        private static WindowsIdentity ffxivWi = null;
+        private static Process[] actProcesses = null;
+        private static string actIsAdmin = null;
+        private static string ffxivIsAdmin = null;
         private static string screenMode = null;
 
         [DllImport("user32.dll")]
         static extern ulong GetWindowLongPtr(IntPtr hWnd, int nIndex);
+
+        [DllImport("advapi32.dll", SetLastError = true)]
+        private static extern bool OpenProcessToken(IntPtr processHandle, uint desiredAccess, out IntPtr tokenHandle);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool CloseHandle(IntPtr hObject);
 
         static string hideChatLogForPrivacyName = "chkDisableCombatLog";
 
@@ -55,6 +70,12 @@ namespace RainbowMage.OverlayPlugin
             warnings = new SimpleTable { new List<string> { "Warnings" } };
 
             plugins = new SimpleTable { new List<string> { "Plugin Name", "Enabled", "Version", "Path" } };
+
+            actProcesses = Process.GetProcessesByName("Advanced Combat Tracker");
+            if (actProcesses.Length > 1)
+            {
+                warnings.Add(new List<string> { "Multiple instances of ACT running" });
+            }
 
             bool foundFFIXVActPlugin = false;
             bool foundOverlayPlugin = false;
@@ -116,6 +137,34 @@ namespace RainbowMage.OverlayPlugin
                     repository.RegisterProcessChangedHandler(GetFFXIVScreenMode);
                 }
                 settings.Add(new List<string> { "Screen Mode", screenMode });
+
+                try
+                {
+                    actWi = WindowsIdentity.GetCurrent();
+                    if (actWi.Owner.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid))
+                    {
+                        actIsAdmin = "Elevated (Admin)";
+                    }
+                    else
+                    {
+                        actIsAdmin = "Not Elevated";
+                    }
+                }
+                catch (Exception)
+                {
+                    // The most common exception is an access denied error.
+                    // This *shouldn't* happen when checking the WindowsIdentity of the
+                    // current process, but just in case.
+                    actIsAdmin = "(unknown)";
+                }
+                settings.Add(new List<string> { "ACT Process Elevation", actIsAdmin });
+
+                if (ffxivIsAdmin == null)
+                {
+                    ffxivIsAdmin = "(unknown)";
+                    repository.RegisterProcessChangedHandler(GetFFXIVIsRunningAsAdmin);
+                }
+                settings.Add(new List<string> { "FFXIV Process Elevation", ffxivIsAdmin });
 
                 var tabPage = repository.GetPluginTabPage();
                 if (tabPage != null)
@@ -230,6 +279,47 @@ namespace RainbowMage.OverlayPlugin
                 screenMode = "Full Screen";
             }
             return;
+        }
+
+        private void GetFFXIVIsRunningAsAdmin(Process process)
+        {
+            if (process == null)
+            {
+                ffxivIsAdmin = "(not running)";
+                return;
+            }
+
+            try
+            {
+                OpenProcessToken(process.Handle, TOKEN_QUERY, out ph);
+                ffxivWi = new WindowsIdentity(ph);
+                if (ffxivWi.Owner.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid))
+                {
+                    ffxivIsAdmin = "Elevated (Admin)";
+                }
+                else
+                {
+                    ffxivIsAdmin = "Not Elevated";
+                }
+            }
+            catch (Exception)
+            {
+                // The most common exception is an access denied error.
+                // This will probably happen if ACT is running in non-admin mode,
+                // since it may not have sufficient permissions to check the FFXIV process.
+                // I can't get ACT working in non-admin mode right now to test this out,
+                // but it would be useful to know if the access denied exception only occurs
+                // if FFXIV is elevated and ACT is not, or whether it will always happen if 
+                // ACT is not elevated (so we can get a litle more granular with the message).
+                ffxivIsAdmin = "(unknown)";
+            }
+            finally
+            {
+                if (ph != IntPtr.Zero)
+                {
+                    CloseHandle(ph);
+                }
+            }
         }
 
         private static void GetCheckboxes(Control.ControlCollection controls, Dictionary<string, CheckBox> checkboxes)
