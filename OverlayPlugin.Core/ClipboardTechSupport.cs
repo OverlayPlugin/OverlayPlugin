@@ -304,14 +304,13 @@ namespace RainbowMage.OverlayPlugin
             }
             catch (Exception)
             {
-                // The most common exception is an access denied error.
-                // This will probably happen if ACT is running in non-admin mode,
-                // since it may not have sufficient permissions to check the FFXIV process.
-                // I can't get ACT working in non-admin mode right now to test this out,
-                // but it would be useful to know if the access denied exception only occurs
-                // if FFXIV is elevated and ACT is not, or whether it will always happen if 
-                // ACT is not elevated (so we can get a litle more granular with the message).
-                ffxivIsAdmin = "(unknown)";
+                // Will get an access-denied exception if ACT is not elevated, but FFXIV is,
+                // since ACT won't have sufficient permissions to check the FFXIV process.
+                // Could theoretically be triggered if FFXIV is running under a different
+                // (non-admin) user, so give a somewhat non-comittal output.
+                // NOTE: *REALLY REALLY* bad idea to run FFXIV as elevated, as it will result
+                // in game config data becoming write-protected from your own user account.
+                ffxivIsAdmin = "Likely Elevated (access violation)";
             }
             finally
             {
