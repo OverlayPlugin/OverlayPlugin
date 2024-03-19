@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
 using Newtonsoft.Json.Linq;
@@ -25,6 +26,8 @@ namespace RainbowMage.OverlayPlugin
 
         private const ulong WS_POPUP = 0x80000000L;
         private const ulong WS_CAPTION = 0x00C00000L;
+
+        private static string screenMode = null;
 
         [DllImport("user32.dll")]
         static extern ulong GetWindowLongPtr(IntPtr hWnd, int nIndex);
@@ -106,7 +109,13 @@ namespace RainbowMage.OverlayPlugin
                 settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
                 string gameVersion = repository.GetGameVersion();
                 settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
-                settings.Add(new List<string> { "Screen Mode", GetFFXIVScreenMode(repository.GetCurrentFFXIVProcess()) });
+
+                if (screenMode == null)
+                {
+                    screenMode = "(unknown)";
+                    repository.RegisterProcessChangedHandler(GetFFXIVScreenMode);
+                }
+                settings.Add(new List<string> { "Screen Mode", screenMode });
 
                 var tabPage = repository.GetPluginTabPage();
                 if (tabPage != null)
@@ -182,30 +191,45 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        private string GetFFXIVScreenMode(Process process)
+        private void GetFFXIVScreenMode(Process process)
         {
             if (process == null)
-                return "(not running)";
+            {
+                screenMode = "(not running)";
+                return;
+            }
 
+            // If a handler exists when the game is closed and later re-opened, GetFFXIVScreenMode()
+            // will be called with the new process before a main window handle is available.
+            // In this case, just sleep for 15 seconds and try again.
             IntPtr mainWindowHandle = process.MainWindowHandle;
             if (mainWindowHandle == IntPtr.Zero)
-                return "(not running)";
+            {
+                Thread.Sleep(15000);
+                mainWindowHandle = process.MainWindowHandle;
+                if (mainWindowHandle == IntPtr.Zero)
+                {
+                    screenMode = "(not running)";
+                    return;
+                }
+            }
 
             ulong style = GetWindowLongPtr(mainWindowHandle, -16);
 
             if ((style & WS_POPUP) != 0)
             {
-                return "Borderless Windowed";
+                screenMode = "Borderless Windowed";
             }
             else if ((style & WS_CAPTION) != 0)
             {
-                return "Windowed";
+                screenMode = "Windowed";
             }
             else
             {
                 warnings.Add(new List<string> { "Game running in Full Screen mode." });
-                return "Full Screen";
+                screenMode = "Full Screen";
             }
+            return;
         }
 
         private static void GetCheckboxes(Control.ControlCollection controls, Dictionary<string, CheckBox> checkboxes)

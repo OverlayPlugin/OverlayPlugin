@@ -30,7 +30,16 @@ namespace RainbowMage.OverlayPlugin
             var span = TimeSpan.FromSeconds(3);
             timer = new Timer(EnsureOverlaysAreOverGame, null, span, span);
 
-            repository.RegisterProcessChangedHandler(UpdateFFXIVProcess);
+            try
+            {
+                repository.RegisterProcessChangedHandler(UpdateFFXIVProcess);
+            }
+            catch (Exception ex)
+            {
+                logger.Log(LogLevel.Error, "Failed to register process watcher for FFXIV; this is only an issue if you're playing FFXIV. As a consequence, OverlayPlugin won't be able to ensure overlays are on top.");
+                logger.Log(LogLevel.Error, "Details: " + ex.ToString());
+            }
+
         }
 
         public void DeInit()

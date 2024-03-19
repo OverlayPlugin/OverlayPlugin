@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 using RainbowMage.HtmlRenderer;
 using RainbowMage.OverlayPlugin.Controls;
 using RainbowMage.OverlayPlugin.EventSources;
-using RainbowMage.OverlayPlugin.Integration;
 using RainbowMage.OverlayPlugin.MemoryProcessors;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Aggro;
 using RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage;
@@ -296,9 +295,6 @@ namespace RainbowMage.OverlayPlugin
                             this.label.Text = "Init Phase 2: Addons";
                             await Task.Run(LoadAddons);
                             wsConfigPanel.RebuildOverlayOptions();
-
-                            this.label.Text = "Init Phase 2: Unstable new stuff";
-                            _container.Register(new UnstableNewLogLines(_container));
 
                             this.label.Text = "Init Phase 2: UI";
                             ActGlobals.oFormActMain.Invoke((Action)(() =>
