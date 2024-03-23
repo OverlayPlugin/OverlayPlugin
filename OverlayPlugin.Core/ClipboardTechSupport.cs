@@ -150,12 +150,13 @@ namespace RainbowMage.OverlayPlugin
                         actIsAdmin = "Not Elevated";
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     // The most common exception is an access denied error.
                     // This *shouldn't* happen when checking the WindowsIdentity of the
                     // current process, but just in case.
-                    actIsAdmin = "(unknown)";
+                    actIsAdmin = "(unknown - check warnings)";
+                    warnings.Add(new List<string> { "Could not check for ACT process elevation: " + e.Message });
                 }
                 settings.Add(new List<string> { "ACT Process Elevation", actIsAdmin });
 
@@ -302,15 +303,21 @@ namespace RainbowMage.OverlayPlugin
                     ffxivIsAdmin = "Not Elevated";
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // Will get an access-denied exception if ACT is not elevated, but FFXIV is,
                 // since ACT won't have sufficient permissions to check the FFXIV process.
                 // Could theoretically be triggered if FFXIV is running under a different
                 // (non-admin) user, so give a somewhat non-comittal output.
-                // NOTE: *REALLY REALLY* bad idea to run FFXIV as elevated, as it will result
-                // in game config data becoming write-protected from your own user account.
-                ffxivIsAdmin = "Likely Elevated (access violation)";
+                if (e.Message.Contains("Access is denied"))
+                {
+                    ffxivIsAdmin = "Likely Elevated (access violation)";
+                }
+                else
+                {
+                    ffxivIsAdmin = "(unknown - check warnings)";
+                    warnings.Add(new List<string> { "Could not check for FFXIV process elevation: " + e.Message });
+                }
             }
             finally
             {
