@@ -44,7 +44,7 @@
     },
     // Global region
     "2024.03.27.0000.0000": {
-        // Version: 6.58h
+        // Version: 6.58 Hotfix
         "MapEffect": {
             "opcode": 280,
             "size": 11
