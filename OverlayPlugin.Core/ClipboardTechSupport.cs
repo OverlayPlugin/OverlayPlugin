@@ -108,7 +108,7 @@ namespace RainbowMage.OverlayPlugin
                 }
                 else if (!foundFFIXVActPlugin || !foundOverlayPlugin)
                 {
-                    warnings.Add(new List<string> { $"{plugin.pluginFile.Name} loaded before FFXIV_ACT_Plugin.dll or OverlayPlugion.dll" });
+                    warnings.Add(new List<string> { $"{plugin.pluginFile.Name} loaded before FFXIV_ACT_Plugin.dll or OverlayPlugin.dll" });
                 }
             }
 
