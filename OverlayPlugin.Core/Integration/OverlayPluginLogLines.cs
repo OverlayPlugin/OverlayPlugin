@@ -8,10 +8,14 @@ using RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings;
 using RainbowMage.OverlayPlugin.MemoryProcessors.InCombat;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
 using RainbowMage.OverlayPlugin.Updater;
+using MachinaRegion = System.String;
+using OpcodeName = System.String;
+using OpcodeVersion = System.String;
 
 namespace RainbowMage.OverlayPlugin
 {
-    using Opcodes = Dictionary<string, Dictionary<string, OpcodeConfigEntry>>;
+
+    using Opcodes = Dictionary<MachinaRegion, Dictionary<OpcodeVersion, Dictionary<OpcodeName, OpcodeConfigEntry>>>;
 
     class OverlayPluginLogLines
     {
@@ -97,8 +101,7 @@ namespace RainbowMage.OverlayPlugin
 
             try
             {
-                // TODO: is there a better way to go JToken -> Dictionary here without a string intermediary?
-                opcodesConfig = JsonConvert.DeserializeObject<Opcodes>(config.CachedOpcodeFile.ToString());
+                opcodesConfig = config.CachedOpcodeFile.ToObject<Opcodes>();
             }
             catch (Exception ex)
             {
@@ -172,21 +175,29 @@ namespace RainbowMage.OverlayPlugin
             if (opcodes == null)
                 return null;
 
-            if (opcodes.ContainsKey(version))
+            var machinaRegion = repository.GetMachinaRegion().ToString();
+
+            if (opcodes.TryGetValue(machinaRegion, out var regionOpcodes))
             {
-                var versionOpcodes = opcodes[version];
-                if (versionOpcodes.ContainsKey(name))
+                if (regionOpcodes.TryGetValue(version, out var versionOpcodes))
                 {
-                    return versionOpcodes[name];
+                    if (versionOpcodes.TryGetValue(name, out var opcode))
+                    {
+                        return opcode;
+                    }
+                    else
+                    {
+                        LogException($"No {opcodeType} opcode for game region {machinaRegion}, version {version}, opcode name {name}");
+                    }
                 }
                 else
                 {
-                    LogException($"No {opcodeType} opcode for game version {version}, opcode name {name}");
+                    LogException($"No {opcodeType} opcodes for game region {machinaRegion}, version {version}");
                 }
             }
             else
             {
-                LogException($"No {opcodeType} opcodes for game version {version}");
+                LogException($"No {opcodeType} opcodes for game region {machinaRegion}");
             }
 
             return null;
