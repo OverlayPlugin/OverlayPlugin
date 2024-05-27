@@ -4,41 +4,41 @@
 {
     "Chinese": {
         "2024.03.28.0000.0000": {
-            // Version: 6.51
+            // Version: 6.55
             "MapEffect": {
-                "opcode": 199,
+                "opcode": 301,
                 "size": 11
             },
             "CEDirector": {
-                "opcode": 577,
+                "opcode": 767,
                 "size": 16
             },
             "RSVData": {
-                "opcode": 819,
+                "opcode": 294,
                 "size": 1080
             },
             "NpcYell": {
-                "opcode": 502,
+                "opcode": 233,
                 "size": 32
             },
             "BattleTalk2": {
-                "opcode": 222,
+                "opcode": 145,
                 "size": 40
             },
             "Countdown": {
-                "opcode": 779,
+                "opcode": 329,
                 "size": 48
             },
             "CountdownCancel": {
-                "opcode": 797,
+                "opcode": 529,
                 "size": 40
             },
             "ActorMove": {
-                "opcode": 477,
+                "opcode": 989,
                 "size": 16
             },
             "ActorSetPos": {
-                "opcode": 469,
+                "opcode": 451,
                 "size": 24
             }
         }
