@@ -81,6 +81,14 @@
             "ActorSetPos": {
                 "opcode": 669,
                 "size": 24
+            },
+            "SpawnObject": {
+                "opcode": 952,
+                "size": 64
+            },
+            "DespawnObject": {
+                "opcode": 472,
+                "size": 8
             }
         }
     },
