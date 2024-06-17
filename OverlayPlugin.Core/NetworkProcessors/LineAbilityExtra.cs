@@ -36,14 +36,15 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                     // exception if we try to prematurely cast it to UInt16
                     var abilityId = aeHeader.Get<uint>("actionId");
                     var globalEffectCounter = aeHeader.Get<uint>("globalEffectCounter");
+                    var animationLock = aeHeader.Get<float>("animationLockTime");
 
                     if (rawPacket.actionEffectCount == 1)
                     {
                         // AE1 is not useful. It does not contain this data. But we still need to write something
                         // to indicate that a proper line will not be happening.
                         return string.Format(CultureInfo.InvariantCulture,
-                            "{0:X8}|{1:X4}|{2:X8}|{3}||||",
-                            ActorID, abilityId, globalEffectCounter, (int)LineSubType.NO_DATA);
+                            "{0:X8}|{1:X4}|{2:X8}|{3}||||{4:F3}|",
+                            ActorID, abilityId, globalEffectCounter, (int)LineSubType.NO_DATA, animationLock);
                     }
 
                     float x = FFXIVRepository.ConvertUInt16Coordinate(rawPacket.x);
@@ -52,8 +53,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
                     var h = FFXIVRepository.ConvertHeading(aeHeader.Get<ushort>("rotation"));
                     return string.Format(CultureInfo.InvariantCulture,
-                        "{0:X8}|{1:X4}|{2:X8}|{3}|{4:F3}|{5:F3}|{6:F3}|{7:F3}",
-                        ActorID, abilityId, globalEffectCounter, (int)LineSubType.DATA_PRESENT, x, y, z, h);
+                        "{0:X8}|{1:X4}|{2:X8}|{3}|{4:F3}|{5:F3}|{6:F3}|{7:F3}|{8:F3}",
+                        ActorID, abilityId, globalEffectCounter, (int)LineSubType.DATA_PRESENT, x, y, z, h, animationLock);
                 }
                 finally
                 {
