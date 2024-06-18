@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.logBox = new System.Windows.Forms.TextBox();
+            this.logBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // logBox
@@ -39,7 +39,7 @@
             this.logBox.Multiline = true;
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
-            this.logBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.logBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.logBox.Size = new System.Drawing.Size(519, 372);
             this.logBox.TabIndex = 0;
             // 
@@ -57,6 +57,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox logBox;
+        private System.Windows.Forms.RichTextBox logBox;
     }
 }

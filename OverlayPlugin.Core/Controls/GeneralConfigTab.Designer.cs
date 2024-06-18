@@ -34,6 +34,7 @@
             this.btnUpdateCheck = new System.Windows.Forms.Button();
             this.cbHideOverlaysWhenNotActive = new System.Windows.Forms.CheckBox();
             this.cbHideOverlaysDuringCutscene = new System.Windows.Forms.CheckBox();
+            this.cbColorblindMode = new System.Windows.Forms.CheckBox();
             this.lblGithub = new System.Windows.Forms.Label();
             this.lnkGithubRepo = new System.Windows.Forms.LinkLabel();
             this.lblNewUserWelcome = new System.Windows.Forms.Label();
@@ -73,6 +74,12 @@
             resources.ApplyResources(this.cbHideOverlaysDuringCutscene, "cbHideOverlaysDuringCutscene");
             this.cbHideOverlaysDuringCutscene.Name = "cbHideOverlaysDuringCutscene";
             this.cbHideOverlaysDuringCutscene.UseVisualStyleBackColor = true;
+            // 
+            // cbColorblindMode
+            // 
+            resources.ApplyResources(this.cbColorblindMode, "cbColorblindMode");
+            this.cbColorblindMode.Name = "cbColorblindMode";
+            this.cbColorblindMode.UseVisualStyleBackColor = true;
             // 
             // lblGithub
             // 
@@ -136,6 +143,7 @@
             this.Controls.Add(this.cbUpdateCheck);
             this.Controls.Add(this.cbHideOverlaysDuringCutscene);
             this.Controls.Add(this.cbHideOverlaysWhenNotActive);
+            this.Controls.Add(this.cbColorblindMode);
             this.Name = "GeneralConfigTab";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -148,12 +156,13 @@
         private System.Windows.Forms.Button btnUpdateCheck;
         private System.Windows.Forms.CheckBox cbHideOverlaysWhenNotActive;
         private System.Windows.Forms.CheckBox cbHideOverlaysDuringCutscene;
+        private System.Windows.Forms.CheckBox cbColorblindMode;
         private System.Windows.Forms.Label lblGithub;
         private System.Windows.Forms.LinkLabel lnkGithubRepo;
         private System.Windows.Forms.Label lblNewUserWelcome;
         private System.Windows.Forms.Label lblReadMe;
         private System.Windows.Forms.Button btnCactbotUpdate;
-    private System.Windows.Forms.Button btnClipboardTechSupport;
+        private System.Windows.Forms.Button btnClipboardTechSupport;
         private System.Windows.Forms.Button btnClearCEFCache;
     }
 }

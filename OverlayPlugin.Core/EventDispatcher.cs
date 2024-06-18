@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin
 {
-    class EventDispatcher
+    class EventDispatcher : ITinyIoCAutoConstructPreInit<EventDispatcher>
     {
         ILogger _logger;
         Dictionary<string, Func<JObject, JToken>> handlers;

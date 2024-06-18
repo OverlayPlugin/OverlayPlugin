@@ -16,9 +16,23 @@ namespace RainbowMage.OverlayPlugin.Controls
         {
             InitializeComponent();
 
-            container.Resolve<ILogger>().RegisterListener((entry) =>
+            container.Resolve<ILogger>().OnLog += HandleOnLog;
+        }
+
+        private void HandleOnLog(object sender, IReadOnlyCollection<LogEntry> e)
+        {
+            PluginMain.InvokeOnUIThread(() =>
             {
-                logBox.AppendText($"[{entry.Time}] {entry.Level}: {entry.Message}" + Environment.NewLine);
+                var newText = @"{\rtf1\ansi";
+
+                foreach (var entry in e)
+                {
+                    newText += entry.ToRtfString();
+                }
+
+                newText += "}";
+
+                logBox.Rtf = newText;
             });
         }
     }

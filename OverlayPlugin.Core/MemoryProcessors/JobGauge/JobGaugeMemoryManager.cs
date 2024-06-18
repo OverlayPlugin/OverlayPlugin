@@ -72,7 +72,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         IJobGauge GetJobGauge();
     }
 
-    class JobGaugeMemoryManager : IJobGaugeMemory
+    class JobGaugeMemoryManager : IJobGaugeMemory, ITinyIoCAutoRegisterDuringInit<IJobGaugeMemory>
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
@@ -82,7 +82,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         public JobGaugeMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<IJobGaugeMemory655, JobGaugeMemory655>();
             repository = container.Resolve<FFXIVRepository>();
             logger = container.Resolve<ILogger>();
 

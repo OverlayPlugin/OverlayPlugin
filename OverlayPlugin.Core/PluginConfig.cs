@@ -296,6 +296,20 @@ namespace RainbowMage.OverlayPlugin
 
         public Dictionary<string, JObject> EventSourceConfigs { get; set; }
 
+        private bool _ColorblindMode;
+        public bool ColorblindMode
+        {
+            get
+            {
+                return _ColorblindMode;
+            }
+            set
+            {
+                _ColorblindMode = value;
+                isDirty = true;
+            }
+        }
+
         [JsonIgnore]
         private ILogger logger;
 

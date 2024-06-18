@@ -4,7 +4,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
 {
     interface IInCombatMemory61 : IInCombatMemory { }
 
-    class InCombatMemory61 : InCombatMemory, IInCombatMemory61
+    class InCombatMemory61 : InCombatMemory, IInCombatMemory61, ITinyIoCAutoRegisterAfterInit<IInCombatMemory61>
     {
         private const string inCombatSignature = "803D????????000F95C04883C428";
         private const int inCombatSignatureOffset = -12;

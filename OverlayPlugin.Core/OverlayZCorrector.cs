@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RainbowMage.OverlayPlugin
 {
-    class OverlayZCorrector : IDisposable
+    class OverlayZCorrector : IDisposable, ITinyIoCAutoConstructAfterInit<OverlayZCorrector>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Usage",

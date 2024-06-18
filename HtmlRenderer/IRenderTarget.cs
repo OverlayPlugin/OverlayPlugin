@@ -13,7 +13,6 @@ namespace RainbowMage.HtmlRenderer
     public interface IRenderTarget
     {
         int MaxFrameRate { get; }
-        Cursor Cursor { get; set; }
         System.Drawing.Point Location { get; set; }
         int Width { get; }
         int Height { get; }
@@ -23,6 +22,8 @@ namespace RainbowMage.HtmlRenderer
         void MovePopup(Rect rect);
 
         void SetPopupVisible(bool visible);
+
+        void SetCursor(Cursor cursor);
     }
 
     public interface IWinFormsTarget : IRenderTarget

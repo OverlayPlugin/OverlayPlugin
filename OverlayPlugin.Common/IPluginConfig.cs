@@ -23,6 +23,8 @@ namespace RainbowMage.OverlayPlugin
         bool IsFirstLaunch { get; set; }
         Dictionary<string, JObject> EventSourceConfigs { get; set; }
 
+        bool ColorblindMode { get; set; }
+
         void MarkDirty();
     }
 }

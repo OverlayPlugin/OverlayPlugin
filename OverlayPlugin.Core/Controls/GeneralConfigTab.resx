@@ -184,7 +184,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnUpdateCheck.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 116</value>
+    <value>20, 142</value>
   </data>
   <data name="btnUpdateCheck.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 23</value>
@@ -267,11 +267,38 @@
   <data name="&gt;&gt;cbHideOverlaysDuringCutscene.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
+  <data name="cbColorblindMode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbColorblindMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 106</value>
+  </data>
+  <data name="cbColorblindMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 17</value>
+  </data>
+  <data name="cbColorblindMode.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="cbColorblindMode.Text" xml:space="preserve">
+    <value>Colorblind Mode</value>
+  </data>
+  <data name="&gt;&gt;cbColorblindMode.Name" xml:space="preserve">
+    <value>cbColorblindMode</value>
+  </data>
+  <data name="&gt;&gt;cbColorblindMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbColorblindMode.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cbColorblindMode.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
   <data name="lblGithub.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lblGithub.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 186</value>
+    <value>17, 212</value>
   </data>
   <data name="lblGithub.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 13</value>
@@ -298,7 +325,7 @@
     <value>True</value>
   </data>
   <data name="lnkGithubRepo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 186</value>
+    <value>95, 212</value>
   </data>
   <data name="lnkGithubRepo.Size" type="System.Drawing.Size, System.Drawing">
     <value>235, 13</value>
@@ -322,7 +349,7 @@
     <value>5</value>
   </data>
   <data name="lblNewUserWelcome.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 256</value>
+    <value>17, 276</value>
   </data>
   <data name="lblNewUserWelcome.Size" type="System.Drawing.Size, System.Drawing">
     <value>501, 119</value>
@@ -355,7 +382,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>Microsoft Sans Serif, 11pt, style=Bold</value>
   </data>
   <data name="lblReadMe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 229</value>
+    <value>17, 249</value>
   </data>
   <data name="lblReadMe.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 18</value>
@@ -379,7 +406,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>3</value>
   </data>
   <data name="btnCactbotUpdate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 116</value>
+    <value>241, 142</value>
   </data>
   <data name="btnCactbotUpdate.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 23</value>
@@ -406,7 +433,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>NoControl</value>
   </data>
   <data name="btnClipboardTechSupport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 145</value>
+    <value>20, 171</value>
   </data>
   <data name="btnClipboardTechSupport.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 23</value>
@@ -433,7 +460,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>NoControl</value>
   </data>
   <data name="btnClearCEFCache.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 145</value>
+    <value>241, 171</value>
   </data>
   <data name="btnClearCEFCache.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 23</value>

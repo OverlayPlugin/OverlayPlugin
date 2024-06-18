@@ -243,8 +243,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     ExecuteScript("if (window.OverlayPluginApi) window.OverlayPluginApi.preview = true;");
                 }
 
-                // Reset page-specific state
-                Overlay.SetAcceptFocus(false);
+                // Invoke on UI thread due to accessing `Handle` as part of `SetAcceptFocus`.
+                PluginMain.InvokeOnUIThread(() =>
+                {
+                    // Reset page-specific state
+                    Overlay.SetAcceptFocus(false);
+                });
 
                 // Subscriptions are cleared on page navigation so we have to restore this after every load.
                 Subscribe("CombatData");

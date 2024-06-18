@@ -4,7 +4,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
 {
     interface IContentFinderSettingsMemory651 : IContentFinderSettingsMemory { }
 
-    class ContentFinderSettingsMemory651 : ContentFinderSettingsMemory, IContentFinderSettingsMemory651
+    class ContentFinderSettingsMemory651 : ContentFinderSettingsMemory, IContentFinderSettingsMemory651, ITinyIoCAutoRegisterAfterInit<IContentFinderSettingsMemory651>
     {
         // FUN_140985ee0:140985fae
         private const string settingsSignature = "0FB63D????????EB??488B0D????????BA????????4883C1??E8????????8378????410F97C6";

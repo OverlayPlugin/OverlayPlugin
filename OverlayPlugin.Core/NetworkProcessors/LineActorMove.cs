@@ -6,7 +6,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
     class LineActorMove : LineBaseCustom<
             Server_MessageHeader_Global, LineActorMove.ActorMove_v655,
             Server_MessageHeader_CN, LineActorMove.ActorMove_v655,
-            Server_MessageHeader_KR, LineActorMove.ActorMove_v655>
+            Server_MessageHeader_KR, LineActorMove.ActorMove_v655>, IOverlayPluginLogLine<LineActorMove>
     {
         [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
         internal unsafe struct ActorMove_v655 : IPacketStruct

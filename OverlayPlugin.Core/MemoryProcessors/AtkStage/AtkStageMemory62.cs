@@ -10,7 +10,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage
     using AtkStage = global::FFXIVClientStructs.Global.FFXIV.Component.GUI.AtkStage;
     interface IAtkStageMemory62 : IAtkStageMemory { }
 
-    class AtkStageMemory62 : AtkStageMemory, IAtkStageMemory62
+    class AtkStageMemory62 : AtkStageMemory, IAtkStageMemory62, ITinyIoCAutoRegisterAfterInit<IAtkStageMemory62>
     {
         private static long GetAtkStageSingletonAddress(TinyIoCContainer container)
         {

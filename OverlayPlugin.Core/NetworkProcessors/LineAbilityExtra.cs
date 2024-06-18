@@ -9,7 +9,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
     /**
      * Class for position/angle info from ActionEffect (i.e. line 21/22).
      */
-    class LineAbilityExtra : LineBaseSubMachina<LineAbilityExtra.AbilityExtraPacket<LineAbilityExtra.Server_ActionEffect1_Extra>>
+    class LineAbilityExtra : LineBaseSubMachina<LineAbilityExtra.AbilityExtraPacket<LineAbilityExtra.Server_ActionEffect1_Extra>>, IOverlayPluginLogLine<LineAbilityExtra>
     {
         public const uint LogFileLineID = 264;
         public const string LogLineName = "AbilityExtra";

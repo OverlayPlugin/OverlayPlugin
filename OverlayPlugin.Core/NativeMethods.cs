@@ -10,11 +10,13 @@ namespace RainbowMage.OverlayPlugin
     /// <summary>
     /// ネイティブ関数を提供します。
     /// </summary>
-    class NativeMethods
+    class NativeMethods : IDisposable, ITinyIoCAutoConstructPreInit<NativeMethods>
     {
         private WinEventDelegate dele = null;
         private IntPtr foregroundHookHandle;
         private IntPtr minimizeEndHookHandle;
+
+        private bool disposedValue;
 
         public NativeMethods(TinyIoCContainer container)
         {
@@ -32,11 +34,33 @@ namespace RainbowMage.OverlayPlugin
 
         ~NativeMethods()
         {
-            if (foregroundHookHandle != IntPtr.Zero)
-                UnhookWinEvent(foregroundHookHandle);
+            Dispose(disposing: false);
+        }
 
-            if (minimizeEndHookHandle != IntPtr.Zero)
-                UnhookWinEvent(minimizeEndHookHandle);
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    dele = null;
+                }
+
+                if (foregroundHookHandle != IntPtr.Zero)
+                    UnhookWinEvent(foregroundHookHandle);
+
+                if (minimizeEndHookHandle != IntPtr.Zero)
+                    UnhookWinEvent(minimizeEndHookHandle);
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);

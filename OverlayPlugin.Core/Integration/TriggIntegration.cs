@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin
 {
-    class TriggIntegration
+    class TriggIntegration : ITinyIoCAutoConstructDuringInit<TriggIntegration>
     {
         private PluginMain _plugin;
         public delegate void CustomCallbackDelegate(object o, string param);

@@ -4,7 +4,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
 {
     interface IEnmityMemory60 : IEnmityMemory { }
 
-    class EnmityMemory60 : EnmityMemory, IEnmityMemory60
+    class EnmityMemory60 : EnmityMemory, IEnmityMemory60, ITinyIoCAutoRegisterAfterInit<IEnmityMemory60>
     {
         public const string enmitySignature = "83f9ff7412448b048e8bd3488d0d";
         private const int enmitySignatureOffset = -2608;

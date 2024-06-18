@@ -22,7 +22,7 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineActorControlSelfExtra : LineBaseSubMachina<LineActorControlSelfExtra.ActorControlSelfExtraPacket>
+    class LineActorControlSelfExtra : LineBaseSubMachina<LineActorControlSelfExtra.ActorControlSelfExtraPacket>, IOverlayPluginLogLine<LineActorControlSelfExtra>
     {
         public const uint LogFileLineID = 274;
         public const string LogLineName = "ActorControlSelfExtra";

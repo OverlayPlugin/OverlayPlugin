@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace RainbowMage.OverlayPlugin
 {
-    public sealed class KeyboardHook : NativeWindow, IDisposable
+    public sealed class KeyboardHook : NativeWindow, IDisposable, ITinyIoCAutoConstructPreInit<KeyboardHook>
     {
         private Dictionary<int, HotKeyInfo> _hotkeys = new Dictionary<int, HotKeyInfo>();
         private ILogger _logger;

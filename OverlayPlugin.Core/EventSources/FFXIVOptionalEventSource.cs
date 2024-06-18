@@ -48,10 +48,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         private void StopACTCombat()
         {
-            ActGlobals.oFormActMain.Invoke((Action)(() =>
+            PluginMain.InvokeOnUIThread(() =>
             {
                 ActGlobals.oFormActMain.EndCombat(true);
-            }));
+            });
         }
 
         private void LogLineHandler(bool isImport, LogLineEventArgs args)

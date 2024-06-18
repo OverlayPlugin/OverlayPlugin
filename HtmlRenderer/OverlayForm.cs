@@ -105,14 +105,14 @@ namespace RainbowMage.HtmlRenderer
         /// <param name="form"></param>
         public void HidePreview()
         {
-            int ex = NativeMethods.GetWindowLong(Handle, NativeMethods.GWL_EXSTYLE);
+            int ex = NativeMethods.GetWindowLong(SafeHandle, NativeMethods.GWL_EXSTYLE);
             ex |= NativeMethods.WS_EX_TOOLWINDOW;
-            NativeMethods.SetWindowLongA(Handle, NativeMethods.GWL_EXSTYLE, (IntPtr)ex);
+            NativeMethods.SetWindowLongA(SafeHandle, NativeMethods.GWL_EXSTYLE, (IntPtr)ex);
         }
 
         public void SetAcceptFocus(bool accept)
         {
-            int ex = NativeMethods.GetWindowLong(Handle, NativeMethods.GWL_EXSTYLE);
+            int ex = NativeMethods.GetWindowLong(SafeHandle, NativeMethods.GWL_EXSTYLE);
             if (accept)
             {
                 ex &= ~WS_EX_NOACTIVATE;
@@ -121,7 +121,7 @@ namespace RainbowMage.HtmlRenderer
             {
                 ex |= WS_EX_NOACTIVATE;
             }
-            NativeMethods.SetWindowLongA(Handle, NativeMethods.GWL_EXSTYLE, (IntPtr)ex);
+            NativeMethods.SetWindowLongA(SafeHandle, NativeMethods.GWL_EXSTYLE, (IntPtr)ex);
         }
 
         public void Reload()
@@ -202,25 +202,12 @@ namespace RainbowMage.HtmlRenderer
                 Y = 0
             };
 
-            IntPtr handle = IntPtr.Zero;
             try
             {
                 if (!this.terminated)
                 {
-                    if (this.InvokeRequired)
-                    {
-                        this.Invoke(new Action(() =>
-                        {
-                            handle = this.Handle;
-                        }));
-                    }
-                    else
-                    {
-                        handle = this.Handle;
-                    }
-
                     NativeMethods.UpdateLayeredWindow(
-                        handle,
+                        SafeHandle,
                         IntPtr.Zero,
                         ref windowPosition,
                         ref surfaceSize,
@@ -255,17 +242,17 @@ namespace RainbowMage.HtmlRenderer
         private void EnableMouseClickThru()
         {
             NativeMethods.SetWindowLong(
-                this.Handle,
+                SafeHandle,
                 NativeMethods.GWL_EXSTYLE,
-                NativeMethods.GetWindowLong(this.Handle, NativeMethods.GWL_EXSTYLE) | NativeMethods.WS_EX_TRANSPARENT);
+                NativeMethods.GetWindowLong(SafeHandle, NativeMethods.GWL_EXSTYLE) | NativeMethods.WS_EX_TRANSPARENT);
         }
 
         private void DisableMouseClickThru()
         {
             NativeMethods.SetWindowLong(
-                this.Handle,
+                SafeHandle,
                 NativeMethods.GWL_EXSTYLE,
-                NativeMethods.GetWindowLong(this.Handle, NativeMethods.GWL_EXSTYLE) & ~NativeMethods.WS_EX_TRANSPARENT);
+                NativeMethods.GetWindowLong(SafeHandle, NativeMethods.GWL_EXSTYLE) & ~NativeMethods.WS_EX_TRANSPARENT);
         }
 
         #endregion
@@ -351,6 +338,39 @@ namespace RainbowMage.HtmlRenderer
         public void SetPopupVisible(bool visible)
         {
 
+        }
+
+        private IntPtr SafeHandle
+        {
+            get
+            {
+                if (this.InvokeRequired)
+                {
+                    return (IntPtr)this.Invoke(new Func<IntPtr>(() =>
+                    {
+                        return this.Handle;
+                    }));
+                }
+                else
+                {
+                    return this.Handle;
+                }
+            }
+        }
+
+        public void SetCursor(Cursor cursor)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((Action)(() =>
+                {
+                    Cursor = cursor;
+                }));
+            }
+            else
+            {
+                Cursor = cursor;
+            }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Target
         Combatant.Combatant GetHoverCombatant();
     }
 
-    class TargetMemoryManager : ITargetMemory
+    class TargetMemoryManager : ITargetMemory, ITinyIoCAutoRegisterDuringInit<ITargetMemory>
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
@@ -22,8 +22,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Target
         public TargetMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<ITargetMemory63, TargetMemory63>();
-            container.Register<ITargetMemory60, TargetMemory60>();
             repository = container.Resolve<FFXIVRepository>();
 
             var memory = container.Resolve<FFXIVMemory>();

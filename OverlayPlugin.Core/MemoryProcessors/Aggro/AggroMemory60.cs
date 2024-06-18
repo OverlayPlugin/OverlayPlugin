@@ -4,7 +4,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
 {
     interface IAggroMemory60 : IAggroMemory { }
 
-    class AggroMemory60 : AggroMemory, IAggroMemory60
+    class AggroMemory60 : AggroMemory, IAggroMemory60, ITinyIoCAutoRegisterAfterInit<IAggroMemory60>
     {
         private const int aggroEnmityOffset = -2336;
 

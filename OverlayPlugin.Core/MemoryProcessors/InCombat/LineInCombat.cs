@@ -7,7 +7,7 @@ using static RainbowMage.OverlayPlugin.EventSources.EnmityEventSource;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
 {
-    public class LineInCombat
+    public class LineInCombat : IOverlayPluginLogLine<LineInCombat>
     {
         public const uint LogFileLineID = 260;
         private ILogger logger;

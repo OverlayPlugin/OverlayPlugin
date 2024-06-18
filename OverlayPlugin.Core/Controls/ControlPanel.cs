@@ -3,13 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Advanced_Combat_Tracker;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -39,7 +34,7 @@ namespace RainbowMage.OverlayPlugin
             { "SpellTimerOverlay", Resources.MapOverlaySpellTimer },
         };
 
-        public ControlPanel(TinyIoCContainer container)
+        public ControlPanel()
         {
             InitializeComponent();
             tableLayoutPanel0.PerformLayout();
@@ -47,11 +42,11 @@ namespace RainbowMage.OverlayPlugin
             // important if we never make it that far.
             splitContainer1.SplitterDistance = 5;
 
-            _container = container;
-            _logger = container.Resolve<ILogger>();
-            _pluginMain = container.Resolve<PluginMain>();
-            _config = container.Resolve<IPluginConfig>();
-            _registry = container.Resolve<Registry>();
+            _container = TinyIoCContainer.Current;
+            _logger = _container.Resolve<ILogger>();
+            _pluginMain = _container.Resolve<PluginMain>();
+            _config = _container.Resolve<IPluginConfig>();
+            _registry = _container.Resolve<Registry>();
 
             this.checkBoxFollowLog.Checked = _config.FollowLatestLog;
 
@@ -60,17 +55,17 @@ namespace RainbowMage.OverlayPlugin
                 Name = Resources.GeneralTab,
                 Text = "",
             };
-            _generalTab.Controls.Add(new GeneralConfigTab(container));
+            _generalTab.Controls.Add(new GeneralConfigTab(_container));
 
             _eventTab = new ConfigTabPage
             {
                 Name = Resources.EventConfigTab,
                 Text = "",
             };
-            _eventTab.Controls.Add(new EventSources.BuiltinEventConfigPanel(container));
+            _eventTab.Controls.Add(new EventSources.BuiltinEventConfigPanel(_container));
 
             logBox.Text = Resources.LogNotConnectedError;
-            _logger.RegisterListener(AddLogEntry);
+            _logger.OnLog += HandleOnLog;
             _registry.EventSourceRegistered += (o, e) => Invoke((Action)(() => AddEventSourceTab(o, e)));
 
             Resize += (o, e) =>
@@ -102,72 +97,61 @@ namespace RainbowMage.OverlayPlugin
                 _generalTab?.Dispose();
                 _eventTab?.Dispose();
                 _registry.EventSourceRegistered -= AddEventSourceTab;
-                _logger.ClearListener();
+                _logger.OnLog -= HandleOnLog;
             }
 
             base.Dispose(disposing);
         }
 
-        private void AddLogEntry(LogEntry entry)
+        private void HandleOnLog(object sender, IReadOnlyCollection<LogEntry> e)
         {
-            Action appendText = () =>
+            PluginMain.InvokeOnUIThread(() =>
             {
-                var msg = $"[{entry.Time}] {entry.Level}: {entry.Message}" + Environment.NewLine;
-
                 if (!logConnected)
                 {
                     // Remove the error message about the log not being connected since it is now.
                     logConnected = true;
                     logBox.Text = "";
                 }
-                else if (logBox.TextLength > 200 * 1024)
+
+                var newText = @"{\rtf1\ansi";
+
+                if (_config.ColorblindMode == false)
                 {
-                    logBox.Text = "============ LOG TRUNCATED ==============\nThe log was truncated to reduce memory usage.\n=========================================\n" + msg;
-                    return;
+                    newText += LogEntry.DefaultColorTable;
                 }
 
-                if (checkBoxFollowLog.Checked)
+                foreach (var entry in e)
                 {
-                    logBox.AppendText(msg);
+                    newText += entry.ToRtfString();
                 }
-                else
+
+                newText += "}";
+
+                // This is based on https://stackoverflow.com/q/1743448
+                bool bottomFlag = checkBoxFollowLog.Checked;
+                int sbOffset;
+                int savedVpos;
+
+                // Win32 magic to keep the textbox scrolling to the newest append to the textbox unless
+                // the user has moved the scrollbox up
+                sbOffset = (int)((logBox.ClientSize.Height - SystemInformation.HorizontalScrollBarHeight) / (logBox.Font.Height));
+                savedVpos = NativeMethods.GetScrollPos(logBox.Handle, NativeMethods.SB_VERT);
+                NativeMethods.GetScrollRange(logBox.Handle, NativeMethods.SB_VERT, out _, out int VSmax);
+
+                if (savedVpos >= (VSmax - sbOffset - 1))
+                    bottomFlag = true;
+
+                logBox.Rtf = newText;
+
+                if (bottomFlag)
                 {
-                    // This is based on https://stackoverflow.com/q/1743448
-                    bool bottomFlag = false;
-                    int sbOffset;
-                    int savedVpos;
-
-                    // Win32 magic to keep the textbox scrolling to the newest append to the textbox unless
-                    // the user has moved the scrollbox up
-                    sbOffset = (int)((logBox.ClientSize.Height - SystemInformation.HorizontalScrollBarHeight) / (logBox.Font.Height));
-                    savedVpos = NativeMethods.GetScrollPos(logBox.Handle, NativeMethods.SB_VERT);
-                    NativeMethods.GetScrollRange(logBox.Handle, NativeMethods.SB_VERT, out _, out int VSmax);
-
-                    if (savedVpos >= (VSmax - sbOffset - 1))
-                        bottomFlag = true;
-
-                    logBox.AppendText(msg);
-
-                    if (bottomFlag)
-                    {
-                        NativeMethods.GetScrollRange(logBox.Handle, NativeMethods.SB_VERT, out _, out VSmax);
-                        savedVpos = VSmax - sbOffset;
-                    }
-                    NativeMethods.SetScrollPos(logBox.Handle, NativeMethods.SB_VERT, savedVpos, true);
-                    NativeMethods.PostMessageA(logBox.Handle, NativeMethods.WM_VSCROLL, NativeMethods.SB_THUMBPOSITION + 0x10000 * savedVpos, 0);
+                    NativeMethods.GetScrollRange(logBox.Handle, NativeMethods.SB_VERT, out _, out VSmax);
+                    savedVpos = VSmax - sbOffset;
                 }
-            };
-
-            // Invoke in UI thread if needed to avoid WinForms issues.
-            // See https://github.com/OverlayPlugin/OverlayPlugin/issues/254
-            if (ActGlobals.oFormActMain.InvokeRequired)
-            {
-                ActGlobals.oFormActMain.Invoke(appendText);
-            }
-            else
-            {
-                appendText();
-            }
+                NativeMethods.SetScrollPos(logBox.Handle, NativeMethods.SB_VERT, savedVpos, true);
+                NativeMethods.PostMessageA(logBox.Handle, NativeMethods.WM_VSCROLL, NativeMethods.SB_THUMBPOSITION + 0x10000 * savedVpos, 0);
+            });
         }
 
         private void AddEventSourceTab(object sender, EventSourceRegisteredEventArgs e)

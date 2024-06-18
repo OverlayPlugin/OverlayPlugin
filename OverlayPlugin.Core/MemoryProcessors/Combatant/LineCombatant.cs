@@ -12,7 +12,7 @@ using RainbowMage.OverlayPlugin.NetworkProcessors;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
-    public class LineCombatant : IDisposable
+    public class LineCombatant : IDisposable, IOverlayPluginLogLine<LineCombatant>
     {
         public const uint LogFileLineID = 261;
         private ILogger logger;

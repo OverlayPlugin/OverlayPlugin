@@ -12,7 +12,7 @@ using static RainbowMage.OverlayPlugin.MemoryProcessors.InCombat.LineInCombat;
 
 namespace RainbowMage.OverlayPlugin
 {
-    class OverlayHider : IDisposable
+    class OverlayHider : IDisposable, ITinyIoCAutoConstructAfterInit<OverlayHider>
     {
         private bool gameActive = true;
         private bool inCutscene = false;

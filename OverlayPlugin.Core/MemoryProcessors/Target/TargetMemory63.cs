@@ -4,7 +4,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Target
 {
     interface ITargetMemory63 : ITargetMemory { }
 
-    class TargetMemory63 : TargetMemory, ITargetMemory63
+    class TargetMemory63 : TargetMemory, ITargetMemory63, ITinyIoCAutoRegisterAfterInit<ITargetMemory63>
     {
         private const string targetSignature = "483BC3750832C04883C4205BC3488D0D";
 

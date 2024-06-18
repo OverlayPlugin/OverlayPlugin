@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
-using RainbowMage.HtmlRenderer;
 using RainbowMage.OverlayPlugin.Updater;
 
 namespace RainbowMage.OverlayPlugin
@@ -17,7 +13,7 @@ namespace RainbowMage.OverlayPlugin
     public class PluginLoader : IActPluginV1, IDisposable
     {
         PluginMain pluginMain;
-        Logger logger;
+        ILogger logger;
         static AssemblyResolver asmResolver;
         string pluginDirectory;
         TabPage pluginScreenSpace;
@@ -29,6 +25,9 @@ namespace RainbowMage.OverlayPlugin
 
         public void InitPlugin(TabPage pluginScreenSpace, Label pluginStatusText)
         {
+#if DEBUG
+            Control.CheckForIllegalCrossThreadCalls = true;
+#endif
             pluginDirectory = GetPluginDirectory();
 
             if (asmResolver == null)
@@ -62,36 +61,40 @@ namespace RainbowMage.OverlayPlugin
                 return;
             }
 
+            pluginStatusText.Text = Resources.InitRuntime;
+
             Initialize();
         }
 
-        // AssemblyResolver でカスタムリゾルバを追加する前に PluginMain が解決されることを防ぐために、
-        // インライン展開を禁止したメソッドに処理を分離
+        // To prevent PluginMain from being resolved before we add our custom resolver in AssemblyResolver,
+        // we separate the reference to its own method and prevent inlining.
         [MethodImpl(MethodImplOptions.NoInlining)]
         private async void Initialize()
         {
-            pluginStatusText.Text = Resources.InitRuntime;
+            // Use TinyIoC's singleton since we don't use multiple IoC containers
+            // This won't cause issues with other plugins, as our TinyIoCContainer is namespaced to `RainbowMage.OverlayPlugin`
+            Container = TinyIoCContainer.Current;
 
-            var container = new TinyIoCContainer();
-            logger = new Logger();
-            container.Register(logger);
-            container.Register<ILogger>(logger);
+            TinyIoCAutoHelper.RegisterAssemblies(SanityChecker.GetAssemblies());
+
+            TinyIoCAutoHelper.AutoRegisterPreInit();
+            TinyIoCAutoHelper.AutoConstructPreInit();
+
+            logger = Container.Resolve<ILogger>();
 
             asmResolver.ExceptionOccured += (o, e) => logger.Log(LogLevel.Error, Resources.AssemblyResolverError, e.Exception);
             asmResolver.AssemblyLoaded += (o, e) => logger.Log(LogLevel.Info, Resources.AssemblyResolverLoaded, e.LoadedAssembly.FullName);
 
-            this.Container = container;
-            pluginMain = new PluginMain(pluginDirectory, logger, container);
-            container.Register(pluginMain);
+            pluginMain = new PluginMain(pluginDirectory);
 
             pluginStatusText.Text = Resources.InitCef;
 
-            SanityChecker.CheckDependencyVersions(logger);
+            SanityChecker.CheckDependencyVersions();
 
-            await FinishInit(container);
+            await FinishInit();
         }
 
-        public async Task FinishInit(TinyIoCContainer container)
+        public async Task FinishInit()
         {
             if (await CefInstaller.EnsureCef(GetCefPath()))
             {
@@ -100,11 +103,11 @@ namespace RainbowMage.OverlayPlugin
                 if (SanityChecker.LoadSaneAssembly("HtmlRenderer"))
                 {
                     // Since this is an async method, we could have switched threds. Make sure InitPlugin() runs on the ACT main thread.
-                    ActGlobals.oFormActMain.Invoke((Action)(() =>
+                    await InvokeOnUIThread(async () =>
                     {
                         try
                         {
-                            pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
+                            await pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
                             initFailed = false;
                         }
                         catch (Exception ex)
@@ -116,9 +119,9 @@ namespace RainbowMage.OverlayPlugin
                             initFailed = true;
 
                             MessageBox.Show("Failed to init OverlayPlugin: " + ex.ToString(), "OverlayPlugin Error");
-                            pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this, container));
+                            pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this));
                         }
-                    }));
+                    });
                 }
                 else
                 {
@@ -127,7 +130,7 @@ namespace RainbowMage.OverlayPlugin
             }
             else
             {
-                pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this, container));
+                pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this));
             }
         }
 
@@ -163,6 +166,44 @@ namespace RainbowMage.OverlayPlugin
         private string GetCefPath()
         {
             return Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "OverlayPluginCef", Environment.Is64BitProcess ? "x64" : "x86");
+        }
+
+        public async void SetPluginStatusText(string text)
+        {
+            await InvokeOnUIThread(() =>
+            {
+                pluginStatusText.Text = text;
+            });
+        }
+
+        public static Task<T> InvokeOnUIThread<T>(Func<T> p)
+        {
+            return Task.Run(new Func<T>(() =>
+            {
+                if (ActGlobals.oFormActMain.InvokeRequired)
+                {
+                    return (T)ActGlobals.oFormActMain.EndInvoke(ActGlobals.oFormActMain.BeginInvoke(p));
+                }
+                else
+                {
+                    return p();
+                }
+            }));
+        }
+
+        public static Task InvokeOnUIThread(Action p)
+        {
+            return Task.Run(() =>
+            {
+                if (ActGlobals.oFormActMain.InvokeRequired)
+                {
+                    ActGlobals.oFormActMain.EndInvoke(ActGlobals.oFormActMain.BeginInvoke(p));
+                }
+                else
+                {
+                    p();
+                }
+            });
         }
 
         protected virtual void Dispose(bool disposing)

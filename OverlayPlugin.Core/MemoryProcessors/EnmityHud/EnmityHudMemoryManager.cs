@@ -9,7 +9,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
         List<EnmityHudEntry> GetEnmityHudEntries();
     }
 
-    public class EnmityHudMemoryManager : IEnmityHudMemory
+    public class EnmityHudMemoryManager : IEnmityHudMemory, ITinyIoCAutoRegisterDuringInit<IEnmityHudMemory>
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
@@ -18,8 +18,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
         public EnmityHudMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<IEnmityHudMemory60, EnmityHudMemory60>();
-            container.Register<IEnmityHudMemory62, EnmityHudMemory62>();
             repository = container.Resolve<FFXIVRepository>();
 
             var memory = container.Resolve<FFXIVMemory>();

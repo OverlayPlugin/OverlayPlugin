@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -39,11 +33,15 @@ namespace RainbowMage.OverlayPlugin
             cbHideOverlaysWhenNotActive.Checked = config.HideOverlaysWhenNotActive;
             cbHideOverlaysDuringCutscene.Checked = config.HideOverlayDuringCutscene;
 
+            cbColorblindMode.Checked = config.ColorblindMode;
+
             // Attach the event handlers only *after* loading the configuration because we'd otherwise trigger them ourselves.
             cbErrorReports.CheckedChanged += CbErrorReports_CheckedChanged;
             cbUpdateCheck.CheckedChanged += CbUpdateCheck_CheckedChanged;
             cbHideOverlaysWhenNotActive.CheckedChanged += cbHideOverlaysWhenNotActive_CheckedChanged;
             cbHideOverlaysDuringCutscene.CheckedChanged += cbHideOverlaysDuringCutscene_CheckedChanged;
+
+            cbColorblindMode.CheckedChanged += CbColorblindMode_CheckedChanged;
         }
 
         public void SetReadmeVisible(bool visible)
@@ -70,7 +68,7 @@ namespace RainbowMage.OverlayPlugin
                 Thread.Sleep(500);
 
                 if (lastClick != now) return;
-                Updater.Updater.PerformUpdateIfNecessary(pluginDirectory, container, true, timePassed < 500);
+                Updater.Updater.PerformUpdateIfNecessary(pluginDirectory, true, timePassed < 500);
             });
         }
 
@@ -116,6 +114,14 @@ namespace RainbowMage.OverlayPlugin
         {
             config.HideOverlayDuringCutscene = cbHideOverlaysDuringCutscene.Checked;
             container.Resolve<OverlayHider>().UpdateOverlays();
+        }
+
+        private void CbColorblindMode_CheckedChanged(object sender, EventArgs e)
+        {
+            config.ColorblindMode = cbColorblindMode.Checked;
+
+            // Trigger an OnLog event so that the log panel can update its display
+            logger.RefreshLogs();
         }
 
         private void lnkGithubRepo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

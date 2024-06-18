@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class NetworkParser
+    class NetworkParser : ITinyIoCAutoConstructDuringInit<NetworkParser>
     {
         public event EventHandler<OnlineStatusChangedArgs> OnOnlineStatusChanged;
 

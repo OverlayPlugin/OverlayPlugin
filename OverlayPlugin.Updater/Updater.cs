@@ -329,8 +329,10 @@ namespace RainbowMage.OverlayPlugin.Updater
             }
         }
 
-        public static async void PerformUpdateIfNecessary(string pluginDirectory, TinyIoCContainer container, bool manualCheck = false, bool checkPreRelease = false)
+        public static async void PerformUpdateIfNecessary(string pluginDirectory, bool manualCheck = false, bool checkPreRelease = false)
         {
+            var container = TinyIoCContainer.Current;
+
             var logger = container.Resolve<ILogger>();
 
             // e.g. dir/OverlayPlugin/out/Release/OverlayPlugin.dll checking for dir/OverlayPlugin/.git/

@@ -71,7 +71,7 @@ namespace RainbowMage.OverlayPlugin
         Korean = 3
     }
 
-    public class FFXIVRepository
+    public class FFXIVRepository : ITinyIoCAutoConstructDuringInit<FFXIVRepository>
     {
         private readonly ILogger logger;
         private IDataRepository repository;

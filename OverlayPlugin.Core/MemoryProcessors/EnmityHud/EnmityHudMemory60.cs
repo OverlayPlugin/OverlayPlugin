@@ -5,7 +5,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
 {
     interface IEnmityHudMemory60 : IEnmityHudMemory { }
 
-    class EnmityHudMemory60 : EnmityHudMemory, IEnmityHudMemory60
+    class EnmityHudMemory60 : EnmityHudMemory, IEnmityHudMemory60, ITinyIoCAutoRegisterAfterInit<IEnmityHudMemory60>
     {
         private const string enmityHudSignature = "48895C246048897C2470488B3D";
         private static readonly int[] enmityHudPointerPath = new int[] { 0x30, 0x58, 0x98, 0x20 };

@@ -10,6 +10,8 @@ namespace RainbowMage.OverlayPlugin
 {
     public static class SanityChecker
     {
+        private static Dictionary<string, Assembly> LoadedAssemblies = new Dictionary<string, Assembly>();
+
         /**
          * The assembly load order is as follows:
          * 
@@ -54,11 +56,25 @@ namespace RainbowMage.OverlayPlugin
                 return false;
             }
 
+            LoadedAssemblies[name] = asm;
+
             return true;
         }
 
-        public static void CheckDependencyVersions(ILogger logger)
+        public static Assembly GetAssembly(string name)
         {
+            return LoadedAssemblies[name];
+        }
+
+        public static List<Assembly> GetAssemblies()
+        {
+            return LoadedAssemblies.Values.ToList();
+        }
+
+        public static void CheckDependencyVersions()
+        {
+            ILogger logger = TinyIoCContainer.Current.Resolve<ILogger>();
+
             var expectedVersions = new Dictionary<string, string>
             {
                 { "Newtonsoft.Json", "12.0.0" },

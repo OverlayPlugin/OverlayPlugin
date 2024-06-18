@@ -9,7 +9,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
         List<EnmityEntry> GetEnmityEntryList(List<Combatant.Combatant> combatantList);
     }
 
-    public class EnmityMemoryManager : IEnmityMemory
+    public class EnmityMemoryManager : IEnmityMemory, ITinyIoCAutoRegisterDuringInit<IEnmityMemory>
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
@@ -18,7 +18,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
         public EnmityMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<IEnmityMemory60, EnmityMemory60>();
             repository = container.Resolve<FFXIVRepository>();
 
             var memory = container.Resolve<FFXIVMemory>();

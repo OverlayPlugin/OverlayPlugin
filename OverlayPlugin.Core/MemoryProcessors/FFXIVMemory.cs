@@ -13,7 +13,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         bool IsValid();
     }
 
-    public class FFXIVMemory
+    public class FFXIVMemory : ITinyIoCAutoConstructDuringInit<FFXIVMemory>
     {
         private event EventHandler<Process> OnProcessChange;
 

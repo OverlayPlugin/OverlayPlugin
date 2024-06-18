@@ -12,7 +12,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.FFXIVClientStructs
         Global
     }
 
-    public class Data
+    public class Data : ITinyIoCAutoConstructDuringInit<Data>
     {
         private readonly ILogger logger;
         private readonly string yamlFilePath;

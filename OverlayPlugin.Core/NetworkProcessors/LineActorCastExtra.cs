@@ -4,7 +4,7 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineActorCastExtra : LineBaseSubMachina<LineActorCastExtra.ActorCastExtraPacket>
+    class LineActorCastExtra : LineBaseSubMachina<LineActorCastExtra.ActorCastExtraPacket>, IOverlayPluginLogLine<LineActorCastExtra>
     {
         public const uint LogFileLineID = 263;
         public const string LogLineName = "ActorCastExtra";

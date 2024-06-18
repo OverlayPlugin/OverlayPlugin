@@ -23,7 +23,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
         ContentFinderSettings GetContentFinderSettings();
     }
 
-    class ContentFinderSettingsMemoryManager : IContentFinderSettingsMemory
+    class ContentFinderSettingsMemoryManager : IContentFinderSettingsMemory, ITinyIoCAutoRegisterDuringInit<IContentFinderSettingsMemory>
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
@@ -32,7 +32,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
         public ContentFinderSettingsMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<IContentFinderSettingsMemory651, ContentFinderSettingsMemory651>();
             repository = container.Resolve<FFXIVRepository>();
 
             var memory = container.Resolve<FFXIVMemory>();

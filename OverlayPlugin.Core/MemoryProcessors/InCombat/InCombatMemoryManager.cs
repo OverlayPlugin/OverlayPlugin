@@ -9,7 +9,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
         bool GetInCombat();
     }
 
-    class InCombatMemoryManager : IInCombatMemory
+    class InCombatMemoryManager : IInCombatMemory, ITinyIoCAutoRegisterDuringInit<IInCombatMemory>
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
@@ -18,7 +18,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
         public InCombatMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<IInCombatMemory61, InCombatMemory61>();
             repository = container.Resolve<FFXIVRepository>();
 
             var memory = container.Resolve<FFXIVMemory>();

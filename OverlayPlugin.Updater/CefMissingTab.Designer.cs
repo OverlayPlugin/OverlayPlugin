@@ -13,6 +13,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            TinyIoCContainer.Current.Resolve<ILogger>().OnLog -= HandleOnLog;
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -43,7 +44,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnOpenManual = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.logBox = new System.Windows.Forms.TextBox();
+            this.logBox = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -188,6 +189,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnOpenManual;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TextBox logBox;
+        private System.Windows.Forms.RichTextBox logBox;
     }
 }

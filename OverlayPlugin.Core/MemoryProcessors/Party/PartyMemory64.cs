@@ -9,7 +9,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Party
 {
     interface IPartyMemory64 : IPartyMemory { }
 
-    public class PartyMemory64 : PartyMemory, IPartyMemory64
+    public class PartyMemory64 : PartyMemory, IPartyMemory64, ITinyIoCAutoRegisterAfterInit<IPartyMemory64>
     {
         // Due to lack of multi-version support in FFXIVClientStructs, we need to duplicate these structures here per-version
         // We use FFXIVClientStructs versions of the structs because they have more required details than FFXIV_ACT_Plugin's struct definitions

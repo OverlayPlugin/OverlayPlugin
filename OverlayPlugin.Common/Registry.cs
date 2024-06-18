@@ -4,7 +4,7 @@ using Advanced_Combat_Tracker;
 
 namespace RainbowMage.OverlayPlugin
 {
-    public class Registry
+    public class Registry : ITinyIoCAutoConstructPreInit<Registry>
     {
         private TinyIoCContainer _container;
         private List<Type> _overlays;

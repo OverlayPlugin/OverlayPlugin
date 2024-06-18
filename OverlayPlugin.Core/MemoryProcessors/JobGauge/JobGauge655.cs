@@ -5,7 +5,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
 {
     interface IJobGaugeMemory655 : IJobGaugeMemory { }
 
-    partial class JobGaugeMemory655 : JobGaugeMemory, IJobGaugeMemory655
+    partial class JobGaugeMemory655 : JobGaugeMemory, IJobGaugeMemory655, ITinyIoCAutoRegisterAfterInit<IJobGaugeMemory655>
     {
         private static string jobDataSignature = "488B3D????????33ED";
         private static int jobDataSignatureOffset = -6;

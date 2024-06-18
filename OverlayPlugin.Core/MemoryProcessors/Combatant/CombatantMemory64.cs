@@ -6,7 +6,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
     interface ICombatantMemory64 : ICombatantMemory { }
 
-    class CombatantMemory64 : CombatantMemory, ICombatantMemory64
+    class CombatantMemory64 : CombatantMemory, ICombatantMemory64, ITinyIoCAutoRegisterAfterInit<ICombatantMemory64>
     {
         private const string charmapSignature = "488B5720B8000000E0483BD00F84????????488D0D";
 

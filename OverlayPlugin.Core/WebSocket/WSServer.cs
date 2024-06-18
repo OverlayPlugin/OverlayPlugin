@@ -15,7 +15,7 @@ using RainbowMage.OverlayPlugin.Overlays;
 
 namespace RainbowMage.OverlayPlugin
 {
-    public class WSServer : IDisposable
+    public class WSServer : IDisposable, ITinyIoCAutoConstructBeforeInit<WSServer>
     {
         TinyIoCContainer _container;
         ILogger _logger;

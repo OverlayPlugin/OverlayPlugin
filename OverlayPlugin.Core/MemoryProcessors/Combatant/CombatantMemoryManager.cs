@@ -12,7 +12,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         List<Combatant> GetCombatantList();
     }
 
-    public class CombatantMemoryManager : ICombatantMemory
+    public class CombatantMemoryManager : ICombatantMemory, ITinyIoCAutoRegisterDuringInit<ICombatantMemory>
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
@@ -21,9 +21,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         public CombatantMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<ICombatantMemory63, CombatantMemory63>();
-            container.Register<ICombatantMemory64, CombatantMemory64>();
-            container.Register<ICombatantMemory65, CombatantMemory65>();
             repository = container.Resolve<FFXIVRepository>();
 
             var memory = container.Resolve<FFXIVMemory>();

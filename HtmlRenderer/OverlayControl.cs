@@ -157,5 +157,20 @@ namespace RainbowMage.HtmlRenderer
         {
             throw new NotImplementedException();
         }
+
+        public void SetCursor(Cursor cursor)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((Action)(() =>
+                {
+                    Cursor = cursor;
+                }));
+            }
+            else
+            {
+                Cursor = cursor;
+            }
+        }
     }
 }

@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
-using RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings;
-using RainbowMage.OverlayPlugin.MemoryProcessors.InCombat;
-using RainbowMage.OverlayPlugin.NetworkProcessors;
 using RainbowMage.OverlayPlugin.Updater;
 using MachinaRegion = System.String;
 using OpcodeName = System.String;
@@ -17,29 +13,16 @@ namespace RainbowMage.OverlayPlugin
 
     using Opcodes = Dictionary<MachinaRegion, Dictionary<OpcodeVersion, Dictionary<OpcodeName, OpcodeConfigEntry>>>;
 
-    class OverlayPluginLogLines
+    interface IOverlayPluginLogLine<T> { }
+
+    class OverlayPluginLogLines : ITinyIoCAutoConstructDuringInit<OverlayPluginLogLines>
     {
         public OverlayPluginLogLines(TinyIoCContainer container)
         {
             container.Register(new OverlayPluginLogLineConfig(container));
-            container.Register(new LineMapEffect(container));
-            container.Register(new LineFateControl(container));
-            container.Register(new LineCEDirector(container));
-            container.Register(new LineInCombat(container));
-            container.Register(new LineCombatant(container));
-            container.Register(new LineRSV(container));
-            container.Register(new LineActorCastExtra(container));
-            container.Register(new LineAbilityExtra(container));
-            container.Register(new LineContentFinderSettings(container));
-            container.Register(new LineNpcYell(container));
-            container.Register(new LineBattleTalk2(container));
-            container.Register(new LineCountdown(container));
-            container.Register(new LineCountdownCancel(container));
-            container.Register(new LineActorMove(container));
-            container.Register(new LineActorSetPos(container));
-            container.Register(new LineSpawnNpcExtra(container));
-            container.Register(new LineActorControlExtra(container));
-            container.Register(new LineActorControlSelfExtra(container));
+
+            TinyIoCAutoHelper.AutoRegister(typeof(IOverlayPluginLogLine<>));
+            TinyIoCAutoHelper.AutoConstruct(typeof(IOverlayPluginLogLine<>));
         }
     }
 

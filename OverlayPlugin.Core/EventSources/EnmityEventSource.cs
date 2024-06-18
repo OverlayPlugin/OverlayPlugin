@@ -123,10 +123,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 Task.Run(async delegate
                 {
                     await Task.Delay(endEncounterOutOfCombatDelayMs, endEncounterToken.Token);
-                    ActGlobals.oFormActMain.Invoke((Action)(() =>
+                    await PluginMain.InvokeOnUIThread(() =>
                     {
                         ActGlobals.oFormActMain.EndCombat(true);
-                    }));
+                    });
                 });
             }
             // If combat starts again, cancel any outstanding tasks to stop the ACT encounter.

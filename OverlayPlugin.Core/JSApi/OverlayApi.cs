@@ -52,10 +52,10 @@ namespace RainbowMage.OverlayPlugin
 
         public void endEncounter()
         {
-            ActGlobals.oFormActMain.Invoke((Action)(() =>
+            PluginMain.InvokeOnUIThread(() =>
             {
                 ActGlobals.oFormActMain.EndCombat(true);
-            }));
+            });
         }
 
         public void makeScreenshot()
@@ -79,7 +79,10 @@ namespace RainbowMage.OverlayPlugin
 
         public void setAcceptFocus(bool accept)
         {
-            receiver.SetAcceptFocus(accept);
+            PluginMain.InvokeOnUIThread(() =>
+            {
+                receiver.SetAcceptFocus(accept);
+            });
         }
 
         // Also handles (un)subscription to make switching between this and WS easier.

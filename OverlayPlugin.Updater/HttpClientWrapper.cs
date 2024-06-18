@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace RainbowMage.OverlayPlugin.Updater
 {
@@ -116,7 +117,15 @@ namespace RainbowMage.OverlayPlugin.Updater
                     Monitor.Pulse(completionLock);
                 }
             });
-            action();
+            // Do not run HttpClient requests on the UI thread
+            if (!Advanced_Combat_Tracker.ActGlobals.oFormActMain.InvokeRequired)
+            {
+                Task.Run(action);
+            }
+            else
+            {
+                action();
+            }
 
             lock (completionLock)
             {

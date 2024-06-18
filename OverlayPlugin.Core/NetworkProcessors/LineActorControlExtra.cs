@@ -11,7 +11,7 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineActorControlExtra : LineBaseSubMachina<LineActorControlExtra.ActorControlExtraPacket>
+    class LineActorControlExtra : LineBaseSubMachina<LineActorControlExtra.ActorControlExtraPacket>, IOverlayPluginLogLine<LineActorControlExtra>
     {
         public const uint LogFileLineID = 273;
         public const string LogLineName = "ActorControlExtra";

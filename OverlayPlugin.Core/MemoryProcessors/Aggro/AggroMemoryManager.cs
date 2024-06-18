@@ -9,7 +9,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
         List<AggroEntry> GetAggroList(List<Combatant.Combatant> combatantList);
     }
 
-    public class AggroMemoryManager : IAggroMemory
+    public class AggroMemoryManager : IAggroMemory, ITinyIoCAutoRegisterDuringInit<IAggroMemory>
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
@@ -18,7 +18,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
         public AggroMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<IAggroMemory60, AggroMemory60>();
             repository = container.Resolve<FFXIVRepository>();
 
             var memory = container.Resolve<FFXIVMemory>();

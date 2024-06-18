@@ -36,7 +36,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
     class LineSpawnNpcExtra : LineBaseCustomMachina<Server_MessageHeader_Global, LineSpawnNpcExtra.Server_NpcSpawn_Global_6_51,
             Server_MessageHeader_CN, LineSpawnNpcExtra.Server_NpcSpawn_Global_6_51,
-            Server_MessageHeader_KR, LineSpawnNpcExtra.Server_NpcSpawn_Global_6_51>
+            Server_MessageHeader_KR, LineSpawnNpcExtra.Server_NpcSpawn_Global_6_51>, IOverlayPluginLogLine<LineSpawnNpcExtra>
     {
         public const uint LogFileLineID = 272;
         public const string LogLineName = "NpcSpawnExtra";

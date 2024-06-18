@@ -3,7 +3,7 @@ using Advanced_Combat_Tracker;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
 {
-    class LineContentFinderSettings
+    class LineContentFinderSettings : IOverlayPluginLogLine<LineContentFinderSettings>
     {
         public const uint LogFileLineID = 265;
         private readonly FFXIVRepository ffxiv;

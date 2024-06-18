@@ -9,7 +9,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Party
         PartyListsStruct GetPartyLists();
     }
 
-    class PartyMemoryManager : IPartyMemory
+    class PartyMemoryManager : IPartyMemory, ITinyIoCAutoRegisterDuringInit<IPartyMemory>
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
@@ -18,8 +18,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Party
         public PartyMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<IPartyMemory64, PartyMemory64>();
-            container.Register<IPartyMemory65, PartyMemory65>();
             repository = container.Resolve<FFXIVRepository>();
 
             var memory = container.Resolve<FFXIVMemory>();

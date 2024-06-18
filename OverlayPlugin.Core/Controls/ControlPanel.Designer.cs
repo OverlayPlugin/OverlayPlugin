@@ -26,7 +26,7 @@ namespace RainbowMage.OverlayPlugin
             this.buttonRemoveOverlay = new System.Windows.Forms.Button();
             this.checkBoxFollowLog = new System.Windows.Forms.CheckBox();
             this.buttonClearLog = new System.Windows.Forms.Button();
-            this.logBox = new System.Windows.Forms.TextBox();
+            this.logBox = new System.Windows.Forms.RichTextBox();
             this.tabPageMain = new System.Windows.Forms.TabPage();
             this.label_ListEmpty = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -171,7 +171,7 @@ namespace RainbowMage.OverlayPlugin
         private TableLayoutPanel tableLayoutPanel0;
         private FlowLayoutPanel flowLayoutPanel;
         private Label label_ListEmpty;
-        private TextBox logBox;
+        private RichTextBox logBox;
         private CheckBox checkBoxFollowLog;
         private Button buttonClearLog;
         private Button buttonRename;

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin
 {
-    public class FFXIVCustomLogLines
+    public class FFXIVCustomLogLines : ITinyIoCAutoConstructDuringInit<FFXIVCustomLogLines>
     {
         private ILogger logger;
         private FFXIVRepository repository;

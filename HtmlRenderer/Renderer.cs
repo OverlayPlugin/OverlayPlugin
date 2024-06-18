@@ -742,7 +742,7 @@ MaxUploadsPerDay=0
 
         void IRenderWebBrowser.OnCursorChange(IntPtr cursor, CursorType type, CursorInfo customCursorInfo)
         {
-            target.Cursor = new Cursor(cursor);
+            target.SetCursor(new Cursor(cursor));
         }
 
         bool IRenderWebBrowser.GetScreenPoint(int contentX, int contentY, out int screenX, out int screenY)

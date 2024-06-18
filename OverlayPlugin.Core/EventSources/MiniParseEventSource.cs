@@ -153,10 +153,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         private void StopACTCombat()
         {
-            ActGlobals.oFormActMain.Invoke((Action)(() =>
+            PluginMain.InvokeOnUIThread(() =>
             {
                 ActGlobals.oFormActMain.EndCombat(true);
-            }));
+            });
         }
 
         public override Control CreateConfigControl()

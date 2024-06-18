@@ -7,7 +7,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
     class LineCEDirector : LineBaseCustom<
             Server_MessageHeader_Global, LineCEDirector.CEDirector_v62,
             Server_MessageHeader_CN, LineCEDirector.CEDirector_v62,
-            Server_MessageHeader_KR, LineCEDirector.CEDirector_v62>
+            Server_MessageHeader_KR, LineCEDirector.CEDirector_v62>, IOverlayPluginLogLine<LineCEDirector>
     {
         [StructLayout(LayoutKind.Explicit)]
         internal struct CEDirector_v62 : IPacketStruct

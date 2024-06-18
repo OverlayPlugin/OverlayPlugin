@@ -47,9 +47,11 @@ namespace RainbowMage.OverlayPlugin
             Error
         };
 
-        public WSConfigPanel(TinyIoCContainer container)
+        public WSConfigPanel()
         {
             InitializeComponent();
+
+            var container = TinyIoCContainer.Current;
 
             _config = container.Resolve<IPluginConfig>();
             _server = container.Resolve<WSServer>();

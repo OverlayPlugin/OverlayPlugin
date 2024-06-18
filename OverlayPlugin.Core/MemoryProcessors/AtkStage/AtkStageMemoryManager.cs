@@ -10,7 +10,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage
         dynamic GetAddon(string name);
     }
 
-    class AtkStageMemoryManager : IAtkStageMemory
+    class AtkStageMemoryManager : IAtkStageMemory, ITinyIoCAutoRegisterDuringInit<IAtkStageMemory>
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
@@ -19,7 +19,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage
         public AtkStageMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<IAtkStageMemory62, AtkStageMemory62>();
             repository = container.Resolve<FFXIVRepository>();
 
             var memory = container.Resolve<FFXIVMemory>();
