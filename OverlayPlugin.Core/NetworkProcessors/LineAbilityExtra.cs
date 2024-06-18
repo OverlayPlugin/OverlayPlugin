@@ -43,7 +43,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                         // AE1 is not useful. It does not contain this data. But we still need to write something
                         // to indicate that a proper line will not be happening.
                         return string.Format(CultureInfo.InvariantCulture,
-                            "{0:X8}|{1:X4}|{2:X8}|{3}||||{4:F3}|",
+                            "{0:X8}|{1:X4}|{2:X8}|{3}|||||{4:F3}",
                             ActorID, abilityId, globalEffectCounter, (int)LineSubType.NO_DATA, animationLock);
                     }
 
