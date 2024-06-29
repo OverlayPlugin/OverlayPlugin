@@ -34,7 +34,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             ProgressInfoCallback infoCb, bool resume)
         {
             if (!ActGlobals.oFormActMain.InvokeRequired)
-                throw new Exception("HttpClientWrapper called on UI thread, this can cause deadlocks");
+                throw new HttpClientException(false, "HttpClientWrapper called on UI thread, this can cause deadlocks");
 
             var completionLock = new object();
             string result = null;
