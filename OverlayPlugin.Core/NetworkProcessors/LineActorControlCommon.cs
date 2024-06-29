@@ -3,6 +3,7 @@
     public enum Server_ActorControlCategory : ushort
     {
         SetAnimationState = 0x003E, // 62
+        FishingMsg = 0x0140, // 320
         StatusUpdate = 0x01F8, // 504
         // Name is a guess
         DisplayLogMessage = 0x020F, // 527

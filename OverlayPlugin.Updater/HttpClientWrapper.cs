@@ -56,7 +56,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 try
                 {
-                    var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                    var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
 
                     if (downloadDest == null)
                     {
