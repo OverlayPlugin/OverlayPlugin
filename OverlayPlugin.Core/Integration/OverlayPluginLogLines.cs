@@ -170,12 +170,10 @@ namespace RainbowMage.OverlayPlugin
             logger.Log(LogLevel.Error, message);
         }
 
-        private IOpcodeConfigEntry GetOpcode(string name, Opcodes opcodes, string version, string opcodeType)
+        private IOpcodeConfigEntry GetOpcode(string name, Opcodes opcodes, string version, string opcodeType, MachinaRegion machinaRegion)
         {
             if (opcodes == null)
                 return null;
-
-            var machinaRegion = repository.GetMachinaRegion().ToString();
 
             if (opcodes.TryGetValue(machinaRegion, out var regionOpcodes))
             {
@@ -202,23 +200,54 @@ namespace RainbowMage.OverlayPlugin
 
             return null;
         }
-
         public IOpcodeConfigEntry this[string name]
         {
             get
             {
+                var machinaRegion = repository.GetMachinaRegion().ToString();
+                return this[name, machinaRegion];
+            }
+        }
+
+        public IOpcodeConfigEntry this[string name, MachinaRegion machinaRegion]
+        {
+            get
+            {
                 var version = repository.GetGameVersion();
-                if (version == null)
+                if (version == null || version == "")
                 {
-                    LogException("Could not detect game version from FFXIV_ACT_Plugin");
-                    return null;
+                    LogException($"Could not detect game version from FFXIV_ACT_Plugin, defaulting to latest version for region {machinaRegion}");
+
+                    var possibleVersions = new List<string>();
+                    if (opcodesFile != null && opcodesFile.ContainsKey(machinaRegion))
+                    {
+                        foreach (var key in opcodesFile[machinaRegion].Keys)
+                            possibleVersions.Add(key);
+                    }
+
+                    if (opcodesConfig != null && opcodesConfig.ContainsKey(machinaRegion))
+                    {
+                        foreach (var key in opcodesConfig[machinaRegion].Keys)
+                            possibleVersions.Add(key);
+                    }
+                    possibleVersions.Sort();
+
+                    if (possibleVersions.Count > 0)
+                    {
+                        version = possibleVersions[possibleVersions.Count - 1];
+                        LogException($"Detected most recent version for {machinaRegion} = {version}");
+                    }
+                    else
+                    {
+                        LogException($"Could not determine latest version for region {machinaRegion}");
+                        return null;
+                    }
                 }
 
-                IOpcodeConfigEntry opcode = null;
-                opcode = GetOpcode(name, opcodesConfig, version, "config");
+                var opcode = GetOpcode(name, opcodesConfig, version, "config", machinaRegion);
                 if (opcode == null)
                 {
-                    opcode = GetOpcode(name, opcodesFile, version, "file");
+                    opcode = GetOpcode(name, opcodesFile, version, "file", machinaRegion);
 
                     // Try once to get this remotely, but only if this opcode or version is missing.
                     // TODO: we could consider getting this once always too, but for now
@@ -227,7 +256,7 @@ namespace RainbowMage.OverlayPlugin
                     {
                         haveAttemptedOpcodeDownload = true;
                         SaveRemoteOpcodesToConfig();
-                        return GetOpcode(name, opcodesConfig, version, "config");
+                        return GetOpcode(name, opcodesConfig, version, "config", machinaRegion);
                     }
                 }
 

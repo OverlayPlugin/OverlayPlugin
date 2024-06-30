@@ -354,6 +354,29 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        public static Dictionary<GameRegion, Dictionary<string, ushort>> GetMachinaOpcodes()
+        {
+            try
+            {
+                var mach = Assembly.Load("Machina.FFXIV");
+                var opcode_manager_type = mach.GetType("Machina.FFXIV.Headers.Opcodes.OpcodeManager");
+                var opcode_manager = opcode_manager_type.GetProperty("Instance").GetValue(null);
+
+                // This is ugly, but C# doesn't like typecasting directly because our local `GameRegion` isn't the exact same as Machina's.
+                var machinaOpcodes = (System.Collections.IDictionary)opcode_manager_type.GetField("_opcodes", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(opcode_manager);
+
+                var opcodes = new Dictionary<GameRegion, Dictionary<string, ushort>>();
+                foreach (var key in machinaOpcodes.Keys)
+                {
+                    opcodes.Add((GameRegion)(int)key, (Dictionary<string, ushort>)machinaOpcodes[key]);
+                }
+
+                return opcodes;
+            }
+            catch (Exception) { }
+            return null;
+        }
+
         public GameRegion GetMachinaRegion()
         {
             return GameRegion.Chinese;
@@ -398,7 +421,7 @@ namespace RainbowMage.OverlayPlugin
          *
          * See https://github.com/ravahn/FFXIV_ACT_Plugin/issues/298
          */
-        public float ConvertUInt16Coordinate(ushort value)
+        public static float ConvertUInt16Coordinate(ushort value)
         {
             return (value - 0x7FFF) / 32.767f;
         }
@@ -411,7 +434,7 @@ namespace RainbowMage.OverlayPlugin
          * 
          * See https://github.com/ravahn/FFXIV_ACT_Plugin/issues/298
          */
-        public double ConvertHeading(ushort heading)
+        public static double ConvertHeading(ushort heading)
         {
             return heading
                // Normalize to turns
@@ -426,7 +449,7 @@ namespace RainbowMage.OverlayPlugin
          * Reinterpret a float as a UInt16. Some fields in Machina, such as Server_ActorCast.Rotation, are
          * marked as floats when they really should be UInt16.
          */
-        public ushort InterpretFloatAsUInt16(float value)
+        public static ushort InterpretFloatAsUInt16(float value)
         {
             return BitConverter.ToUInt16(BitConverter.GetBytes(value), 0);
         }

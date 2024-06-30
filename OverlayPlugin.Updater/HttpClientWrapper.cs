@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Threading;
+using Advanced_Combat_Tracker;
 
 namespace RainbowMage.OverlayPlugin.Updater
 {
@@ -32,6 +33,9 @@ namespace RainbowMage.OverlayPlugin.Updater
         public static string Get(string url, Dictionary<string, string> headers, string downloadDest,
             ProgressInfoCallback infoCb, bool resume)
         {
+            if (!ActGlobals.oFormActMain.InvokeRequired)
+                throw new HttpClientException(false, "HttpClientWrapper called on UI thread, this can cause deadlocks");
+
             var completionLock = new object();
             string result = null;
             Exception error = null;
