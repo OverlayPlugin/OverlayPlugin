@@ -316,7 +316,7 @@ namespace RainbowMage.HtmlRenderer
 
         private void OverlayForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.Renderer.EndRender();
+            this.Renderer?.EndRender();
             terminated = true;
         }
 
@@ -326,20 +326,18 @@ namespace RainbowMage.HtmlRenderer
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (this.surfaceBuffer != null)
+            terminated = true;
+
+            if (disposing)
             {
-                this.surfaceBuffer.Dispose();
+                surfaceBuffer?.Dispose();
+                surfaceBuffer = null;
+                Renderer?.Dispose();
+                Renderer = null;
+                components?.Dispose();
+                components = null;
             }
 
-            if (this.Renderer != null)
-            {
-                this.Renderer.Dispose();
-            }
-
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
