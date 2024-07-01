@@ -35,7 +35,8 @@ namespace RainbowMage.OverlayPlugin
 
         public static void AttachTo(Renderer r, TinyIoCContainer container)
         {
-            r.SetApi(new MinimalApi(r, container));
+            if (r != null)
+                r.SetApi(new MinimalApi(r, container));
         }
 
         [Obsolete("Please pass your IoC container to AttachTo().")]
