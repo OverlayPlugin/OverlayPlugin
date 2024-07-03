@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
@@ -20,6 +21,8 @@ namespace RainbowMage.OverlayPlugin
     // so that folks don't have to paste screenshots in discord.
     class ClipboardTechSupport
     {
+        readonly string ACTPathPattern = @"C:\\Users\\.*\\AppData\\Roaming\\Advanced Combat Tracker";
+        readonly string ACTPathReplace = "<ACT Folder>";
         private SimpleTable plugins;
         private SimpleTable overlays;
         private SimpleTable settings;
@@ -69,7 +72,7 @@ namespace RainbowMage.OverlayPlugin
         {
             warnings = new SimpleTable { new List<string> { "Warnings" } };
 
-            plugins = new SimpleTable { new List<string> { "Plugin Name", "Enabled", "Version", "Path" } };
+            plugins = new SimpleTable { new List<string> { "Plugin Name", "- Status", "- Version", "- Path" } };
 
             actProcesses = Process.GetProcessesByName("Advanced Combat Tracker");
             if (actProcesses.Length > 1)
@@ -85,13 +88,15 @@ namespace RainbowMage.OverlayPlugin
                 // TODO: plugin.pluginVersion has FileVersion, ProductVersion, etc, but all as a string.
                 // For now, ask FileVersionInfo to get this for us.
                 var fullPath = plugin.pluginFile.FullName;
+                var fullpathregex = Regex.Replace(fullPath, ACTPathPattern, ACTPathReplace);
                 var version = FileVersionInfo.GetVersionInfo(fullPath);
+                var state = plugin.cbEnabled.Checked.ToString() == "True" ? "Enabled" : "Disabled";
                 plugins.Add(new List<string>{
-                    plugin.pluginFile.Name,
+                    plugin.pluginFile.Name, "-",
                     // TODO: could check plugin.pluginObj to see if it loaded successfully.
-                    plugin.cbEnabled.Checked.ToString(),
-                    version?.FileVersion?.ToString() ?? "",
-                    fullPath,
+                    state,  "-",
+                    version?.FileVersion?.ToString() ?? "",  "-",
+                    fullpathregex,
                 });
 
                 if (plugin.pluginFile.Name == "FFXIV_ACT_Plugin.dll")
@@ -113,30 +118,31 @@ namespace RainbowMage.OverlayPlugin
             }
 
             var pluginConfig = container.Resolve<IPluginConfig>();
-            overlays = new SimpleTable { new List<string> { "Overlay Name", "URL" } };
+            overlays = new SimpleTable { new List<string> { "Overlay Name", "- URL" } };
             foreach (var overlay in pluginConfig.Overlays)
             {
+                var UrlRegex = Regex.Replace(overlay.Url, ACTPathPattern, ACTPathReplace);
                 overlays.Add(new List<string>{
-                    overlay.Name,
-                    overlay.Url,
+                    overlay.Name, "-",
+                    UrlRegex,
                 });
             }
 
-            settings = new SimpleTable { new List<string> { "Various Settings", "Value" } };
+            settings = new SimpleTable { new List<string> { "Various Settings", "- Value" } };
             var repository = container.Resolve<FFXIVRepository>();
             if (repository.IsFFXIVPluginPresent())
             {
-                settings.Add(new List<string> { "Plugin Language", repository.GetLanguage().ToString() });
-                settings.Add(new List<string> { "Machina Region", repository.GetMachinaRegion().ToString() });
+                settings.Add(new List<string> { "Plugin Language", "-", repository.GetLanguage().ToString() });
+                settings.Add(new List<string> { "Machina Region", "-", repository.GetMachinaRegion().ToString() });
                 string gameVersion = repository.GetGameVersion();
-                settings.Add(new List<string> { "Game Version", gameVersion != "" ? gameVersion : "(not running)" });
+                settings.Add(new List<string> { "Game Version", "-", gameVersion != "" ? gameVersion : "(not running)" });
 
                 if (screenMode == null)
                 {
                     screenMode = "(unknown)";
                     repository.RegisterProcessChangedHandler(GetFFXIVScreenMode);
                 }
-                settings.Add(new List<string> { "Screen Mode", screenMode });
+                settings.Add(new List<string> { "Screen Mode", "-", screenMode });
 
                 try
                 {
@@ -158,14 +164,14 @@ namespace RainbowMage.OverlayPlugin
                     actIsAdmin = "(unknown - check warnings)";
                     warnings.Add(new List<string> { "Could not check for ACT process elevation: " + e.Message });
                 }
-                settings.Add(new List<string> { "ACT Process Elevation", actIsAdmin });
+                settings.Add(new List<string> { "ACT Process Elevation", "-", actIsAdmin });
 
                 if (ffxivIsAdmin == null)
                 {
                     ffxivIsAdmin = "(unknown)";
                     repository.RegisterProcessChangedHandler(GetFFXIVIsRunningAsAdmin);
                 }
-                settings.Add(new List<string> { "FFXIV Process Elevation", ffxivIsAdmin });
+                settings.Add(new List<string> { "FFXIV Process Elevation", "-", ffxivIsAdmin });
 
                 var tabPage = repository.GetPluginTabPage();
                 if (tabPage != null)
@@ -181,8 +187,13 @@ namespace RainbowMage.OverlayPlugin
                         {
                             continue;
                         }
+                        if (cbName == "chkShowDebug" && cb.Checked == false)
+                        {
+                            // If Show Debug Option Not Enabled, Not printing the DEBUG options
+                            return;
+                        }
 
-                        settings.Add(new List<string> { settingText, cb.Checked.ToString() });
+                        settings.Add(new List<string> { settingText, "-", cb.Checked.ToString() });
 
                         if (cb.Name == hideChatLogForPrivacyName && cb.Checked)
                         {
@@ -195,7 +206,7 @@ namespace RainbowMage.OverlayPlugin
                     // Include any unknown checkboxes last with text as written.
                     foreach (var cb in checkboxes.Values)
                     {
-                        settings.Add(new List<string> { cb.Text, cb.Checked.ToString() });
+                        settings.Add(new List<string> { cb.Text, "-", cb.Checked.ToString() });
                     }
                 }
             }
@@ -216,7 +227,8 @@ namespace RainbowMage.OverlayPlugin
                 try
                 {
                     var userDir = cactbotConfig["options"]["general"]["CactbotUserDirectory"];
-                    settings.Add(new List<string> { "Cactbot User Dir", userDir.ToString() });
+                    var userdirregex = Regex.Replace(userDir.ToString(), ACTPathPattern, ACTPathReplace);
+                    settings.Add(new List<string> { "Cactbot User Dir", "-", userdirregex });
                 }
                 catch { }
             }
@@ -346,18 +358,7 @@ namespace RainbowMage.OverlayPlugin
 
         private string TableToString(SimpleTable input)
         {
-            // Find the maximum length of each column.
-            List<int> lengths = new List<int>();
             int numColumns = input.Select(x => x.Count).Max();
-            for (int column = 0; column < numColumns; ++column)
-            {
-                lengths.Add(input.Select(x => x.ElementAtOrDefault(column)?.Length ?? 0).Max());
-            }
-
-            // Construct a line of hyphens to place after the first row.
-            int numHyphens = lengths.Sum() + numColumns - 1;
-            string hyphens = new String('-', numHyphens) + "\n";
-
             string text = "";
             foreach (var row in input)
             {
@@ -366,17 +367,10 @@ namespace RainbowMage.OverlayPlugin
                     if (column != 0)
                         text += " ";
                     var elem = row.ElementAtOrDefault(column);
-                    var padLength = -lengths[column];
-                    if (column == numColumns - 1)
-                        padLength = 0;
-                    text += String.Format($"{{0, {padLength}}}", elem);
+                    text += String.Format($"{elem}");
                 }
                 text += "\n";
-
-                text += hyphens;
-                hyphens = "";
             }
-
             return text;
         }
 
@@ -386,13 +380,13 @@ namespace RainbowMage.OverlayPlugin
             if (warnings.Count > 1)
             {
                 text += TableToString(warnings);
-                text += "\n\n";
+                text += "\n";
             }
 
             text += TableToString(plugins);
-            text += "\n\n";
+            text += "\n";
             text += TableToString(overlays);
-            text += "\n\n";
+            text += "\n";
             text += TableToString(settings);
             text += "```\n";
 
