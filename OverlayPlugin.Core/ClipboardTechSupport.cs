@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
@@ -18,7 +19,6 @@ namespace RainbowMage.OverlayPlugin
     // so that folks don't have to paste screenshots in discord.
     class ClipboardTechSupport
     {
-        string roamingAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         string ACTPathPattern;
         readonly string ACTPathReplace = "<ACT Folder>";
         private List<string> plugins;
@@ -68,8 +68,9 @@ namespace RainbowMage.OverlayPlugin
 
         public ClipboardTechSupport(TinyIoCContainer container)
         {
-            ACTPathPattern = $@"{Regex.Escape(roamingAppData)}\\Advanced Combat Tracker";
-            
+            string ActAppData = ActGlobals.oFormActMain.AppDataFolder.FullName;
+            ACTPathPattern = $@"{Regex.Escape(ActAppData)}";
+
             warnings = new List<string> { "Warnings" };
             plugins = new List<string> { "Plugin Name" + " - Status" + " - Version" + " - Path" };
 
