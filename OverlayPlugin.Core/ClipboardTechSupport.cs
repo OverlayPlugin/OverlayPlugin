@@ -71,7 +71,7 @@ namespace RainbowMage.OverlayPlugin
             ACTPathPattern = $@"{Regex.Escape(roamingAppData)}\\Advanced Combat Tracker";
             
             warnings = new List<string> { "Warnings" };
-            plugins = new List<string> { "Plugin Name" + "- Status" + "- Version" + "- Path" };
+            plugins = new List<string> { "Plugin Name" + " - Status" + " - Version" + " - Path" };
 
             actProcesses = Process.GetProcessesByName("Advanced Combat Tracker");
             if (actProcesses.Length > 1)
@@ -118,7 +118,7 @@ namespace RainbowMage.OverlayPlugin
             }
 
             var pluginConfig = container.Resolve<IPluginConfig>();
-            overlays = new List<string> { "Overlay Name" + "- URL" };
+            overlays = new List<string> { "Overlay Name" + " - URL" };
             foreach (var overlay in pluginConfig.Overlays)
             {
                 var UrlRegex = Regex.Replace(overlay.Url, ACTPathPattern, ACTPathReplace);
@@ -128,7 +128,7 @@ namespace RainbowMage.OverlayPlugin
                 );
             }
 
-            settings = new List<string> { "Various Settings" + "- Value" };
+            settings = new List<string> { "Various Settings" + " - Value" };
             var repository = container.Resolve<FFXIVRepository>();
             if (repository.IsFFXIVPluginPresent())
             {
