@@ -54,6 +54,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         DNC = 38,
         RPR = 39,
         SGE = 40,
+        VPR = 41,
+        PCT = 42,
     }
 
     public interface IJobGauge : IEquatable<IJobGauge>
@@ -207,6 +209,21 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         byte WhiteMana { get; }
         byte BlackMana { get; }
         byte ManaStacks { get; }
+    }
+
+
+    public interface IBasePictomancerGauge : IBaseJobGauge
+    {
+        byte PalleteGauge { get; }
+        byte Paint { get; }
+        CanvasFlags CanvasFlags { get; }
+        CanvasFlags CreatureMotif { get; }
+        bool WeaponMotif { get; }
+        bool LandscapeMotif { get; }
+        CreatureFlags CreatureFlags { get; }
+        string[] Depictions { get; }
+        bool MooglePortrait { get; }
+        bool MadeenPortrait { get; }
     }
 
     #endregion
@@ -420,6 +437,26 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
     {
         Lunar = 2,
         Solar = 4
+    }
+
+    [Flags]
+    public enum CanvasFlags : byte {
+        Pom = 1,
+        Wing = 1 << 1,
+        Claw = 1 << 2,
+        Maw = 1 << 3,
+        Weapon = 1 << 4,
+        Landscape = 1 << 5,
+    }
+
+    [Flags]
+    public enum CreatureFlags : byte {
+        Pom = 1,
+        Wings = 1 << 1,
+        Claw = 1 << 2,
+        // Maw = 1 << 3, // Once you paint the Maw motif, it becomes a Madeen portrait.
+        MooglePortrait = 1 << 4,
+        MadeenPortrait = 1 << 5,
     }
 
     #endregion

@@ -45,6 +45,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
                 case JobGaugeJob.BLM: ret.data = jobGaugeManager.BlackMage; break;
                 case JobGaugeJob.SMN: ret.data = jobGaugeManager.Summoner; break;
                 case JobGaugeJob.RDM: ret.data = jobGaugeManager.RedMage; break;
+                case JobGaugeJob.PCT: ret.data = jobGaugeManager.Pictomancer; break;
 
                 case JobGaugeJob.MNK: ret.data = jobGaugeManager.Monk; break;
                 case JobGaugeJob.DRG: ret.data = jobGaugeManager.Dragoon; break;

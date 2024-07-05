@@ -29,6 +29,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
             [FieldOffset(0x08)] public BlackMageGauge BlackMage;
             [FieldOffset(0x08)] public SummonerGauge Summoner;
             [FieldOffset(0x08)] public RedMageGauge RedMage;
+            [FieldOffset(0x08)] public PictomancerGauge Pictomancer;
 
             [FieldOffset(0x08)] public MonkGauge Monk;
             [FieldOffset(0x08)] public DragoonGauge Dragoon;
@@ -203,6 +204,45 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
             byte IBaseRedMageGauge.BlackMana => BlackMana;
 
             byte IBaseRedMageGauge.ManaStacks => ManaStacks;
+        }
+
+        
+        [StructLayout(LayoutKind.Explicit, Size = 0x10)]
+        public struct PictomancerGauge : IBasePictomancerGauge {
+            [FieldOffset(0x08)] public byte PalleteGauge;
+            [FieldOffset(0x0A)] public byte Paint;
+            [FieldOffset(0x0B)] public CanvasFlags CanvasFlags;
+            [FieldOffset(0x0C)] public CreatureFlags CreatureFlags;
+
+            byte IBasePictomancerGauge.PalleteGauge => PalleteGauge;
+
+            byte IBasePictomancerGauge.Paint => Paint;
+
+            CanvasFlags IBasePictomancerGauge.CanvasFlags => CanvasFlags;
+
+            CanvasFlags IBasePictomancerGauge.CreatureMotif => CanvasFlags;
+
+            bool IBasePictomancerGauge.WeaponMotif => CanvasFlags.HasFlag(CanvasFlags.Weapon);
+
+            bool IBasePictomancerGauge.LandscapeMotif => CanvasFlags.HasFlag(CanvasFlags.Landscape);
+
+            CreatureFlags IBasePictomancerGauge.CreatureFlags => CreatureFlags;
+
+            string[] IBasePictomancerGauge.Depictions {
+                get {
+                    var depictions = new System.Collections.Generic.List<string>();
+                    foreach (CreatureFlags flag in System.Enum.GetValues(typeof(CreatureFlags))) {
+                        if (CreatureFlags.HasFlag(flag)) {
+                            depictions.Add(flag.ToString());
+                        }
+                    }
+                    return depictions.ToArray();
+                }
+            }
+
+            bool IBasePictomancerGauge.MooglePortrait => CreatureFlags.HasFlag(CreatureFlags.MooglePortrait);
+
+            bool IBasePictomancerGauge.MadeenPortrait => CreatureFlags.HasFlag(CreatureFlags.MadeenPortrait);
         }
 
         #endregion
