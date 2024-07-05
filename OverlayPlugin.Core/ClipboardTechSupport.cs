@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
@@ -20,6 +21,7 @@ namespace RainbowMage.OverlayPlugin
     class ClipboardTechSupport
     {
         string ACTPathPattern;
+        string ACTPathPatternAlt;
         readonly string ACTPathReplace = "<ACT Folder>";
         private List<string> plugins;
         private List<string> overlays;
@@ -69,7 +71,9 @@ namespace RainbowMage.OverlayPlugin
         public ClipboardTechSupport(TinyIoCContainer container)
         {
             string ActAppData = ActGlobals.oFormActMain.AppDataFolder.FullName;
+            string ActAppDataAlt = ActGlobals.oFormActMain.AppDataFolder.FullName.Replace('\\','/').Replace(" ","%20");
             ACTPathPattern = $@"{Regex.Escape(ActAppData)}";
+            ACTPathPatternAlt = $@"{ActAppDataAlt}";
 
             warnings = new List<string> { "Warnings" };
             plugins = new List<string> { "Plugin Name" + " - Status" + " - Version" + " - Path" };
@@ -122,7 +126,8 @@ namespace RainbowMage.OverlayPlugin
             overlays = new List<string> { "Overlay Name" + " - URL" };
             foreach (var overlay in pluginConfig.Overlays)
             {
-                var UrlRegex = Regex.Replace(overlay.Url, ACTPathPattern, ACTPathReplace);
+                
+                var UrlRegex = Regex.Replace(overlay.Url, ACTPathPatternAlt, ACTPathReplace);
                 overlays.Add(
                     overlay.Name + " - " +
                     UrlRegex
@@ -180,7 +185,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     Dictionary<string, CheckBox> checkboxes = new Dictionary<string, CheckBox>();
                     GetCheckboxes(tabPage.Controls, checkboxes);
-
+                    var debug = true;
                     // Include all known checkboxes first in order, with English text.
                     foreach (var (cbName, settingText) in pluginCheckboxMap)
                     {
@@ -189,13 +194,15 @@ namespace RainbowMage.OverlayPlugin
                         {
                             continue;
                         }
-                        if (cbName == "chkShowDebug" && cb.Checked == false)
-                        {
-                            // If Show Debug Option Not Enabled, Not printing the DEBUG options
-                            return;
-                        }
-
+                        
                         settings.Add(settingText + " - " + cb.Checked.ToString());
+
+                        if (cb.Name == "chkShowDebug" && !cb.Checked)
+                        {
+                            debug = false;
+                            // If Show Debug Option Not Enabled, Not printing the DEBUG options
+                            break;
+                        }
 
                         if (cb.Name == hideChatLogForPrivacyName && cb.Checked)
                         {
@@ -208,6 +215,12 @@ namespace RainbowMage.OverlayPlugin
                     // Include any unknown checkboxes last with text as written.
                     foreach (var cb in checkboxes.Values)
                     {
+                        if (!debug && cb.Text.Contains("DEBUG"))
+                        {
+                            // This foreach loop goes through the CB left, 
+                            // and if debug is not enable those would be left in the list, so we skip those
+                            continue;
+                        }
                         settings.Add(cb.Text + " - " + cb.Checked.ToString());
                     }
                 }
