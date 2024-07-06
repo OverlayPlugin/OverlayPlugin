@@ -93,6 +93,7 @@ namespace RainbowMage.OverlayPlugin
                 // For now, ask FileVersionInfo to get this for us.
                 var fullPath = plugin.pluginFile.FullName;
                 var fullpathregex = Regex.Replace(fullPath, ACTPathPattern, ACTPathReplace);
+                fullpathregex = fullpathregex.Replace(Environment.UserName, "<USER>");
                 var version = FileVersionInfo.GetVersionInfo(fullPath);
                 string versionString = version.FileVersion.ToString() ?? "";
                 var state = plugin.cbEnabled.Checked.ToString() == "True" ? "Enabled" : "Disabled";
@@ -128,6 +129,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 
                 var UrlRegex = Regex.Replace(overlay.Url, ACTPathPatternAlt, ACTPathReplace);
+                UrlRegex = UrlRegex.Replace(Environment.UserName, "<USER>");
                 overlays.Add(
                     overlay.Name + " - " +
                     UrlRegex
@@ -218,7 +220,7 @@ namespace RainbowMage.OverlayPlugin
                         if (!debug && cb.Text.Contains("DEBUG"))
                         {
                             // This foreach loop goes through the CB left, 
-                            // and if debug is not enable those would be left in the list, so we skip those
+                            //and if debug is not enable those would be left in the list, so we skip those
                             continue;
                         }
                         settings.Add(cb.Text + " - " + cb.Checked.ToString());
@@ -243,6 +245,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     var userDir = cactbotConfig["options"]["general"]["CactbotUserDirectory"];
                     var userdirregex = Regex.Replace(userDir.ToString(), ACTPathPattern, ACTPathReplace);
+                    userdirregex = userdirregex.Replace(Environment.UserName, "<USER>");
                     settings.Add("Cactbot User Dir" + " - " + userdirregex);
                 }
                 catch { }
@@ -392,6 +395,9 @@ namespace RainbowMage.OverlayPlugin
             text += "\n\n";
             text += ListToString(settings);
             text += "\n```\n";
+            text += ACTPathPattern + "\n";
+            text += ACTPathPatternAlt + "\n";
+
 
             Clipboard.SetText(text);
         }
