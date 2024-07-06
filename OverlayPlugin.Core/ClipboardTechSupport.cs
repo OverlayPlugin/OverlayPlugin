@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -71,7 +71,7 @@ namespace RainbowMage.OverlayPlugin
         public ClipboardTechSupport(TinyIoCContainer container)
         {
             string ActAppData = ActGlobals.oFormActMain.AppDataFolder.FullName;
-            string ActAppDataAlt = ActGlobals.oFormActMain.AppDataFolder.FullName.Replace('\\','/').Replace(" ","%20");
+            string ActAppDataAlt = ActGlobals.oFormActMain.AppDataFolder.FullName.Replace('\\', '/').Replace(" ", "%20");
             ACTPathPattern = $@"{Regex.Escape(ActAppData)}";
             ACTPathPatternAlt = $@"{ActAppDataAlt}";
 
@@ -100,7 +100,7 @@ namespace RainbowMage.OverlayPlugin
                 plugins.Add(
                     plugin.pluginFile.Name + " - " +
                     // TODO: could check plugin.pluginObj to see if it loaded successfully.
-                    state +  " - " +
+                    state + " - " +
                     versionString + " - " +
                     censoredFullPath
                 );
@@ -127,7 +127,7 @@ namespace RainbowMage.OverlayPlugin
             overlays = new List<string> { "Overlay Name" + " - URL" };
             foreach (var overlay in pluginConfig.Overlays)
             {
-                
+
                 var censoredUrl = Regex.Replace(overlay.Url, ACTPathPatternAlt, ACTPathReplace);
                 censoredUrl = censoredUrl.Replace(Environment.UserName, "<USER>");
                 overlays.Add(
@@ -196,7 +196,7 @@ namespace RainbowMage.OverlayPlugin
                         {
                             continue;
                         }
-                        
+
                         settings.Add(settingText + " - " + cb.Checked.ToString());
 
                         if (cb.Name == "chkShowDebug" && !cb.Checked)
