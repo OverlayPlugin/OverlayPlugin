@@ -395,8 +395,6 @@ namespace RainbowMage.OverlayPlugin
             text += "\n\n";
             text += ListToString(settings);
             text += "\n```\n";
-            text += ACTPathPattern + "\n";
-            text += ACTPathPatternAlt + "\n";
 
 
             Clipboard.SetText(text);
