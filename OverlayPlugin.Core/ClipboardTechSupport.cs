@@ -102,7 +102,7 @@ namespace RainbowMage.OverlayPlugin
                     // TODO: could check plugin.pluginObj to see if it loaded successfully.
                     state +  " - " +
                     versionString + " - " +
-                    fullpathregex
+                    censoredFullPath
                 );
 
                 if (plugin.pluginFile.Name == "FFXIV_ACT_Plugin.dll")
@@ -128,11 +128,11 @@ namespace RainbowMage.OverlayPlugin
             foreach (var overlay in pluginConfig.Overlays)
             {
                 
-                var UrlRegex = Regex.Replace(overlay.Url, ACTPathPatternAlt, ACTPathReplace);
-                UrlRegex = UrlRegex.Replace(Environment.UserName, "<USER>");
+                var censoredUrl = Regex.Replace(overlay.Url, ACTPathPatternAlt, ACTPathReplace);
+                censoredUrl = censoredUrl.Replace(Environment.UserName, "<USER>");
                 overlays.Add(
                     overlay.Name + " - " +
-                    UrlRegex
+                    censoredUrl
                 );
             }
 
