@@ -92,8 +92,8 @@ namespace RainbowMage.OverlayPlugin
                 // TODO: plugin.pluginVersion has FileVersion, ProductVersion, etc, but all as a string.
                 // For now, ask FileVersionInfo to get this for us.
                 var fullPath = plugin.pluginFile.FullName;
-                var fullpathregex = Regex.Replace(fullPath, ACTPathPattern, ACTPathReplace);
-                fullpathregex = fullpathregex.Replace(Environment.UserName, "<USER>");
+                var censoredFullPath = Regex.Replace(fullPath, ACTPathPattern, ACTPathReplace);
+                censoredFullPath = censoredFullPath.Replace(Environment.UserName, "<USER>");
                 var version = FileVersionInfo.GetVersionInfo(fullPath);
                 string versionString = version.FileVersion.ToString() ?? "";
                 var state = plugin.cbEnabled.Checked.ToString() == "True" ? "Enabled" : "Disabled";
