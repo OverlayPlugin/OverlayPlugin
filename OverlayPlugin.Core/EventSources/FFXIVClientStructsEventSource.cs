@@ -72,6 +72,12 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             dynamic addonPartyList = atkStageMemory.GetAddon("_PartyList");
 
+            if (addonPartyList == null)
+            {
+                logger.Log(LogLevel.Error, "addonPartyList not found");
+                return null;
+            }
+
             partyList.ChocoboCount = addonPartyList.ChocoboCount;
             partyList.MemberCount = addonPartyList.MemberCount;
             partyList.PartyType = addonPartyList.PartyTypeTextNode.NodeText;
