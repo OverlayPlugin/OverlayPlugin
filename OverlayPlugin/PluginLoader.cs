@@ -152,7 +152,8 @@ namespace RainbowMage.OverlayPlugin
                 // To work around that, we just enable our killswitch here which causes any attempt to create a new
                 // renderer to noop.
                 SetNoMoreRenders(true);
-            } catch(Exception e) {}
+            }
+            catch (Exception e) { }
 
             if (pluginMain != null && !initFailed)
             {
