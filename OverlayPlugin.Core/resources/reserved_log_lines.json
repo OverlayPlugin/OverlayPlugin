@@ -140,6 +140,13 @@
         "Comment": "Extra info from ActorControlSelf packets"
     },
     {
+        "ID": 275,
+        "Name": "EventStartPlayFinish",
+        "Source": "OverlayPlugin",
+        "Version": 1,
+        "Comment": "EventStart, EventFinish, and EventPlay* packet data"
+    },
+    {
         "StartID": 256,
         "EndID": 512,
         "Source": "OverlayPlugin",

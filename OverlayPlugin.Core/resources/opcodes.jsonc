@@ -81,6 +81,48 @@
             "ActorSetPos": {
                 "opcode": 570,
                 "size": 24
+            },
+            // EventPlay*, EventStart, and EventFinish packets have their size defined by the actual packet struct definition,
+            // as they include header size. So we don't need to provide a valid size variable here
+            "EventPlay1": {
+                "opcode": 341,
+                "size": 1
+            },
+            "EventPlay4": {
+                "opcode": 208,
+                "size": 1
+            },
+            "EventPlay8": {
+                "opcode": 555,
+                "size": 1
+            },
+            "EventPlay16": {
+                "opcode": 210,
+                "size": 1
+            },
+            "EventPlay32": {
+                "opcode": 719,
+                "size": 1
+            },
+            "EventPlay64": {
+                "opcode": 468,
+                "size": 1
+            },
+            "EventPlay128": {
+                "opcode": 927,
+                "size": 1
+            },
+            "EventPlay255": {
+                "opcode": 115,
+                "size": 1
+            },
+            "EventStart": {
+                "opcode": 326,
+                "size": 1
+            },
+            "EventFinish": {
+                "opcode": 825,
+                "size": 1
             }
         }
     },

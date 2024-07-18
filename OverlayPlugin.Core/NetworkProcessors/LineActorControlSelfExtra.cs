@@ -20,6 +20,10 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 // 274|2024-03-21T20:45:41.3680000-04:00|10001234|0210|129D|10001234|F|0|0|0|d274429622d0c27e
 // 00|2024-03-21T20:45:40.0000000-04:00|08BE||You obtain 15 MGP.|97702e809544a633
 
+// To test `FishingMsg`, just catch a fish.
+// 274|2024-05-12T00:43:44.5690000-04:00|10001234|0140|7C0001|70095|0|0|0|0|1e6e32a5eab814d2
+// 00|2024-05-12T00:43:44.0000000-04:00|0843||You land a harbor herring measuring 12.4 ilms!|8aa7801f9c7dded4
+
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
     class LineActorControlSelfExtra : LineBaseSubMachina<LineActorControlSelfExtra.ActorControlSelfExtraPacket>
@@ -34,6 +38,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             // except that 0x0210 messages usually have another actor ID in the parameters
             Server_ActorControlCategory.DisplayLogMessage,
             Server_ActorControlCategory.DisplayLogMessageParams,
+            Server_ActorControlCategory.FishingMsg,
         };
 
         internal class ActorControlSelfExtraPacket : MachinaPacketWrapper
