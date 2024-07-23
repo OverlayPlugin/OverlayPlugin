@@ -20,7 +20,11 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         // Any category defined in this array will be allowed as an emitted line
         public static readonly Server_ActorControlCategory[] AllowedActorControlCategories = {
             Server_ActorControlCategory.SetAnimationState,
-            Server_ActorControlCategory.DisplayPublicContentTextMessage
+            Server_ActorControlCategory.DisplayPublicContentTextMessage,
+            Server_ActorControlCategory.VfxUnknown49,
+            Server_ActorControlCategory.SetModelState,
+            Server_ActorControlCategory.PlayActionTimeline,
+            Server_ActorControlCategory.EObjAnimation,
         };
 
         internal class ActorControlExtraPacket : MachinaPacketWrapper

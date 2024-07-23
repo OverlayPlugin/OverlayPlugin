@@ -91,6 +91,14 @@ namespace RainbowMage.OverlayPlugin
             await FinishInit(container);
         }
 
+        // Make sure that .NET only tries to load HtmlRenderer once this method is called and not
+        // when a calling method is called (assembly references are resolved before a method is called).
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private void SetNoMoreRenders(bool value)
+        {
+            Renderer.noMoreRenders = value;
+        }
+
         public async Task FinishInit(TinyIoCContainer container)
         {
             if (await CefInstaller.EnsureCef(GetCefPath()))
@@ -99,6 +107,9 @@ namespace RainbowMage.OverlayPlugin
                 // the CefInstaller is done.
                 if (SanityChecker.LoadSaneAssembly("HtmlRenderer"))
                 {
+                    // Make sure the killswitch isn't still enabled.
+                    SetNoMoreRenders(false);
+
                     // Since this is an async method, we could have switched threds. Make sure InitPlugin() runs on the ACT main thread.
                     ActGlobals.oFormActMain.Invoke((Action)(() =>
                     {
@@ -133,6 +144,17 @@ namespace RainbowMage.OverlayPlugin
 
         public void DeInitPlugin()
         {
+            try
+            {
+                // Due to some issues with WinForms, some event handlers might try to create new renderers which is
+                // pointless since we're shutting down anyway and can cause crashes because CEF just crashes the entire
+                // process if a window handle for a parent window disappears while it's constructing a new renderer.
+                // To work around that, we just enable our killswitch here which causes any attempt to create a new
+                // renderer to noop.
+                SetNoMoreRenders(true);
+            }
+            catch (Exception e) { }
+
             if (pluginMain != null && !initFailed)
             {
                 pluginMain.DeInitPlugin();
