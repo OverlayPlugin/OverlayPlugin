@@ -153,7 +153,7 @@ namespace RainbowMage.OverlayPlugin
                 // renderer to noop.
                 SetNoMoreRenders(true);
             }
-            catch (Exception e) { }
+            catch (Exception) { }
 
             if (pluginMain != null && !initFailed)
             {

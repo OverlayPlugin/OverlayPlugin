@@ -95,7 +95,7 @@ namespace RainbowMage.OverlayPlugin
                 var censoredFullPath = Regex.Replace(fullPath, ACTPathPattern, ACTPathReplace);
                 censoredFullPath = censoredFullPath.Replace(Environment.UserName, "<USER>");
                 var version = FileVersionInfo.GetVersionInfo(fullPath);
-                string versionString = version.FileVersion.ToString() ?? "";
+                string versionString = version.FileVersion?.ToString() ?? "";
                 var state = plugin.cbEnabled.Checked.ToString() == "True" ? "Enabled" : "Disabled";
                 plugins.Add(
                     plugin.pluginFile.Name + " - " +
