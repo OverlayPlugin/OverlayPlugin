@@ -14,13 +14,13 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         internal unsafe struct RSV_v62 : IPacketStruct
         {
             public const int structSize = 1080;
-            public const int keySize = 0x30;
+            public const int keySize = 0x64;
             public const int valueSize = 0x404;
             [FieldOffset(0x0)]
             public int valueByteCount;
             [FieldOffset(0x4)]
             public fixed byte key[keySize];
-            [FieldOffset(0x34)]
+            [FieldOffset(0x68)]
             public fixed byte value[valueSize];
 
             public string ToString(long epoch, uint ActorID)
