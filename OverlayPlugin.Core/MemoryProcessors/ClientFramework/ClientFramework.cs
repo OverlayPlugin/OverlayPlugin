@@ -108,6 +108,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
                 clientFrameworkAddress = IntPtr.Zero;
                 fail.Add(nameof(clientFrameworkAddress));
             }
+            logger.Log(LogLevel.Debug, "clientFrameworkAddress: 0x{0:X}", clientFrameworkAddress.ToInt64());
 
             if (fail.Count == 0)
             {
