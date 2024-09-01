@@ -14,6 +14,7 @@ using RainbowMage.OverlayPlugin.EventSources;
 using RainbowMage.OverlayPlugin.MemoryProcessors;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Aggro;
 using RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage;
+using RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
 using RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Enmity;
@@ -272,6 +273,7 @@ namespace RainbowMage.OverlayPlugin
                                     // These are registered to be lazy-loaded. Use interface to force TinyIoC to use singleton pattern.
                                     _container.Register<ICombatantMemory, CombatantMemoryManager>();
                                     _container.Register<ITargetMemory, TargetMemoryManager>();
+                                    _container.Register<IClientFrameworkMemory, ClientFrameworkMemoryManager>();
                                     _container
                                         .Register<IContentFinderSettingsMemory, ContentFinderSettingsMemoryManager>();
                                     _container.Register<IAggroMemory, AggroMemoryManager>();
