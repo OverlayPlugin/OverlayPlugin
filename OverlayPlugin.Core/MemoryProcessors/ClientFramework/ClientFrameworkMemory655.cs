@@ -11,16 +11,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
     // the current global client, but they also appear to have been stable for
     // multiple releases prior to 7.0.  Including them here so there is at least
     // some support for ko/cn clients until they are on 7.0.
-    public class ClientFrameworkMemory655 : ClientFrameworkMemory, IClientFrameworkMemory655
+    partial class ClientFrameworkMemory655 : ClientFrameworkMemory, IClientFrameworkMemory655
     {
-        // FFXIVClientStructs.FFXIV.Client.System.Framework.Framework
-        [StructLayout(LayoutKind.Explicit, Size = 0x35C8)]
-        public unsafe partial struct ClientFrameworkStruct
-        {
-            [FieldOffset(0x0580)]
-            public byte ClientLanguage;
-        }
-
         private const string clientFrameworkSignature = "440FB6C0488B0D????????";
         private const int clientFrameworkSignatureOffset = -4;
 
@@ -46,7 +38,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
 
             try
             {
-                var clientFramework = ManagedType<ClientFrameworkStruct>.GetManagedTypeFromIntPtr(clientFrameworkAddress, memory).ToType();
+                var clientFramework = ManagedType<Framework>.GetManagedTypeFromIntPtr(clientFrameworkAddress, memory).ToType();
                 ret.clientLanguage = (ClientLang)clientFramework.ClientLanguage;
                 ret.foundLanguage = true;
             }

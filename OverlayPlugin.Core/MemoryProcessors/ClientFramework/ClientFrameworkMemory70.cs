@@ -6,20 +6,14 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
 {
     interface IClientFrameworkMemory70 : IClientFrameworkMemory { }
 
-    public class ClientFrameworkMemory70 : ClientFrameworkMemory, IClientFrameworkMemory70
+    partial class ClientFrameworkMemory70 : ClientFrameworkMemory, IClientFrameworkMemory70
     {
-        // FFXIVClientStructs.FFXIV.Client.System.Framework.Framework
-        [StructLayout(LayoutKind.Explicit, Size = 0x35D0)]
-        public unsafe partial struct ClientFrameworkStruct
-        {
-            [FieldOffset(0x0580)]
-            public byte ClientLanguage;
-        }
-
         private const string clientFrameworkSignature = "498BDC48891D????????";
         private const int clientFrameworkSignatureOffset = -4;
 
-        public ClientFrameworkMemory70(TinyIoCContainer container) : base(container, clientFrameworkSignature, clientFrameworkSignatureOffset) { }
+        public ClientFrameworkMemory70(TinyIoCContainer container)
+            : base(container, clientFrameworkSignature, clientFrameworkSignatureOffset)
+        { }
 
         public override Version GetVersion()
         {
@@ -41,7 +35,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
 
             try
             {
-                var clientFramework = ManagedType<ClientFrameworkStruct>.GetManagedTypeFromIntPtr(clientFrameworkAddress, memory).ToType();
+                var clientFramework = ManagedType<Framework>.GetManagedTypeFromIntPtr(clientFrameworkAddress, memory).ToType();
                 ret.clientLanguage = (ClientLang)clientFramework.ClientLanguage;
                 ret.foundLanguage = true;
             }
