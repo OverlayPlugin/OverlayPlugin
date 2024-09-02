@@ -71,8 +71,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Party
             public fixed byte PartyMembers[0x3A0 * 8]; // PartyMember type
             [FieldOffset(0x1D00)]
             public fixed byte AllianceMembers[0x3A0 * 20]; // PartyMember type
-            // Immediately after `AllianceMembers`, e.g. ((0x390 * 20)+0x1D00) = 0x6400
-            [FieldOffset(0x6400)]
+            // Immediately after `AllianceMembers`, e.g. ((0x3A0 * 20)+0x1D00) = 0x6580
+            [FieldOffset(0x6580)]
             public uint CurrentPartyFlags; // FFXIVClientStructs doesn't map this, but it contains flags that indicate the alliance the player is in, as well as other flags.
             [FieldOffset(0x6588)]
             public long PartyId; // both seem to be unique per party and replicated to every member
