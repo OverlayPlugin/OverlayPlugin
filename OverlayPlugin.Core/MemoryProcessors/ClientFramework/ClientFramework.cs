@@ -6,15 +6,14 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
 {
     public enum ClientLang
     {
+        // global client
         Japanese = 0,
         English = 1,
         German = 2,
         French = 3,
-        // The global client only supports the above options, but presumably
-        // other clients have different byte values for their languages.
-        // We don't know what these are yet, so make all other possible
-        // values 'Unknown', and we can map if/once they are known.
-        Unknown4 = 4,
+        // cn client
+        Chinese = 4,
+        // We don't know what these are yet; treat as unknown for now.
         Unknown5 = 5,
         Unknown6 = 6,
         Unknown7 = 7,

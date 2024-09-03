@@ -4,8 +4,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
 {
     partial class ClientFrameworkMemory655 : ClientFrameworkMemory, IClientFrameworkMemory655
     {
-        // Due to lack of multi-version support in FFXIVClientStructs, we need to duplicate these structures here per-version
-        // We use FFXIVClientStructs versions of the structs because they have more required details than FFXIV_ACT_Plugin's struct definitions
         // Many offsets are commented because they are typed and we don't need to bother with them.
         #region FFXIVClientStructs structs
         [StructLayout(LayoutKind.Explicit, Size = 0x35C8)]
