@@ -13,9 +13,10 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
         French = 3,
         // cn client
         Chinese = 4,
+        // ko client
+        Korean = 6,
         // We don't know what these are yet; treat as unknown for now.
         Unknown5 = 5,
-        Unknown6 = 6,
         Unknown7 = 7,
         Unknown8 = 8,
         Unknown9 = 9,
