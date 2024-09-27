@@ -321,35 +321,14 @@ Please try using the presets instead of manually setting the URL since this can 
   <data name="&gt;&gt;lblReadMe.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="btnCactbotUpdate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 116</value>
-  </data>
-  <data name="btnCactbotUpdate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 23</value>
-  </data>
-  <data name="btnCactbotUpdate.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="btnCactbotUpdate.Text" xml:space="preserve">
-    <value>Check For Cactbot Updates</value>
-  </data>
-  <data name="&gt;&gt;btnCactbotUpdate.Name" xml:space="preserve">
-    <value>btnCactbotUpdate</value>
-  </data>
-  <data name="&gt;&gt;btnCactbotUpdate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnCactbotUpdate.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnCactbotUpdate.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="btnClipboardTechSupport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnClipboardTechSupport.Location" type="System.Drawing.Point, System.Drawing">
     <value>20, 145</value>
+  </data>
+  <data name="btnClipboardTechSupport.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="btnClipboardTechSupport.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 23</value>
@@ -364,7 +343,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>btnClipboardTechSupport</value>
   </data>
   <data name="&gt;&gt;btnClipboardTechSupport.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;btnClipboardTechSupport.Parent" xml:space="preserve">
     <value>$this</value>
@@ -377,6 +356,9 @@ Please try using the presets instead of manually setting the URL since this can 
   </data>
   <data name="btnClearCEFCache.Location" type="System.Drawing.Point, System.Drawing">
     <value>241, 145</value>
+  </data>
+  <data name="btnClearCEFCache.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="btnClearCEFCache.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 23</value>
@@ -391,7 +373,7 @@ Please try using the presets instead of manually setting the URL since this can 
     <value>btnClearCEFCache</value>
   </data>
   <data name="&gt;&gt;btnClearCEFCache.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;btnClearCEFCache.Parent" xml:space="preserve">
     <value>$this</value>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Advanced_Combat_Tracker;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
@@ -31,6 +32,56 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
             SetupControlProperties();
             SetupConfigEventHandlers();
+
+            if (ActGlobals.oFormActMain != null)
+            {
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InvertColorsChanged += ActColorSettings_InvertColorsChanged;
+                UpdateActColorSettings();
+            }
+        }
+        private void ActColorSettings_InvertColorsChanged(object sender, EventArgs e)
+        {
+            UpdateActColorSettings();
+        }
+        private void ActColorSettings_ColorSettingChanged(Color NewColor)
+        {
+            UpdateActColorSettings();
+        }
+        private void UpdateActColorSettings()
+        {
+            this.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            this.ForeColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSetting;
+            if (ActGlobals.oFormActMain.ActColorSettings.InvertColors)
+            {
+                // TextBoxes
+                textGlobalHotkey.BorderStyle = BorderStyle.FixedSingle;
+                textLogParseUrl.BorderStyle = BorderStyle.FixedSingle;
+                // ComboBoxes
+                comboHotkeyType.FlatStyle = FlatStyle.Flat;
+            }
+            else
+            {
+                // TextBoxes
+                textGlobalHotkey.BorderStyle = BorderStyle.Fixed3D;
+                textLogParseUrl.BorderStyle = BorderStyle.Fixed3D;
+                // ComboBoxes
+                comboHotkeyType.FlatStyle = FlatStyle.Standard;
+            }
+            // Text Boxes
+            textGlobalHotkey.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            textGlobalHotkey.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            textLogParseUrl.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            textLogParseUrl.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            // ComboBoxes
+            comboHotkeyType.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            comboHotkeyType.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            // NumericUpDowns
+            nudMaxFrameRate.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            nudMaxFrameRate.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
         }
 
         private void SetupControlProperties()
