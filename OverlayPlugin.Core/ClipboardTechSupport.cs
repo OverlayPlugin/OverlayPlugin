@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
 using Newtonsoft.Json.Linq;
+using RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework;
 
 // TODO: print warning on cactbot plugin / url / user dir mismatch
 // TODO: include first N lines of OverlayPlugin log
@@ -36,6 +38,7 @@ namespace RainbowMage.OverlayPlugin
         private static WindowsIdentity actWi = null;
         private static WindowsIdentity ffxivWi = null;
         private static Process[] actProcesses = null;
+        private static string gameLanguage = null;
         private static string actIsAdmin = null;
         private static string ffxivIsAdmin = null;
         private static string screenMode = null;
@@ -137,6 +140,8 @@ namespace RainbowMage.OverlayPlugin
             }
 
             settings = new List<string> { "Various Settings" + " - Value" };
+            gameLanguage = GetGameLanguage(container);
+            settings.Add("Game Language" + " - " + gameLanguage);
             var repository = container.Resolve<FFXIVRepository>();
             if (repository.IsFFXIVPluginPresent())
             {
@@ -269,6 +274,22 @@ namespace RainbowMage.OverlayPlugin
             {
                 return null;
             }
+        }
+
+        private static string GetGameLanguage(TinyIoCContainer container)
+        {
+            var clientFrameworkMemory = container.Resolve<IClientFrameworkMemory>();
+            if (!clientFrameworkMemory.IsValid())
+            {
+                return "(unknown)";
+            }
+
+            var clientFramework = clientFrameworkMemory.GetClientFramework();
+            if (!clientFramework.foundLanguage)
+            {
+                return "(unknown)";
+            }
+            return clientFramework.clientLanguage.ToString();
         }
 
         private void GetFFXIVScreenMode(Process process)
