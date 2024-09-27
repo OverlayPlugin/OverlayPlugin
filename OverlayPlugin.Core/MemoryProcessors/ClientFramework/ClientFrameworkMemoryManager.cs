@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
+namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
 {
-    public interface IInCombatMemory : IVersionedMemory
+    public interface IClientFrameworkMemory : IVersionedMemory
     {
-        bool GetInCombat();
+        ClientFramework GetClientFramework();
     }
 
-    class InCombatMemoryManager : IInCombatMemory
+    class ClientFrameworkMemoryManager : IClientFrameworkMemory
     {
         private readonly TinyIoCContainer container;
         private readonly FFXIVRepository repository;
-        private IInCombatMemory memory = null;
+        private IClientFrameworkMemory memory = null;
 
-        public InCombatMemoryManager(TinyIoCContainer container)
+        public ClientFrameworkMemoryManager(TinyIoCContainer container)
         {
             this.container = container;
-            container.Register<IInCombatMemory61, InCombatMemory61>();
-            container.Register<IInCombatMemory70, InCombatMemory70>();
+            container.Register<IClientFrameworkMemory70, ClientFrameworkMemory70>();
+            container.Register<IClientFrameworkMemory655, ClientFrameworkMemory655>();
             repository = container.Resolve<FFXIVRepository>();
 
-            var memory = container.Resolve<FFXIVMemory>();
-            memory.RegisterOnProcessChangeHandler(FindMemory);
+            var ffxivMemory = container.Resolve<FFXIVMemory>();
+            ffxivMemory.RegisterOnProcessChangeHandler(FindMemory);
         }
 
         private void FindMemory(object sender, Process p)
@@ -38,9 +38,9 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
 
         public void ScanPointers()
         {
-            List<IInCombatMemory> candidates = new List<IInCombatMemory>();
-            candidates.Add(container.Resolve<IInCombatMemory70>());
-            candidates.Add(container.Resolve<IInCombatMemory61>());
+            List<IClientFrameworkMemory> candidates = new List<IClientFrameworkMemory>();
+            candidates.Add(container.Resolve<IClientFrameworkMemory70>());
+            candidates.Add(container.Resolve<IClientFrameworkMemory655>());
             memory = FFXIVMemory.FindCandidate(candidates, repository.GetMachinaRegion());
         }
 
@@ -60,13 +60,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
             return memory.GetVersion();
         }
 
-        public bool GetInCombat()
+        public ClientFramework GetClientFramework()
         {
             if (!IsValid())
-            {
-                return false;
-            }
-            return memory.GetInCombat();
+                return null;
+            return memory.GetClientFramework();
         }
     }
 }

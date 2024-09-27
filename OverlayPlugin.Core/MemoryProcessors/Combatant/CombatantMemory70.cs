@@ -4,21 +4,21 @@ using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
-    interface ICombatantMemory64 : ICombatantMemory { }
+    interface ICombatantMemory70 : ICombatantMemory { }
 
-    class CombatantMemory64 : CombatantMemory, ICombatantMemory64
+    class CombatantMemory70 : CombatantMemory, ICombatantMemory70
     {
         private const string charmapSignature = "488B5720B8000000E0483BD00F84????????488D0D";
 
-        public CombatantMemory64(TinyIoCContainer container)
-            : base(container, charmapSignature, CombatantMemory.Size, EffectMemory.Size)
+        public CombatantMemory70(TinyIoCContainer container)
+            : base(container, charmapSignature, CombatantMemory.Size, EffectMemory.Size, 629)
         {
 
         }
 
         public override Version GetVersion()
         {
-            return new Version(6, 4);
+            return new Version(7, 0);
         }
 
         // Returns a combatant if the combatant is a mob or a PC.
@@ -54,11 +54,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     ID = mem.ID,
                     OwnerID = mem.OwnerID == emptyID ? 0 : mem.OwnerID,
                     Type = (ObjectType)mem.Type,
-                    MonsterType = (MonsterType)mem.MonsterType,
+                    MonsterType = 0,
                     Status = (ObjectStatus)mem.Status,
                     ModelStatus = (ModelStatus)mem.ModelStatus,
                     // Normalize all possible aggression statuses into the basic 4 ones.
-                    AggressionStatus = (AggressionStatus)(mem.AggressionStatus - (mem.AggressionStatus / 4) * 4),
+                    AggressionStatus = 0,
                     NPCTargetID = mem.NPCTargetID,
                     RawEffectiveDistance = mem.EffectiveDistance,
                     PosX = mem.PosX,
@@ -120,8 +120,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         {
             public static int Size => Marshal.SizeOf(typeof(CombatantMemory));
 
-            // Unknown size, but this is the bytes up to the next field.
-            public const int NameBytes = 68;
+            // 64 bytes per both FFXIV_ACT_Plugin and aers/FFXIVClientStructs
+            public const int NameBytes = 64;
 
             public const int EffectCount = 60;
             public const int EffectBytes = EffectMemory.Size * EffectCount;
@@ -165,94 +165,88 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0x114)]
             public int ModelStatus;
 
-            [FieldOffset(0x1C4)]
+            [FieldOffset(0x1BC)]
             public int CurrentHP;
 
-            [FieldOffset(0x1C8)]
+            [FieldOffset(0x1C0)]
             public int MaxHP;
 
-            [FieldOffset(0x1CC)]
+            [FieldOffset(0x1C4)]
             public int CurrentMP;
 
-            [FieldOffset(0x1D0)]
+            [FieldOffset(0x1C8)]
             public int MaxMP;
 
-            [FieldOffset(0x1D4)]
+            [FieldOffset(0x1CC)]
             public ushort CurrentGP;
 
-            [FieldOffset(0x1D6)]
+            [FieldOffset(0x1CE)]
             public ushort MaxGP;
 
-            [FieldOffset(0x1D8)]
+            [FieldOffset(0x1D0)]
             public ushort CurrentCP;
 
-            [FieldOffset(0x1DA)]
+            [FieldOffset(0x1D2)]
             public ushort MaxCP;
 
-            [FieldOffset(0x1DC)]
+            [FieldOffset(0x1D4)]
             public short TransformationId;
 
-            [FieldOffset(0x1E2)]
+            [FieldOffset(0x1DA)]
             public byte Job;
 
-            [FieldOffset(0x1E3)]
+            [FieldOffset(0x1DB)]
             public byte Level;
 
-            [FieldOffset(0xCB0)]
-            public uint PCTargetID;
-
-            // TODO: this is incorrect in 6.3, please fix
-            [FieldOffset(0x19C3)]
-            public byte MonsterType;
-
-            // TODO: this is incorrect in 6.3, please fix
-            [FieldOffset(0x19DF)]
-            public byte AggressionStatus;
-
-            [FieldOffset(0x1AB8)]
-            public uint NPCTargetID;
-
-            [FieldOffset(0x1B00)]
-            public uint BNpcNameID;
-
-            [FieldOffset(0x1B1C)]
-            public ushort CurrentWorldID;
-
-            [FieldOffset(0x1B1E)]
-            public ushort WorldID;
-
-            [FieldOffset(0x1B2C)]
+            [FieldOffset(0xC70)]
             public byte WeaponId;
 
-            [FieldOffset(0x1B88)]
+            // TODO: Verify for 7.0. Could potentially be 0xD50, 0xF30, or 0x1110
+            [FieldOffset(0xD50)]
+            public uint PCTargetID;
+
+            [FieldOffset(0x2200)]
+            public uint NPCTargetID;
+
+            [FieldOffset(0x2240)]
+            public uint BNpcNameID;
+
+            [FieldOffset(0x2268)]
+            public ushort CurrentWorldID;
+
+            [FieldOffset(0x226A)]
+            public ushort WorldID;
+
+            [FieldOffset(0x22C8)]
             public fixed byte Effects[EffectBytes];
 
-            [FieldOffset(0x1D10)]
+            [FieldOffset(0x25B0)]
             public byte IsCasting1;
 
-            [FieldOffset(0x1D11)]
+            [FieldOffset(0x25B2)]
             public byte IsCasting2;
 
-            [FieldOffset(0x1D14)]
+            [FieldOffset(0x25B4)]
             public uint CastBuffID;
 
-            [FieldOffset(0x1D20)]
+            [FieldOffset(0x25C0)]
             public uint CastTargetID;
 
-            [FieldOffset(0x1D30)]
+            [FieldOffset(0x25D0)]
             public float CastGroundTargetX;
 
-            [FieldOffset(0x1D34)]
+            [FieldOffset(0x25D4)]
             public float CastGroundTargetY;
 
-            [FieldOffset(0x1D38)]
+            [FieldOffset(0x25D8)]
             public float CastGroundTargetZ;
 
-            [FieldOffset(0x1D44)]
+            [FieldOffset(0x25E4)]
             public float CastDurationCurrent;
 
-            [FieldOffset(0x1D48)]
+            [FieldOffset(0x25E8)]
             public float CastDurationMax;
+
             // Missing PartyType
         }
     }

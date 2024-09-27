@@ -56,13 +56,19 @@ namespace RainbowMage.HtmlRenderer
 
         public void Init(string url, int maxFrameRate = 30, object api = null)
         {
+            // Work around a bug where Cactbot calls this method during shutdown
+            if (!Visible)
+            {
+                return;
+            }
+
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.Selectable | ControlStyles.UserMouse, true);
             this.SetStyle(ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, false);
 
             lock (surfaceLock)
             {
-                if (surfaceBuffer == null)
+                if (surfaceBuffer == null && Width > 1 && Height > 1)
                 {
                     // Make sure we have a valid buffer to avoid the "No buffer!" warning in OnPaint().
                     surfaceBuffer = new Bitmap(Width, Height);

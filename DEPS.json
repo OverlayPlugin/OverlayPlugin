@@ -1,11 +1,11 @@
 {
   "ACT": {
-    "url": "https://github.com/EQAditu/AdvancedCombatTracker/releases/download/3.4.9.271/ACTv3.zip",
+    "url": "https://github.com/EQAditu/AdvancedCombatTracker/releases/download/3.8.0.283/ACTv3.zip",
     "dest": "Thirdparty/ACT",
     "strip": 0,
     "hash": [
       "sha256",
-      "eb5dc7074c32a534d4e80e0248976c9499c377b61892be2ae85ad631e5af6589"
+      "663F1A276425B51DEC2AF5CB9CA63507B75FBF46188A0D8C9A6BC11A6C4FDC6D"
     ]
   },
   "FFXIV_ACT_Plugin": {

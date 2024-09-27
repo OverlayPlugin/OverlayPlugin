@@ -1,158 +1,91 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
+using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    [Serializable]
-    [StructLayout(LayoutKind.Explicit)]
-    internal struct CEDirector_v62
+    class LineCEDirector : LineBaseCustom<
+            Server_MessageHeader_Global, LineCEDirector.CEDirector_v62,
+            Server_MessageHeader_CN, LineCEDirector.CEDirector_v62,
+            Server_MessageHeader_KR, LineCEDirector.CEDirector_v62>
     {
-        [FieldOffset(0x0)]
-        public uint popTime;
-        [FieldOffset(0x4)]
-        public ushort timeRemaining;
-        [FieldOffset(0x6)]
-        public ushort unk9;
-        [FieldOffset(0x8)]
-        public byte ceKey;
-        [FieldOffset(0x9)]
-        public byte numPlayers;
-        [FieldOffset(0xA)]
-        public byte status;
-        [FieldOffset(0xB)]
-        public byte unk10;
-        [FieldOffset(0xC)]
-        public byte progress;
-        [FieldOffset(0xD)]
-        public byte unk11;
-        [FieldOffset(0xE)]
-        public byte unk12;
-        [FieldOffset(0xF)]
-        public byte unk13;
-
-        public override string ToString()
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct CEDirector_v62 : IPacketStruct
         {
-            return
-                $"{popTime:X8}|" +
-                $"{timeRemaining:X4}|" +
-                $"{unk9:X4}|" +
-                $"{ceKey:X2}|" +
-                $"{numPlayers:X2}|" +
-                $"{status:X2}|" +
-                $"{unk10:X2}|" +
-                $"{progress:X2}|" +
-                $"{unk11:X2}|" +
-                $"{unk12:X2}|" +
-                $"{unk13:X2}";
+            [FieldOffset(0x0)]
+            public uint popTime;
+            [FieldOffset(0x4)]
+            public ushort timeRemaining;
+            [FieldOffset(0x6)]
+            public ushort unk9;
+            [FieldOffset(0x8)]
+            public byte ceKey;
+            [FieldOffset(0x9)]
+            public byte numPlayers;
+            [FieldOffset(0xA)]
+            public byte status;
+            [FieldOffset(0xB)]
+            public byte unk10;
+            [FieldOffset(0xC)]
+            public byte progress;
+            [FieldOffset(0xD)]
+            public byte unk11;
+            [FieldOffset(0xE)]
+            public byte unk12;
+            [FieldOffset(0xF)]
+            public byte unk13;
+
+            public string ToString(long epoch, uint ActorID)
+            {
+                string line =
+                    $"{popTime:X8}|" +
+                    $"{timeRemaining:X4}|" +
+                    $"{unk9:X4}|" +
+                    $"{ceKey:X2}|" +
+                    $"{numPlayers:X2}|" +
+                    $"{status:X2}|" +
+                    $"{unk10:X2}|" +
+                    $"{progress:X2}|" +
+                    $"{unk11:X2}|" +
+                    $"{unk12:X2}|" +
+                    $"{unk13:X2}";
+
+                var isBeingRemoved = status == 0;
+                if (isBeingRemoved)
+                {
+                    if (!ces.Remove(ceKey))
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    string oldData;
+                    if (ces.TryGetValue(ceKey, out oldData))
+                    {
+                        if (oldData == line)
+                        {
+                            return null;
+                        }
+                    }
+                    ces[ceKey] = line;
+                }
+
+                return line;
+            }
         }
-    }
-
-    public class LineCEDirector
-    {
         public const uint LogFileLineID = 259;
-        private ILogger logger;
-        private OverlayPluginLogLineConfig opcodeConfig;
-        private IOpcodeConfigEntry opcode = null;
-        private readonly int offsetMessageType;
-        private readonly int offsetPacketData;
-        private readonly FFXIVRepository ffxiv;
+        public const string logLineName = "CEDirector";
+        public const string MachinaPacketName = "CEDirector";
 
-        private Func<string, DateTime, bool> logWriter;
-        private static Dictionary<byte, CEDirector_v62> ces = new Dictionary<byte, CEDirector_v62>();
+        // Used to reduce spam of these packets to log file
+        // Only emit a line if it doesn't match the last line for this CE ID
+        private static Dictionary<byte, string> ces = new Dictionary<byte, string>();
 
         public LineCEDirector(TinyIoCContainer container)
+            : base(container, LogFileLineID, logLineName, MachinaPacketName)
         {
-            logger = container.Resolve<ILogger>();
-            ffxiv = container.Resolve<FFXIVRepository>();
-            var netHelper = container.Resolve<NetworkParser>();
-            if (!ffxiv.IsFFXIVPluginPresent())
-                return;
-            opcodeConfig = container.Resolve<OverlayPluginLogLineConfig>();
-            try
-            {
-                var mach = Assembly.Load("Machina.FFXIV");
-                var msgHeaderType = mach.GetType("Machina.FFXIV.Headers.Server_MessageHeader");
-                offsetMessageType = netHelper.GetOffset(msgHeaderType, "MessageType");
-                offsetPacketData = Marshal.SizeOf(msgHeaderType);
-                ffxiv.RegisterNetworkParser(MessageReceived);
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                logger.Log(LogLevel.Error, Resources.NetworkParserNoFfxiv);
-            }
-            catch (Exception e)
-            {
-                logger.Log(LogLevel.Error, Resources.NetworkParserInitException, e);
-            }
-            var customLogLines = container.Resolve<FFXIVCustomLogLines>();
-            this.logWriter = customLogLines.RegisterCustomLogLine(new LogLineRegistryEntry()
-            {
-                Name = "CEDirector",
-                Source = "OverlayPlugin",
-                ID = LogFileLineID,
-                Version = 1,
-            });
-
             ffxiv.RegisterZoneChangeDelegate((zoneID, zoneName) => ces.Clear());
         }
-
-        private unsafe void MessageReceived(string id, long epoch, byte[] message)
-        {
-            // Wait for network data to actually fetch opcode info from file and register log line
-            // This is because the FFXIV_ACT_Plugin's `GetGameVersion` method only returns valid data
-            // if the player is currently logged in/a network connection is active
-            if (opcode == null)
-            {
-                opcode = opcodeConfig["CEDirector"];
-                if (opcode == null)
-                {
-                    return;
-                }
-            }
-
-            if (message.Length < opcode.size + offsetPacketData)
-                return;
-
-            fixed (byte* buffer = message)
-            {
-                if (*(ushort*)&buffer[offsetMessageType] == opcode.opcode)
-                {
-                    DateTime serverTime = ffxiv.EpochToDateTime(epoch);
-                    CEDirector_v62 ceDirectorPacket = *(CEDirector_v62*)&buffer[offsetPacketData];
-                    var ceKey = ceDirectorPacket.ceKey;
-
-                    var isBeingRemoved = ceDirectorPacket.status == 0;
-                    if (isBeingRemoved)
-                    {
-                        if (!ces.Remove(ceKey))
-                        {
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        CEDirector_v62 oldData;
-                        if (ces.TryGetValue(ceKey, out oldData))
-                        {
-                            if (oldData.Equals(ceDirectorPacket))
-                            {
-                                return;
-                            }
-                        }
-                        ces[ceKey] = ceDirectorPacket;
-                    }
-
-
-                    logWriter(ceDirectorPacket.ToString(), serverTime);
-
-                    return;
-                }
-            }
-        }
-
     }
 }

@@ -20,6 +20,7 @@ namespace RainbowMage.HtmlRenderer
     public class Renderer : IDisposable
     {
         const string CRASH_SERVER = "https://sentry.gruenprint.de/api/12/minidump/?sentry_key=5742b37c4b71484e9ba590c6a6a0e137";
+        public static bool noMoreRenders = false;
 
         public event EventHandler<BrowserErrorEventArgs> BrowserError;
         public event EventHandler<BrowserLoadEventArgs> BrowserStartLoading;
@@ -57,6 +58,8 @@ namespace RainbowMage.HtmlRenderer
 
         public void InitBrowser()
         {
+            if (noMoreRenders) return;
+
             this._browser = new BrowserWrapper(lastUrl ?? "about:blank", automaticallyCreateBrowser: false, target: _target);
             _browser.RequestHandler = new CustomRequestHandler(this);
             _browser.MenuHandler = new ContextMenuHandler(_ctxMenuCallback);
@@ -76,14 +79,15 @@ namespace RainbowMage.HtmlRenderer
         public void SetApi(object api)
         {
             _api = api;
-            if (api != null)
+            if (api != null && _browser != null)
                 _browser.JavascriptObjectRepository.Register("OverlayPluginApi", api, isAsync: true);
         }
 
         public void SetContextMenuCallback(Func<int, int, bool> ctxMenuCallback)
         {
             _ctxMenuCallback = ctxMenuCallback;
-            _browser.MenuHandler = new ContextMenuHandler(ctxMenuCallback);
+            if (_browser != null)
+                _browser.MenuHandler = new ContextMenuHandler(ctxMenuCallback);
         }
 
         private void _browser_BrowserInitialized(object sender, EventArgs e)
@@ -191,7 +195,10 @@ namespace RainbowMage.HtmlRenderer
 
         public void BeginRender()
         {
+            if (noMoreRenders) return;
+
             EndRender();
+            InitBrowser();
 
             var cefWindowInfo = CreateWindowInfo();
             _isWindowless = cefWindowInfo.WindowlessRenderingEnabled;
@@ -211,8 +218,7 @@ namespace RainbowMage.HtmlRenderer
                 _browser.GetBrowser().CloseBrowser(true);
                 _browser.GetBrowserHost().CloseBrowser(true);
                 _browser.Dispose();
-
-                InitBrowser();
+                _browser = null;
             }
         }
 
