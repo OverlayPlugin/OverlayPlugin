@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
+using Advanced_Combat_Tracker;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -77,6 +78,54 @@ namespace RainbowMage.OverlayPlugin
             lblTypeDesc.Visible = false;
 
             textBox1.Focus();
+
+            if (ActGlobals.oFormActMain != null)
+            {
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InvertColorsChanged += ActColorSettings_InvertColorsChanged;
+                UpdateActColorSettings();
+            }
+        }
+
+        private void ActColorSettings_InvertColorsChanged(object sender, EventArgs e)
+        {
+            UpdateActColorSettings();
+        }
+        private void ActColorSettings_ColorSettingChanged(Color NewColor)
+        {
+            UpdateActColorSettings();
+        }
+        private void UpdateActColorSettings()
+        {
+            this.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            this.ForeColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSetting;
+            if (ActGlobals.oFormActMain.ActColorSettings.InvertColors)
+            {
+                // TextBoxes
+                textBox1.BorderStyle = BorderStyle.FixedSingle;
+                // ComboBoxes
+                cbPreset.FlatStyle = FlatStyle.Flat;
+                cbType.FlatStyle = FlatStyle.Flat;
+            }
+            else
+            {
+                // TextBoxes
+                textBox1.BorderStyle = BorderStyle.Fixed3D;
+                // ComboBoxes
+                cbPreset.FlatStyle = FlatStyle.Standard;
+                cbType.FlatStyle = FlatStyle.Standard;
+            }
+            // TextBoxes
+            textBox1.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            textBox1.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            // ComboBoxes
+            cbPreset.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            cbPreset.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            cbType.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            cbType.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
         }
 
         private Dictionary<string, OverlayPreset> PreparePresetCombo(ComboBox cbPreset)
