@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
@@ -106,55 +107,10 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         public static bool Create(string packetTypeName, out MachinaRegionalizedPacketHelper<PacketType> packetHelper, string packetOpcodeName = null)
         {
             packetOpcodeName = packetOpcodeName ?? packetTypeName;
-            packetHelper = null;
-            var opcodes = FFXIVRepository.GetMachinaOpcodes();
-            if (opcodes == null)
-            {
-                return false;
-            }
 
-            if (!opcodes.TryGetValue(GameRegion.Global, out var globalOpcodes))
-            {
-                return false;
-            }
-            if (!opcodes.TryGetValue(GameRegion.Chinese, out var cnOpcodes))
-            {
-                return false;
-            }
-            if (!opcodes.TryGetValue(GameRegion.Korean, out var krOpcodes))
-            {
-                return false;
-            }
-
-            if (!MachinaMap.GetPacketType(GameRegion.Global, packetTypeName, out var globalPacketType))
-            {
-                return false;
-            }
-            if (!MachinaMap.GetPacketType(GameRegion.Chinese, packetTypeName, out var cnPacketType))
-            {
-                return false;
-            }
-            if (!MachinaMap.GetPacketType(GameRegion.Korean, packetTypeName, out var krPacketType))
-            {
-                return false;
-            }
-
-            if (!globalOpcodes.TryGetValue(packetOpcodeName, out var globalOpcode))
-            {
-                globalOpcode = 0;
-            }
-            if (!cnOpcodes.TryGetValue(packetOpcodeName, out var cnOpcode))
-            {
-                cnOpcode = 0;
-            }
-            if (!krOpcodes.TryGetValue(packetOpcodeName, out var krOpcode))
-            {
-                krOpcode = 0;
-            }
-
-            var global = new MachinaPacketHelper<PacketType>(globalOpcode, MachinaMap.HeaderType_Global, globalPacketType);
-            var cn = new MachinaPacketHelper<PacketType>(cnOpcode, MachinaMap.HeaderType_CN, cnPacketType);
-            var kr = new MachinaPacketHelper<PacketType>(krOpcode, MachinaMap.HeaderType_KR, krPacketType);
+            var global = new MachinaPacketHelper<PacketType>(packetTypeName, packetOpcodeName, GameRegion.Global, MachinaMap.HeaderType_Global);
+            var cn = new MachinaPacketHelper<PacketType>(packetTypeName, packetOpcodeName, GameRegion.Chinese, MachinaMap.HeaderType_CN);
+            var kr = new MachinaPacketHelper<PacketType>(packetTypeName, packetOpcodeName, GameRegion.Korean, MachinaMap.HeaderType_KR);
 
             packetHelper = new MachinaRegionalizedPacketHelper<PacketType>(global, cn, kr);
 
@@ -180,21 +136,58 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
     class MachinaPacketHelper<PacketType> : IPacketHelper
         where PacketType : MachinaPacketWrapper, new()
     {
-        public readonly ushort Opcode;
+        public ushort Opcode { get; private set; }
+        public readonly GameRegion region;
+        public readonly string opcodeName;
+        public readonly string packetTypeName;
         public readonly int headerSize;
-        public readonly int packetSize;
+        public int packetSize { get; private set; }
 
         public readonly Type headerType;
-        public readonly Type packetType;
+        public Type packetType { get; private set; }
 
-        public MachinaPacketHelper(ushort opcode, Type headerType, Type packetType)
+        public MachinaPacketHelper(string packetTypeName, string opcodeName, GameRegion region, Type headerType)
         {
-            Opcode = opcode;
+            this.packetTypeName = packetTypeName;
+            this.opcodeName = opcodeName;
+            this.region = region;
             headerSize = Marshal.SizeOf(headerType);
-            // Machina packets include the header as part of the packet struct
-            packetSize = Marshal.SizeOf(packetType) - headerSize;
             this.headerType = headerType;
-            this.packetType = packetType;
+        }
+
+        // Tell the compiler to inline this whenever possible for performance reasons
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void InitOpcode()
+        {
+            if (Opcode == 0)
+            {
+                var opcodes = FFXIVRepository.GetMachinaOpcodes();
+                if (opcodes == null)
+                {
+                    return;
+                }
+
+
+                if (!opcodes.TryGetValue(region, out var opcodeDict))
+                {
+                    return;
+                }
+
+                if (!MachinaMap.GetPacketType(GameRegion.Global, packetTypeName, out var localPacketType))
+                {
+                    return;
+                }
+
+                if (!opcodeDict.TryGetValue(opcodeName, out var localOpcode))
+                {
+                    return;
+                }
+
+                packetType = localPacketType;
+                Opcode = localOpcode;
+                // Machina packets include the header as part of the packet struct
+                packetSize = Marshal.SizeOf(packetType) - headerSize;
+            }
         }
 
         /// <summary>
@@ -205,6 +198,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         /// <returns>null for invalid packet, otherwise a constructed packet</returns>
         public string ToString(long epoch, byte[] message)
         {
+            InitOpcode();
             if (ToStructs(message, out var header, out var packet) == false)
             {
                 return null;
@@ -221,11 +215,13 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         /// <returns>null for invalid packet, otherwise a constructed packet</returns>
         public string ToString(long epoch, MachinaHeaderWrapper header, MachinaPacketWrapper packet)
         {
+            InitOpcode();
             return packet.ToString(epoch, header.ActorID);
         }
 
         public unsafe bool ToStructs(byte[] message, out MachinaHeaderWrapper header, out PacketType packet)
         {
+            InitOpcode();
             // Message is too short to contain this packet
             if (message.Length < headerSize + packetSize)
             {
@@ -243,12 +239,14 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
 
         public unsafe bool ToStructs(void* message, out MachinaHeaderWrapper header, out PacketType packet)
         {
+            InitOpcode();
             var ptr = new IntPtr(message);
             return ToStructs(ptr, out header, out packet);
         }
 
         public unsafe bool ToStructs(IntPtr ptr, out MachinaHeaderWrapper header, out PacketType packet, bool ignoreOpcode = false)
         {
+            InitOpcode();
             var headerObj = Marshal.PtrToStructure(ptr, headerType);
 
             header = new MachinaHeaderWrapper(headerObj);
