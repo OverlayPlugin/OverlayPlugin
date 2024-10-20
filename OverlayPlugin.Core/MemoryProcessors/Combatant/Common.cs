@@ -1,17 +1,28 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
+    // PC, Monster, NPC, Treasure, Gathering, EventObj, Retainer, AreaObject, HousingEventObject could be retrieved by GetCombatantList()
     public enum ObjectType : byte
     {
-        Unknown = 0x00,
-        PC = 0x01,
-        Monster = 0x02,
-        NPC = 0x03,
-        Aetheryte = 0x05,
-        Gathering = 0x06,
-        Minion = 0x09
+        Unknown = 0,
+        PC = 1,
+        Monster = 2,        // FFCS: BattleNpc
+        NPC = 3,            // FFCS: EventNpc 
+        Treasure = 4, 
+        Aetheryte = 5,
+        Gathering = 6,      // FFCS: GatheringPoint
+        EventObj = 7,
+        Mount = 8,
+        Minion = 9,         // FFCS: Companion
+        Retainer = 10,
+        AreaObject = 11,
+        HousingEventObject = 12,
+        Cutscene = 13,
+        MjiObject = 14,
+        Ornament = 15,
+        CardStand = 16
     }
 
     /// <summary>A byte offset by 0x1980 from the combatant's address that further describes the combatant if their ObjectType is a Monster.</summary>
