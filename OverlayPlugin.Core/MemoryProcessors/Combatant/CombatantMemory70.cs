@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -68,48 +68,41 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     Heading = mem.Heading,
                     Radius = mem.Radius,
                     // In-memory there are separate values for PC's current target and NPC's current target
-                    TargetID = (ObjectType)mem.Type == ObjectType.PC ? mem.PCTargetID : mem.NPCTargetID,
-                    CurrentHP = mem.CurrentHP,
-                    MaxHP = mem.MaxHP,
-                    Effects = exceptEffects ? new List<EffectEntry>() : GetEffectEntries(mem.Effects, (ObjectType)mem.Type, mycharID),
-
-                    BNpcID = mem.BNpcID,
-                    CurrentMP = mem.CurrentMP,
-                    MaxMP = mem.MaxMP,
-                    CurrentGP = mem.CurrentGP,
-                    MaxGP = mem.MaxGP,
-                    CurrentCP = mem.CurrentCP,
-                    MaxCP = mem.MaxCP,
-                    Level = mem.Level,
+                    TargetID = ((ObjectType)mem.Type == ObjectType.PC || (ObjectType)mem.Type == ObjectType.Retainer) ? mem.PCTargetID : mem.NPCTargetID,
+                    BNpcID = mem.BNpcID,   
                     PCTargetID = mem.PCTargetID,
-
                     BNpcNameID = mem.BNpcNameID,
-
                     WorldID = mem.WorldID,
                     CurrentWorldID = mem.CurrentWorldID,
-
-                    IsCasting1 = mem.IsCasting1,
-                    IsCasting2 = mem.IsCasting2,
-                    CastBuffID = mem.CastBuffID,
-                    CastTargetID = mem.CastTargetID,
-                    // Y and Z are deliberately swapped to match FFXIV_ACT_Plugin's data model
-                    CastGroundTargetX = mem.CastGroundTargetX,
-                    CastGroundTargetY = mem.CastGroundTargetZ,
-                    CastGroundTargetZ = mem.CastGroundTargetY,
-                    CastDurationCurrent = mem.CastDurationCurrent,
-                    CastDurationMax = mem.CastDurationMax,
-
-                    TransformationId = mem.TransformationId,
-                    WeaponId = mem.WeaponId
                 };
                 combatant.IsTargetable =
                     (combatant.ModelStatus == ModelStatus.Visible)
                     && ((combatant.Status == ObjectStatus.NormalActorStatus) || (combatant.Status == ObjectStatus.NormalSubActorStatus));
-                if (combatant.Type != ObjectType.PC && combatant.Type != ObjectType.Monster)
+                if (combatant.Type == ObjectType.PC || combatant.Type == ObjectType.Monster || combatant.Type == ObjectType.NPC || combatant.Type == ObjectType.Retainer)
                 {
-                    // Other types have garbage memory for hp.
-                    combatant.CurrentHP = 0;
-                    combatant.MaxHP = 0;
+                    // Other types have garbage memory for at least the data below:
+                    combatant.Level = mem.Level;
+                    combatant.CurrentHP = mem.CurrentHP;
+                    combatant.MaxHP = mem.MaxHP;
+                    combatant.CurrentMP = mem.CurrentMP;
+                    combatant.MaxMP = mem.MaxMP;
+                    combatant.CurrentCP = mem.CurrentCP;
+                    combatant.MaxCP = mem.MaxCP;
+                    combatant.CurrentGP = mem.CurrentGP;
+                    combatant.MaxGP = mem.MaxGP;
+                    combatant.Effects = exceptEffects ? new List<EffectEntry>() : GetEffectEntries(mem.Effects, (ObjectType)mem.Type, mycharID);
+                    combatant.IsCasting1 = mem.IsCasting1;
+                    combatant.IsCasting2 = mem.IsCasting2;
+                    combatant.CastBuffID = mem.CastBuffID;
+                    combatant.CastTargetID = mem.CastTargetID;
+                    // Y and Z are deliberately swapped to match FFXIV_ACT_Plugin's data model
+                    combatant.CastGroundTargetX = mem.CastGroundTargetX;
+                    combatant.CastGroundTargetY = mem.CastGroundTargetZ;
+                    combatant.CastGroundTargetZ = mem.CastGroundTargetY;
+                    combatant.CastDurationCurrent = mem.CastDurationCurrent;
+                    combatant.CastDurationMax = mem.CastDurationMax;
+                    combatant.TransformationId = mem.TransformationId;
+                    combatant.WeaponId = mem.WeaponId;
                 }
                 return combatant;
             }
