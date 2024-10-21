@@ -26,7 +26,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         CardStand = 16
     }
 
-    /// <summary>A byte offset by 0x1980 from the combatant's address that further describes the combatant if their ObjectType is a Monster.</summary>
+    /// <summary>A byte offset by 0x1E9 from the combatant's address that further describes the combatant if their ObjectType is a Monster.</summary>
     // Basically, pets, combat NPCs (ones that attack), and monsters all share ObjectType 2 (Monster), this field distinguishes the monsters from those two.
     public enum MonsterType : byte
     {
@@ -89,10 +89,14 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         // And a few others, but monsters consistently use 0, 2048, and 16384.
     }
 
-    /// <summary>A byte offset by 0x19A0 from the combatant's address that describes the combatant's aggression status.</summary>
-    // It's not exactly only about the aggression status, it's that and other things embedded into it:
-    // Sheathing the weapon adds 4 to the status.
-    // Being mid-cast adds 128 to the status.
+    /// <summary>
+    /// A byte offset by 0x1EB from the combatant's address that describes the combatant's aggression status.
+    /// The enum values below are normalized to 0-3, for consistency with previous versions.
+    /// </summary>
+    // After patch 6.3, the definition has changed:
+    // 0x10: Aggressive
+    // 0x20: In combat
+    // 0x40: Weapon unsheathed
     public enum AggressionStatus : byte
     {
         /// <summary>Indicates a combatant that doesn't aggro on sight and is out of combat.</summary>
@@ -153,8 +157,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         public ushort CurrentCP;
         public ushort MaxCP;
         public uint PCTargetID;
-        public byte IsCasting1;
-        public byte IsCasting2;
+        public byte IsCasting1;     // better name: IsCasting
+        public byte IsCasting2;     // better name: CastType (type = 2 when using an item, such as opening an equipment chest)
         public uint CastBuffID;
         public uint CastTargetID;
         public float CastGroundTargetX;

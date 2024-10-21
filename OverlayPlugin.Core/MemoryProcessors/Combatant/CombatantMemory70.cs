@@ -62,6 +62,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     Heading = mem.Heading,
                     Radius = mem.Radius,
                     BNpcID = mem.BNpcID,
+                    Address = (IntPtr)p,
                 };
                 
                 if (combatant.Type == ObjectType.PC  || combatant.Type == ObjectType.Monster || 
@@ -107,7 +108,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     combatant.CastGroundTargetZ = mem.CastGroundTargetY;
                     combatant.CastDurationCurrent = mem.CastDurationCurrent;
                     combatant.CastDurationMax = mem.CastDurationMax;
-                    combatant.Address = (IntPtr)p;
                 }
                 return combatant;
             }
