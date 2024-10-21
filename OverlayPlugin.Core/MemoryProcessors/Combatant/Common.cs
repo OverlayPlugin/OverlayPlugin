@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
@@ -31,6 +32,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
     {
         Friendly = 0,
         Hostile = 4
+        // Also observed: Hostile = 10, such as the Gigas in Mor Dhona
     }
 
     /// <summary>An unsigned byte offset by 0x94 from the combatant's address that describes its status.</summary>
@@ -113,6 +115,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         public ObjectStatus Status;
         public ModelStatus ModelStatus;
         public AggressionStatus AggressionStatus;
+        public byte PartyType;
         public uint TargetID;
         public bool IsTargetable;
 
@@ -162,6 +165,19 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
         public short TransformationId;
         public byte WeaponId;
+
+        // Indirect data from the flags for external use, not included in the JSON for performance concerns
+        [JsonIgnore]
+        public bool IsEnemy;    // if the monster (BattleNPC) is an enemy
+        [JsonIgnore]
+        public bool InParty;    // if the player is in my party (trusted NPCs are not included)
+        [JsonIgnore]
+        public bool InAlliance; // if the player is in my alliance, and not in my party
+        [JsonIgnore]
+        public bool IsFriend;
+
+        [JsonIgnore]
+        public IntPtr Address;
 
         private Single GetDistance(Combatant target)
         {

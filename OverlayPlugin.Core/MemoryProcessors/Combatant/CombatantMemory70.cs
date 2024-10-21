@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -50,16 +50,10 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                 Combatant combatant = new Combatant()
                 {
                     Name = FFXIVMemory.GetStringFromBytes(mem.Name, CombatantMemory.NameBytes),
-                    Job = mem.Job,
                     ID = mem.ID,
                     OwnerID = mem.OwnerID == emptyID ? 0 : mem.OwnerID,
                     Type = (ObjectType)mem.Type,
-                    MonsterType = 0,
                     Status = (ObjectStatus)mem.Status,
-                    ModelStatus = (ModelStatus)mem.ModelStatus,
-                    // Normalize all possible aggression statuses into the basic 4 ones.
-                    AggressionStatus = 0,
-                    NPCTargetID = mem.NPCTargetID,
                     RawEffectiveDistance = mem.EffectiveDistance,
                     PosX = mem.PosX,
                     // Y and Z are deliberately swapped to match FFXIV_ACT_Plugin's data model
@@ -67,20 +61,14 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     PosZ = mem.PosY,
                     Heading = mem.Heading,
                     Radius = mem.Radius,
-                    // In-memory there are separate values for PC's current target and NPC's current target
-                    TargetID = ((ObjectType)mem.Type == ObjectType.PC || (ObjectType)mem.Type == ObjectType.Retainer) ? mem.PCTargetID : mem.NPCTargetID,
-                    BNpcID = mem.BNpcID,   
-                    PCTargetID = mem.PCTargetID,
-                    BNpcNameID = mem.BNpcNameID,
-                    WorldID = mem.WorldID,
-                    CurrentWorldID = mem.CurrentWorldID,
+                    BNpcID = mem.BNpcID,
                 };
-                combatant.IsTargetable =
-                    (combatant.ModelStatus == ModelStatus.Visible)
-                    && ((combatant.Status == ObjectStatus.NormalActorStatus) || (combatant.Status == ObjectStatus.NormalSubActorStatus));
-                if (combatant.Type == ObjectType.PC || combatant.Type == ObjectType.Monster || combatant.Type == ObjectType.NPC || combatant.Type == ObjectType.Retainer)
+                
+                if (combatant.Type == ObjectType.PC  || combatant.Type == ObjectType.Monster || 
+                    combatant.Type == ObjectType.NPC || combatant.Type == ObjectType.Retainer)
                 {
-                    // Other types have garbage memory for at least the data below:
+                    // Other types have garbage memory for the data below:
+                    combatant.Job = mem.Job;
                     combatant.Level = mem.Level;
                     combatant.CurrentHP = mem.CurrentHP;
                     combatant.MaxHP = mem.MaxHP;
@@ -90,6 +78,24 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     combatant.MaxCP = mem.MaxCP;
                     combatant.CurrentGP = mem.CurrentGP;
                     combatant.MaxGP = mem.MaxGP;
+                    combatant.MonsterType = (MonsterType)mem.MonsterType;
+                    combatant.IsEnemy = mem.MonsterType != 0;
+                    // Convert to the previous definition of AggressionStatus
+                    combatant.AggressionStatus = (AggressionStatus)(mem.AggressionStatus / 16 % 4);
+                    combatant.PartyType = mem.PartyType;
+                    combatant.InParty = (mem.PartyType & 0x8) != 0;
+                    combatant.InAlliance = (mem.PartyType & 0x10) != 0;
+                    combatant.IsFriend = (mem.PartyType & 0x20) != 0;
+                    combatant.BNpcNameID = mem.BNpcNameID;
+                    combatant.TransformationId = mem.TransformationId;
+                    combatant.WeaponId = mem.WeaponId;
+                    combatant.ModelStatus = (ModelStatus)mem.ModelStatus;
+                    // In-memory there are separate values for PC's current target and NPC's current target
+                    combatant.PCTargetID = mem.PCTargetID;
+                    combatant.NPCTargetID = mem.NPCTargetID;
+                    combatant.TargetID = ((ObjectType)mem.Type == ObjectType.PC || (ObjectType)mem.Type == ObjectType.Retainer) ? mem.PCTargetID : mem.NPCTargetID;
+                    combatant.IsTargetable = (combatant.ModelStatus == ModelStatus.Visible)
+                        && ((combatant.Status == ObjectStatus.NormalActorStatus) || (combatant.Status == ObjectStatus.NormalSubActorStatus));
                     combatant.Effects = exceptEffects ? new List<EffectEntry>() : GetEffectEntries(mem.Effects, (ObjectType)mem.Type, mycharID);
                     combatant.IsCasting1 = mem.IsCasting1;
                     combatant.IsCasting2 = mem.IsCasting2;
@@ -101,8 +107,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     combatant.CastGroundTargetZ = mem.CastGroundTargetY;
                     combatant.CastDurationCurrent = mem.CastDurationCurrent;
                     combatant.CastDurationMax = mem.CastDurationMax;
-                    combatant.TransformationId = mem.TransformationId;
-                    combatant.WeaponId = mem.WeaponId;
+                    combatant.Address = (IntPtr)p;
                 }
                 return combatant;
             }
@@ -155,6 +160,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0xD0)]
             public Single Radius;
 
+            // Fields after 0x110 are only for PCs, Monsters, NPCs (mainly empty), and Retainers.
+
             [FieldOffset(0x114)]
             public int ModelStatus;
 
@@ -190,6 +197,15 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
             [FieldOffset(0x1DB)]
             public byte Level;
+
+            [FieldOffset(0x1E9)]
+            public byte MonsterType;
+
+            [FieldOffset(0x1EB)]
+            public byte AggressionStatus;
+
+            [FieldOffset(0x1EC)]
+            public byte PartyType;
 
             [FieldOffset(0xC70)]
             public byte WeaponId;
@@ -239,8 +255,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
             [FieldOffset(0x25E8)]
             public float CastDurationMax;
-
-            // Missing PartyType
         }
     }
 }

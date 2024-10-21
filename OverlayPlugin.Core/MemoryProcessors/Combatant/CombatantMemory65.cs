@@ -198,19 +198,20 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0x1DB)]
             public byte Level;
 
+            [FieldOffset(0x1E9)]
+            public byte MonsterType;
+
+            [FieldOffset(0x1EB)]
+            public byte AggressionStatus;
+
+            [FieldOffset(0x1EC)]
+            public byte PartyType;
+
             [FieldOffset(0xC30)]
             public byte WeaponId;
 
             [FieldOffset(0xD00)]
             public uint PCTargetID;
-
-            // TODO: this is still incorrect as of 6.5, should we drop this field if we can't find it again?
-            [FieldOffset(0x19C3)]
-            public byte MonsterType;
-
-            // TODO: this is still incorrect as of 6.5, should we drop this field if we can't find it again?
-            [FieldOffset(0x19DF)]
-            public byte AggressionStatus;
 
             [FieldOffset(0x1B58)]
             public uint NPCTargetID;
@@ -253,8 +254,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
             [FieldOffset(0x1F38)]
             public float CastDurationMax;
-
-            // Missing PartyType
         }
     }
 }
