@@ -68,7 +68,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                 if (combatant.Type == ObjectType.PC  || combatant.Type == ObjectType.Monster || 
                     combatant.Type == ObjectType.NPC || combatant.Type == ObjectType.Retainer)
                 {
-                    // Other types have garbage memory for the data below:
+                    // The following fields are only valid for these types above,
+                    // while other types have garbage memory.
                     combatant.Job = mem.Job;
                     combatant.Level = mem.Level;
                     combatant.CurrentHP = mem.CurrentHP;

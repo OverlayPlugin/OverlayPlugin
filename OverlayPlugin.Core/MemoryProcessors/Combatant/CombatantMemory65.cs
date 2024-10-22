@@ -50,16 +50,10 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                 Combatant combatant = new Combatant()
                 {
                     Name = FFXIVMemory.GetStringFromBytes(mem.Name, CombatantMemory.NameBytes),
-                    Job = mem.Job,
                     ID = mem.ID,
                     OwnerID = mem.OwnerID == emptyID ? 0 : mem.OwnerID,
                     Type = (ObjectType)mem.Type,
-                    MonsterType = (MonsterType)mem.MonsterType,
                     Status = (ObjectStatus)mem.Status,
-                    ModelStatus = (ModelStatus)mem.ModelStatus,
-                    // Normalize all possible aggression statuses into the basic 4 ones.
-                    AggressionStatus = (AggressionStatus)(mem.AggressionStatus - (mem.AggressionStatus / 4) * 4),
-                    NPCTargetID = mem.NPCTargetID,
                     RawEffectiveDistance = mem.EffectiveDistance,
                     PosX = mem.PosX,
                     // Y and Z are deliberately swapped to match FFXIV_ACT_Plugin's data model
@@ -67,49 +61,54 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     PosZ = mem.PosY,
                     Heading = mem.Heading,
                     Radius = mem.Radius,
-                    // In-memory there are separate values for PC's current target and NPC's current target
-                    TargetID = (ObjectType)mem.Type == ObjectType.PC ? mem.PCTargetID : mem.NPCTargetID,
-                    CurrentHP = mem.CurrentHP,
-                    MaxHP = mem.MaxHP,
-                    Effects = exceptEffects ? new List<EffectEntry>() : GetEffectEntries(mem.Effects, (ObjectType)mem.Type, mycharID),
-
                     BNpcID = mem.BNpcID,
-                    CurrentMP = mem.CurrentMP,
-                    MaxMP = mem.MaxMP,
-                    CurrentGP = mem.CurrentGP,
-                    MaxGP = mem.MaxGP,
-                    CurrentCP = mem.CurrentCP,
-                    MaxCP = mem.MaxCP,
-                    Level = mem.Level,
-                    PCTargetID = mem.PCTargetID,
-
-                    BNpcNameID = mem.BNpcNameID,
-
-                    WorldID = mem.WorldID,
-                    CurrentWorldID = mem.CurrentWorldID,
-
-                    IsCasting1 = mem.IsCasting1,
-                    IsCasting2 = mem.IsCasting2,
-                    CastBuffID = mem.CastBuffID,
-                    CastTargetID = mem.CastTargetID,
-                    // Y and Z are deliberately swapped to match FFXIV_ACT_Plugin's data model
-                    CastGroundTargetX = mem.CastGroundTargetX,
-                    CastGroundTargetY = mem.CastGroundTargetZ,
-                    CastGroundTargetZ = mem.CastGroundTargetY,
-                    CastDurationCurrent = mem.CastDurationCurrent,
-                    CastDurationMax = mem.CastDurationMax,
-
-                    TransformationId = mem.TransformationId,
-                    WeaponId = mem.WeaponId
+                    Address = (IntPtr)p,
                 };
-                combatant.IsTargetable =
-                    (combatant.ModelStatus == ModelStatus.Visible)
-                    && ((combatant.Status == ObjectStatus.NormalActorStatus) || (combatant.Status == ObjectStatus.NormalSubActorStatus));
-                if (combatant.Type != ObjectType.PC && combatant.Type != ObjectType.Monster)
+
+                if (combatant.Type == ObjectType.PC || combatant.Type == ObjectType.Monster ||
+                    combatant.Type == ObjectType.NPC || combatant.Type == ObjectType.Retainer)
                 {
-                    // Other types have garbage memory for hp.
-                    combatant.CurrentHP = 0;
-                    combatant.MaxHP = 0;
+                    // The following fields are only valid for these types above,
+                    // while other types have garbage memory.
+                    combatant.Job = mem.Job;
+                    combatant.Level = mem.Level;
+                    combatant.CurrentHP = mem.CurrentHP;
+                    combatant.MaxHP = mem.MaxHP;
+                    combatant.CurrentMP = mem.CurrentMP;
+                    combatant.MaxMP = mem.MaxMP;
+                    combatant.CurrentCP = mem.CurrentCP;
+                    combatant.MaxCP = mem.MaxCP;
+                    combatant.CurrentGP = mem.CurrentGP;
+                    combatant.MaxGP = mem.MaxGP;
+                    combatant.MonsterType = (MonsterType)mem.MonsterType;
+                    combatant.IsEnemy = mem.MonsterType != 0;
+                    // Convert to the previous definition of AggressionStatus
+                    combatant.AggressionStatus = (AggressionStatus)(mem.AggressionStatus / 16 % 4);
+                    combatant.PartyType = mem.PartyType;
+                    combatant.InParty = (mem.PartyType & 0x8) != 0;
+                    combatant.InAlliance = (mem.PartyType & 0x10) != 0;
+                    combatant.IsFriend = (mem.PartyType & 0x20) != 0;
+                    combatant.BNpcNameID = mem.BNpcNameID;
+                    combatant.TransformationId = mem.TransformationId;
+                    combatant.WeaponId = mem.WeaponId;
+                    combatant.ModelStatus = (ModelStatus)mem.ModelStatus;
+                    // In-memory there are separate values for PC's current target and NPC's current target
+                    combatant.PCTargetID = mem.PCTargetID;
+                    combatant.NPCTargetID = mem.NPCTargetID;
+                    combatant.TargetID = ((ObjectType)mem.Type == ObjectType.PC || (ObjectType)mem.Type == ObjectType.Retainer) ? mem.PCTargetID : mem.NPCTargetID;
+                    combatant.IsTargetable = (combatant.ModelStatus == ModelStatus.Visible)
+                        && ((combatant.Status == ObjectStatus.NormalActorStatus) || (combatant.Status == ObjectStatus.NormalSubActorStatus));
+                    combatant.Effects = exceptEffects ? new List<EffectEntry>() : GetEffectEntries(mem.Effects, (ObjectType)mem.Type, mycharID);
+                    combatant.IsCasting1 = mem.IsCasting1;
+                    combatant.IsCasting2 = mem.IsCasting2;
+                    combatant.CastBuffID = mem.CastBuffID;
+                    combatant.CastTargetID = mem.CastTargetID;
+                    // Y and Z are deliberately swapped to match FFXIV_ACT_Plugin's data model
+                    combatant.CastGroundTargetX = mem.CastGroundTargetX;
+                    combatant.CastGroundTargetY = mem.CastGroundTargetZ;
+                    combatant.CastGroundTargetZ = mem.CastGroundTargetY;
+                    combatant.CastDurationCurrent = mem.CastDurationCurrent;
+                    combatant.CastDurationMax = mem.CastDurationMax;
                 }
                 return combatant;
             }
@@ -161,6 +160,9 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
             [FieldOffset(0xD0)]
             public Single Radius;
+
+            // All combatants have the first 0x1A0 bytes (`GameObject` per FFXIVClientStructs)
+            // Fields below this point are only valid for PCs, Monsters, NPCs (mainly empty), and Retainers.
 
             [FieldOffset(0x114)]
             public int ModelStatus;
