@@ -160,7 +160,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0xD0)]
             public Single Radius;
 
-            // Fields after 0x110 are only for PCs, Monsters, NPCs (mainly empty), and Retainers.
+            // All combatants have the first 0x1A0 bytes (`GameObject` per FFXIVClientStructs)
+            // Fields below this point are only valid for PCs, Monsters, NPCs (mainly empty), and Retainers.
 
             [FieldOffset(0x114)]
             public int ModelStatus;
