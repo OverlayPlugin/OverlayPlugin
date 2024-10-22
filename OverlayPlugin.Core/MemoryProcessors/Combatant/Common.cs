@@ -180,7 +180,9 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         [JsonIgnore]
         public bool IsFriend;
 
+#if !DEBUG
         [JsonIgnore]
+#endif
         public IntPtr Address;
 
         private Single GetDistance(Combatant target)
