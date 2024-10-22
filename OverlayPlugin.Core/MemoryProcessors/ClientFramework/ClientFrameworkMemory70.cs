@@ -8,8 +8,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
 
     partial class ClientFrameworkMemory70 : ClientFrameworkMemory, IClientFrameworkMemory70
     {
-        private const string clientFrameworkSignature = "498BDC48891D????????";
-        private const int clientFrameworkSignatureOffset = -4;
+        private const string clientFrameworkSignature = "498BC4488B0D";
+        private const int clientFrameworkSignatureOffset = 14;
 
         public ClientFrameworkMemory70(TinyIoCContainer container)
             : base(container, clientFrameworkSignature, clientFrameworkSignatureOffset)
