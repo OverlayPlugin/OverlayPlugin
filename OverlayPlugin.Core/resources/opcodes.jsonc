@@ -47,39 +47,39 @@
         "2024.11.06.0000.0000": {
             // Version: 7.10
             "MapEffect": {
-                "opcode": 148,
+                "opcode": 270,
                 "size": 11
             },
             "CEDirector": {
-                "opcode": 250,
+                "opcode": 140,
                 "size": 16
             },
             "RSVData": {
-                "opcode": 300,
+                "opcode": 689,
                 "size": 1080
             },
             "NpcYell": {
-                "opcode": 226,
+                "opcode": 253,
                 "size": 32
             },
             "BattleTalk2": {
-                "opcode": 822,
+                "opcode": 455,
                 "size": 40
             },
             "Countdown": {
-                "opcode": 147,
+                "opcode": 416,
                 "size": 48
             },
             "CountdownCancel": {
-                "opcode": 251,
+                "opcode": 807,
                 "size": 40
             },
             "ActorMove": {
-                "opcode": 369,
+                "opcode": 938,
                 "size": 16
             },
             "ActorSetPos": {
-                "opcode": 190,
+                "opcode": 908,
                 "size": 24
             }
         }
