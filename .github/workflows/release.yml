@@ -70,7 +70,7 @@ jobs:
           dotnet-version: '7'
 
       - name: Set up msbuild
-        uses: microsoft/setup-msbuild@v1.0.2
+        uses: microsoft/setup-msbuild@v2
 
       - name: Run Build
         run: build.bat
