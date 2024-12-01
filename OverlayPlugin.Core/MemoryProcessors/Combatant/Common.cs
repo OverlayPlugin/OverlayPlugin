@@ -1,25 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
+    // PC, Monster, NPC, Treasure, Gathering, EventObj, Retainer, AreaObject, HousingEventObject could be retrieved by GetCombatantList()
     public enum ObjectType : byte
     {
-        Unknown = 0x00,
-        PC = 0x01,
-        Monster = 0x02,
-        NPC = 0x03,
-        Aetheryte = 0x05,
-        Gathering = 0x06,
-        Minion = 0x09
+        Unknown = 0,
+        PC = 1,
+        Monster = 2,        // FFCS: BattleNpc
+        NPC = 3,            // FFCS: EventNpc 
+        Treasure = 4, 
+        Aetheryte = 5,
+        Gathering = 6,      // FFCS: GatheringPoint
+        EventObj = 7,
+        Mount = 8,
+        Minion = 9,         // FFCS: Companion
+        Retainer = 10,
+        AreaObject = 11,
+        HousingEventObject = 12,
+        Cutscene = 13,
+        MjiObject = 14,
+        Ornament = 15,
+        CardStand = 16
     }
 
-    /// <summary>A byte offset by 0x1980 from the combatant's address that further describes the combatant if their ObjectType is a Monster.</summary>
+    /// <summary>A byte offset by 0x1E9 from the combatant's address that further describes the combatant if their ObjectType is a Monster.</summary>
     // Basically, pets, combat NPCs (ones that attack), and monsters all share ObjectType 2 (Monster), this field distinguishes the monsters from those two.
     public enum MonsterType : byte
     {
         Friendly = 0,
         Hostile = 4
+        // Also observed: Hostile = 10, such as the Gigas in Mor Dhona
     }
 
     /// <summary>An unsigned byte offset by 0x94 from the combatant's address that describes its status.</summary>
@@ -76,10 +89,14 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         // And a few others, but monsters consistently use 0, 2048, and 16384.
     }
 
-    /// <summary>A byte offset by 0x19A0 from the combatant's address that describes the combatant's aggression status.</summary>
-    // It's not exactly only about the aggression status, it's that and other things embedded into it:
-    // Sheathing the weapon adds 4 to the status.
-    // Being mid-cast adds 128 to the status.
+    /// <summary>
+    /// A byte offset by 0x1EB from the combatant's address that describes the combatant's aggression status.
+    /// The enum values below are normalized to 0-3, for consistency with previous versions.
+    /// </summary>
+    // After patch 6.3, the definition has changed:
+    // 0x10: Aggressive
+    // 0x20: In combat
+    // 0x40: Weapon unsheathed
     public enum AggressionStatus : byte
     {
         /// <summary>Indicates a combatant that doesn't aggro on sight and is out of combat.</summary>
@@ -102,6 +119,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         public ObjectStatus Status;
         public ModelStatus ModelStatus;
         public AggressionStatus AggressionStatus;
+        public byte PartyType;
         public uint TargetID;
         public bool IsTargetable;
 
@@ -139,8 +157,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         public ushort CurrentCP;
         public ushort MaxCP;
         public uint PCTargetID;
-        public byte IsCasting1;
-        public byte IsCasting2;
+        public byte IsCasting1;     // better name: IsCasting
+        public byte IsCasting2;     // better name: CastType (type = 2 when using an item, such as opening an equipment chest)
         public uint CastBuffID;
         public uint CastTargetID;
         public float CastGroundTargetX;
@@ -151,6 +169,21 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 
         public short TransformationId;
         public byte WeaponId;
+
+        // Indirect data from the flags for external use, not included in the JSON for performance concerns
+        [JsonIgnore]
+        public bool IsEnemy;    // if the monster (BattleNPC) is an enemy
+        [JsonIgnore]
+        public bool InParty;    // if the player is in my party (trusted NPCs are not included)
+        [JsonIgnore]
+        public bool InAlliance; // if the player is in my alliance, and not in my party
+        [JsonIgnore]
+        public bool IsFriend;
+
+#if !DEBUG
+        [JsonIgnore]
+#endif
+        public IntPtr Address;
 
         private Single GetDistance(Combatant target)
         {
