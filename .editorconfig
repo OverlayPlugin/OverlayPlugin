@@ -67,79 +67,79 @@ csharp_preserve_single_line_statements = true
 #Style - Code block preferences
 
 #prefer curly braces even for one line of code
-# csharp_prefer_braces = true:suggestion
+csharp_prefer_braces = true
 
 #Style - expression bodied member options
 
 #prefer block bodies for accessors
-# csharp_style_expression_bodied_accessors = false:suggestion
+csharp_style_expression_bodied_accessors = true
 #prefer block bodies for constructors
-# csharp_style_expression_bodied_constructors = false:suggestion
+csharp_style_expression_bodied_constructors = true
 #prefer block bodies for methods
-# csharp_style_expression_bodied_methods = false:suggestion
+csharp_style_expression_bodied_methods = true
 #prefer block bodies for properties
-# csharp_style_expression_bodied_properties = false:suggestion
+csharp_style_expression_bodied_properties = true
 
 #Style - expression level options
 
 #prefer out variables to be declared before the method call
-# csharp_style_inlined_variable_declaration = false:suggestion
+csharp_style_inlined_variable_declaration = false
 #prefer the language keyword for member access expressions, instead of the type name, for types that have a keyword to represent them
-# dotnet_style_predefined_type_for_member_access = true:suggestion
+dotnet_style_predefined_type_for_member_access = true
 
 #Style - Expression-level  preferences
 
 #prefer objects to be initialized using object initializers when possible
-# dotnet_style_object_initializer = true:suggestion
+dotnet_style_object_initializer = true
 #prefer inferred anonymous type member names
-# dotnet_style_prefer_inferred_anonymous_type_member_names = false:suggestion
+dotnet_style_prefer_inferred_anonymous_type_member_names = false
 #prefer inferred tuple element names
-# dotnet_style_prefer_inferred_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_tuple_names = true
 
 #Style - implicit and explicit types
 
 #prefer var over explicit type in all cases, unless overridden by another code style rule
-# csharp_style_var_elsewhere = true:suggestion
+#csharp_style_var_elsewhere = true
 #prefer var is used to declare variables with built-in system types such as int
-# csharp_style_var_for_built_in_types = true:suggestion
+#csharp_style_var_for_built_in_types = true
 #prefer var when the type is already mentioned on the right-hand side of a declaration expression
-# csharp_style_var_when_type_is_apparent = true:suggestion
+#csharp_style_var_when_type_is_apparent = true
 
 #Style - language keyword and framework type options
 
 #prefer the language keyword for local variables, method parameters, and class members, instead of the type name, for types that have a keyword to represent them
-# dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
+dotnet_style_predefined_type_for_locals_parameters_members = true
 
 #Style - Miscellaneous preferences
 
 #prefer anonymous functions over local functions
-# csharp_style_pattern_local_over_anonymous_function = false:suggestion
+csharp_style_pattern_local_over_anonymous_function = false
 
 #Style - modifier options
 
 #prefer accessibility modifiers to be declared except for public interface members. This will currently not differ from always and will act as future proofing for if C# adds default interface methods.
-# dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
+dotnet_style_require_accessibility_modifiers = for_non_interface_members
 
 #Style - Modifier preferences
 
 #when this rule is set to a list of modifiers, prefer the specified ordering.
-# csharp_preferred_modifier_order = public,private,protected,internal,static,override,extern,virtual,readonly,async,abstract,unsafe:suggestion
+csharp_preferred_modifier_order = public,private,protected,internal,static,override,extern,virtual,readonly,async,abstract,unsafe
 
 #Style - Pattern matching
 
 #prefer is expression with type casts instead of pattern matching
-# csharp_style_pattern_matching_over_as_with_null_check = false:suggestion
+csharp_style_pattern_matching_over_as_with_null_check = false
 
 #Style - qualification options
 
 #prefer events not to be prefaced with this. or Me. in Visual Basic
-# dotnet_style_qualification_for_event = false:suggestion
+dotnet_style_qualification_for_event = false
 #prefer fields not to be prefaced with this. or Me. in Visual Basic
-# dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_field = false
 #prefer methods not to be prefaced with this. or Me. in Visual Basic
-# dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_method = false
 #prefer properties not to be prefaced with this. or Me. in Visual Basic
-# dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_property = false
 
 end_of_line=lf
 
