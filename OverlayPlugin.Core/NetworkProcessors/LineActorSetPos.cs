@@ -42,7 +42,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             {
                 return
                     string.Format(CultureInfo.InvariantCulture,
-                        "{0:X8}|{1:F4}|{2:X2}|{3:X2}|{4:F4}|{5:F4}|{6:F4}", 
+                        "{0:X8}|{1:F4}|{2:X2}|{3:X2}|{4:F4}|{5:F4}|{6:F4}",
                         ActorID, FFXIVRepository.ConvertHeading(rotation), unknown1, unknown2, x, z, y);
             }
         }
