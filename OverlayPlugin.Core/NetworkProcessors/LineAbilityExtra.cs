@@ -9,13 +9,13 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
     /**
      * Class for position/angle info from ActionEffect (i.e. line 21/22).
      */
-    class LineAbilityExtra : LineBaseSubMachina<LineAbilityExtra.AbilityExtraPacket<LineAbilityExtra.Server_ActionEffect1_Extra>>
+    public class LineAbilityExtra : LineBaseSubMachina<LineAbilityExtra.AbilityExtraPacket<LineAbilityExtra.Server_ActionEffect1_Extra>>
     {
         public const uint LogFileLineID = 264;
         public const string LogLineName = "AbilityExtra";
         public const string MachinaPacketName = "ActionEffect1";
 
-        internal class AbilityExtraPacket<T> : MachinaPacketWrapper
+        public class AbilityExtraPacket<T> : MachinaPacketWrapper
             where T : unmanaged, IActionEffectExtra
         {
             public unsafe override string ToString(long epoch, uint ActorID)
@@ -76,7 +76,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
         protected static GameRegion? staticRegion;
 
-        internal interface IActionEffectExtra
+        public interface IActionEffectExtra
         {
             uint actionEffectCount { get; }
             ushort x { get; }
@@ -85,7 +85,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         }
 
         [StructLayout(LayoutKind.Explicit, Pack = 1)]
-        internal struct Server_ActionEffect1_Extra : IActionEffectExtra
+        public struct Server_ActionEffect1_Extra : IActionEffectExtra
         {
             public uint actionEffectCount => 1;
 
@@ -95,7 +95,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         }
 
         [StructLayout(LayoutKind.Explicit, Pack = 1)]
-        internal struct Server_ActionEffect8_Extra : IActionEffectExtra
+        public struct Server_ActionEffect8_Extra : IActionEffectExtra
         {
             [FieldOffset(0x290)]
             private ushort _x;
@@ -114,7 +114,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         }
 
         [StructLayout(LayoutKind.Explicit, Pack = 1)]
-        internal struct Server_ActionEffect16_Extra : IActionEffectExtra
+        public struct Server_ActionEffect16_Extra : IActionEffectExtra
         {
             [FieldOffset(0x4D0)]
             public ushort _x;
@@ -133,7 +133,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         }
 
         [StructLayout(LayoutKind.Explicit, Pack = 1)]
-        internal struct Server_ActionEffect24_Extra : IActionEffectExtra
+        public struct Server_ActionEffect24_Extra : IActionEffectExtra
         {
             [FieldOffset(0x710)]
             public ushort _x;
@@ -152,7 +152,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         }
 
         [StructLayout(LayoutKind.Explicit, Pack = 1)]
-        internal struct Server_ActionEffect32_Extra : IActionEffectExtra
+        public struct Server_ActionEffect32_Extra : IActionEffectExtra
         {
             [FieldOffset(0x950)]
             public ushort _x;
@@ -171,7 +171,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         }
 
         // For possible future expansion.
-        private enum LineSubType
+        public enum LineSubType
         {
             NO_DATA = 0,
             DATA_PRESENT = 1,

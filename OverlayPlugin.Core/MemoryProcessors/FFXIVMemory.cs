@@ -104,11 +104,10 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             return false;
         }
 
-        public unsafe static string GetStringFromBytes(byte* source, int size)
+        public unsafe static string GetStringFromBytes(byte* source, int size, int realSize = 0)
         {
             var bytes = new byte[size];
             Marshal.Copy((IntPtr)source, bytes, 0, size);
-            var realSize = 0;
             for (var i = 0; i < size; i++)
             {
                 if (bytes[i] != 0)
