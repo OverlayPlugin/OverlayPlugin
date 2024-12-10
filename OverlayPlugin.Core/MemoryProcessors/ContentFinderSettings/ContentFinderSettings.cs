@@ -25,10 +25,13 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
 
         protected IntPtr settingsAddress = IntPtr.Zero;
         protected IntPtr inContentFinderAddress = IntPtr.Zero;
+        protected IntPtr ConfigPartyListRoleSortAdress = IntPtr.Zero;
 
         private string settingsSignature;
         private string inContentFinderSignature;
         private int inContentSettingsOffset;
+
+
 
         public ContentFinderSettingsMemory(TinyIoCContainer container, string settingsSignature, string inContentFinderSignature, int inContentSettingsOffset)
         {
@@ -116,7 +119,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
             var bytes = memory.GetByteArray(inContentFinderAddress, 1);
             return bytes[0] != 0;
         }
-
+        public short[] GetUISort()
+        {
+            var bytes = memory.Read16(ConfigPartyListRoleSortAdress+56, 46);
+            return bytes;
+        }
         public ContentFinderSettings GetContentFinderSettings()
         {
             var settings = new ContentFinderSettingsImpl();
