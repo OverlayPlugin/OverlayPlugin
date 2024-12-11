@@ -75,7 +75,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
             }
 
             logger.Log(LogLevel.Debug, "FrameworkPtr: 0x{0:X}", FrameworkPtr.ToInt64());
-          
             if (fail.Count == 0)
             {
                 logger.Log(LogLevel.Info, $"Found content finder settings memory via {GetType().Name}.");
