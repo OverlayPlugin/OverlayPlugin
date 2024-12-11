@@ -447,7 +447,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             BuildPartyMemberResults(result, cachedPartyList.alliance4Members, remainingAlliances[3], false);
             BuildPartyMemberResults(result, cachedPartyList.alliance5Members, remainingAlliances[4], false);
 
-            Log(LogLevel.Info, "party list: {0}", JObject.FromObject(new { party = result }).ToString());
+            Log(LogLevel.Debug, "party list: {0}", JObject.FromObject(new { party = result }).ToString());
 
             DispatchAndCacheEvent(JObject.FromObject(new
             {

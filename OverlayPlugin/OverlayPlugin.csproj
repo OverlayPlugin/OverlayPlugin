@@ -6,9 +6,9 @@
     <Product>OverlayPlugin</Product>
     <Description>Overlay plugin for Advanced Combat Tracker</Description>
     <OutputPath>..\out\$(Configuration)\</OutputPath>
-    <!--<PostBuildEvent>xcopy /Y /R "$(SolutionDir)README"* "$(MSBuildProjectDirectory)\$(OutputPath)"
+    <PostBuildEvent>xcopy /Y /R "$(SolutionDir)README"* "$(MSBuildProjectDirectory)\$(OutputPath)"
 xcopy /Y /R "$(SolutionDir)LICENSE.txt" "$(MSBuildProjectDirectory)\$(OutputPath)"
-</PostBuildEvent>-->
+</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">

@@ -54,15 +54,15 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
             }
 
             logger.Log(LogLevel.Debug, "inContentFinderAddress: 0x{0:X}", inContentFinderAddress.ToInt64());
-            IntPtr FrameworkPtr=IntPtr.Zero;
+            IntPtr FrameworkPtr = IntPtr.Zero;
             list = memory.SigScan(FrameworkPSignature, -4, true, 0);
             if (list != null && list.Count > 0)
             {
                 FrameworkPtr = list[0];
-                var GetUIModuleOffsetPtr= memory.SigScan(GetUIModulePtrSignature, -8, true, 11)[0];
-                var GetUIModuleOffset = memory.Read32(GetUIModuleOffsetPtr,1)[0];
+                var GetUIModuleOffsetPtr = memory.SigScan(GetUIModulePtrSignature, -8, true, 11)[0];
+                var GetUIModuleOffset = memory.Read32(GetUIModuleOffsetPtr, 1)[0];
                 var uiMoudle = memory.ReadIntPtr(memory.ReadIntPtr(FrameworkPtr) + GetUIModuleOffset);
-                var GetAgentModule = memory.ReadIntPtr(memory.ReadIntPtr(uiMoudle) + 8*37)+3;
+                var GetAgentModule = memory.ReadIntPtr(memory.ReadIntPtr(uiMoudle) + 8 * 37) + 3;
                 var GetAgentModuleOffset = memory.Read32(GetAgentModule, 1)[0];
                 var agent = IntPtr.Add(uiMoudle, GetAgentModuleOffset);
                 ConfigPartyListRoleSortAdress = memory.ReadIntPtr(agent + 8 * 230 + 32);

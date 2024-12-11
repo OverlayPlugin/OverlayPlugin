@@ -121,7 +121,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
         }
         public short[] GetUISort()
         {
-            var bytes = memory.Read16(ConfigPartyListRoleSortAdress+56, 46);
+            var bytes = memory.Read16(ConfigPartyListRoleSortAdress + 56, 46);
             return bytes;
         }
         public ContentFinderSettings GetContentFinderSettings()
