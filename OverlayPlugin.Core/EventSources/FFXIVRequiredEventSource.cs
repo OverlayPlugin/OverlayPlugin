@@ -165,7 +165,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         {
             var contentFinderSettingsMemory = container.Resolve<IContentFinderSettingsMemory>();
             var sortArry = contentFinderSettingsMemory.GetUISort();
-            var sort = new SortParty[31] ;
+            var sort = new SortParty[31];
             for (int i = 0; i < sort.Length; i++)
             {
                 sort[i] = new SortParty();
@@ -176,7 +176,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 sort[i].order = i;
                 sort[i].classJob = sortArry[i];
-                if (sort[i].classJob==1)
+                if (sort[i].classJob == 1)
                 {
                     //骑士
                     sort[22].order = i;
@@ -244,22 +244,13 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     sort[30].classJob = 27;
                 }
             }
-            var sad = 45;
             var count = cachedPartyList.partyMembers.Count();
             var sortParty = new SortParty[count];
-            
             for (int i = 0; i < count; i++)
             {
-                var asda = sort.Where(j => j.classJob == cachedPartyList.partyMembers[i].classJob).FirstOrDefault();
-                sortParty[i]= new SortParty() { name= cachedPartyList.partyMembers[i].name,classJob= cachedPartyList.partyMembers[i].classJob,order= sort.Where(j=>j.classJob== cachedPartyList.partyMembers[i].classJob).FirstOrDefault().order ,objectId= cachedPartyList.partyMembers[i] .objectId};
+                sortParty[i] = new SortParty() { name = cachedPartyList.partyMembers[i].name, classJob = cachedPartyList.partyMembers[i].classJob, order = sort.Where(j => j.classJob == cachedPartyList.partyMembers[i].classJob).FirstOrDefault().order, objectId = cachedPartyList.partyMembers[i].objectId };
             }
-            //        var classJobToMinOrder = sort
-            //.GroupBy(s => s.classJob)
-            //.ToDictionary(g => g.Key, g => g.Min(s => s.order));
-            //        var sortedSortParty = sortParty
-            //.OrderBy(sp => classJobToMinOrder.ContainsKey(sp.classJob) ? classJobToMinOrder[sp.classJob] : int.MaxValue)
-            //.ToList();
-            var sortedSortParty = sortParty.OrderBy(i=>i.order).ToList();
+            var sortedSortParty = sortParty.OrderBy(i => i.order).ToList();
             return JObject.FromObject(new
             {
                 sortedSortParty

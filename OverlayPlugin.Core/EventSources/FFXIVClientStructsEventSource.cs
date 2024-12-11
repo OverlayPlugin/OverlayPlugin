@@ -60,7 +60,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 return GetSortedPartyList();
             });
-       
 
         }
 
