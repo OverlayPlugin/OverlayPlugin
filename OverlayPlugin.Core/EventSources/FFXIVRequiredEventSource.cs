@@ -141,9 +141,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         combatants
                     });
                 });
-                RegisterEventHandler("getMySortedPartyList", (msg) =>
+                RegisterEventHandler("getUISortedPartyList", (msg) =>
                 {
-                    return GetMySortedPartyList();
+                    return GetUISortedPartyList();
                 });
                 container.Resolve<NetworkParser>().OnOnlineStatusChanged += (o, e) =>
                 {
@@ -161,7 +161,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 Task.Run(PollJobGauge, cancellationToken.Token);
             }
         }
-        private JObject GetMySortedPartyList()
+        private JObject GetUISortedPartyList()
         {
             var contentFinderSettingsMemory = container.Resolve<IContentFinderSettingsMemory>();
             var sortArry = contentFinderSettingsMemory.GetUISort();
