@@ -11,7 +11,7 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineActorControlExtra : LineBaseSubMachina<LineActorControlExtra.ActorControlExtraPacket>
+    public class LineActorControlExtra : LineBaseSubMachina<LineActorControlExtra.ActorControlExtraPacket>
     {
         public const uint LogFileLineID = 273;
         public const string LogLineName = "ActorControlExtra";
@@ -27,7 +27,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             Server_ActorControlCategory.EObjAnimation,
         };
 
-        internal class ActorControlExtraPacket : MachinaPacketWrapper
+        public class ActorControlExtraPacket : MachinaPacketWrapper
         {
             public override string ToString(long epoch, uint ActorID)
             {

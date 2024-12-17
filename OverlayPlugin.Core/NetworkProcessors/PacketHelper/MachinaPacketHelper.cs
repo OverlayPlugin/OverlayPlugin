@@ -89,7 +89,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         }
     }
 
-    class MachinaRegionalizedPacketHelper<PacketType>
+    public class MachinaRegionalizedPacketHelper<PacketType>
         where PacketType : MachinaPacketWrapper, new()
     {
         public readonly MachinaPacketHelper<PacketType> global;
@@ -177,7 +177,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         }
     }
 
-    class MachinaPacketHelper<PacketType> : IPacketHelper
+    public class MachinaPacketHelper<PacketType> : IPacketHelper
         where PacketType : MachinaPacketWrapper, new()
     {
         public readonly ushort Opcode;
@@ -273,7 +273,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         }
     }
 
-    class MachinaHeaderWrapper : IHeaderStruct
+    public class MachinaHeaderWrapper : IHeaderStruct
     {
         public object header;
 
@@ -313,7 +313,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         public uint Opcode => Get<ushort>("MessageType");
     }
 
-    abstract class MachinaPacketWrapper : IPacketStruct
+    public abstract class MachinaPacketWrapper : IPacketStruct
     {
         public Type packetType;
         public object packetValue;

@@ -5,7 +5,7 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineFateControl : LineBaseSubMachina<LineFateControl.FateControlPacket>
+    public class LineFateControl : LineBaseSubMachina<LineFateControl.FateControlPacket>
     {
         public static readonly Server_ActorControlCategory[] FateActorControlCategories = {
             Server_ActorControlCategory.FateAdd,
@@ -13,7 +13,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             Server_ActorControlCategory.FateUpdate,
         };
 
-        internal class FateControlPacket : MachinaPacketWrapper
+        public class FateControlPacket : MachinaPacketWrapper
         {
             public override string ToString(long epoch, uint ActorID)
             {

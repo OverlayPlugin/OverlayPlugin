@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
 {
-    abstract class LineBaseCustom<
+    public abstract class LineBaseCustom<
         HeaderStruct_Global, PacketStruct_Global,
         HeaderStruct_CN, PacketStruct_CN,
         HeaderStruct_KR, PacketStruct_KR>
