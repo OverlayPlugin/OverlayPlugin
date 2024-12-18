@@ -19,7 +19,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
         {
             this.container = container;
             container.Register<IClientFrameworkMemory70, ClientFrameworkMemory70>();
-            container.Register<IClientFrameworkMemory655, ClientFrameworkMemory655>();
             repository = container.Resolve<FFXIVRepository>();
 
             var ffxivMemory = container.Resolve<FFXIVMemory>();
@@ -40,7 +39,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ClientFramework
         {
             List<IClientFrameworkMemory> candidates = new List<IClientFrameworkMemory>();
             candidates.Add(container.Resolve<IClientFrameworkMemory70>());
-            candidates.Add(container.Resolve<IClientFrameworkMemory655>());
             memory = FFXIVMemory.FindCandidate(candidates, repository.GetMachinaRegion());
         }
 
