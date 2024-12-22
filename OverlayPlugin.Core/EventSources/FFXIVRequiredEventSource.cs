@@ -176,7 +176,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 sortParty[i] = new SortParty() { name = cachedPartyList.partyMembers[i].name, classJob = cachedPartyList.partyMembers[i].classJob, order = sort.Where(j => j.classJob == cachedPartyList.partyMembers[i].classJob).FirstOrDefault().order, objectId = cachedPartyList.partyMembers[i].objectId };
             }
-            var sortedSortParty = sortParty.OrderBy(i => i.order).OrderBy(i => i.objectId).ToList();
+            var sortedSortParty = sortParty.OrderBy(i => i.objectId).OrderBy(i => i.order).ToList();
             return JObject.FromObject(new
             {
                 sortedSortParty
