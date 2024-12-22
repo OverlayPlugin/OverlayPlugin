@@ -14,9 +14,9 @@ using RainbowMage.OverlayPlugin.MemoryProcessors.Party;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.UISortParty
 {
- 
 
-    public  class UISortParty
+
+    public class UISortParty
 
     {
 
@@ -35,7 +35,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.UISortParty
         private FFXIVMemory memory;
         private ILogger logger;
         public PartyRoleListStruct party;
-        public unsafe UISortParty(TinyIoCContainer container) {
+        public unsafe UISortParty(TinyIoCContainer container)
+        {
             tinyIoC = container;
             memory = container.Resolve<FFXIVMemory>();
             logger = container.Resolve<ILogger>();
@@ -85,7 +86,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.UISortParty
             {
 
                 sort[i].order = i;
-                sort[i].classJob = party.healerOrder[i-4];
+                sort[i].classJob = party.healerOrder[i - 4];
                 if (sort[i].classJob == 6)
                 {
                     //白魔
@@ -96,7 +97,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.UISortParty
             for (int i = 8; i < 22; i++)
             {
                 sort[i].order = i;
-                sort[i].classJob = party.healerOrder[i-8];
+                sort[i].classJob = party.healerOrder[i - 8];
                 if (sort[i].classJob == 2)
                 {
                     //武僧
@@ -173,7 +174,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.UISortParty
                 fail.Add(nameof(FrameworkPtr));
             }
 
-            logger.Log(LogLevel.Debug, "FrameworkPtr: 0x{0:X}", FrameworkPtr.ToInt64());;
+            logger.Log(LogLevel.Debug, "FrameworkPtr: 0x{0:X}", FrameworkPtr.ToInt64()); ;
         }
         private bool HasValidPointers()
         {
@@ -189,7 +190,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.UISortParty
             if (!HasValidPointers())
                 return false;
 
-            return true;;
+            return true; ;
         }
     }
 }
