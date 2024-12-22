@@ -270,7 +270,6 @@ namespace RainbowMage.OverlayPlugin
                                     // Register FFXIV memory reading subcomponents.
                                     // Must be done before loading addons.
                                     _container.Register(new FFXIVMemory(_container));
-                                    
                                     // These are registered to be lazy-loaded. Use interface to force TinyIoC to use singleton pattern.
                                     _container.Register<ICombatantMemory, CombatantMemoryManager>();
                                     _container.Register<ITargetMemory, TargetMemoryManager>();
