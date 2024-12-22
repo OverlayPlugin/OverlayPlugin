@@ -15,10 +15,12 @@ using Advanced_Combat_Tracker;
 using FFXIV_ACT_Plugin.Common;
 using FFXIV_ACT_Plugin.Common.Models;
 using Newtonsoft.Json.Linq;
+using RainbowMage.OverlayPlugin.MemoryProcessors;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
 using RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings;
 using RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Party;
+using RainbowMage.OverlayPlugin.MemoryProcessors.UISortParty;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
 using PluginCombatant = FFXIV_ACT_Plugin.Common.Models.Combatant;
 
@@ -47,8 +49,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private IPartyMemory partyMemory;
         private IJobGaugeMemory jobGaugeMemory;
 
-        private CancellationTokenSource cancellationToken;
 
+        private CancellationTokenSource cancellationToken;
+        private UISortParty uiSortParty;
         // In milliseconds
         private const int PollingRate = 50;
 
@@ -68,7 +71,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 {
                     Log(LogLevel.Error, "Could not construct FFXIVRequiredEventSource: Missing partyMemory");
                 }
-
+                if (!container.TryResolve(out uiSortParty))
+                {
+                    Log(LogLevel.Error, "Could not construct FFXIVRequiredEventSource: Missing uiSortParty");
+                }
                 if (!container.TryResolve(out jobGaugeMemory))
                 {
                     Log(LogLevel.Error, "Could not construct FFXIVRequiredEventSource: Missing jobGaugeMemory");
@@ -141,6 +147,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         combatants
                     });
                 });
+  
                 RegisterEventHandler("getUISortedPartyList", (msg) =>
                 {
                     return GetUISortedPartyList();
@@ -163,94 +170,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
         }
         private JObject GetUISortedPartyList()
         {
-            var contentFinderSettingsMemory = container.Resolve<IContentFinderSettingsMemory>();
-            var sortArry = contentFinderSettingsMemory.GetUISort();
-            var sort = new SortParty[31];
-            for (int i = 0; i < sort.Length; i++)
-            {
-                sort[i] = new SortParty();
-            }
-
-
-            for (int i = 0; i < 4; i++)
-            {
-                sort[i].order = i;
-                sort[i].classJob = sortArry[i];
-                if (sort[i].classJob == 1)
-                {
-                    //骑士
-                    sort[22].order = i;
-                    sort[22].classJob = 19;
-                }
-                if (sort[i].classJob == 3)
-                {
-                    //战士
-                    sort[23].order = i;
-                    sort[23].classJob = 21;
-                }
-
-            }
-            for (int i = 4; i < 8; i++)
-            {
-                var sorted = i + 12;
-                sort[i].order = i;
-                sort[i].classJob = sortArry[sorted];
-                if (sort[i].classJob == 6)
-                {
-                    //白魔
-                    sort[24].order = i;
-                    sort[24].classJob = 24;
-                }
-            }
-            for (int i = 8; i < 22; i++)
-            {
-                var sorted = i + 24;
-                sort[i].order = i;
-                sort[i].classJob = sortArry[sorted];
-                if (sort[i].classJob == 2)
-                {
-                    //武僧
-                    sort[25].order = i;
-                    sort[25].classJob = 20;
-                }
-                if (sort[i].classJob == 4)
-                {
-                    //龙骑
-                    sort[26].order = i;
-                    sort[26].classJob = 22;
-                }
-                if (sort[i].classJob == 29)
-                {
-                    //忍者
-                    sort[27].order = i;
-                    sort[27].classJob = 30;
-                }
-                if (sort[i].classJob == 5)
-                {
-                    //诗人
-                    sort[28].order = i;
-                    sort[28].classJob = 23;
-                }
-                if (sort[i].classJob == 7)
-                {
-                    //黑魔
-                    sort[29].order = i;
-                    sort[29].classJob = 25;
-                }
-                if (sort[i].classJob == 26)
-                {
-                    //召唤
-                    sort[30].order = i;
-                    sort[30].classJob = 27;
-                }
-            }
+            var sort = uiSortParty.GetUISortedPartyList();
             var count = cachedPartyList.partyMembers.Count();
             var sortParty = new SortParty[count];
             for (int i = 0; i < count; i++)
             {
                 sortParty[i] = new SortParty() { name = cachedPartyList.partyMembers[i].name, classJob = cachedPartyList.partyMembers[i].classJob, order = sort.Where(j => j.classJob == cachedPartyList.partyMembers[i].classJob).FirstOrDefault().order, objectId = cachedPartyList.partyMembers[i].objectId };
             }
-            var sortedSortParty = sortParty.OrderBy(i => i.order).ToList();
+            var sortedSortParty = sortParty.OrderBy(i => i.order).OrderBy(i=>i.objectId).ToList();
             return JObject.FromObject(new
             {
                 sortedSortParty

@@ -21,7 +21,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
     public interface IContentFinderSettingsMemory : IVersionedMemory
     {
         ContentFinderSettings GetContentFinderSettings();
-        short[] GetUISort();
+
 
     }
 
@@ -83,11 +83,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
             return memory.GetContentFinderSettings();
         }
 
-        public short[] GetUISort()
-        {
-            if (!IsValid())
-                return null;
-            return memory.GetUISort();
-        }
+
     }
 }
