@@ -44,7 +44,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                     {
                         // AE1 only contains rotation.
                         return string.Format(CultureInfo.InvariantCulture,
-                            "{0:X8}|{1:X4}|{2:X8}|{3}|||{4:F3}|{5:X8}|",
+                            "{0:X8}|{1:X4}|{2:X8}|{3}||||{4:F3}|{5:X8}|",
                             ActorID, abilityId, globalEffectCounter, (int)LineSubType.NO_DATA, h, atId);
                     }
 
