@@ -38,13 +38,14 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                     var globalEffectCounter = aeHeader.Get<uint>("globalEffectCounter");
 
                     var h = FFXIVRepository.ConvertHeading(aeHeader.Get<ushort>("rotation"));
+                    var atId = (aeHeader.Get<uint>("animationTargetId"));
 
                     if (rawPacket.actionEffectCount == 1)
                     {
                         // AE1 only contains rotation.
                         return string.Format(CultureInfo.InvariantCulture,
-                            "{0:X8}|{1:X4}|{2:X8}|{3}|||{4:F3}|",
-                            ActorID, abilityId, globalEffectCounter, (int)LineSubType.NO_DATA, h);
+                            "{0:X8}|{1:X4}|{2:X8}|{3}|||{4:F3}|{5:X8}|",
+                            ActorID, abilityId, globalEffectCounter, (int)LineSubType.NO_DATA, h, atId);
                     }
 
                     float x = FFXIVRepository.ConvertUInt16Coordinate(rawPacket.x);
@@ -52,8 +53,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                     float z = FFXIVRepository.ConvertUInt16Coordinate(rawPacket.z);
 
                     return string.Format(CultureInfo.InvariantCulture,
-                        "{0:X8}|{1:X4}|{2:X8}|{3}|{4:F3}|{5:F3}|{6:F3}|{7:F3}",
-                        ActorID, abilityId, globalEffectCounter, (int)LineSubType.DATA_PRESENT, x, y, z, h);
+                        "{0:X8}|{1:X4}|{2:X8}|{3}|{4:F3}|{5:F3}|{6:F3}|{7:F3}|{8:X8}",
+                        ActorID, abilityId, globalEffectCounter, (int)LineSubType.DATA_PRESENT, x, y, z, h, atId);
                 }
                 finally
                 {
