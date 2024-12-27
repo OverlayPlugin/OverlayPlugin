@@ -70,7 +70,8 @@ namespace RainbowMage.OverlayPlugin
             Initialize();
         }
 
-        private bool CheckACTVersion() {
+        private bool CheckACTVersion()
+        {
             var reqVersion = new Version(3, 8, 0, 281);
             var version = ActGlobals.oFormActMain.GetVersion();
             if (version < reqVersion)
