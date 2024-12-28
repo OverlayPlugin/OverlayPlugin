@@ -121,6 +121,10 @@
     <value>Failed to load Common!</value>
     <comment>Plugin status (in ACT's plugin list)</comment>
   </data>
+	<data name="ActVersionTooOld" xml:space="preserve">
+    <value>ACT version too old! Requires version {0} or newer</value>
+    <comment>Plugin status (in ACT's plugin list)</comment>
+  </data>
   <data name="InitRuntime" xml:space="preserve">
     <value>Initializing Runtime...</value>
     <comment>Plugin status (in ACT's plugin list)</comment>
