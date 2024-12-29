@@ -48,6 +48,11 @@ namespace RainbowMage.OverlayPlugin
             this.pluginScreenSpace = pluginScreenSpace;
             this.pluginStatusText = pluginStatusText;
 
+            if (!CheckACTVersion())
+            {
+                return;
+            }
+
             /*
              * We explicitly load OverlayPlugin.Common here for two reasons:
              *  * To prevent a stack overflow in the assembly loaded handler when we use the logger interface.
@@ -63,6 +68,20 @@ namespace RainbowMage.OverlayPlugin
             }
 
             Initialize();
+        }
+
+        private bool CheckACTVersion()
+        {
+            var reqVersion = new Version(3, 8, 0, 281);
+            var version = ActGlobals.oFormActMain.GetVersion();
+            if (version < reqVersion)
+            {
+                var errorMsg = $"Error: OverlayPlugin requires ACT version {reqVersion}, but you're on {version}";
+                ActGlobals.oFormActMain.NotificationAdd("OverlayPlugin Error", errorMsg);
+                pluginStatusText.Text = string.Format(Resources.ActVersionTooOld, reqVersion);
+                return false;
+            }
+            return true;
         }
 
         // AssemblyResolver でカスタムリゾルバを追加する前に PluginMain が解決されることを防ぐために、
