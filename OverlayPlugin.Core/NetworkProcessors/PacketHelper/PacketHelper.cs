@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
 {
-    class RegionalizedPacketHelper<
+    public class RegionalizedPacketHelper<
         HeaderStruct_Global, PacketStruct_Global,
         HeaderStruct_CN, PacketStruct_CN,
         HeaderStruct_KR, PacketStruct_KR>
@@ -95,12 +95,12 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         }
     }
 
-    interface IPacketHelper
+    public interface IPacketHelper
     {
         string ToString(long epoch, byte[] message);
     }
 
-    class PacketHelper<HeaderStruct, PacketStruct> : IPacketHelper
+    public class PacketHelper<HeaderStruct, PacketStruct> : IPacketHelper
         where HeaderStruct : struct, IHeaderStruct
         where PacketStruct : struct, IPacketStruct
     {
@@ -175,12 +175,12 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         }
     }
 
-    interface IPacketStruct
+    public interface IPacketStruct
     {
         string ToString(long epoch, uint ActorID);
     }
 
-    interface IHeaderStruct
+    public interface IHeaderStruct
     {
         uint ActorID { get; }
         uint Opcode { get; }

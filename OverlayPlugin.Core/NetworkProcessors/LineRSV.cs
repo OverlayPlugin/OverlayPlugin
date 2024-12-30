@@ -5,13 +5,13 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineRSV : LineBaseCustom<
+    public class LineRSV : LineBaseCustom<
             Server_MessageHeader_Global, LineRSV.RSV_v62,
             Server_MessageHeader_CN, LineRSV.RSV_v62,
             Server_MessageHeader_KR, LineRSV.RSV_v62>
     {
         [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
-        internal unsafe struct RSV_v62 : IPacketStruct
+        public unsafe struct RSV_v62 : IPacketStruct
         {
             public const int structSize = 1080;
             public const int keySize = 0x30;
