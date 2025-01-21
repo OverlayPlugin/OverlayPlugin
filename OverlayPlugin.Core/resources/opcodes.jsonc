@@ -85,42 +85,42 @@
         }
     },
     "Korean": {
-        "2024.12.18.0000.0000": {
-            // Version: 7.01
+        "2025.01.08.0000.0000": {
+            // Version: 7.05
             "MapEffect": {
-                "opcode": 482,
+                "opcode": 519,
                 "size": 11
             },
             "CEDirector": {
-                "opcode": 349,
+                "opcode": 802,
                 "size": 16
             },
             "RSVData": {
-                "opcode": 373,
+                "opcode": 740,
                 "size": 1080
             },
             "NpcYell": {
-                "opcode": 361,
+                "opcode": 937,
                 "size": 32
             },
             "BattleTalk2": {
-                "opcode": 961,
+                "opcode": 971,
                 "size": 40
             },
             "Countdown": {
-                "opcode": 579,
+                "opcode": 689,
                 "size": 48
             },
             "CountdownCancel": {
-                "opcode": 110,
+                "opcode": 641,
                 "size": 40
             },
             "ActorMove": {
-                "opcode": 262,
+                "opcode": 984,
                 "size": 16
             },
             "ActorSetPos": {
-                "opcode": 459,
+                "opcode": 303,
                 "size": 24
             }
         }
