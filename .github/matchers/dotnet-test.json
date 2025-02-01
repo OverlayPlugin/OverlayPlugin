@@ -1,0 +1,15 @@
+{
+    "problemMatcher": [
+      {
+        "owner": "run-tests",
+        "pattern": [
+          {
+            "regexp": "^\\s*Failed!.*?\\s*-\\s*.*?\\s*-\\s*(.*)\\s+\\([^)]+\\)\\s*$",
+            "message": 0,
+            "file": 1
+          }
+        ]
+      }
+    ]
+  }
+  
