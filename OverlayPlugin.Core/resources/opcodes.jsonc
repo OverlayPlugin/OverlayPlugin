@@ -44,83 +44,83 @@
         }
     },
     "Global": {
-        "2024.12.07.0000.0000": {
-            // Version: 7.15
+        "2025.01.28.0000.0000": {
+            // Version: 7.16h
             "MapEffect": {
-                "opcode": 762,
+                "opcode": 160,
                 "size": 11
             },
             "CEDirector": {
-                "opcode": 186,
+                "opcode": 821,
                 "size": 16
             },
             "RSVData": {
-                "opcode": 553,
+                "opcode": 861,
                 "size": 1080
             },
             "NpcYell": {
-                "opcode": 683,
+                "opcode": 964,
                 "size": 32
             },
             "BattleTalk2": {
-                "opcode": 881,
+                "opcode": 308,
                 "size": 40
             },
             "Countdown": {
-                "opcode": 127,
+                "opcode": 962,
                 "size": 48
             },
             "CountdownCancel": {
-                "opcode": 615,
+                "opcode": 264,
                 "size": 40
             },
             "ActorMove": {
-                "opcode": 563,
+                "opcode": 421,
                 "size": 16
             },
             "ActorSetPos": {
-                "opcode": 823,
+                "opcode": 741,
                 "size": 24
             }
         }
     },
     "Korean": {
-        "2024.12.18.0000.0000": {
-            // Version: 7.01
+        "2025.01.08.0000.0000": {
+            // Version: 7.05
             "MapEffect": {
-                "opcode": 482,
+                "opcode": 519,
                 "size": 11
             },
             "CEDirector": {
-                "opcode": 349,
+                "opcode": 802,
                 "size": 16
             },
             "RSVData": {
-                "opcode": 373,
+                "opcode": 740,
                 "size": 1080
             },
             "NpcYell": {
-                "opcode": 361,
+                "opcode": 937,
                 "size": 32
             },
             "BattleTalk2": {
-                "opcode": 961,
+                "opcode": 971,
                 "size": 40
             },
             "Countdown": {
-                "opcode": 579,
+                "opcode": 689,
                 "size": 48
             },
             "CountdownCancel": {
-                "opcode": 110,
+                "opcode": 641,
                 "size": 40
             },
             "ActorMove": {
-                "opcode": 262,
+                "opcode": 984,
                 "size": 16
             },
             "ActorSetPos": {
-                "opcode": 459,
+                "opcode": 303,
                 "size": 24
             }
         }
