@@ -4,13 +4,13 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineActorMove : LineBaseCustom<
+    public class LineActorMove : LineBaseCustom<
             Server_MessageHeader_Global, LineActorMove.ActorMove_v655,
             Server_MessageHeader_CN, LineActorMove.ActorMove_v655,
             Server_MessageHeader_KR, LineActorMove.ActorMove_v655>
     {
         [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
-        internal unsafe struct ActorMove_v655 : IPacketStruct
+        public unsafe struct ActorMove_v655 : IPacketStruct
         {
             // 6.5.5 packet data (minus header):
             // 1897 3004 3C00 B681 AA80 9F83 00000000
