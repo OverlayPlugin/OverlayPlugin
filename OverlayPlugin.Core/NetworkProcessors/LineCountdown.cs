@@ -4,13 +4,13 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineCountdown : LineBaseCustom<
+    public class LineCountdown : LineBaseCustom<
             Server_MessageHeader_Global, LineCountdown.Countdown_v655,
             Server_MessageHeader_CN, LineCountdown.Countdown_v655,
             Server_MessageHeader_KR, LineCountdown.Countdown_v655>
     {
         [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
-        internal unsafe struct Countdown_v655 : IPacketStruct
+        public unsafe struct Countdown_v655 : IPacketStruct
         {
             // 6.5.5 packet data (minus header):
             // 34120010 4F00 1500 53  00  00  0102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F20 00000000

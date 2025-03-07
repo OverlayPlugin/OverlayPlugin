@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
 {
-    abstract class LineBaseSubMachina<PacketType>
+    public abstract class LineBaseSubMachina<PacketType>
         where PacketType : MachinaPacketWrapper, new()
     {
         protected static FFXIVRepository ffxiv;
