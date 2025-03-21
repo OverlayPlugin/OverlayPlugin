@@ -9,13 +9,18 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Services.Description;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
 using FFXIV_ACT_Plugin.Common;
+using FFXIV_ACT_Plugin.Common.Models;
 using Newtonsoft.Json.Linq;
+using RainbowMage.OverlayPlugin.MemoryProcessors;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
+using RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings;
 using RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Party;
+using RainbowMage.OverlayPlugin.MemoryProcessors.UISortParty;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
 using PluginCombatant = FFXIV_ACT_Plugin.Common.Models.Combatant;
 
@@ -44,8 +49,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private IPartyMemory partyMemory;
         private IJobGaugeMemory jobGaugeMemory;
 
-        private CancellationTokenSource cancellationToken;
 
+        private CancellationTokenSource cancellationToken;
+        private UISortParty uiSortParty;
         // In milliseconds
         private const int PollingRate = 50;
 
@@ -65,7 +71,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 {
                     Log(LogLevel.Error, "Could not construct FFXIVRequiredEventSource: Missing partyMemory");
                 }
-
+                if (!container.TryResolve(out uiSortParty))
+                {
+                    Log(LogLevel.Error, "Could not construct FFXIVRequiredEventSource: Missing uiSortParty");
+                }
                 if (!container.TryResolve(out jobGaugeMemory))
                 {
                     Log(LogLevel.Error, "Could not construct FFXIVRequiredEventSource: Missing jobGaugeMemory");
@@ -138,7 +147,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         combatants
                     });
                 });
-
+                RegisterEventHandler("getUISortedPartyList", (msg) =>
+                {
+                    return GetUISortedPartyList();
+                });
                 container.Resolve<NetworkParser>().OnOnlineStatusChanged += (o, e) =>
                 {
                     var obj = new JObject();
@@ -155,7 +167,22 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 Task.Run(PollJobGauge, cancellationToken.Token);
             }
         }
+        private JObject GetUISortedPartyList()
+        {
+            var sort = uiSortParty.GetUISortedPartyList();
+            var count = cachedPartyList.partyMembers.Count();
+            var sortParty = new SortParty[count];
+            for (int i = 0; i < count; i++)
+            {
+                sortParty[i] = new SortParty() { name = cachedPartyList.partyMembers[i].name, classJob = cachedPartyList.partyMembers[i].classJob, order = sort.Where(j => j.classJob == cachedPartyList.partyMembers[i].classJob).FirstOrDefault().order, objectId = cachedPartyList.partyMembers[i].objectId };
+            }
+            var sortedSortParty = sortParty.OrderBy(i => i.objectId).OrderBy(i => i.order).ToList();
+            return JObject.FromObject(new
+            {
+                sortedSortParty
+            });
 
+        }
         [MethodImpl(MethodImplOptions.NoInlining)]
         private List<Dictionary<string, object>> GetCombatants(List<uint> ids, List<string> names, List<string> props)
         {
@@ -367,6 +394,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 #endif
             }));
         }
+
 
         private void BuildPartyMemberResults(List<PartyMember> result, PartyListEntry[] members, PartyType partyType, bool inParty)
         {
