@@ -4,13 +4,13 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineActorCastExtra : LineBaseSubMachina<LineActorCastExtra.ActorCastExtraPacket>
+    public class LineActorCastExtra : LineBaseSubMachina<LineActorCastExtra.ActorCastExtraPacket>
     {
         public const uint LogFileLineID = 263;
         public const string LogLineName = "ActorCastExtra";
         public const string MachinaPacketName = "ActorCast";
 
-        internal class ActorCastExtraPacket : MachinaPacketWrapper
+        public class ActorCastExtraPacket : MachinaPacketWrapper
         {
             public override string ToString(long epoch, uint ActorID)
             {

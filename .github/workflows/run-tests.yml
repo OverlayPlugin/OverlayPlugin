@@ -1,0 +1,55 @@
+name: Run tests
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '**/*.cs'
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    paths:
+      - '**/*.cs'
+  workflow_dispatch:
+
+jobs:
+  msbuild:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7'
+
+      - name: Check dependencies cache
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./Thirdparty
+            ./OverlayPlugin.Core/Thirdparty
+          key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.ps1', './DEPS.json', './tools/StripFFXIVClientStructs/StripFFXIVClientStructs/StripFFXIVClientStructs.cs') }}
+          restore-keys: |
+            ${{ runner.os }}-overlayplugin-
+      # Fetch dependencies only if cache-hit is false
+      - name: Fetch dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          .\tools\fetch_deps.ps1
+
+      - name: Set up msbuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Add Custom Problem Matcher
+        run: |
+          echo "::add-matcher::.github/matchers/dotnet-test.json"
+
+      - name: Run Build
+        run: dotnet test
+        shell: cmd

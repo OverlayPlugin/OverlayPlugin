@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{00D71842-2F1E-4B77-8FFF-5D2E43DECA9A}</ProjectGuid>
+    <RootNamespace>RainbowMage.OverlayPlugin.NetworkPacketTests</RootNamespace>
+    <AssemblyTitle>NetworkPacketTests</AssemblyTitle>
+    <Product>OverlayPlugin</Product>
+    <Description>Tests for NetworkPacket handlers</Description>
+    <OutputPath>..\out\test\$(Configuration)\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TestProjectType>UnitTest</TestProjectType>
+    <EnableMSTestRunner>true</EnableMSTestRunner>
+    <PostBuildEvent>
+xcopy /Y /R "$(SolutionDir)Thirdparty\ACT\Advanced Combat Tracker.exe" "$(MSBuildProjectDirectory)\$(OutputPath)"
+xcopy /Y /R "$(SolutionDir)Thirdparty\FFXIV_ACT_Plugin\SDK\"*.dll "$(MSBuildProjectDirectory)\$(OutputPath)"
+xcopy /Y /R "$(SolutionDir)Thirdparty\FFXIV_ACT_Plugin\SDK\"*.dll "$(MSBuildProjectDirectory)\$(OutputPath)"
+</PostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Advanced Combat Tracker">
+      <HintPath>..\Thirdparty\ACT\Advanced Combat Tracker.exe</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\tools\VSBuildDeps\VSBuildDeps.csproj" Private="False" />
+    <ProjectReference Include="..\HtmlRenderer\HtmlRenderer.csproj" />
+    <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj" />
+    <ProjectReference Include="..\OverlayPlugin.Core\OverlayPlugin.Core.csproj" />
+    <ProjectReference Include="..\OverlayPlugin.Updater\OverlayPlugin.Updater.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="MSTest" Version="3.2.0" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+</Project>

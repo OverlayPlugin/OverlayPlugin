@@ -43,7 +43,7 @@ namespace RainbowMage.OverlayPlugin
         }
     }
 
-    class OverlayPluginLogLineConfig
+    public class OverlayPluginLogLineConfig
     {
         private Opcodes opcodesFile;
         private Opcodes opcodesConfig;
@@ -270,7 +270,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
     }
-    interface IOpcodeConfigEntry
+    public interface IOpcodeConfigEntry
     {
         uint opcode { get; }
         uint size { get; }

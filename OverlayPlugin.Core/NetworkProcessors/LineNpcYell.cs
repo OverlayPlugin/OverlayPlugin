@@ -3,13 +3,13 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineNpcYell : LineBaseCustom<
+    public class LineNpcYell : LineBaseCustom<
             Server_MessageHeader_Global, LineNpcYell.NpcYell_v655,
             Server_MessageHeader_CN, LineNpcYell.NpcYell_v655,
             Server_MessageHeader_KR, LineNpcYell.NpcYell_v655>
     {
         [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
-        internal unsafe struct NpcYell_v655 : IPacketStruct
+        public unsafe struct NpcYell_v655 : IPacketStruct
         {
             // 00|2024-02-22T22:35:03.0000000-05:00|0044|Shanoa|Meow!♪|1d173e4a0eacfd95
             // 6.5.5 packet data (minus header):

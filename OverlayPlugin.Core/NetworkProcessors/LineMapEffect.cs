@@ -3,13 +3,13 @@ using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
-    class LineMapEffect : LineBaseCustom<
+    public class LineMapEffect : LineBaseCustom<
             Server_MessageHeader_Global, LineMapEffect.MapEffect_v62,
             Server_MessageHeader_CN, LineMapEffect.MapEffect_v62,
             Server_MessageHeader_KR, LineMapEffect.MapEffect_v62>
     {
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        internal struct MapEffect_v62 : IPacketStruct
+        public struct MapEffect_v62 : IPacketStruct
         {
             public uint instanceContentID;
             public uint flags;
