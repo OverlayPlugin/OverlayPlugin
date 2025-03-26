@@ -339,7 +339,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             Server_MessageHeader_CN, LineMapEffect.MapEffect8_v72,
             Server_MessageHeader_KR, LineMapEffect.MapEffect8_v72> packetHelper_8;
 
-        private  RegionalizedPacketHelper<
+        private RegionalizedPacketHelper<
             Server_MessageHeader_Global, LineMapEffect.MapEffect16_v72,
             Server_MessageHeader_CN, LineMapEffect.MapEffect16_v72,
             Server_MessageHeader_KR, LineMapEffect.MapEffect16_v72> packetHelper_16;
@@ -353,6 +353,12 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         protected override void MessageReceived(string id, long epoch, byte[] message)
         {
             if (MessageReceivedSubHandler(packetHelper, epoch, message))
+                return;
+            if (MessageReceivedSubHandler(packetHelper_4, epoch, message))
+                return;
+            if (MessageReceivedSubHandler(packetHelper_8, epoch, message))
+                return;
+            if (MessageReceivedSubHandler(packetHelper_16, epoch, message))
                 return;
         }
 
@@ -445,7 +451,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
                 // Two blank fields at the end used to be $"{unknown1:X2}|{unknown2:X4}", turned out to be padding
                 // @TODO: Remove these fields at some point, this is a breaking change.
-                logWriter($"{strInstanceContentID}|{flag1:X4}|{flag2:X4}|{index:X2}||", serverTime);
+                // @TODO: Since we'll be breaking things anyways, maybe separate flags out into two fields?
+                logWriter($"{strInstanceContentID}|{flag1:X4}{flag2:X4}|{index:X2}||", serverTime);
             }
         }
     }
