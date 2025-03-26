@@ -79,7 +79,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
             uint IMapEffectPacket.instanceContentID => 0;
 
-            ushort IMapEffectPacket.count => 1;
+            ushort IMapEffectPacket.count => count;
 
             List<ushort> IMapEffectPacket.flags1
             {
@@ -162,7 +162,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
             uint IMapEffectPacket.instanceContentID => 0;
 
-            ushort IMapEffectPacket.count => 1;
+            ushort IMapEffectPacket.count => count;
 
             List<ushort> IMapEffectPacket.flags1
             {
@@ -245,7 +245,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
             uint IMapEffectPacket.instanceContentID => 0;
 
-            ushort IMapEffectPacket.count => 1;
+            ushort IMapEffectPacket.count => count;
 
             List<ushort> IMapEffectPacket.flags1
             {
@@ -348,6 +348,23 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             : base(container, LogFileLineID, logLineName, MachinaPacketName)
         {
             logger = container.Resolve<ILogger>();
+
+            var opcodeConfig = container.Resolve<OverlayPluginLogLineConfig>();
+
+            packetHelper_4 = RegionalizedPacketHelper<
+            Server_MessageHeader_Global, LineMapEffect.MapEffect4_v72,
+            Server_MessageHeader_CN, LineMapEffect.MapEffect4_v72,
+            Server_MessageHeader_KR, LineMapEffect.MapEffect4_v72>.CreateFromOpcodeConfig(opcodeConfig, $"{MachinaPacketName}4");
+
+            packetHelper_8 = RegionalizedPacketHelper<
+            Server_MessageHeader_Global, LineMapEffect.MapEffect8_v72,
+            Server_MessageHeader_CN, LineMapEffect.MapEffect8_v72,
+            Server_MessageHeader_KR, LineMapEffect.MapEffect8_v72>.CreateFromOpcodeConfig(opcodeConfig, $"{MachinaPacketName}8");
+
+            packetHelper_16 = RegionalizedPacketHelper<
+            Server_MessageHeader_Global, LineMapEffect.MapEffect16_v72,
+            Server_MessageHeader_CN, LineMapEffect.MapEffect16_v72,
+            Server_MessageHeader_KR, LineMapEffect.MapEffect16_v72>.CreateFromOpcodeConfig(opcodeConfig, $"{MachinaPacketName}16");
         }
 
         protected override void MessageReceived(string id, long epoch, byte[] message)
@@ -403,16 +420,6 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 default:
                     return false;
             }
-
-            var line = packetHelper[currentRegion.Value].ToString(epoch, message);
-
-            if (line != null)
-            {
-                DateTime serverTime = ffxiv.EpochToDateTime(epoch);
-                logWriter(line, serverTime);
-                return true;
-            }
-            return false;
         }
 
         private void WriteLinesFor(long epoch, uint instanceContentID, ushort count, List<ushort> flags1, List<ushort> flags2, List<byte> indexes)
