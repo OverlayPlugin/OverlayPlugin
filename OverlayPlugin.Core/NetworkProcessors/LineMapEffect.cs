@@ -234,9 +234,9 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        internal unsafe struct MapEffect16_v72 : IPacketStruct, IMapEffectPacket
+        internal unsafe struct MapEffect12_v72 : IPacketStruct, IMapEffectPacket
         {
-            private const int MaxCount = 16;
+            private const int MaxCount = 12;
             public ushort count;
             public fixed ushort flags1[MaxCount];
             public fixed ushort flags2[MaxCount];
@@ -340,9 +340,9 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             Server_MessageHeader_KR, LineMapEffect.MapEffect8_v72> packetHelper_8;
 
         private RegionalizedPacketHelper<
-            Server_MessageHeader_Global, LineMapEffect.MapEffect16_v72,
-            Server_MessageHeader_CN, LineMapEffect.MapEffect16_v72,
-            Server_MessageHeader_KR, LineMapEffect.MapEffect16_v72> packetHelper_16;
+            Server_MessageHeader_Global, LineMapEffect.MapEffect12_v72,
+            Server_MessageHeader_CN, LineMapEffect.MapEffect12_v72,
+            Server_MessageHeader_KR, LineMapEffect.MapEffect12_v72> packetHelper_12;
 
         public LineMapEffect(TinyIoCContainer container)
             : base(container, LogFileLineID, logLineName, MachinaPacketName)
@@ -361,10 +361,10 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             Server_MessageHeader_CN, LineMapEffect.MapEffect8_v72,
             Server_MessageHeader_KR, LineMapEffect.MapEffect8_v72>.CreateFromOpcodeConfig(opcodeConfig, $"{MachinaPacketName}8");
 
-            packetHelper_16 = RegionalizedPacketHelper<
-            Server_MessageHeader_Global, LineMapEffect.MapEffect16_v72,
-            Server_MessageHeader_CN, LineMapEffect.MapEffect16_v72,
-            Server_MessageHeader_KR, LineMapEffect.MapEffect16_v72>.CreateFromOpcodeConfig(opcodeConfig, $"{MachinaPacketName}16");
+            packetHelper_12 = RegionalizedPacketHelper<
+            Server_MessageHeader_Global, LineMapEffect.MapEffect12_v72,
+            Server_MessageHeader_CN, LineMapEffect.MapEffect12_v72,
+            Server_MessageHeader_KR, LineMapEffect.MapEffect12_v72>.CreateFromOpcodeConfig(opcodeConfig, $"{MachinaPacketName}12");
         }
 
         protected override void MessageReceived(string id, long epoch, byte[] message)
@@ -375,7 +375,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 return;
             if (MessageReceivedSubHandler(packetHelper_8, epoch, message))
                 return;
-            if (MessageReceivedSubHandler(packetHelper_16, epoch, message))
+            if (MessageReceivedSubHandler(packetHelper_12, epoch, message))
                 return;
         }
 
