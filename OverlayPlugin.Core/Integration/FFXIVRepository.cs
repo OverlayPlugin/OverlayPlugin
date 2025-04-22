@@ -379,7 +379,6 @@ namespace RainbowMage.OverlayPlugin
 
         public GameRegion GetMachinaRegion()
         {
-            return GameRegion.Chinese;
             try
             {
                 var mach = Assembly.Load("Machina.FFXIV");
