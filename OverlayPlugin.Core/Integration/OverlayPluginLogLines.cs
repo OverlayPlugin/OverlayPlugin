@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
@@ -214,7 +215,26 @@ namespace RainbowMage.OverlayPlugin
             get
             {
                 var version = repository.GetGameVersion();
-                if (version == null || version == "")
+
+                // Hang until we have a valid version.
+                while (string.IsNullOrEmpty(version))
+                {
+                    try
+                    {
+                        Thread.Sleep(500);
+                        version = repository.GetGameVersion();
+                    } catch // Don't care
+                    {
+                    }
+                }
+
+                var _machinaRegion = repository.GetMachinaRegion().ToString();
+                if (_machinaRegion != machinaRegion)
+                {
+                    return null;
+                }
+
+                if (string.IsNullOrEmpty(version))
                 {
                     LogException($"Could not detect game version from FFXIV_ACT_Plugin, defaulting to latest version for region {machinaRegion}");
 
