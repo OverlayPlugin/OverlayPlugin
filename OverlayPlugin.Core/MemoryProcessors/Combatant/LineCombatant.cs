@@ -34,11 +34,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             {
                 // in milliseconds
                 public uint DelayDefault; // If any property has changed in this timeframe, a line will be written
-                public uint DelayPosition;
-                // in in-game distance, squared
-                public double DistancePosition;
-                // in radians
-                public float DistanceHeading;
                 public ReadOnlyDictionary<FieldInfo, uint> CheckFieldDelay;
             }
 
@@ -52,9 +47,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             public static CriteriaData InCombatCriteria = new CriteriaData()
             {
                 DelayDefault = InCombatDelayDefault,
-                DelayPosition = 250,
-                DistancePosition = Math.Pow(5, 2),
-                DistanceHeading = (float)(45 * (Math.PI / 180)), // 45º turns
 
                 CheckFieldDelay = new ReadOnlyDictionary<FieldInfo, uint>(new Dictionary<FieldInfo, uint>(){
                     // Default delay threshold
@@ -84,9 +76,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             public static CriteriaData OutOfCombatCriteria = new CriteriaData()
             {
                 DelayDefault = OutOfCombatDelayDefault,
-                DelayPosition = 1250,
-                DistancePosition = Math.Pow(15, 2),
-                DistanceHeading = 20f, // Effectively disabled
 
                 CheckFieldDelay = new ReadOnlyDictionary<FieldInfo, uint>(new Dictionary<FieldInfo, uint>(){
                     // Default delay threshold
@@ -284,44 +273,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                 var oldCombatant = combatantStateMap[combatant.ID].combatant;
                 var lastUpdatedDiff = (now - combatantStateMap[combatant.ID].lastUpdated).TotalMilliseconds;
                 var changed = new HashSet<FieldInfo>();
-
-                // Check position/heading first since it has a custom delay timing with threshold
-                // and custom behavior (all position data is written)
-                if (lastUpdatedDiff > criteria.DelayPosition)
-                {
-                    var writePosition = false;
-                    // This check seems redundant but it's less expensive than the check below against distance
-                    // so it uses less CPU
-                    if (combatant.PosX != oldCombatant.PosX || combatant.PosY != oldCombatant.PosY || combatant.PosZ != oldCombatant.PosZ)
-                    {
-                        var dist = Math.Pow(combatant.PosX - oldCombatant.PosX, 2)
-                            + Math.Pow(combatant.PosY - oldCombatant.PosY, 2)
-                            + Math.Pow(combatant.PosZ - oldCombatant.PosZ, 2);
-                        if (dist > criteria.DistancePosition)
-                        {
-                            writePosition = true;
-                        }
-                    }
-                    else if (combatant.Heading != oldCombatant.Heading)
-                    {
-                        double PI2 = Math.PI * 2;
-                        double normalizedAngle = combatant.Heading - oldCombatant.Heading;
-                        normalizedAngle += Math.Abs((normalizedAngle > Math.PI) ? -PI2 : (normalizedAngle < -Math.PI) ? PI2 : 0);
-                        if (normalizedAngle >= criteria.DistanceHeading)
-                        {
-                            writePosition = true;
-                        }
-                    }
-
-                    // If any position data has changed, write all position data
-                    if (writePosition)
-                    {
-                        changed.Add(combatant.GetType().GetField(nameof(Combatant.PosX)));
-                        changed.Add(combatant.GetType().GetField(nameof(Combatant.PosY)));
-                        changed.Add(combatant.GetType().GetField(nameof(Combatant.PosZ)));
-                        changed.Add(combatant.GetType().GetField(nameof(Combatant.Heading)));
-                    }
-                }
 
                 // Check the general case of "if any mapped field has changed since the specified delay duration, queue a change line"
                 // But only if we don't already have a queued change line
