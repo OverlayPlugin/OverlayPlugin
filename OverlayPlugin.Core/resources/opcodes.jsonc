@@ -115,6 +115,18 @@
                 "opcode": 150,
                 "size": 11
             },
+            "MapEffect4": {
+                "opcode": 635,
+                "size": 0
+            },
+            "MapEffect8": {
+                "opcode": 737,
+                "size": 0
+            },
+            "MapEffect12": {
+                "opcode": 811,
+                "size": 0
+            },
             "CEDirector": {
                 "opcode": 670,
                 "size": 16
