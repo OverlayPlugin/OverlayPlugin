@@ -112,51 +112,51 @@
         "2025.07.04.0000.0000": {
             // Version: 7.2
             "MapEffect": {
-                "opcode": 150,
+                "opcode": 956,
                 "size": 11
             },
             "MapEffect4": {
-                "opcode": 635,
+                "opcode": 150,
                 "size": 0
             },
             "MapEffect8": {
-                "opcode": 737,
+                "opcode": 635,
                 "size": 0
             },
             "MapEffect12": {
-                "opcode": 811,
+                "opcode": 737,
                 "size": 0
             },
             "CEDirector": {
-                "opcode": 670,
+                "opcode": 231,
                 "size": 16
             },
             "RSVData": {
-                "opcode": 489,
+                "opcode": 772,
                 "size": 1080
             },
             "NpcYell": {
-                "opcode": 379,
+                "opcode": 598,
                 "size": 32
             },
             "BattleTalk2": {
-                "opcode": 341,
+                "opcode": 904,
                 "size": 40
             },
             "Countdown": {
-                "opcode": 698,
+                "opcode": 893,
                 "size": 48
             },
             "CountdownCancel": {
-                "opcode": 566,
+                "opcode": 698,
                 "size": 40
             },
             "ActorMove": {
-                "opcode": 919,
+                "opcode": 307,
                 "size": 16
             },
             "ActorSetPos": {
-                "opcode": 146,
+                "opcode": 108,
                 "size": 24
             }
         }
