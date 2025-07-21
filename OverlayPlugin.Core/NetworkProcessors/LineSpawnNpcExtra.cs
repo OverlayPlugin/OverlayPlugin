@@ -48,10 +48,10 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             [FieldOffset(0x58)]
             public uint parentActorId;
 
-            [FieldOffset(0x7A)]
+            [FieldOffset(0x7C)]
             public ushort tetherId;
 
-            [FieldOffset(0x93)]
+            [FieldOffset(0x95)]
             public byte animationState;
 
             public string ToString(long epoch, uint ActorID)
