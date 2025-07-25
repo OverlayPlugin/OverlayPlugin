@@ -32,6 +32,20 @@ This is later cleared to a state of `00` via `ActorControl` `SetAnimationState`:
 273|2024-03-02T18:36:55.8380000-05:00|40013FCB|003E|00000000|00000000|00000000|00000000|1be7b98bf67c8479
  */
 
+/*
+After the first Superchain cast in P12N, 3 orbs and 1 donut are spawned with tethers:
+- 3 orbs with tether ID `00E4` (chn_kusari_tama_0v)
+- 1 donut with tether ID `00E5` (chn_kusari_wa_0v)
+272|time|40019FE8|40019FE9|00E4|00
+272|time|40019FE9|E0000000|0000|00
+272|time|40019FEA|40019FEB|00E5|00
+272|time|40019FEB|E0000000|0000|00
+272|time|40019FEC|40019FED|00E4|00
+272|time|40019FED|E0000000|0000|00
+272|time|40019FEE|40019FEF|00E4|00
+272|time|40019FEF|E0000000|0000|00
+ */
+
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
     class LineSpawnNpcExtra : LineBaseCustomMachina<Server_MessageHeader_Global, LineSpawnNpcExtra.Server_NpcSpawn_Global_6_51,
@@ -48,10 +62,10 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             [FieldOffset(0x58)]
             public uint parentActorId;
 
-            [FieldOffset(0x7A)]
+            [FieldOffset(0x7C)]
             public ushort tetherId;
 
-            [FieldOffset(0x93)]
+            [FieldOffset(0x95)]
             public byte animationState;
 
             public string ToString(long epoch, uint ActorID)
