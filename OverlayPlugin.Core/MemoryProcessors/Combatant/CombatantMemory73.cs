@@ -199,7 +199,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
             [FieldOffset(0x1CB)]
             public byte Level;
 
-//FIXME FOR 7.3
             [FieldOffset(0xCE0)]
             public byte WeaponId;
 
