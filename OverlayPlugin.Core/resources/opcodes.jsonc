@@ -56,54 +56,54 @@
         }
     },
     "Global": {
-        "2025.10.13.0000.0000": {
-            // Version: 7.35h
+        "2025.10.30.0000.0000": {
+            // Version: 7.38
             "MapEffect": {
-                "opcode": 550,
+                "opcode": 829,
                 "size": 11
             },
             "MapEffect4": {
-                "opcode": 771,
+                "opcode": 764,
                 "size": 0
             },
             "MapEffect8": {
-                "opcode": 740,
+                "opcode": 200,
                 "size": 0
             },
             "MapEffect12": {
-                "opcode": 956,
+                "opcode": 575,
                 "size": 0
             },
             "CEDirector": {
-                "opcode": 688,
+                "opcode": 925,
                 "size": 16
             },
             "RSVData": {
-                "opcode": 739,
+                "opcode": 446,
                 "size": 1080
             },
             "NpcYell": {
-                "opcode": 503,
+                "opcode": 846,
                 "size": 32
             },
             "BattleTalk2": {
-                "opcode": 230,
+                "opcode": 667,
                 "size": 40
             },
             "Countdown": {
-                "opcode": 810,
+                "opcode": 976,
                 "size": 48
             },
             "CountdownCancel": {
-                "opcode": 296,
+                "opcode": 839,
                 "size": 40
             },
             "ActorMove": {
-                "opcode": 318,
+                "opcode": 861,
                 "size": 16
             },
             "ActorSetPos": {
-                "opcode": 845,
+                "opcode": 222,
                 "size": 24
             }
         }
