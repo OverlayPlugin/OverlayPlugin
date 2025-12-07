@@ -52,8 +52,7 @@ namespace RainbowMage.OverlayPlugin
         private PluginConfig config;
         private TinyIoCContainer container;
 
-        private int exceptionCount = 0;
-        private const int maxExceptionsLogged = 3;
+        private HashSet<string> loggedErrors = new HashSet<string>();
 
         private bool haveAttemptedOpcodeDownload = false;
 
@@ -86,7 +85,7 @@ namespace RainbowMage.OverlayPlugin
             }
             catch (Exception ex)
             {
-                LogException($"Invalid CachedOpcodeOverlayPluginVersion {versionStr}: {ex}");
+                Log(LogLevel.Error, $"Invalid CachedOpcodeOverlayPluginVersion {versionStr}: {ex}");
                 ClearCachedOpcodes();
                 return false;
             }
@@ -105,7 +104,7 @@ namespace RainbowMage.OverlayPlugin
             }
             catch (Exception ex)
             {
-                LogException($"Failed to parse cached opcodes: {ex}");
+                Log(LogLevel.Error, $"Failed to parse cached opcodes: {ex}");
                 ClearCachedOpcodes();
                 return false;
             }
@@ -136,7 +135,7 @@ namespace RainbowMage.OverlayPlugin
             }
             catch (Exception ex)
             {
-                LogException($"Remote opcode error: {ex}");
+                Log(LogLevel.Error, $"Remote opcode error: {ex}");
                 return;
             }
         }
@@ -163,17 +162,17 @@ namespace RainbowMage.OverlayPlugin
             }
             catch (Exception ex)
             {
-                LogException(string.Format(Resources.ErrorCouldNotLoadReservedLogLines, ex));
+                Log(LogLevel.Error, string.Format(Resources.ErrorCouldNotLoadReservedLogLines, ex));
                 return false;
             }
         }
 
-        private void LogException(string message)
+        private void Log(LogLevel level, string message)
         {
-            if (exceptionCount >= maxExceptionsLogged)
+            if (loggedErrors.Contains(message))
                 return;
-            exceptionCount++;
-            logger.Log(LogLevel.Error, message);
+            loggedErrors.Add(message);
+            logger.Log(level, message);
         }
 
         private IOpcodeConfigEntry GetOpcode(string name, Opcodes opcodes, string version, string opcodeType, MachinaRegion machinaRegion)
@@ -191,17 +190,17 @@ namespace RainbowMage.OverlayPlugin
                     }
                     else
                     {
-                        LogException($"No {opcodeType} opcode for game region {machinaRegion}, version {version}, opcode name {name}");
+                        Log(LogLevel.Error, $"No {opcodeType} opcode for game region {machinaRegion}, version {version}, opcode name {name}");
                     }
                 }
                 else
                 {
-                    LogException($"No {opcodeType} opcodes for game region {machinaRegion}, version {version}");
+                    Log(LogLevel.Info, $"No {opcodeType} opcodes for game region {machinaRegion}, version {version}");
                 }
             }
             else
             {
-                LogException($"No {opcodeType} opcodes for game region {machinaRegion}");
+                Log(LogLevel.Info, $"No {opcodeType} opcodes for game region {machinaRegion}");
             }
 
             return null;
@@ -222,7 +221,7 @@ namespace RainbowMage.OverlayPlugin
                 var version = repository.GetGameVersion();
                 if (version == null || version == "")
                 {
-                    LogException($"Could not detect game version from FFXIV_ACT_Plugin, defaulting to latest version for region {machinaRegion}");
+                    Log(LogLevel.Warning, $"Could not detect game version from FFXIV_ACT_Plugin, defaulting to latest version for region {machinaRegion}");
 
                     var possibleVersions = new List<string>();
                     if (opcodesFile != null && opcodesFile.ContainsKey(machinaRegion))
@@ -241,11 +240,11 @@ namespace RainbowMage.OverlayPlugin
                     if (possibleVersions.Count > 0)
                     {
                         version = possibleVersions[possibleVersions.Count - 1];
-                        LogException($"Detected most recent version for {machinaRegion} = {version}");
+                        Log(LogLevel.Info, $"Detected most recent version for {machinaRegion} = {version}");
                     }
                     else
                     {
-                        LogException($"Could not determine latest version for region {machinaRegion}");
+                        Log(LogLevel.Error, $"Could not determine latest version for region {machinaRegion}");
                         return null;
                     }
                 }
@@ -262,7 +261,12 @@ namespace RainbowMage.OverlayPlugin
                     {
                         haveAttemptedOpcodeDownload = true;
                         SaveRemoteOpcodesToConfig();
-                        return GetOpcode(name, opcodesConfig, version, "config", machinaRegion);
+                        opcode = GetOpcode(name, opcodesConfig, version, "config", machinaRegion);
+
+                        if (opcode == null)
+                        {
+                            Log(LogLevel.Error, $"Could not fetch {name} opcode information via any means");
+                        }
                     }
                 }
 
