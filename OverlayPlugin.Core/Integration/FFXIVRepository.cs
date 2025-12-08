@@ -352,7 +352,7 @@ namespace RainbowMage.OverlayPlugin
                     return "ko";
                 // @TODO: Replace with `Language.Tc` once we can reference a newer version of FFXIV_ACT_Plugin SDK for all releases
                 case (Language)7:
-                    return "ko";
+                    return "tc";
                 default:
                     return null;
             }
