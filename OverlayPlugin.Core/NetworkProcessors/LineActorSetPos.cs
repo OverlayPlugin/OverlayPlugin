@@ -7,7 +7,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
     class LineActorSetPos : LineBaseCustom<
             Server_MessageHeader_Global, LineActorSetPos.ActorSetPos_v655,
             Server_MessageHeader_CN, LineActorSetPos.ActorSetPos_v655,
-            Server_MessageHeader_KR, LineActorSetPos.ActorSetPos_v655>
+            Server_MessageHeader_KR, LineActorSetPos.ActorSetPos_v655,
+            Server_MessageHeader_TC, LineActorSetPos.ActorSetPos_v655>
     {
         [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
         internal unsafe struct ActorSetPos_v655 : IPacketStruct

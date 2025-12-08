@@ -119,6 +119,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 region_ = "ko";
             else if (language == "cn")
                 region_ = "cn";
+            else if (language == "tc")
+                region_ = "tc";
             else
                 region_ = "intl";
 

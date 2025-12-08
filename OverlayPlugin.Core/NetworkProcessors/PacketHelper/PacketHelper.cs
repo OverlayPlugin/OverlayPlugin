@@ -6,23 +6,28 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
     class RegionalizedPacketHelper<
         HeaderStruct_Global, PacketStruct_Global,
         HeaderStruct_CN, PacketStruct_CN,
-        HeaderStruct_KR, PacketStruct_KR>
+        HeaderStruct_KR, PacketStruct_KR,
+        HeaderStruct_TC, PacketStruct_TC>
         where HeaderStruct_Global : struct, IHeaderStruct
         where PacketStruct_Global : struct, IPacketStruct
         where HeaderStruct_CN : struct, IHeaderStruct
         where PacketStruct_CN : struct, IPacketStruct
         where HeaderStruct_KR : struct, IHeaderStruct
         where PacketStruct_KR : struct, IPacketStruct
+        where HeaderStruct_TC : struct, IHeaderStruct
+        where PacketStruct_TC : struct, IPacketStruct
     {
         public readonly PacketHelper<HeaderStruct_Global, PacketStruct_Global> global;
         public readonly PacketHelper<HeaderStruct_CN, PacketStruct_CN> cn;
         public readonly PacketHelper<HeaderStruct_KR, PacketStruct_KR> kr;
+        public readonly PacketHelper<HeaderStruct_TC, PacketStruct_TC> tc;
 
-        public RegionalizedPacketHelper(ushort globalOpcode, ushort cnOpcode, ushort krOpcode)
+        public RegionalizedPacketHelper(ushort globalOpcode, ushort cnOpcode, ushort krOpcode, ushort tcOpcode)
         {
             global = new PacketHelper<HeaderStruct_Global, PacketStruct_Global>(globalOpcode);
             cn = new PacketHelper<HeaderStruct_CN, PacketStruct_CN>(cnOpcode);
             kr = new PacketHelper<HeaderStruct_KR, PacketStruct_KR>(krOpcode);
+            tc = new PacketHelper<HeaderStruct_TC, PacketStruct_TC>(tcOpcode);
         }
 
         public IPacketHelper this[GameRegion gameRegion]
@@ -40,7 +45,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             }
         }
 
-        public static RegionalizedPacketHelper<HeaderStruct_Global, PacketStruct_Global, HeaderStruct_CN, PacketStruct_CN, HeaderStruct_KR, PacketStruct_KR>
+        public static RegionalizedPacketHelper<HeaderStruct_Global, PacketStruct_Global, HeaderStruct_CN, PacketStruct_CN, HeaderStruct_KR, PacketStruct_KR, HeaderStruct_TC, PacketStruct_TC>
             CreateFromMachina(string opcodeName)
         {
             var opcodes = FFXIVRepository.GetMachinaOpcodes();
@@ -61,6 +66,10 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             {
                 return null;
             }
+            if (!opcodes.TryGetValue(GameRegion.TraditionalChinese, out var tcOpcodes))
+            {
+                return null;
+            }
 
             if (!globalOpcodes.TryGetValue(opcodeName, out var globalOpcode))
             {
@@ -74,24 +83,30 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             {
                 krOpcode = 0;
             }
+            if (!tcOpcodes.TryGetValue(opcodeName, out var tcOpcode))
+            {
+                tcOpcode = 0;
+            }
 
-            return new RegionalizedPacketHelper<HeaderStruct_Global, PacketStruct_Global, HeaderStruct_CN, PacketStruct_CN, HeaderStruct_KR, PacketStruct_KR>
-                (globalOpcode, cnOpcode, krOpcode);
+            return new RegionalizedPacketHelper<HeaderStruct_Global, PacketStruct_Global, HeaderStruct_CN, PacketStruct_CN, HeaderStruct_KR, PacketStruct_KR, HeaderStruct_TC, PacketStruct_TC>
+                (globalOpcode, cnOpcode, krOpcode, tcOpcode);
         }
 
-        public static RegionalizedPacketHelper<HeaderStruct_Global, PacketStruct_Global, HeaderStruct_CN, PacketStruct_CN, HeaderStruct_KR, PacketStruct_KR>
+        public static RegionalizedPacketHelper<HeaderStruct_Global, PacketStruct_Global, HeaderStruct_CN, PacketStruct_CN, HeaderStruct_KR, PacketStruct_KR, HeaderStruct_TC, PacketStruct_TC>
             CreateFromOpcodeConfig(OverlayPluginLogLineConfig opcodeConfig, string opcodeName)
         {
             var globalOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Global.ToString()];
             var cnOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Chinese.ToString()];
             var krOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Korean.ToString()];
+            var tcOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.TraditionalChinese.ToString()];
 
             ushort globalOpcode = (ushort)(globalOpcodeConfigEntry?.opcode ?? 0);
             ushort cnOpcode = (ushort)(cnOpcodeConfigEntry?.opcode ?? 0);
             ushort krOpcode = (ushort)(krOpcodeConfigEntry?.opcode ?? 0);
+            ushort tcOpcode = (ushort)(tcOpcodeConfigEntry?.opcode ?? 0);
 
-            return new RegionalizedPacketHelper<HeaderStruct_Global, PacketStruct_Global, HeaderStruct_CN, PacketStruct_CN, HeaderStruct_KR, PacketStruct_KR>
-                (globalOpcode, cnOpcode, krOpcode);
+            return new RegionalizedPacketHelper<HeaderStruct_Global, PacketStruct_Global, HeaderStruct_CN, PacketStruct_CN, HeaderStruct_KR, PacketStruct_KR, HeaderStruct_TC, PacketStruct_TC>
+                (globalOpcode, cnOpcode, krOpcode, tcOpcode);
         }
     }
 

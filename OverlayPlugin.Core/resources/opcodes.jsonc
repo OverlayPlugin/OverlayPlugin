@@ -160,5 +160,58 @@
                 "size": 24
             }
         }
+    },
+    "TraditionalChinese": {
+        "2025.10.27.0000.0000": {
+            // Version: 7.2, maybe?
+            "CountdownCancel": {
+                "opcode": 147,
+                "size": 0
+            },
+            "NpcYell": {
+                "opcode": 177,
+                "size": 0
+            },
+            "MapEffect": {
+                "opcode": 189,
+                "size": 0
+            },
+            "ActorSetPos": {
+                "opcode": 227,
+                "size": 0
+            },
+            "Countdown": {
+                "opcode": 286,
+                "size": 0
+            },
+            "RSVData": {
+                "opcode": 514,
+                "size": 0
+            },
+            "MapEffect12": {
+                "opcode": 579,
+                "size": 0
+            },
+            "ActorMove": {
+                "opcode": 879,
+                "size": 0
+            },
+            "CEDirector": {
+                "opcode": 890,
+                "size": 0
+            },
+            "MapEffect4": {
+                "opcode": 920,
+                "size": 0
+            },
+            "BattleTalk2": {
+                "opcode": 936,
+                "size": 0
+            },
+            "MapEffect8": {
+                "opcode": 964,
+                "size": 0
+            }
+        }
     }
 }

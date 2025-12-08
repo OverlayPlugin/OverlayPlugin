@@ -6,7 +6,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
     class LineNpcYell : LineBaseCustom<
             Server_MessageHeader_Global, LineNpcYell.NpcYell_v655,
             Server_MessageHeader_CN, LineNpcYell.NpcYell_v655,
-            Server_MessageHeader_KR, LineNpcYell.NpcYell_v655>
+            Server_MessageHeader_KR, LineNpcYell.NpcYell_v655,
+            Server_MessageHeader_TC, LineNpcYell.NpcYell_v655>
     {
         [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
         internal unsafe struct NpcYell_v655 : IPacketStruct
