@@ -168,6 +168,16 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        private HashSet<string> loggedMessages = new HashSet<string>();
+
+        private void LogOnce(LogLevel level, string message)
+        {
+            if (loggedMessages.Contains(message))
+                return;
+            loggedMessages.Add(message);
+            logger.Log(level, message);
+        }
+
         private void LogException(string message)
         {
             if (exceptionCount >= maxExceptionsLogged)
@@ -222,7 +232,7 @@ namespace RainbowMage.OverlayPlugin
                 var version = repository.GetGameVersion();
                 if (version == null || version == "")
                 {
-                    LogException($"Could not detect game version from FFXIV_ACT_Plugin, defaulting to latest version for region {machinaRegion}");
+                    LogOnce(LogLevel.Info, $"Could not detect game version from FFXIV_ACT_Plugin, defaulting to latest version for region {machinaRegion}");
 
                     var possibleVersions = new List<string>();
                     if (opcodesFile != null && opcodesFile.ContainsKey(machinaRegion))
@@ -241,11 +251,11 @@ namespace RainbowMage.OverlayPlugin
                     if (possibleVersions.Count > 0)
                     {
                         version = possibleVersions[possibleVersions.Count - 1];
-                        LogException($"Detected most recent version for {machinaRegion} = {version}");
+                        LogOnce(LogLevel.Info, $"Detected most recent version for {machinaRegion} = {version}");
                     }
                     else
                     {
-                        LogException($"Could not determine latest version for region {machinaRegion}");
+                        LogOnce(LogLevel.Info, $"Could not determine latest version for region {machinaRegion}");
                         return null;
                     }
                 }
