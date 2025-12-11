@@ -141,10 +141,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         {
             if (ToStructs(message, out var header, out var packet) == false)
             {
-                LineCountdown.DebugLog($"DEBUG|Failed ToStructs|", DateTime.Now);
                 return null;
             }
-            LineCountdown.DebugLog($"DEBUG|Succeeded ToStructs|", DateTime.Now);
 
             return ToString(epoch, header, packet);
         }
@@ -162,11 +160,9 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
 
         public unsafe bool ToStructs(byte[] message, out HeaderStruct header, out PacketStruct packet)
         {
-            LineCountdown.DebugLog($"DEBUG|ToStructs|Trying Struct|{typeof(PacketStruct)}", DateTime.Now);
             // Message is too short to contain this packet
             if (message.Length < headerSize + packetSize)
             {
-                LineCountdown.DebugLog($"DEBUG|ToStructs|Message Length Check Failed|{message.Length}|{headerSize}|{packetSize}", DateTime.Now);
                 header = default;
                 packet = default;
 
@@ -180,13 +176,11 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
 
                 if (header.Opcode != Opcode)
                 {
-                    LineCountdown.DebugLog($"DEBUG|ToStructs|Opcode mismatch|{header.Opcode}|{Opcode}", DateTime.Now);
                     header = default;
                     packet = default;
 
                     return false;
                 }
-                LineCountdown.DebugLog($"DEBUG|ToStructs|Opcode succeeded|{header.Opcode}|{Opcode}", DateTime.Now);
 
                 var packetPtr = new IntPtr(messagePtr + headerSize);
                 packet = Marshal.PtrToStructure<PacketStruct>(packetPtr);

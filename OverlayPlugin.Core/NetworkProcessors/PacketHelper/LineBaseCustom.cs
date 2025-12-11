@@ -41,11 +41,9 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
                 HeaderStruct_KR, PacketStruct_KR,
                 HeaderStruct_TC, PacketStruct_TC>.CreateFromOpcodeConfig(opcodeConfig, opcodeName);
 
-            var logger = container.Resolve<ILogger>();
-            logger.Log(LogLevel.Info, $"Initialized opcodes for {opcodeName}: {packetHelper.global.Opcode}|{packetHelper.cn.Opcode}|{packetHelper.kr.Opcode}|{packetHelper.tc.Opcode}");
-
             if (packetHelper == null)
             {
+                var logger = container.Resolve<ILogger>();
                 logger.Log(LogLevel.Error, $"Failed to initialize {logLineName}: Failed to create {opcodeName} packet helper from opcode configs and native structs");
                 return;
             }
@@ -81,13 +79,10 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
 
             var line = packetHelper[currentRegion.Value].ToString(epoch, message);
 
-            LineCountdown.DebugLog($"DEBUG|Parsed Line|{line != null}", ffxiv.EpochToDateTime(epoch));
-
             if (line != null)
             {
                 DateTime serverTime = ffxiv.EpochToDateTime(epoch);
                 logWriter(line, serverTime);
-                LineCountdown.DebugLog($"DEBUG|Wrote Line", ffxiv.EpochToDateTime(epoch));
             }
         }
     }
