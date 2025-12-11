@@ -86,5 +86,36 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
         public LineCountdown(TinyIoCContainer container)
             : base(container, LogFileLineID, logLineName, MachinaPacketName) { }
+
+        protected override void MessageReceived(string id, long epoch, byte[] message)
+        {
+            try
+            {
+                if (packetHelper == null)
+                    return;
+
+                if (currentRegion == null)
+                    currentRegion = ffxiv.GetMachinaRegion();
+
+                if (currentRegion == null)
+                    return;
+
+                var line = packetHelper[currentRegion.Value].ToString(epoch, message);
+                unsafe
+                {
+                    fixed (byte* messagePtr = message)
+                    {
+                        var headerPtr = new System.IntPtr(messagePtr);
+                        var header = Marshal.PtrToStructure<Server_MessageHeader_Global>(headerPtr);
+                        logWriter($"DEBUG|{currentRegion.Value}|{header.Opcode}", ffxiv.EpochToDateTime(epoch));
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                logWriter($"DEBUG|{currentRegion.Value}|EXCEPTION|{ex.ToString().Replace("\r\n", "|").Replace("\n", "|")}", ffxiv.EpochToDateTime(epoch));
+            }
+            base.MessageReceived(id, epoch, message);
+        }
     }
 }
