@@ -39,6 +39,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
                     case GameRegion.Global: return global;
                     case GameRegion.Chinese: return cn;
                     case GameRegion.Korean: return kr;
+                    case GameRegion.Tc: return tc;
 
                     default: return global;
                 }

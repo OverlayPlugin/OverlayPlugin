@@ -425,6 +425,13 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                         WriteLinesFor(epoch, packet.instanceContentID, packet.count, packet.flags1, packet.flags2, packet.indexes);
                         return true;
                     }
+                case GameRegion.Tc:
+                    {
+                        if (!helper.tc.ToStructs(message, out var header, out var packet))
+                            return false;
+                        WriteLinesFor(epoch, packet.instanceContentID, packet.count, packet.flags1, packet.flags2, packet.indexes);
+                        return true;
+                    }
 
                 default:
                     return false;
