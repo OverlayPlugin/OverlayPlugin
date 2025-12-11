@@ -81,10 +81,13 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
 
             var line = packetHelper[currentRegion.Value].ToString(epoch, message);
 
+            LineCountdown.DebugLog($"DEBUG|Parsed Line|{line != null}", ffxiv.EpochToDateTime(epoch));
+
             if (line != null)
             {
                 DateTime serverTime = ffxiv.EpochToDateTime(epoch);
                 logWriter(line, serverTime);
+                LineCountdown.DebugLog($"DEBUG|Wrote Line", ffxiv.EpochToDateTime(epoch));
             }
         }
     }

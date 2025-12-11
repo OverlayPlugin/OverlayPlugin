@@ -84,8 +84,13 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         public const string logLineName = "Countdown";
         public const string MachinaPacketName = "Countdown";
 
+        private static System.Func<string, System.DateTime, bool> __logger;
+
         public LineCountdown(TinyIoCContainer container)
-            : base(container, LogFileLineID, logLineName, MachinaPacketName) { }
+            : base(container, LogFileLineID, logLineName, MachinaPacketName)
+        {
+            __logger = logWriter;
+        }
 
         protected override void MessageReceived(string id, long epoch, byte[] message)
         {
@@ -107,15 +112,20 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                     {
                         var headerPtr = new System.IntPtr(messagePtr);
                         var header = Marshal.PtrToStructure<Server_MessageHeader_Global>(headerPtr);
-                        logWriter($"DEBUG|{currentRegion.Value}|{header.Opcode}", ffxiv.EpochToDateTime(epoch));
+                        DebugLog($"DEBUG|{currentRegion.Value}|{header.Opcode}", ffxiv.EpochToDateTime(epoch));
                     }
                 }
             }
             catch (System.Exception ex)
             {
-                logWriter($"DEBUG|{currentRegion.Value}|EXCEPTION|{ex.ToString().Replace("\r\n", "|").Replace("\n", "|")}", ffxiv.EpochToDateTime(epoch));
+                DebugLog($"DEBUG|{currentRegion.Value}|EXCEPTION|{ex.ToString().Replace("\r\n", "|").Replace("\n", "|")}", ffxiv.EpochToDateTime(epoch));
             }
             base.MessageReceived(id, epoch, message);
+        }
+
+        public static void DebugLog(string message, System.DateTime dateTime)
+        {
+            __logger(message, dateTime);
         }
     }
 }

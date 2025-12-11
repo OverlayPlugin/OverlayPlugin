@@ -161,7 +161,7 @@
             }
         }
     },
-    "TraditionalChinese": {
+    "Tc": { // Traditional Chinese
         "2025.12.05.0000.0000": {
             // Version: 7.2, maybe?
             "CountdownCancel": {
