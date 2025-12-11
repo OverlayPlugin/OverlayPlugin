@@ -63,7 +63,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
                     { GameRegion.Global, new ReadOnlyDictionary<string, Type>(globalDict) },
                     { GameRegion.Chinese, new ReadOnlyDictionary<string, Type>(chineseDict) },
                     { GameRegion.Korean, new ReadOnlyDictionary<string, Type>(koreanDict) },
-                    { GameRegion.TraditionalChinese, new ReadOnlyDictionary<string, Type>(tcDict) },
+                    { GameRegion.Tc, new ReadOnlyDictionary<string, Type>(tcDict) },
                 });
 
                 MachinaPacketWrapper.InitTypePropertyMap(mType);
@@ -135,7 +135,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             {
                 return false;
             }
-            if (!opcodes.TryGetValue(GameRegion.TraditionalChinese, out var tcOpcodes))
+            if (!opcodes.TryGetValue(GameRegion.Tc, out var tcOpcodes))
             {
                 return false;
             }
@@ -152,7 +152,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             {
                 return false;
             }
-            if (!MachinaMap.GetPacketType(GameRegion.TraditionalChinese, packetTypeName, out var tcPacketType))
+            if (!MachinaMap.GetPacketType(GameRegion.Tc, packetTypeName, out var tcPacketType))
             {
                 return false;
             }
@@ -193,7 +193,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
                     case GameRegion.Global: return global;
                     case GameRegion.Chinese: return cn;
                     case GameRegion.Korean: return kr;
-                    case GameRegion.TraditionalChinese: return tc;
+                    case GameRegion.Tc: return tc;
 
                     default: return global;
                 }

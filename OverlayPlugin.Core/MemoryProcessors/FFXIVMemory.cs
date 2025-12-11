@@ -396,7 +396,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
                 target = cnVersion;
             else if (region == GameRegion.Korean)
                 target = koVersion;
-            else if (region == GameRegion.TraditionalChinese)
+            else if (region == GameRegion.Tc)
                 target = tcVersion;
             else
                 target = globalVersion;

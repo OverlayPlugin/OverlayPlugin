@@ -69,7 +69,7 @@ namespace RainbowMage.OverlayPlugin
         Global = 1,
         Chinese = 2,
         Korean = 3,
-        TraditionalChinese = 4
+        Tc = 4
     }
 
     public class FFXIVRepository
@@ -393,7 +393,10 @@ namespace RainbowMage.OverlayPlugin
                 if (Enum.TryParse<GameRegion>(machina_region, out var region))
                     return region;
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                logger.Log(LogLevel.Error, "Exception parsing Machina region: {0}", ex);
+            }
             return GameRegion.Global;
         }
 

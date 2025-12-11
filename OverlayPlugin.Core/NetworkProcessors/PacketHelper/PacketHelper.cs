@@ -66,7 +66,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             {
                 return null;
             }
-            if (!opcodes.TryGetValue(GameRegion.TraditionalChinese, out var tcOpcodes))
+            if (!opcodes.TryGetValue(GameRegion.Tc, out var tcOpcodes))
             {
                 return null;
             }
@@ -98,7 +98,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             var globalOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Global.ToString()];
             var cnOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Chinese.ToString()];
             var krOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Korean.ToString()];
-            var tcOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.TraditionalChinese.ToString()];
+            var tcOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Tc.ToString()];
 
             ushort globalOpcode = (ushort)(globalOpcodeConfigEntry?.opcode ?? 0);
             ushort cnOpcode = (ushort)(cnOpcodeConfigEntry?.opcode ?? 0);
