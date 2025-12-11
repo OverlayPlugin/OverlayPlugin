@@ -129,6 +129,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             ac143opcodes = new Dictionary<string, AC143OPCodes>();
             ac143opcodes.Add("ko", ac143_v5_2);
             ac143opcodes.Add("cn", ac143_v5_2);
+            ac143opcodes.Add("tc", ac143_v5_2);
             ac143opcodes.Add("intl", ac143_v5_2);
 
             cedirectoropcodes = new Dictionary<string, CEDirectorOPCodes>();
