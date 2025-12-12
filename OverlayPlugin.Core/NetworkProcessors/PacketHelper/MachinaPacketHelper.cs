@@ -137,7 +137,9 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             }
             if (!opcodes.TryGetValue(GameRegion.Tc, out var tcOpcodes))
             {
-                return false;
+                // @TODO: Once FFXIV_ACT_Plugin has TC opcodes for global release, remove this default
+                tcOpcodes = new Dictionary<string, ushort>();
+                // return false;
             }
 
             if (!MachinaMap.GetPacketType(GameRegion.Global, packetTypeName, out var globalPacketType))
@@ -154,7 +156,9 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             }
             if (!MachinaMap.GetPacketType(GameRegion.Tc, packetTypeName, out var tcPacketType))
             {
-                return false;
+                // @TODO: Once FFXIV_ACT_Plugin has TC opcodes for global release, remove this default
+                tcPacketType = globalPacketType;
+                // return false;
             }
 
             if (!globalOpcodes.TryGetValue(packetOpcodeName, out var globalOpcode))

@@ -69,7 +69,9 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             }
             if (!opcodes.TryGetValue(GameRegion.Tc, out var tcOpcodes))
             {
-                return null;
+                // @TODO: Once FFXIV_ACT_Plugin has TC opcodes for global release, remove this default
+                tcOpcodes = new System.Collections.Generic.Dictionary<string, ushort>();
+                // return null;
             }
 
             if (!globalOpcodes.TryGetValue(opcodeName, out var globalOpcode))
