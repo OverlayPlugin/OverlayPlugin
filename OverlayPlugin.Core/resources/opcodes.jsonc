@@ -3,54 +3,54 @@
 // For more information, see comments on https://github.com/OverlayPlugin/OverlayPlugin/issues/235
 {
     "Chinese": {
-        "2025.10.23.0000.0000": {
-            // Version: 7.35
+        "2025.12.09.0000.0000": {
+            // Version: 7.4
             "MapEffect": {
-                "opcode": 434,
+                "opcode": 364,
                 "size": 11
             },
             "MapEffect4": {
-                "opcode": 604,
+                "opcode": 275,
                 "size": 0
             },
             "MapEffect8": {
-                "opcode": 569,
+                "opcode": 351,
                 "size": 0
             },
             "MapEffect12": {
-                "opcode": 265,
+                "opcode": 852,
                 "size": 0
             },
             "CEDirector": {
-                "opcode": 868,
+                "opcode": 969,
                 "size": 16
             },
             "RSVData": {
-                "opcode": 510,
+                "opcode": 930,
                 "size": 1080
             },
             "NpcYell": {
-                "opcode": 351,
+                "opcode": 671,
                 "size": 32
             },
             "BattleTalk2": {
-                "opcode": 653,
+                "opcode": 640,
                 "size": 40
             },
             "Countdown": {
-                "opcode": 913,
+                "opcode": 361,
                 "size": 48
             },
             "CountdownCancel": {
-                "opcode": 947,
+                "opcode": 796,
                 "size": 40
             },
             "ActorMove": {
-                "opcode": 188,
+                "opcode": 300,
                 "size": 16
             },
             "ActorSetPos": {
-                "opcode": 213,
+                "opcode": 841,
                 "size": 24
             }
         }
