@@ -6,13 +6,16 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
     abstract class LineBaseCustom<
         HeaderStruct_Global, PacketStruct_Global,
         HeaderStruct_CN, PacketStruct_CN,
-        HeaderStruct_KR, PacketStruct_KR>
+        HeaderStruct_KR, PacketStruct_KR,
+        HeaderStruct_TC, PacketStruct_TC>
         where HeaderStruct_Global : struct, IHeaderStruct
         where PacketStruct_Global : struct, IPacketStruct
         where HeaderStruct_CN : struct, IHeaderStruct
         where PacketStruct_CN : struct, IPacketStruct
         where HeaderStruct_KR : struct, IHeaderStruct
         where PacketStruct_KR : struct, IPacketStruct
+        where HeaderStruct_TC : struct, IHeaderStruct
+        where PacketStruct_TC : struct, IPacketStruct
     {
         protected static FFXIVRepository ffxiv;
 
@@ -20,7 +23,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
         protected readonly RegionalizedPacketHelper<
             HeaderStruct_Global, PacketStruct_Global,
             HeaderStruct_CN, PacketStruct_CN,
-            HeaderStruct_KR, PacketStruct_KR> packetHelper;
+            HeaderStruct_KR, PacketStruct_KR,
+            HeaderStruct_TC, PacketStruct_TC> packetHelper;
         protected GameRegion? currentRegion;
 
         protected LineBaseCustom(TinyIoCContainer container, uint logFileLineID, string logLineName, string opcodeName)
@@ -34,7 +38,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             packetHelper = RegionalizedPacketHelper<
                 HeaderStruct_Global, PacketStruct_Global,
                 HeaderStruct_CN, PacketStruct_CN,
-                HeaderStruct_KR, PacketStruct_KR>.CreateFromOpcodeConfig(opcodeConfig, opcodeName);
+                HeaderStruct_KR, PacketStruct_KR,
+                HeaderStruct_TC, PacketStruct_TC>.CreateFromOpcodeConfig(opcodeConfig, opcodeName);
 
             if (packetHelper == null)
             {

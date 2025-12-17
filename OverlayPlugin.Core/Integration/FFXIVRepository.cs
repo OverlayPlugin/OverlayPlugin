@@ -68,7 +68,8 @@ namespace RainbowMage.OverlayPlugin
     {
         Global = 1,
         Chinese = 2,
-        Korean = 3
+        Korean = 3,
+        Tc = 4
     }
 
     public class FFXIVRepository
@@ -349,6 +350,9 @@ namespace RainbowMage.OverlayPlugin
                     return "cn";
                 case Language.Korean:
                     return "ko";
+                // @TODO: Replace with `Language.Tc` once we can reference a newer version of FFXIV_ACT_Plugin SDK for all releases
+                case (Language)7:
+                    return "tc";
                 default:
                     return null;
             }
@@ -389,7 +393,10 @@ namespace RainbowMage.OverlayPlugin
                 if (Enum.TryParse<GameRegion>(machina_region, out var region))
                     return region;
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                logger.Log(LogLevel.Error, "Exception parsing Machina region: {0}", ex);
+            }
             return GameRegion.Global;
         }
 

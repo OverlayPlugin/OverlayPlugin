@@ -7,7 +7,8 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
     class LineCountdown : LineBaseCustom<
             Server_MessageHeader_Global, LineCountdown.Countdown_v730,
             Server_MessageHeader_CN, LineCountdown.Countdown_v730,
-            Server_MessageHeader_KR, LineCountdown.Countdown_v655>
+            Server_MessageHeader_KR, LineCountdown.Countdown_v655,
+            Server_MessageHeader_TC, LineCountdown.Countdown_v655>
     {
         [StructLayout(LayoutKind.Explicit, Size = structSize, Pack = 1)]
         internal unsafe struct Countdown_v655 : IPacketStruct
