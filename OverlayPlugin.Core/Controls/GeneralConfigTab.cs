@@ -35,15 +35,32 @@ namespace RainbowMage.OverlayPlugin
             logger = container.Resolve<ILogger>();
 
             cbErrorReports.Checked = config.ErrorReports;
-            cbUpdateCheck.Checked = config.UpdateCheck;
             cbHideOverlaysWhenNotActive.Checked = config.HideOverlaysWhenNotActive;
             cbHideOverlaysDuringCutscene.Checked = config.HideOverlayDuringCutscene;
 
             // Attach the event handlers only *after* loading the configuration because we'd otherwise trigger them ourselves.
             cbErrorReports.CheckedChanged += CbErrorReports_CheckedChanged;
-            cbUpdateCheck.CheckedChanged += CbUpdateCheck_CheckedChanged;
             cbHideOverlaysWhenNotActive.CheckedChanged += cbHideOverlaysWhenNotActive_CheckedChanged;
             cbHideOverlaysDuringCutscene.CheckedChanged += cbHideOverlaysDuringCutscene_CheckedChanged;
+
+            if (ActGlobals.oFormActMain != null)
+            {
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                UpdateActColorSettings();
+            }
+        }
+
+        private void ActColorSettings_ColorSettingChanged(Color NewColor)
+        {
+            UpdateActColorSettings();
+        }
+        private void UpdateActColorSettings()
+        {
+            this.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            this.ForeColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSetting;
         }
 
         public void SetReadmeVisible(bool visible)
@@ -99,11 +116,6 @@ namespace RainbowMage.OverlayPlugin
             config.ErrorReports = cbErrorReports.Checked;
 
             MessageBox.Show("You have to restart ACT to apply this change.", "OverlayPlugin", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void CbUpdateCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            config.UpdateCheck = cbUpdateCheck.Checked;
         }
 
         private void cbHideOverlaysWhenNotActive_CheckedChanged(object sender, EventArgs e)

@@ -14,7 +14,7 @@ namespace RainbowMage.OverlayPlugin.Updater
     public class CefInstaller
     {
 
-        const string CEF_DL = "https://github.com/ngld/OverlayPlugin/releases/download/v0.7.0/CefSharp-{CEF_VERSION}-{ARCH}.7z";
+        const string CEF_DL = "https://act.diemoe.net/files/ACT.DieMoe/Assets/CefSharp-{CEF_VERSION}-{ARCH}.7z";
         const string CEF_VERSION = "95.7.14";
 
         public static string GetUrl()
@@ -24,52 +24,6 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public static async Task<bool> EnsureCef(string cefPath)
         {
-            // Ensure we have a working MSVCRT first
-            var lib = IntPtr.Zero;
-            while (true)
-            {
-                lib = NativeMethods.LoadLibrary("msvcp140.dll");
-                if (lib != IntPtr.Zero)
-                {
-                    NativeMethods.FreeLibrary(lib);
-
-                    if (!Environment.Is64BitProcess) break;
-
-                    lib = NativeMethods.LoadLibrary("vcruntime140_1.dll");
-                    if (lib != IntPtr.Zero)
-                    {
-                        NativeMethods.FreeLibrary(lib);
-                        break;
-                    }
-                }
-
-                var response = MessageBox.Show(
-                    Resources.MsvcrtMissing,
-                    Resources.OverlayPluginTitle,
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-
-                if (response == DialogResult.Yes)
-                {
-                    var installed = await InstallMsvcrt();
-
-                    if (!installed)
-                    {
-                        MessageBox.Show(
-                            Resources.MsvcrtFailed,
-                            Resources.OverlayPluginTitle,
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error
-                        );
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
             var manifest = Path.Combine(cefPath, "version.txt");
             var importantFiles = new List<string>() { "CefSharp.dll", "CefSharp.Core.dll", "CefSharp.OffScreen.dll", "CefSharp.BrowserSubprocess.exe", "CefSharp.BrowserSubprocess.Core.dll", "libcef.dll", "libEGL.dll", "libGLESv2.dll" };
 
