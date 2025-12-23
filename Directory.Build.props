@@ -5,8 +5,8 @@
         <Copyright>Copyright © RainbowMage 2015, Kuriyama hibiya 2016, ngld 2019, OverlayPlugin Team 2022</Copyright>
         <RunCodeAnalysis>false</RunCodeAnalysis>
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
-        <AssemblyVersion>0.19.78</AssemblyVersion>
-        <FileVersion>0.19.78</FileVersion>
+        <AssemblyVersion>0.19.79</AssemblyVersion>
+        <FileVersion>0.19.79</FileVersion>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
         <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
