@@ -80,6 +80,31 @@ namespace RainbowMage.OverlayPlugin
                     ResizeLog();
                 }
             };
+
+            if (ActGlobals.oFormActMain != null)
+            {
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                UpdateActColorSettings();
+            }
+        }
+
+        private void ActColorSettings_ColorSettingChanged(Color NewColor)
+        {
+            UpdateActColorSettings();
+        }
+        private void UpdateActColorSettings()
+        {
+            this.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            this.ForeColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSetting;
+            // TabPages
+            _generalTab.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            _eventTab.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            // TextBoxes
+            logBox.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            logBox.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
         }
 
         public void ResizeLog()
@@ -218,7 +243,7 @@ namespace RainbowMage.OverlayPlugin
             if (control != null)
             {
                 control.Dock = DockStyle.Fill;
-                control.BackColor = SystemColors.ControlLightLight;
+                control.BackColor = ActGlobals.oFormActMain?.ActColorSettings.MainWindowColors.BackColorSetting ?? SystemColors.ControlLightLight;
                 tabPage.Controls.Add(control);
 
                 this.tabControl.TabPages.Add(tabPage);
@@ -243,7 +268,7 @@ namespace RainbowMage.OverlayPlugin
             if (control != null)
             {
                 control.Dock = DockStyle.Fill;
-                control.BackColor = SystemColors.ControlLightLight;
+                control.BackColor = ActGlobals.oFormActMain?.ActColorSettings.MainWindowColors.BackColorSetting ?? SystemColors.ControlLightLight;
                 tabPage.Controls.Add(control);
 
                 var index = 0;
