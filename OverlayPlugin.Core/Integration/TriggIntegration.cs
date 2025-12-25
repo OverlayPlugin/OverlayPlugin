@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Advanced_Combat_Tracker;
@@ -35,20 +36,27 @@ namespace RainbowMage.OverlayPlugin
                     return;
 
                 var triggType = trigg.pluginObj.GetType();
-                var deleType = triggType.GetNestedType("CustomCallbackDelegate");
-                if (deleType == null)
-                    return;
+                var deleType = triggType.GetNestedType("CustomCallbackDelegate")
+                    ?? throw new MissingMemberException(triggType.FullName, "CustomCallbackDelegate");
 
-                var registerType = triggType.GetMethod("RegisterNamedCallback");
+                var registerType = triggType.GetMethod(
+                    "RegisterNamedCallback",
+                    BindingFlags.Instance | BindingFlags.Public,
+                    null,
+                    new[] { typeof(string), deleType, typeof(object), typeof(string) },
+                    null)
+                    ?? throw new MissingMethodException(triggType.FullName, "RegisterNamedCallback(string, CustomCallbackDelegate, object, string)");
+
+                var registrant = "OverlayPlugin";
 
                 var sendDele = Delegate.CreateDelegate(deleType, this, typeof(TriggIntegration).GetMethod("SendOverlayMessage"));
-                registerType?.Invoke(trigg.pluginObj, new object[] { "OverlayPluginMessage", sendDele, null });
+                registerType.Invoke(trigg.pluginObj, new object[] { "OverlayPluginMessage", sendDele, null, registrant });
 
                 var hideDele = Delegate.CreateDelegate(deleType, this, typeof(TriggIntegration).GetMethod("HideOverlay"));
-                registerType?.Invoke(trigg.pluginObj, new object[] { "HideOverlay", hideDele, null });
+                registerType.Invoke(trigg.pluginObj, new object[] { "HideOverlay", hideDele, null, registrant });
 
                 var showDele = Delegate.CreateDelegate(deleType, this, typeof(TriggIntegration).GetMethod("ShowOverlay"));
-                registerType?.Invoke(trigg.pluginObj, new object[] { "ShowOverlay", showDele, null });
+                registerType.Invoke(trigg.pluginObj, new object[] { "ShowOverlay", showDele, null, registrant });
             }
             catch (Exception ex)
             {
