@@ -1,16 +1,30 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
+using static RainbowMage.OverlayPlugin.NetworkProcessors.NetworkParser;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
     public class FateWatcher
     {
         private ILogger logger;
-        private string region_;
+
+        private MachinaRegionalizedPacketHelper<ActorControlPacket> actorControlSelfPacketHelper;
+        private RegionalizedPacketHelper<
+            Server_MessageHeader_Global, LineCEDirector.CEDirector_v62,
+            Server_MessageHeader_CN, LineCEDirector.CEDirector_v62,
+            Server_MessageHeader_KR, LineCEDirector.CEDirector_v62,
+            Server_MessageHeader_TC, LineCEDirector.CEDirector_v62> cePacketHelper;
+
+        private static FFXIVRepository ffxiv;
+        private GameRegion? currentRegion;
+
+        private const string actorControlSelfMachinaPacketName = "ActorControlSelf";
 
         // Fate start
         // param1: fateID
@@ -22,53 +36,18 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         // Fate update
         // param1: fateID
         // param2: progress (0-100)
-        private struct AC143OPCodes
+        private struct ActorControlSelfFateUpdateOpcodes
         {
-            public AC143OPCodes(int add_, int remove_, int update_) { this.add = add_; this.remove = remove_; this.update = update_; }
-            public int add;
-            public int remove;
-            public int update;
+            public ActorControlSelfFateUpdateOpcodes(int add_, int remove_, int update_) { this.add = add_; this.remove = remove_; this.update = update_; }
+            public readonly int add;
+            public readonly int remove;
+            public readonly int update;
         };
-        private static readonly AC143OPCodes ac143_v5_2 = new AC143OPCodes(
+        private static readonly ActorControlSelfFateUpdateOpcodes acFateUpdate_v5_2 = new ActorControlSelfFateUpdateOpcodes(
           0x935,
           0x936,
           0x93E
         );
-
-        private struct CEDirectorOPCodes
-        {
-            public CEDirectorOPCodes(int size_, int opcode_) { this.size = size_; this.opcode = opcode_; }
-            public int size;
-            public int opcode;
-        }
-
-        private static readonly CEDirectorOPCodes cedirector_v5_35 = new CEDirectorOPCodes(
-          0x30,
-          0x299
-        );
-
-        private static readonly CEDirectorOPCodes cedirector_v5_35_hotfix = new CEDirectorOPCodes(
-          0x30,
-          0x143
-        );
-        private struct ActorControl143
-        {
-            public ActorControl143(Assembly assembly_, NetworkParser netHelper)
-            {
-                packetType = assembly_.GetType("Machina.FFXIV.Headers.Server_ActorControl143");
-                size = Marshal.SizeOf(packetType);
-                categoryOffset = netHelper.GetOffset(packetType, "category");
-                param1Offset = netHelper.GetOffset(packetType, "param1");
-                param2Offset = netHelper.GetOffset(packetType, "param2");
-                opCode = netHelper.GetOpcode("ActorControl143");
-            }
-            public Type packetType;
-            public int size;
-            public int categoryOffset;
-            public int param1Offset;
-            public int param2Offset;
-            public int opCode;
-        };
 
         [Serializable]
         [StructLayout(LayoutKind.Explicit)]
@@ -91,14 +70,13 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
         private static SemaphoreSlim fateSemaphore;
         private static SemaphoreSlim ceSemaphore;
-        private Dictionary<string, AC143OPCodes> ac143opcodes = null;
-        private Dictionary<string, CEDirectorOPCodes> cedirectoropcodes = null;
-
-        private Type MessageType = null;
-        private Type messageHeader = null;
-        public int headerOffset = 0;
-        public int messageTypeOffset = 0;
-        private ActorControl143 actorControl143;
+        private Dictionary<GameRegion, ActorControlSelfFateUpdateOpcodes> fateControlOpcodes
+            = new Dictionary<GameRegion, ActorControlSelfFateUpdateOpcodes>() {
+                { GameRegion.Korean, acFateUpdate_v5_2 },
+                { GameRegion.Chinese, acFateUpdate_v5_2 },
+                { GameRegion.Tc, acFateUpdate_v5_2 },
+                { GameRegion.Global, acFateUpdate_v5_2 },
+        };
 
         // fates<fateID, progress>
         private static Dictionary<int, int> fates;
@@ -109,139 +87,149 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
         public FateWatcher(TinyIoCContainer container)
         {
             logger = container.Resolve<ILogger>();
-            var ffxiv = container.Resolve<FFXIVRepository>();
+            ffxiv = ffxiv ?? container.Resolve<FFXIVRepository>();
             if (!ffxiv.IsFFXIVPluginPresent())
                 return;
 
-            var language = ffxiv.GetLocaleString();
+            var opcodeConfig = container.Resolve<OverlayPluginLogLineConfig>();
 
-            if (language == "ko")
-                region_ = "ko";
-            else if (language == "cn")
-                region_ = "cn";
-            else if (language == "tc")
-                region_ = "tc";
-            else
-                region_ = "intl";
+            cePacketHelper = RegionalizedPacketHelper<
+                Server_MessageHeader_Global, LineCEDirector.CEDirector_v62,
+                Server_MessageHeader_CN, LineCEDirector.CEDirector_v62,
+                Server_MessageHeader_KR, LineCEDirector.CEDirector_v62,
+                Server_MessageHeader_TC, LineCEDirector.CEDirector_v62>.CreateFromOpcodeConfig(opcodeConfig, LineCEDirector.MachinaPacketName);
+
+            ffxiv.RegisterNetworkParser(Parse);
+            ffxiv.RegisterProcessChangedHandler(ProcessChanged);
+
+            if (!MachinaRegionalizedPacketHelper<ActorControlPacket>.Create(actorControlSelfMachinaPacketName, out actorControlSelfPacketHelper))
+            {
+                logger.Log(LogLevel.Error, $"Failed to initialize NetworkParser: Failed to create {actorControlSelfMachinaPacketName} packet helper from Machina structs");
+                return;
+            }
 
             fateSemaphore = new SemaphoreSlim(0, 1);
             ceSemaphore = new SemaphoreSlim(0, 1);
-            ac143opcodes = new Dictionary<string, AC143OPCodes>();
-            ac143opcodes.Add("ko", ac143_v5_2);
-            ac143opcodes.Add("cn", ac143_v5_2);
-            ac143opcodes.Add("tc", ac143_v5_2);
-            ac143opcodes.Add("intl", ac143_v5_2);
-
-            cedirectoropcodes = new Dictionary<string, CEDirectorOPCodes>();
-            cedirectoropcodes.Add("intl", cedirector_v5_35_hotfix);
 
             fates = new Dictionary<int, int>();
             ces = new Dictionary<int, CEDirectorData>();
-
-            var netHelper = container.Resolve<NetworkParser>();
-            var mach = Assembly.Load("Machina.FFXIV");
-            MessageType = mach.GetType("Machina.FFXIV.Headers.Server_MessageType");
-
-            actorControl143 = new ActorControl143(mach, netHelper);
-            headerOffset = netHelper.GetOffset(actorControl143.packetType, "MessageHeader");
-            messageHeader = actorControl143.packetType.GetField("MessageHeader").FieldType;
-            messageTypeOffset = headerOffset + netHelper.GetOffset(messageHeader, "MessageType");
-            ffxiv.RegisterNetworkParser(MessageReceived);
         }
 
-        private unsafe void MessageReceived(string id, long epoch, byte[] message)
+        private void ProcessChanged(Process process)
         {
-            if (message.Length < actorControl143.size && message.Length < cedirectoropcodes[region_].size)
+            if (!ffxiv.IsFFXIVPluginPresent())
                 return;
 
-            fixed (byte* buffer = message)
+            currentRegion = null;
+        }
+
+        private unsafe void Parse(string id, long epoch, byte[] message)
+        {
+            if (actorControlSelfPacketHelper == null)
+                return;
+
+            if (currentRegion == null)
+                currentRegion = ffxiv.GetMachinaRegion();
+
+            if (currentRegion == null)
+                return;
+
+            MachinaPacketHelper<ActorControlPacket> acHelper = (MachinaPacketHelper<ActorControlPacket>)actorControlSelfPacketHelper[currentRegion.Value];
+
+            if (acHelper.ToStructs(message, out var acHeader, out var acPacket))
             {
-                if (*(ushort*)&buffer[messageTypeOffset] == actorControl143.opCode)
+                var category = acPacket.Get<ushort>("category");
+                var param1 = acPacket.Get<UInt32>("param1");
+                var param2 = acPacket.Get<UInt32>("param2");
+
+                ProcessFateUpdatePacket(currentRegion.Value, category, param1, param2);
+            }
+            else
+            {
+                dynamic ceHelper = cePacketHelper[currentRegion.Value];
+                if (ceHelper.ToStructs(message, out dynamic header, out dynamic packet))
                 {
-                    ProcessActorControl143(buffer, message);
-                    return;
-                }
-                if (cedirectoropcodes.ContainsKey(region_))
-                {
-                    if (*(ushort*)&buffer[messageTypeOffset] == cedirectoropcodes[region_].opcode)
-                    {
-                        ProcessCEDirector(buffer, message);
-                        return;
-                    }
+                    CEDirectorData data = new CEDirectorData();
+                    data.popTime = packet.popTime;
+                    data.timeRemaining = packet.timeRemaining;
+                    data.ceKey = packet.ceKey;
+                    data.numPlayers = packet.numPlayers;
+                    data.status = packet.status;
+                    data.progress = packet.progress;
+
+                    ProcessCEDirector(data);
                 }
             }
         }
 
-        public unsafe void ProcessActorControl143(byte* buffer, byte[] message)
+        public unsafe void ProcessFateUpdatePacket(GameRegion region, ushort opcode, uint param1, uint param2)
         {
-            int a = *(ushort*)&buffer[actorControl143.categoryOffset];
-
-            fateSemaphore.WaitAsync();
-            try
+            fateSemaphore.WaitAsync().ContinueWith(_ =>
             {
-                if (a == ac143opcodes[region_].add)
+                try
                 {
-                    AddFate(*(int*)&buffer[actorControl143.param1Offset]);
-                }
-                else if (a == ac143opcodes[region_].remove)
-                {
-                    RemoveFate(*(int*)&buffer[actorControl143.param1Offset]);
-                }
-                else if (a == ac143opcodes[region_].update)
-                {
-                    int param1 = *(int*)&buffer[actorControl143.param1Offset];
-                    int param2 = *(int*)&buffer[actorControl143.param2Offset];
-                    if (!fates.ContainsKey(param1))
+                    if (opcode == fateControlOpcodes[region].add)
                     {
-                        AddFate(param1);
+                        AddFate((int)param1);
                     }
-                    if (fates[param1] != param2)
+                    else if (opcode == fateControlOpcodes[region].remove)
                     {
-                        UpdateFate(param1, param2);
+                        RemoveFate((int)param1);
+                    }
+                    else if (opcode == fateControlOpcodes[region].update)
+                    {
+                        if (!fates.ContainsKey((int)param1))
+                        {
+                            AddFate((int)param1);
+                        }
+                        if (fates[(int)param1] != (int)param2)
+                        {
+                            UpdateFate((int)param1, (int)param2);
+                        }
                     }
                 }
-            }
-            finally
-            {
-                fateSemaphore.Release();
-            }
+                finally
+                {
+                    fateSemaphore.Release();
+                }
+            });
         }
 
-        public unsafe void ProcessCEDirector(byte* buffer, byte[] message)
+        public unsafe void ProcessCEDirector(CEDirectorData data)
         {
-            CEDirectorData data = *(CEDirectorData*)&buffer[0];
-
-            ceSemaphore.WaitAsync();
-            try
+            ceSemaphore.WaitAsync().ContinueWith(_ =>
             {
-                if (data.status != 0 && !ces.ContainsKey(data.ceKey))
+                try
                 {
-                    AddCE(data);
-                    return;
-                }
-                else
-                {
-
-                    // Don't update if key is about to be removed
-                    if (!ces[data.ceKey].Equals(data) &&
-                      data.status != 0)
+                    if (data.status != 0 && !ces.ContainsKey(data.ceKey))
                     {
-                        UpdateCE(data.ceKey, data);
+                        AddCE(data);
                         return;
                     }
-
-                    // Needs removing
-                    if (data.status == 0)
+                    else
                     {
-                        RemoveCE(data);
-                        return;
+
+                        // Don't update if key is about to be removed
+                        if (!ces[data.ceKey].Equals(data) &&
+                          data.status != 0)
+                        {
+                            UpdateCE(data.ceKey, data);
+                            return;
+                        }
+
+                        // Needs removing
+                        if (data.status == 0)
+                        {
+                            RemoveCE(data);
+                            return;
+                        }
                     }
                 }
-            }
-            finally
-            {
-                ceSemaphore.Release();
-            }
+                finally
+                {
+                    ceSemaphore.Release();
+                }
+            });
         }
 
         private void AddCE(CEDirectorData data)
