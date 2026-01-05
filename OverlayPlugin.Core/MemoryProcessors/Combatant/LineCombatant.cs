@@ -5,10 +5,12 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using RainbowMage.OverlayPlugin.MemoryProcessors.InCombat;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
+using RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {
@@ -20,9 +22,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         private ICombatantMemory combatantMemoryManager;
         private bool inCombat = false;
         private ConcurrentDictionary<uint, CombatantStateInfo> combatantStateMap = new ConcurrentDictionary<uint, CombatantStateInfo>();
-
-        int offsetHeaderActorID;
-        int offsetHeaderLoginUserID;
 
         // Only emit a log line when this information changes every X milliseconds
         private class CombatantChangeCriteria
@@ -194,13 +193,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                 Version = 1,
             });
 
-            var netHelper = container.Resolve<NetworkParser>();
             try
             {
-                var mach = Assembly.Load("Machina.FFXIV");
-                var msgHeaderType = mach.GetType("Machina.FFXIV.Headers.Server_MessageHeader");
-                offsetHeaderActorID = netHelper.GetOffset(msgHeaderType, "ActorID");
-                offsetHeaderLoginUserID = netHelper.GetOffset(msgHeaderType, "LoginUserID");
                 ffxiv.RegisterNetworkParser(MessageReceived);
             }
             catch (System.IO.FileNotFoundException)
@@ -450,18 +444,17 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         {
             fixed (byte* buffer = message)
             {
-                uint actorID = *(uint*)&buffer[offsetHeaderActorID];
-                uint loginID = *(uint*)&buffer[offsetHeaderLoginUserID];
+                var header = Marshal.PtrToStructure<Server_MessageHeader>(new IntPtr(buffer));
                 // Only check if we're not looking at a packet that's for just us
-                if (actorID != loginID)
+                if (header.ActorID != header.LoginUserID)
                 {
                     DateTime serverTime = ffxiv.EpochToDateTime(epoch);
                     var delayDefault = CombatantChangeCriteria.Criteria(inCombat).DelayDefault;
                     // Also only check if we're beyond the default delay for this ID, or if this ID doesn't exist yet
                     // This check is in place to avoid reading memory every packet, excessively
-                    if (!combatantStateMap.ContainsKey(actorID) || (serverTime - combatantStateMap[actorID].lastUpdated).TotalMilliseconds > delayDefault)
+                    if (!combatantStateMap.ContainsKey(header.ActorID) || (serverTime - combatantStateMap[header.ActorID].lastUpdated).TotalMilliseconds > delayDefault)
                     {
-                        CheckCombatants(serverTime, actorID);
+                        CheckCombatants(serverTime, header.ActorID);
                     }
                 }
             }

@@ -430,9 +430,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.FFXIVClientStructs
             }
         }
 
-        /// <summary>
-        /// Same as <see cref="NetworkProcessors.NetworkParser.GetOffset(Type, string)"/>
-        /// </summary>
         public static int GetOffset(Type type, string property)
         {
             int offset = 0;
