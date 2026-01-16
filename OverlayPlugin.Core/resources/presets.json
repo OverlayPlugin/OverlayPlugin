@@ -125,5 +125,11 @@
     "url": "https://iamlokken.github.io/DeepDungeonOverlay/overlay/targetinfo/",
     "size": [500, 70],
     "supports": ["modern"]
+  },
+  "Glass": {
+    "type": "MiniParse",
+    "url": "https://piousvenom.github.io/ffxiv-glass-overlay/",
+    "size": [675, 430],
+    "supports": ["modern"]
   }
 }
