@@ -482,6 +482,7 @@ namespace RainbowMage.OverlayPlugin
                 registry.StartEventSource(new FFXIVRequiredEventSource(_container));
                 registry.StartEventSource(new EnmityEventSource(_container));
                 registry.StartEventSource(new FFXIVClientStructsEventSource(_container));
+                registry.StartEventSource(new FileSystemEventSource(_container));
 
                 registry.RegisterOverlay<MiniParseOverlay>();
                 registry.RegisterOverlay<SpellTimerOverlay>();
