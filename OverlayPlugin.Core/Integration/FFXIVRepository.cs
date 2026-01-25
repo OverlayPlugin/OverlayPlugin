@@ -431,7 +431,7 @@ namespace RainbowMage.OverlayPlugin
         public static float ConvertUInt16Coordinate(ushort value)
         {
             // This is the exact same formula the game client uses
-            return value * 3.0518043 * 0.0099999998 - 1000.0;
+            return (float)(value * 3.0518043 * 0.0099999998 - 1000.0);
         }
 
         /**
