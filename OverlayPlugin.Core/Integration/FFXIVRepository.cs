@@ -425,11 +425,13 @@ namespace RainbowMage.OverlayPlugin
         /**
          * Convert a coordinate expressed as a uint16 to a float.
          *
-         * See https://github.com/ravahn/FFXIV_ACT_Plugin/issues/298
+         * See https://github.com/ravahn/FFXIV_ACT_Plugin/issues/298, though this has been
+         * updated to be more accurate.
          */
         public static float ConvertUInt16Coordinate(ushort value)
         {
-            return (value - 0x7FFF) / 32.767f;
+            // This is the exact same formula the game client uses
+            return (float)(value * 3.0518043 * 0.0099999998 - 1000.0);
         }
 
         /**
@@ -438,17 +440,13 @@ namespace RainbowMage.OverlayPlugin
          * When a heading is sent in certain packets, the heading is expressed as a uint16, where
          * 0=north and each increment is 1/65536 of a turn in the CCW direction.
          * 
-         * See https://github.com/ravahn/FFXIV_ACT_Plugin/issues/298
+         * See https://github.com/ravahn/FFXIV_ACT_Plugin/issues/298, though this has been
+         * updated to be more accurate.
          */
         public static double ConvertHeading(ushort heading)
         {
-            return heading
-               // Normalize to turns
-               / 65536.0
-               // Normalize to radians
-               * 2 * Math.PI
-               // Flip from 0=north to 0=south like the game uses
-               - Math.PI;
+            // This is the exact same formula the game client uses
+            return heading * 0.009587526 * 0.0099999998 - Math.PI;
         }
 
         /**
