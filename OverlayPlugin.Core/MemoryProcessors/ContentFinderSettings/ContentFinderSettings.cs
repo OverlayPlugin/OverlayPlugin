@@ -25,10 +25,13 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
 
         protected IntPtr settingsAddress = IntPtr.Zero;
         protected IntPtr inContentFinderAddress = IntPtr.Zero;
+        protected IntPtr PartyRoleListModule = IntPtr.Zero;
 
         private string settingsSignature;
         private string inContentFinderSignature;
         private int inContentSettingsOffset;
+
+
 
         public ContentFinderSettingsMemory(TinyIoCContainer container, string settingsSignature, string inContentFinderSignature, int inContentSettingsOffset)
         {
