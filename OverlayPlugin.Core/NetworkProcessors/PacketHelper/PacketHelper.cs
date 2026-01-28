@@ -39,7 +39,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
                     case GameRegion.Global: return global;
                     case GameRegion.Chinese: return cn;
                     case GameRegion.Korean: return kr;
-                    case GameRegion.Tc: return tc;
+                    case GameRegion.TraditionalChinese: return tc;
 
                     default: return global;
                 }
@@ -67,7 +67,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             {
                 return null;
             }
-            if (!opcodes.TryGetValue(GameRegion.Tc, out var tcOpcodes))
+            if (!opcodes.TryGetValue(GameRegion.TraditionalChinese, out var tcOpcodes))
             {
                 // @TODO: Once FFXIV_ACT_Plugin has TC opcodes for global release, remove this default
                 tcOpcodes = new System.Collections.Generic.Dictionary<string, ushort>();
@@ -101,7 +101,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             var globalOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Global.ToString()];
             var cnOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Chinese.ToString()];
             var krOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Korean.ToString()];
-            var tcOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.Tc.ToString()];
+            var tcOpcodeConfigEntry = opcodeConfig[opcodeName, GameRegion.TraditionalChinese.ToString()];
 
             ushort globalOpcode = (ushort)(globalOpcodeConfigEntry?.opcode ?? 0);
             ushort cnOpcode = (ushort)(cnOpcodeConfigEntry?.opcode ?? 0);

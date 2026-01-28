@@ -63,7 +63,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
                     { GameRegion.Global, new ReadOnlyDictionary<string, Type>(globalDict) },
                     { GameRegion.Chinese, new ReadOnlyDictionary<string, Type>(chineseDict) },
                     { GameRegion.Korean, new ReadOnlyDictionary<string, Type>(koreanDict) },
-                    { GameRegion.Tc, new ReadOnlyDictionary<string, Type>(tcDict) },
+                    { GameRegion.TraditionalChinese, new ReadOnlyDictionary<string, Type>(tcDict) },
                 });
 
                 MachinaPacketWrapper.InitTypePropertyMap(mType);
@@ -135,7 +135,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             {
                 return false;
             }
-            if (!opcodes.TryGetValue(GameRegion.Tc, out var tcOpcodes))
+            if (!opcodes.TryGetValue(GameRegion.TraditionalChinese, out var tcOpcodes))
             {
                 // @TODO: Once FFXIV_ACT_Plugin has TC opcodes for global release, remove this default
                 tcOpcodes = new Dictionary<string, ushort>();
@@ -154,7 +154,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             {
                 return false;
             }
-            if (!MachinaMap.GetPacketType(GameRegion.Tc, packetTypeName, out var tcPacketType))
+            if (!MachinaMap.GetPacketType(GameRegion.TraditionalChinese, packetTypeName, out var tcPacketType))
             {
                 // @TODO: Once FFXIV_ACT_Plugin has TC opcodes for global release, remove this default
                 tcPacketType = globalPacketType;
@@ -197,7 +197,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
                     case GameRegion.Global: return global;
                     case GameRegion.Chinese: return cn;
                     case GameRegion.Korean: return kr;
-                    case GameRegion.Tc: return tc;
+                    case GameRegion.TraditionalChinese: return tc;
 
                     default: return global;
                 }

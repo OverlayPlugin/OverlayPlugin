@@ -74,7 +74,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             = new Dictionary<GameRegion, ActorControlSelfFateUpdateOpcodes>() {
                 { GameRegion.Korean, acFateUpdate_v5_2 },
                 { GameRegion.Chinese, acFateUpdate_v5_2 },
-                { GameRegion.Tc, acFateUpdate_v5_2 },
+                { GameRegion.TraditionalChinese, acFateUpdate_v5_2 },
                 { GameRegion.Global, acFateUpdate_v5_2 },
         };
 
