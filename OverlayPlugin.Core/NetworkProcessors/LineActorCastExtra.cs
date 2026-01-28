@@ -26,7 +26,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 // in-game uses 0=south, pi/2=west, +/-pi=north
                 // Machina thinks this is a float but that appears to be incorrect, so we have to reinterpret as
                 // a UInt16
-                double h = FFXIVRepository.ConvertHeading(FFXIVRepository.InterpretFloatAsUInt16(Get<float>("Rotation")));
+                double h = FFXIVRepository.ConvertHeading(Get<UInt16>("Rotation"));
 
                 return string.Format(CultureInfo.InvariantCulture,
                     "{0:X8}|{1:X4}|{2:F3}|{3:F3}|{4:F3}|{5:F3}",

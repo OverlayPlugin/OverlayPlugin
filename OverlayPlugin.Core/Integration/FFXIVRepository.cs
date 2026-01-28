@@ -449,15 +449,6 @@ namespace RainbowMage.OverlayPlugin
             return heading * 0.009587526 * 0.0099999998 - Math.PI;
         }
 
-        /**
-         * Reinterpret a float as a UInt16. Some fields in Machina, such as Server_ActorCast.Rotation, are
-         * marked as floats when they really should be UInt16.
-         */
-        public static ushort InterpretFloatAsUInt16(float value)
-        {
-            return BitConverter.ToUInt16(BitConverter.GetBytes(value), 0);
-        }
-
         internal object GetFFXIVACTPluginIOCService(string parentAssemblyName, string type)
         {
             var plugin = GetPluginData();
