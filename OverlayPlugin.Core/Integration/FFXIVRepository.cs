@@ -69,7 +69,7 @@ namespace RainbowMage.OverlayPlugin
         Global = 1,
         Chinese = 2,
         Korean = 3,
-        TraditionalChinese  = 4
+        TraditionalChinese = 4
     }
 
     public class FFXIVRepository
