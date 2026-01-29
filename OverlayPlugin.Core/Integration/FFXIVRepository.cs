@@ -393,7 +393,7 @@ namespace RainbowMage.OverlayPlugin
                 if (Enum.TryParse<GameRegion>(machina_region, out var region))
                     return region;
 
-                logger.Log(LogLevel.Error, "Unknown Machina region: {0}", ex);
+                logger.Log(LogLevel.Error, "Unknown Machina region: {0}", machina_region);
             }
             catch (Exception ex)
             {
