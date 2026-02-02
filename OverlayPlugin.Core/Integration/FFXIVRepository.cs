@@ -350,7 +350,7 @@ namespace RainbowMage.OverlayPlugin
                     return "cn";
                 case Language.Korean:
                     return "ko";
-                // @TODO: Replace with `Language.Tc` once we can reference a newer version of FFXIV_ACT_Plugin SDK for all releases
+                // @TODO: Replace with `Language.TraditionalChinese` once we can reference a newer version of FFXIV_ACT_Plugin SDK for all releases
                 case (Language)7:
                     return "tc";
                 default:

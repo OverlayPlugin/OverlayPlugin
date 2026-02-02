@@ -54,7 +54,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
                     case "Machina.FFXIV.Headers.Korean":
                         koreanDict.Add(mType.Name, mType);
                         break;
-                    case "Machina.FFXIV.Headers.Tc":
+                    case "Machina.FFXIV.Headers.TraditionalChinese":
                         tcDict.Add(mType.Name, mType);
                         break;
                 }
