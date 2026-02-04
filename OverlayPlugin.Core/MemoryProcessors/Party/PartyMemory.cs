@@ -23,6 +23,13 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Party
         public byte level;
         public byte flags;
     }
+    public class SortParty
+    {
+        public string name;
+        public short classJob;
+        public int order;
+        public uint objectId;
+    }
 
     public class PartyListsStruct
     {
