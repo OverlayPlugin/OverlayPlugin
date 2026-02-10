@@ -112,19 +112,19 @@
         "2026.02.06.0000.0000": {
             // Version: 7.4h
             "MapEffect": {
-                "opcode": 933,
+                "opcode": 299,
                 "size": 11
             },
             "MapEffect4": {
-                "opcode": 822,
+                "opcode": 771,
                 "size": 0
             },
             "MapEffect8": {
-                "opcode": 299,
+                "opcode": 437,
                 "size": 0
             },
             "MapEffect12": {
-                "opcode": 771,
+                "opcode": 586,
                 "size": 0
             },
             "CEDirector": {
