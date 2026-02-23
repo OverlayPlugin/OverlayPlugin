@@ -1,20 +1,20 @@
 {
   "ACT": {
-    "url": "https://github.com/EQAditu/AdvancedCombatTracker/releases/download/3.8.0.283/ACTv3.zip",
+    "url": "https://github.com/EQAditu/AdvancedCombatTracker/releases/download/3.8.4.287/ACTv3.zip",
     "dest": "Thirdparty/ACT",
     "strip": 0,
     "hash": [
       "sha256",
-      "663F1A276425B51DEC2AF5CB9CA63507B75FBF46188A0D8C9A6BC11A6C4FDC6D"
+      "c19916dffed435594e37ffeab99681c9cf2005b45e80016fdfb1eb8f60c9c480"
     ]
   },
   "FFXIV_ACT_Plugin": {
-    "url": "https://github.com/ravahn/FFXIV_ACT_Plugin/raw/master/Releases/FFXIV_ACT_Plugin_SDK_2.0.6.1.zip",
+    "url": "https://github.com/ravahn/FFXIV_ACT_Plugin/raw/master/Releases/FFXIV_ACT_Plugin_SDK_3.0.0.6.zip",
     "dest": "Thirdparty/FFXIV_ACT_Plugin",
     "strip": 0,
     "hash": [
       "sha256",
-      "ed98fa01ec2c7ed2ac843fa8ea2eec1d66f86fad4c6864de4d73d5cfbf163dce"
+      "6a7927f455a25cc14cdb8a210aebd0797b64e5f216b15fac6edf907d4a1280c5"
     ]
   },
   "FFXIVClientStructs": {
