@@ -5,6 +5,7 @@
         VfxUnknown49 = 0x0031, // 49
         SetAnimationState = 0x003E, // 62
         SetModelState = 0x003F, // 63
+        VfxUnknown184 = 0x00B8, // 184
         PlayActionTimeline = 0x0197, // 407
         EObjAnimation = 0x19D, // 413
         StatusUpdate = 0x01F8, // 504

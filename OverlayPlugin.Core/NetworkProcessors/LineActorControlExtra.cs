@@ -23,6 +23,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             Server_ActorControlCategory.DisplayPublicContentTextMessage,
             Server_ActorControlCategory.VfxUnknown49,
             Server_ActorControlCategory.SetModelState,
+            Server_ActorControlCategory.VfxUnknown184,
             Server_ActorControlCategory.PlayActionTimeline,
             Server_ActorControlCategory.EObjAnimation,
         };
