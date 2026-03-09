@@ -20,7 +20,7 @@ sidebar:
 
 ## API
 
-首先，你需要在悬浮窗网页中引用OverlayPlugin的[common.min.js](.../assets/shared/common.min.js)。
+首先，你需要在悬浮窗网页中引用OverlayPlugin的[common.min.js](../assets/shared/common.min.js)。
 ```html
 <script type="text/javascript" src="https://overlayplugin.github.io/OverlayPlugin/assets/shared/common.min.js"></script>
 ```
