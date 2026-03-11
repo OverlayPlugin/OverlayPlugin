@@ -20,13 +20,13 @@ sidebar:
 
 ## API
 
-首先，你需要在悬浮窗网页中引用OverlayPlugin的[common.min.js](.../assets/shared/common.min.js)。
+首先，你需要在悬浮窗网页中引用OverlayPlugin的[common.min.js](../assets/shared/common.min.js)。
 ```html
 <script type="text/javascript" src="https://overlayplugin.github.io/OverlayPlugin/assets/shared/common.min.js"></script>
 ```
 如果你的用户位于中国境内，我们推荐引用这里的镜像文件。
 ```html
-<script type="text/javascript" src="https://act.diemoe.net/overlays/common/common.min.js"></script>
+<script type="text/javascript" src="https://overlay.diemoe.net/common/common.min.js"></script>
 ```
 [点击这个链接查看该js的未压缩原始代码](https://github.com/OverlayPlugin/OverlayPlugin/blob/main/docs/assets/shared/common.js) if you're curious.
 
