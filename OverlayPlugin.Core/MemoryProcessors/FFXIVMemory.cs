@@ -22,10 +22,10 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         private IntPtr processHandle;
         private FFXIVRepository repository;
 
-        // The "international" version always uses the most recent.
+        // International/CN/KO versions are all on latest build
         private static Version globalVersion = new Version(99, 0);
         private static Version cnVersion = new Version(99, 0);
-        private static Version koVersion = new Version(7, 4, 5, 1);
+        private static Version koVersion = new Version(99, 0);
         private static Version tcVersion = new Version(7, 2);
 
         public FFXIVMemory(TinyIoCContainer container)
