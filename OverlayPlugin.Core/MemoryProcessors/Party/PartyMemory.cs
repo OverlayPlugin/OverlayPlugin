@@ -57,8 +57,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Party
             logger = container.Resolve<ILogger>();
             memory = container.Resolve<FFXIVMemory>();
 
-            var repository = container.Resolve<FFXIVRepository>();
-            var readParty = repository.GetFFXIVACTPluginIOCService("FFXIV_ACT_Plugin.Memory", "FFXIV_ACT_Plugin.Memory.ISignatureManager");
+            var readParty = FFXIVRepository.GetFFXIVACTPluginIOCService("FFXIV_ACT_Plugin.Memory", "FFXIV_ACT_Plugin.Memory.ISignatureManager");
             var sigType = 0x50;
 
             var readPartyReadFunc = readParty.GetType().GetMethod("Read");

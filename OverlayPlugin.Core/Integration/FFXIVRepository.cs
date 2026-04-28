@@ -86,7 +86,7 @@ namespace RainbowMage.OverlayPlugin
             logger = container.Resolve<ILogger>();
         }
 
-        private ActPluginData GetPluginData()
+        private static ActPluginData GetPluginData()
         {
             return ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(plugin =>
             {
@@ -350,8 +350,7 @@ namespace RainbowMage.OverlayPlugin
                     return "cn";
                 case Language.Korean:
                     return "ko";
-                // @TODO: Replace with `Language.TraditionalChinese` once we can reference a newer version of FFXIV_ACT_Plugin SDK for all releases
-                case (Language)7:
+                case Language.TraditionalChinese:
                     return "tc";
                 default:
                     return null;
@@ -362,7 +361,7 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
-                var mach = Assembly.Load("Machina.FFXIV");
+                var mach = GetMachinaAssembly();
                 var opcode_manager_type = mach.GetType("Machina.FFXIV.Headers.Opcodes.OpcodeManager");
                 var opcode_manager = opcode_manager_type.GetProperty("Instance").GetValue(null);
 
@@ -380,24 +379,34 @@ namespace RainbowMage.OverlayPlugin
             catch (Exception) { }
             return null;
         }
+        /***
+         * Gets a new reference to the same Machina assembly in use by the currently loaded FFXIV_ACT_Plugin instance
+         * This ***does not*** return a reference to FFXIV_ACT_Plugin's existing Machina assembly, but instead a reference
+         * to a new instance of the same exact library, due to ACT separating AppDomains for plugins
+         */
+        private static Assembly GetMachinaAssembly()
+        {
+            var actorGauge = GetFFXIVACTPluginIOCService("FFXIV_ACT_Plugin.Network", "FFXIV_ACT_Plugin.Network.PacketHandlers.ActorGauge");
+            Type packetType = (Type)actorGauge.GetType().GetProperty("PacketType").GetValue(actorGauge);
+            var assembly = packetType.Assembly;
+            return assembly;
+        }
 
         public GameRegion GetMachinaRegion()
         {
             try
             {
-                var mach = Assembly.Load("Machina.FFXIV");
-                var opcode_manager_type = mach.GetType("Machina.FFXIV.Headers.Opcodes.OpcodeManager");
-                var opcode_manager = opcode_manager_type.GetProperty("Instance").GetValue(null);
-                var machina_region = opcode_manager_type.GetProperty("GameRegion").GetValue(opcode_manager).ToString();
-
-                if (Enum.TryParse<GameRegion>(machina_region, out var region))
-                    return region;
-
-                logger.Log(LogLevel.Error, "Unknown Machina region: {0}", machina_region);
+                var machina_region = (int)repository.GetGameRegion();
+                if (!Enum.IsDefined(typeof(GameRegion), machina_region))
+                {
+                    logger.Log(LogLevel.Error, "Unknown Machina region: {0}", machina_region);
+                    return GameRegion.Global;
+                }
+                return (GameRegion)machina_region;
             }
             catch (Exception ex)
             {
-                logger.Log(LogLevel.Error, "Exception parsing Machina region: {0}", ex);
+                logger.Log(LogLevel.Error, "Exception fetching Machina region: {0}", ex);
             }
             return GameRegion.Global;
         }
@@ -451,11 +460,15 @@ namespace RainbowMage.OverlayPlugin
             return heading * 0.009587526 * 0.0099999998 - Math.PI;
         }
 
-        internal object GetFFXIVACTPluginIOCService(string parentAssemblyName, string type)
+        internal static object GetFFXIVACTPluginIOCService(string parentAssemblyName, string type)
         {
             var plugin = GetPluginData();
             if (plugin == null) return false;
             var field = plugin.pluginObj.GetType().GetField("_iocContainer", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (!TinyIoCContainer.Current.TryResolve<ILogger>(out var logger))
+            {
+                logger = new Logger();
+            }
             if (field == null)
             {
                 logger.Log(LogLevel.Error, "Unable to retrieve _iocContainer field information from FFXIV_ACT_Plugin");
@@ -470,7 +483,7 @@ namespace RainbowMage.OverlayPlugin
             var getServiceMethod = iocContainer.GetType().GetMethod("GetService");
             if (getServiceMethod == null)
             {
-                logger.Log(LogLevel.Error, "Unable to retrieve _iocContainer field value from FFXIV_ACT_Plugin");
+                logger.Log(LogLevel.Error, "Unable to retrieve method GetService from FFXIV_ACT_Plugin");
                 return null;
             }
             var parentAssembly = AppDomain.CurrentDomain.GetAssemblies().
