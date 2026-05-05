@@ -154,9 +154,11 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             {
                 return false;
             }
-
-            // TC packet structs are identical to Global (same fields, different opcodes only),
-            // so always use the Global struct to avoid type mismatches in TC-specific definitions.
+            // FFXIV_ACT_Plugin currently defines dedicated TraditionalChinese packet handlers and structures,
+            // but does not use them at runtime. It handles TC packets through Global packet handlers instead.
+            // Use Global packet structures with TC opcodes to match runtime behavior.
+            // @TODO: If FFXIV_ACT_Plugin switches runtime TC handling to its dedicated TC packet handlers
+            // and packet structures, restore the TC packet type lookup via MachinaMap.GetPacketType(...).
             var tcPacketType = globalPacketType;
 
             if (!globalOpcodes.TryGetValue(packetOpcodeName, out var globalOpcode))
