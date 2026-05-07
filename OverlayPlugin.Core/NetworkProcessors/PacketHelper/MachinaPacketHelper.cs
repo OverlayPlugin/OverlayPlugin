@@ -154,12 +154,13 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors.PacketHelper
             {
                 return false;
             }
-            if (!MachinaMap.GetPacketType(GameRegion.TraditionalChinese, packetTypeName, out var tcPacketType))
-            {
-                // @TODO: Once FFXIV_ACT_Plugin has TC opcodes for global release, remove this default
-                tcPacketType = globalPacketType;
-                // return false;
-            }
+            // FFXIV_ACT_Plugin currently defines dedicated TraditionalChinese packet handlers and structures,
+            // but does not use them at runtime. It handles TC packets through Global packet handlers instead.
+            // Use Global packet structures with TC opcodes to match runtime behavior.
+            // @TODO: If FFXIV_ACT_Plugin switches runtime TC handling to its dedicated TC packet handlers
+            // and packet structures, restore the TC packet type lookup via MachinaMap.GetPacketType(...).
+            // ref git commit 252cc49b3ad6767dbc6a33e1682a411ed0abb52e
+            var tcPacketType = globalPacketType;
 
             if (!globalOpcodes.TryGetValue(packetOpcodeName, out var globalOpcode))
             {
