@@ -199,7 +199,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
         [StructLayout(LayoutKind.Explicit, Size = Size)]
         public struct EffectMemory
         {
-            public const int Size = 12;
+            public const int Size = 16;
 
             [FieldOffset(0)]
             public ushort BuffID;
