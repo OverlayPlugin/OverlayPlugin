@@ -14,8 +14,8 @@ namespace RainbowMage.OverlayPlugin.Updater
     public class CefInstaller
     {
 
-        const string CEF_DL = "https://github.com/ngld/OverlayPlugin/releases/download/v0.7.0/CefSharp-{CEF_VERSION}-{ARCH}.7z";
-        const string CEF_VERSION = "95.7.14";
+        const string CEF_DL = "https://github.com/OverlayPlugin/CeF/releases/download/v1.0.0/CefSharp-{CEF_VERSION}-{ARCH}.7z";
+        const string CEF_VERSION = "131.3.10";
 
         public static string GetUrl()
         {
