@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Advanced_Combat_Tracker;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
@@ -31,6 +32,51 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
             SetupControlProperties();
             SetupConfigEventHandlers();
+
+            if (ActGlobals.oFormActMain != null)
+            {
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InvertColorsChanged += ActColorSettings_InvertColorsChanged;
+                UpdateActColorSettings();
+            }
+        }
+
+        private void ActColorSettings_InvertColorsChanged(object sender, EventArgs e)
+        {
+            UpdateActColorSettings();
+        }
+        private void ActColorSettings_ColorSettingChanged(Color NewColor)
+        {
+            UpdateActColorSettings();
+        }
+        private void UpdateActColorSettings()
+        {
+            this.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            this.ForeColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSetting;
+            if (ActGlobals.oFormActMain.ActColorSettings.InvertColors)
+            {
+                // TextBoxes
+                textBox.BorderStyle = BorderStyle.FixedSingle;
+                textGlobalHotkey.BorderStyle = BorderStyle.FixedSingle;
+                textUrl.BorderStyle = BorderStyle.FixedSingle;
+            }
+            else
+            {
+                // TextBoxes
+                textBox.BorderStyle = BorderStyle.Fixed3D;
+                textGlobalHotkey.BorderStyle = BorderStyle.Fixed3D;
+                textUrl.BorderStyle = BorderStyle.Fixed3D;
+            }
+            // Text Boxes
+            textBox.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            textBox.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            textGlobalHotkey.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            textGlobalHotkey.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            textUrl.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            textUrl.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
         }
 
         private void SetupControlProperties()
