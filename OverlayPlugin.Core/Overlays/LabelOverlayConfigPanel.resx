@@ -538,7 +538,7 @@
     <value>buttonCopyUpdateScript</value>
   </data>
   <data name="&gt;&gt;buttonCopyUpdateScript.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonCopyUpdateScript.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
@@ -565,7 +565,7 @@
     <value>buttonOpenDevTools</value>
   </data>
   <data name="&gt;&gt;buttonOpenDevTools.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonOpenDevTools.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
@@ -595,7 +595,7 @@
     <value>buttonReloadBrowser</value>
   </data>
   <data name="&gt;&gt;buttonReloadBrowser.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonReloadBrowser.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
@@ -721,7 +721,7 @@
     <value>buttonSelectFile</value>
   </data>
   <data name="&gt;&gt;buttonSelectFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonSelectFile.Parent" xml:space="preserve">
     <value>tableLayoutPanel2</value>

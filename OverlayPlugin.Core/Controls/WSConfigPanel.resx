@@ -218,6 +218,10 @@
   <data name="genSslBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>117, 90</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="genSslBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
+  </data>
   <data name="genSslBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 23</value>
   </data>
@@ -269,7 +273,6 @@
   <data name="&gt;&gt;sslBox.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="logDisplay.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
@@ -311,6 +314,9 @@ Afterwards, you should be able to enable SSL.</value>
   <data name="startBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>377, 13</value>
   </data>
+  <data name="startBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
+  </data>
   <data name="startBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
@@ -334,6 +340,9 @@ Afterwards, you should be able to enable SSL.</value>
   </data>
   <data name="stopBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>377, 38</value>
+  </data>
+  <data name="stopBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="stopBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -711,6 +720,9 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
   <data name="simpStopBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 74</value>
   </data>
+  <data name="simpStopBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
+  </data>
   <data name="simpStopBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>118, 36</value>
   </data>
@@ -737,6 +749,9 @@ Finally, if WSServer is started through the Stream/Local Overlay tab, it will au
   </data>
   <data name="simpStartBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 74</value>
+  </data>
+  <data name="simpStartBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="simpStartBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 36</value>

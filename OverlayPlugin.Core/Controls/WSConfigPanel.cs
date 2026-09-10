@@ -79,6 +79,76 @@ namespace RainbowMage.OverlayPlugin
             UpdateTunnelStatus(TunnelStatus.Inactive);
 
             lblUrlConfidentWarning.Visible = false;
+
+            if (ActGlobals.oFormActMain != null)
+            {
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InvertColorsChanged += ActColorSettings_InvertColorsChanged;
+                UpdateActColorSettings();
+            }
+        }
+
+        private void ActColorSettings_InvertColorsChanged(object sender, EventArgs e)
+        {
+            UpdateActColorSettings();
+        }
+        private void ActColorSettings_ColorSettingChanged(Color NewColor)
+        {
+            UpdateActColorSettings();
+        }
+        private void UpdateActColorSettings()
+        {
+            this.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            this.ForeColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSetting;
+            // TabPages
+            introPage.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            settingsPage.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            tunnelPage.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            // GroupBoxes
+            urlGeneratorBox.ForeColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSetting;
+            if (ActGlobals.oFormActMain.ActColorSettings.InvertColors)
+            {
+                // TextBoxes
+                txtNgrokToken.BorderStyle = BorderStyle.FixedSingle;
+                txtOverlayUrl.BorderStyle = BorderStyle.FixedSingle;
+                ipTxt.BorderStyle = BorderStyle.FixedSingle;
+                portTxt.BorderStyle = BorderStyle.FixedSingle;
+                // ComboBoxes
+                cbOverlay.FlatStyle = FlatStyle.Flat;
+                regionCb.FlatStyle = FlatStyle.Flat;
+            }
+            else
+            {
+                // TextBoxes
+                txtNgrokToken.BorderStyle = BorderStyle.Fixed3D;
+                txtOverlayUrl.BorderStyle = BorderStyle.Fixed3D;
+                ipTxt.BorderStyle = BorderStyle.Fixed3D;
+                portTxt.BorderStyle = BorderStyle.Fixed3D;
+                // ComboBoxes
+                cbOverlay.FlatStyle = FlatStyle.Standard;
+                regionCb.FlatStyle = FlatStyle.Standard;
+            }
+            // Text Boxes
+            txtNgrokToken.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            txtNgrokToken.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            txtOverlayUrl.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            txtOverlayUrl.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            ipTxt.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            ipTxt.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            portTxt.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            portTxt.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            logDisplay.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            logDisplay.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            simpLogBox.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            simpLogBox.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            // ComboBoxes
+            cbOverlay.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            cbOverlay.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            regionCb.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            regionCb.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
         }
 
         public void Stop()

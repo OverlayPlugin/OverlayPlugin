@@ -17,146 +17,147 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPanel));
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tableLayoutPanel0 = new System.Windows.Forms.TableLayoutPanel();
-            this.tabControl = new RainbowMage.OverlayPlugin.TabControlExt();
-            this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.buttonNewOverlay = new System.Windows.Forms.Button();
-            this.buttonRemoveOverlay = new System.Windows.Forms.Button();
-            this.checkBoxFollowLog = new System.Windows.Forms.CheckBox();
-            this.buttonClearLog = new System.Windows.Forms.Button();
-            this.logBox = new System.Windows.Forms.TextBox();
-            this.tabPageMain = new System.Windows.Forms.TabPage();
-            this.label_ListEmpty = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.buttonRename = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.tableLayoutPanel0.SuspendLayout();
-            this.flowLayoutPanel.SuspendLayout();
-            this.tabPageMain.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // splitContainer1
-            // 
-            resources.ApplyResources(this.splitContainer1, "splitContainer1");
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel0);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.logBox);
-            // 
-            // tableLayoutPanel0
-            // 
-            this.tableLayoutPanel0.Controls.Add(this.tabControl, 0, 0);
-            this.tableLayoutPanel0.Controls.Add(this.flowLayoutPanel, 0, 1);
-            resources.ApplyResources(this.tableLayoutPanel0, "tableLayoutPanel0");
-            this.tableLayoutPanel0.Name = "tableLayoutPanel0";
-            // 
-            // tabControl
-            // 
-            resources.ApplyResources(this.tabControl, "tabControl");
-            this.tabControl.Multiline = true;
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            // 
-            // flowLayoutPanel
-            // 
-            this.flowLayoutPanel.Controls.Add(this.buttonNewOverlay);
-            this.flowLayoutPanel.Controls.Add(this.buttonRemoveOverlay);
-            this.flowLayoutPanel.Controls.Add(this.buttonRename);
-            this.flowLayoutPanel.Controls.Add(this.checkBoxFollowLog);
-            this.flowLayoutPanel.Controls.Add(this.buttonClearLog);
-            resources.ApplyResources(this.flowLayoutPanel, "flowLayoutPanel");
-            this.flowLayoutPanel.Name = "flowLayoutPanel";
-            // 
-            // buttonNewOverlay
-            // 
-            resources.ApplyResources(this.buttonNewOverlay, "buttonNewOverlay");
-            this.buttonNewOverlay.Name = "buttonNewOverlay";
-            this.buttonNewOverlay.UseVisualStyleBackColor = true;
-            this.buttonNewOverlay.Click += new System.EventHandler(this.buttonNewOverlay_Click);
-            // 
-            // buttonRemoveOverlay
-            // 
-            resources.ApplyResources(this.buttonRemoveOverlay, "buttonRemoveOverlay");
-            this.buttonRemoveOverlay.Name = "buttonRemoveOverlay";
-            this.buttonRemoveOverlay.UseVisualStyleBackColor = true;
-            this.buttonRemoveOverlay.Click += new System.EventHandler(this.buttonRemoveOverlay_Click);
-            // 
-            // checkBoxFollowLog
-            // 
-            resources.ApplyResources(this.checkBoxFollowLog, "checkBoxFollowLog");
-            this.checkBoxFollowLog.Name = "checkBoxFollowLog";
-            this.checkBoxFollowLog.UseVisualStyleBackColor = true;
-            this.checkBoxFollowLog.CheckedChanged += new System.EventHandler(this.CheckBoxFollowLog_CheckedChanged);
-            // 
-            // buttonClearLog
-            // 
-            resources.ApplyResources(this.buttonClearLog, "buttonClearLog");
-            this.buttonClearLog.Name = "buttonClearLog";
-            this.buttonClearLog.UseVisualStyleBackColor = true;
-            this.buttonClearLog.Click += new System.EventHandler(this.ButtonClearLog_Click);
-            // 
-            // logBox
-            // 
-            this.logBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            resources.ApplyResources(this.logBox, "logBox");
-            this.logBox.HideSelection = false;
-            this.logBox.Name = "logBox";
-            this.logBox.ReadOnly = true;
-            // 
-            // tabPageMain
-            // 
-            this.tabPageMain.Controls.Add(this.label_ListEmpty);
-            resources.ApplyResources(this.tabPageMain, "tabPageMain");
-            this.tabPageMain.Name = "tabPageMain";
-            this.tabPageMain.UseVisualStyleBackColor = true;
-            // 
-            // label_ListEmpty
-            // 
-            resources.ApplyResources(this.label_ListEmpty, "label_ListEmpty");
-            this.label_ListEmpty.Name = "label_ListEmpty";
-            // 
-            // groupBox2
-            // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.TabStop = false;
-            // 
-            // buttonRename
-            // 
-            resources.ApplyResources(this.buttonRename, "buttonRename");
-            this.buttonRename.Name = "buttonRename";
-            this.buttonRename.UseVisualStyleBackColor = true;
-            this.buttonRename.Click += new System.EventHandler(this.buttonRename_Click);
-            // 
-            // ControlPanel
-            // 
-            resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.Controls.Add(this.splitContainer1);
-            this.Name = "ControlPanel";
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.tableLayoutPanel0.ResumeLayout(false);
-            this.flowLayoutPanel.ResumeLayout(false);
-            this.flowLayoutPanel.PerformLayout();
-            this.tabPageMain.ResumeLayout(false);
-            this.ResumeLayout(false);
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPanel));
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.tableLayoutPanel0 = new System.Windows.Forms.TableLayoutPanel();
+			this.tabControl = new RainbowMage.OverlayPlugin.TabControlExt();
+			this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+			this.buttonNewOverlay = new Advanced_Combat_Tracker.ButtonPainted();
+			this.buttonRemoveOverlay = new Advanced_Combat_Tracker.ButtonPainted();
+			this.buttonRename = new Advanced_Combat_Tracker.ButtonPainted();
+			this.checkBoxFollowLog = new System.Windows.Forms.CheckBox();
+			this.buttonClearLog = new Advanced_Combat_Tracker.ButtonPainted();
+			this.logBox = new System.Windows.Forms.TextBox();
+			this.tabPageMain = new System.Windows.Forms.TabPage();
+			this.label_ListEmpty = new System.Windows.Forms.Label();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+			this.splitContainer1.Panel1.SuspendLayout();
+			this.splitContainer1.Panel2.SuspendLayout();
+			this.splitContainer1.SuspendLayout();
+			this.tableLayoutPanel0.SuspendLayout();
+			this.flowLayoutPanel.SuspendLayout();
+			this.tabPageMain.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// splitContainer1
+			// 
+			resources.ApplyResources(this.splitContainer1, "splitContainer1");
+			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+			this.splitContainer1.Name = "splitContainer1";
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel0);
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.Controls.Add(this.logBox);
+			// 
+			// tableLayoutPanel0
+			// 
+			this.tableLayoutPanel0.Controls.Add(this.tabControl, 0, 0);
+			this.tableLayoutPanel0.Controls.Add(this.flowLayoutPanel, 0, 1);
+			resources.ApplyResources(this.tableLayoutPanel0, "tableLayoutPanel0");
+			this.tableLayoutPanel0.Name = "tableLayoutPanel0";
+			// 
+			// tabControl
+			// 
+			resources.ApplyResources(this.tabControl, "tabControl");
+			this.tabControl.Multiline = true;
+			this.tabControl.Name = "tabControl";
+			this.tabControl.SelectedIndex = 0;
+			this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+			// 
+			// flowLayoutPanel
+			// 
+			this.flowLayoutPanel.Controls.Add(this.buttonNewOverlay);
+			this.flowLayoutPanel.Controls.Add(this.buttonRemoveOverlay);
+			this.flowLayoutPanel.Controls.Add(this.buttonRename);
+			this.flowLayoutPanel.Controls.Add(this.checkBoxFollowLog);
+			this.flowLayoutPanel.Controls.Add(this.buttonClearLog);
+			resources.ApplyResources(this.flowLayoutPanel, "flowLayoutPanel");
+			this.flowLayoutPanel.Name = "flowLayoutPanel";
+			// 
+			// buttonNewOverlay
+			// 
+			resources.ApplyResources(this.buttonNewOverlay, "buttonNewOverlay");
+			this.buttonNewOverlay.Name = "buttonNewOverlay";
+			this.buttonNewOverlay.UseVisualStyleBackColor = true;
+			this.buttonNewOverlay.Click += new System.EventHandler(this.buttonNewOverlay_Click);
+			// 
+			// buttonRemoveOverlay
+			// 
+			resources.ApplyResources(this.buttonRemoveOverlay, "buttonRemoveOverlay");
+			this.buttonRemoveOverlay.Name = "buttonRemoveOverlay";
+			this.buttonRemoveOverlay.UseVisualStyleBackColor = true;
+			this.buttonRemoveOverlay.Click += new System.EventHandler(this.buttonRemoveOverlay_Click);
+			// 
+			// buttonRename
+			// 
+			resources.ApplyResources(this.buttonRename, "buttonRename");
+			this.buttonRename.Name = "buttonRename";
+			this.buttonRename.UseVisualStyleBackColor = true;
+			this.buttonRename.Click += new System.EventHandler(this.buttonRename_Click);
+			// 
+			// checkBoxFollowLog
+			// 
+			resources.ApplyResources(this.checkBoxFollowLog, "checkBoxFollowLog");
+			this.checkBoxFollowLog.Name = "checkBoxFollowLog";
+			this.checkBoxFollowLog.UseVisualStyleBackColor = true;
+			this.checkBoxFollowLog.CheckedChanged += new System.EventHandler(this.CheckBoxFollowLog_CheckedChanged);
+			// 
+			// buttonClearLog
+			// 
+			resources.ApplyResources(this.buttonClearLog, "buttonClearLog");
+			this.buttonClearLog.Name = "buttonClearLog";
+			this.buttonClearLog.UseVisualStyleBackColor = true;
+			this.buttonClearLog.Click += new System.EventHandler(this.ButtonClearLog_Click);
+			// 
+			// logBox
+			// 
+			this.logBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.logBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			resources.ApplyResources(this.logBox, "logBox");
+			this.logBox.HideSelection = false;
+			this.logBox.Name = "logBox";
+			this.logBox.ReadOnly = true;
+			// 
+			// tabPageMain
+			// 
+			this.tabPageMain.Controls.Add(this.label_ListEmpty);
+			resources.ApplyResources(this.tabPageMain, "tabPageMain");
+			this.tabPageMain.Name = "tabPageMain";
+			this.tabPageMain.UseVisualStyleBackColor = true;
+			// 
+			// label_ListEmpty
+			// 
+			resources.ApplyResources(this.label_ListEmpty, "label_ListEmpty");
+			this.label_ListEmpty.Name = "label_ListEmpty";
+			// 
+			// groupBox2
+			// 
+			resources.ApplyResources(this.groupBox2, "groupBox2");
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.TabStop = false;
+			// 
+			// ControlPanel
+			// 
+			resources.ApplyResources(this, "$this");
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.Controls.Add(this.splitContainer1);
+			this.Name = "ControlPanel";
+			this.splitContainer1.Panel1.ResumeLayout(false);
+			this.splitContainer1.Panel2.ResumeLayout(false);
+			this.splitContainer1.Panel2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+			this.splitContainer1.ResumeLayout(false);
+			this.tableLayoutPanel0.ResumeLayout(false);
+			this.flowLayoutPanel.ResumeLayout(false);
+			this.flowLayoutPanel.PerformLayout();
+			this.tabPageMain.ResumeLayout(false);
+			this.ResumeLayout(false);
 
         }
 
@@ -166,14 +167,14 @@ namespace RainbowMage.OverlayPlugin
         private RainbowMage.OverlayPlugin.TabControlExt tabControl;
         private System.Windows.Forms.TabPage tabPageMain;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button buttonRemoveOverlay;
-        private System.Windows.Forms.Button buttonNewOverlay;
+        private Advanced_Combat_Tracker.ButtonPainted buttonRemoveOverlay;
+        private Advanced_Combat_Tracker.ButtonPainted buttonNewOverlay;
         private TableLayoutPanel tableLayoutPanel0;
         private FlowLayoutPanel flowLayoutPanel;
         private Label label_ListEmpty;
         private TextBox logBox;
         private CheckBox checkBoxFollowLog;
-        private Button buttonClearLog;
-        private Button buttonRename;
+        private Advanced_Combat_Tracker.ButtonPainted buttonClearLog;
+        private Advanced_Combat_Tracker.ButtonPainted buttonRename;
     }
 }
