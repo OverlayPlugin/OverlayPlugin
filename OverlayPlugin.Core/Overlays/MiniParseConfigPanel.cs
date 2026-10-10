@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Advanced_Combat_Tracker;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
@@ -38,6 +39,69 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
             SetupControlProperties();
             SetupConfigEventHandlers();
+
+            if (ActGlobals.oFormActMain != null)
+            {
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSettingChanged += ActColorSettings_ColorSettingChanged;
+                ActGlobals.oFormActMain.ActColorSettings.InvertColorsChanged += ActColorSettings_InvertColorsChanged;
+                UpdateActColorSettings();
+            }
+        }
+
+        private void ActColorSettings_InvertColorsChanged(object sender, EventArgs e)
+        {
+            UpdateActColorSettings();
+        }
+        private void ActColorSettings_ColorSettingChanged(Color NewColor)
+        {
+            UpdateActColorSettings();
+        }
+        private void UpdateActColorSettings()
+        {
+            this.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            this.ForeColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSetting;
+            // TabPages
+            tabGeneral.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            tabHotkeys.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            tabAdvanced.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            tabACTWS.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+            // DataGrid
+            hotkeyGridView.BackgroundColor = ActGlobals.oFormActMain.ActColorSettings.DataGridColors.BackColorSetting;
+            hotkeyGridView.ForeColor = ActGlobals.oFormActMain.ActColorSettings.DataGridColors.ForeColorSetting;
+            if (ActGlobals.oFormActMain.ActColorSettings.InvertColors)
+            {
+                // TextBoxes
+                textMiniParseUrl.BorderStyle = BorderStyle.FixedSingle;
+                // ComboBoxes
+                applyPresetCombo.FlatStyle = FlatStyle.Flat;
+                hotkeyColAction.FlatStyle = FlatStyle.Flat;
+                // DataGrid
+                hotkeyGridView.EnableHeadersVisualStyles = false;
+                hotkeyGridView.ColumnHeadersDefaultCellStyle.BackColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.BackColorSetting;
+                hotkeyGridView.ColumnHeadersDefaultCellStyle.ForeColor = ActGlobals.oFormActMain.ActColorSettings.MainWindowColors.ForeColorSetting;
+            }
+            else
+            {
+                // TextBoxes
+                textMiniParseUrl.BorderStyle = BorderStyle.Fixed3D;
+                // ComboBoxes
+                applyPresetCombo.FlatStyle = FlatStyle.Standard;
+                hotkeyColAction.FlatStyle = FlatStyle.Standard;
+                // DataGrid
+                hotkeyGridView.EnableHeadersVisualStyles = true;
+            }
+            // Text Boxes
+            textMiniParseUrl.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            textMiniParseUrl.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            // ComboBoxes
+            applyPresetCombo.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            applyPresetCombo.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
+            // NumericUpDowns
+            nudMaxFrameRate.BackColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting;
+            nudMaxFrameRate.ForeColor = ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting;
         }
 
         private void SetupControlProperties()
@@ -328,6 +392,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
                         }
                         break;
                 }
+                e.CellStyle.BackColor = ActGlobals.oFormActMain.ActColorSettings.DataGridColors.BackColorSetting;
+                e.CellStyle.ForeColor = ActGlobals.oFormActMain.ActColorSettings.DataGridColors.ForeColorSetting;
                 e.FormattingApplied = true;
             }
         }
