@@ -23,6 +23,7 @@ using RainbowMage.OverlayPlugin.MemoryProcessors.InCombat;
 using RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Party;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Target;
+using RainbowMage.OverlayPlugin.MemoryProcessors.UISortParty;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
 using RainbowMage.OverlayPlugin.Overlays;
 
@@ -269,7 +270,6 @@ namespace RainbowMage.OverlayPlugin
                                     // Register FFXIV memory reading subcomponents.
                                     // Must be done before loading addons.
                                     _container.Register(new FFXIVMemory(_container));
-
                                     // These are registered to be lazy-loaded. Use interface to force TinyIoC to use singleton pattern.
                                     _container.Register<ICombatantMemory, CombatantMemoryManager>();
                                     _container.Register<ITargetMemory, TargetMemoryManager>();
@@ -283,8 +283,8 @@ namespace RainbowMage.OverlayPlugin
                                     _container.Register<IAtkStageMemory, AtkStageMemoryManager>();
                                     _container.Register<IPartyMemory, PartyMemoryManager>();
                                     _container.Register<IJobGaugeMemory, JobGaugeMemoryManager>();
-
                                     _container.Register(new OverlayPluginLogLines(_container));
+                                    _container.Register(new UISortParty(_container));
                                 });
                             }
                             catch (Exception ex)
@@ -482,7 +482,6 @@ namespace RainbowMage.OverlayPlugin
                 registry.StartEventSource(new FFXIVRequiredEventSource(_container));
                 registry.StartEventSource(new EnmityEventSource(_container));
                 registry.StartEventSource(new FFXIVClientStructsEventSource(_container));
-
                 registry.RegisterOverlay<MiniParseOverlay>();
                 registry.RegisterOverlay<SpellTimerOverlay>();
                 registry.RegisterOverlay<LabelOverlay>();
