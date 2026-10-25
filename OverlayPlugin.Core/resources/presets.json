@@ -132,7 +132,7 @@
     "size": [500, 70],
     "supports": ["modern"]
   },
-  "Phantom Relic Tracker": {
+  "Relic Tracker": {
     "type": "MiniParse",
     "url": "https://darknesskxiv.github.io/ffxiv-relique/",
     "size": [450, 700],
