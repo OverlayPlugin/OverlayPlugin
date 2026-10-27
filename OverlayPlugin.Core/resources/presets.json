@@ -131,5 +131,11 @@
     "url": "https://iamlokken.github.io/DeepDungeonOverlay/overlay/targetinfo/",
     "size": [500, 70],
     "supports": ["modern"]
+  },
+  "Relic Tracker": {
+    "type": "MiniParse",
+    "url": "https://darknesskxiv.github.io/ffxiv-relique/",
+    "size": [500, 700],
+    "supports": ["modern"]
   }
 }
