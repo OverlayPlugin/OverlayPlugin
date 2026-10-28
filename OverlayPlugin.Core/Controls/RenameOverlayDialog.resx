@@ -177,6 +177,9 @@
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
     <value>172, 77</value>
   </data>
+  <data name="btnCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
+  </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
@@ -203,6 +206,9 @@
   </data>
   <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
     <value>266, 77</value>
+  </data>
+  <data name="btnOk.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
