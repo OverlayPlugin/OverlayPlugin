@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using RainbowMage.OverlayPlugin.MemoryProcessors;
 using RainbowMage.OverlayPlugin.MemoryProcessors.AtkStage;
+using RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -59,6 +60,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 return GetSortedPartyList();
             });
+
         }
 
         private JObject GetSortedPartyList()
