@@ -45,12 +45,14 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
                 case JobGaugeJob.BLM: ret.data = jobGaugeManager.BlackMage; break;
                 case JobGaugeJob.SMN: ret.data = jobGaugeManager.Summoner; break;
                 case JobGaugeJob.RDM: ret.data = jobGaugeManager.RedMage; break;
+                case JobGaugeJob.PCT: ret.data = jobGaugeManager.Pictomancer; break;
 
                 case JobGaugeJob.MNK: ret.data = jobGaugeManager.Monk; break;
                 case JobGaugeJob.DRG: ret.data = jobGaugeManager.Dragoon; break;
                 case JobGaugeJob.NIN: ret.data = jobGaugeManager.Ninja; break;
                 case JobGaugeJob.SAM: ret.data = jobGaugeManager.Samurai; break;
                 case JobGaugeJob.RPR: ret.data = jobGaugeManager.Reaper; break;
+                case JobGaugeJob.VPR: ret.data = jobGaugeManager.Viper; break;
 
                 case JobGaugeJob.DRK: ret.data = jobGaugeManager.DarkKnight; break;
                 case JobGaugeJob.PLD: ret.data = jobGaugeManager.Paladin; break;
@@ -69,5 +71,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
                 return (JobGaugeManager)Marshal.PtrToStructure(new IntPtr(buffer), typeof(JobGaugeManager));
             }
         }
+
     }
 }

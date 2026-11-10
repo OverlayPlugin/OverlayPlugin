@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
@@ -29,12 +30,14 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
             [FieldOffset(0x08)] public BlackMageGauge BlackMage;
             [FieldOffset(0x08)] public SummonerGauge Summoner;
             [FieldOffset(0x08)] public RedMageGauge RedMage;
+            [FieldOffset(0x08)] public PictomancerGauge Pictomancer;
 
             [FieldOffset(0x08)] public MonkGauge Monk;
             [FieldOffset(0x08)] public DragoonGauge Dragoon;
             [FieldOffset(0x08)] public NinjaGauge Ninja;
             [FieldOffset(0x08)] public SamuraiGauge Samurai;
             [FieldOffset(0x08)] public ReaperGauge Reaper;
+            [FieldOffset(0x08)] public ViperGauge Viper;
 
             [FieldOffset(0x08)] public DarkKnightGauge DarkKnight;
             [FieldOffset(0x08)] public PaladinGauge Paladin;
@@ -51,6 +54,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
                 RawGaugeData[4], RawGaugeData[5], RawGaugeData[6], RawGaugeData[7]
             };
         }
+
         [StructLayout(LayoutKind.Explicit, Size = 0x08)]
         public struct JobGauge : IBaseJobGauge
         {
@@ -60,65 +64,40 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         #region Healer
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct WhiteMageGauge : IBaseWhiteMageGauge
+        public struct WhiteMageGauge : IBaseJobGauge
         {
             [FieldOffset(0x0A)] public short LilyTimer;
             [FieldOffset(0x0C)] public byte Lily;
             [FieldOffset(0x0D)] public byte BloodLily;
-
-            short IBaseWhiteMageGauge.LilyTimer => LilyTimer;
-
-            byte IBaseWhiteMageGauge.Lily => Lily;
-
-            byte IBaseWhiteMageGauge.BloodLily => BloodLily;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct ScholarGauge : IBaseScholarGauge
+        public struct ScholarGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public byte Aetherflow;
             [FieldOffset(0x09)] public byte FairyGauge;
             [FieldOffset(0x0A)] public short SeraphTimer;
             [FieldOffset(0x0C)] public byte DismissedFairy;
-
-            byte IBaseScholarGauge.Aetherflow => Aetherflow;
-
-            byte IBaseScholarGauge.FairyGauge => FairyGauge;
-
-            short IBaseScholarGauge.SeraphTimer => SeraphTimer;
-
-            byte IBaseScholarGauge.DismissedFairy => DismissedFairy;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public unsafe struct AstrologianGauge : IBaseAstrologianGauge
+        public struct AstrologianGauge : IBaseJobGauge
         {
-            [FieldOffset(0x08)] public short Timer;
-            [FieldOffset(0x0D)] public byte Card;
-            [FieldOffset(0x0E)] public byte Seals; // 6 bits, 0,1-3,1-3,1-3 depending on astrosign
+            [FieldOffset(0x08)] public short Cards;
+            [FieldOffset(0x0A)] public AstrologianDraw CurrentDraw;
 
-            public AstrologianCard CurrentCard => (AstrologianCard)Card;
-
-            public AstrologianSeal[] CurrentSeals => new[]
+            public AstrologianCard[] CurrentCards => new[]
             {
-                (AstrologianSeal)(3 & (this.Seals >> 0)),
-                (AstrologianSeal)(3 & (this.Seals >> 2)),
-                (AstrologianSeal)(3 & (this.Seals >> 4)),
-            };
+        (AstrologianCard)(0xF & (this.Cards >> 0)),
+        (AstrologianCard)(0xF & (this.Cards >> 4)),
+        (AstrologianCard)(0xF & (this.Cards >> 8)),
+    };
 
-            short IBaseAstrologianGauge.Timer => Timer;
-
-            byte IBaseAstrologianGauge.Card => Card;
-
-            byte IBaseAstrologianGauge.Seals => Seals;
-
-            AstrologianCard IBaseAstrologianGauge.CurrentCard => CurrentCard;
-
-            AstrologianSeal[] IBaseAstrologianGauge.CurrentSeals => CurrentSeals;
+            public AstrologianCard CurrentArcana => (AstrologianCard)(0xF & (this.Cards >> 12));
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct SageGauge : IBaseSageGauge
+        public struct SageGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public short AddersgallTimer;
             [FieldOffset(0x0A)] public byte Addersgall;
@@ -126,14 +105,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
             [FieldOffset(0x0C)] public byte Eukrasia;
 
             public bool EukrasiaActive => Eukrasia > 0;
-
-            short IBaseSageGauge.AddersgallTimer => AddersgallTimer;
-
-            byte IBaseSageGauge.Addersgall => Addersgall;
-
-            byte IBaseSageGauge.Addersting => Addersting;
-
-            byte IBaseSageGauge.Eukrasia => Eukrasia;
         }
 
         #endregion
@@ -141,7 +112,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         #region MagicDPS
 
         [StructLayout(LayoutKind.Explicit, Size = 0x30)]
-        public struct BlackMageGauge : IBaseBlackMageGauge
+        public struct BlackMageGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public short EnochianTimer;
             [FieldOffset(0x0A)] public short ElementTimeRemaining;
@@ -154,22 +125,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
             public int AstralStacks => ElementStance <= 0 ? 0 : ElementStance;
             public bool EnochianActive => EnochianFlags.HasFlag(EnochianFlags.Enochian);
             public bool ParadoxActive => EnochianFlags.HasFlag(EnochianFlags.Paradox);
-
-            short IBaseBlackMageGauge.EnochianTimer => EnochianTimer;
-
-            short IBaseBlackMageGauge.ElementTimeRemaining => ElementTimeRemaining;
-
-            sbyte IBaseBlackMageGauge.ElementStance => ElementStance;
-
-            byte IBaseBlackMageGauge.UmbralHearts => UmbralHearts;
-
-            byte IBaseBlackMageGauge.PolyglotStacks => PolyglotStacks;
-
-            EnochianFlags IBaseBlackMageGauge.EnochianFlags => EnochianFlags;
+            public int AstralSoulStacks => ((int)EnochianFlags >> 2) & 7;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct SummonerGauge : IBaseSummonerGauge
+        public struct SummonerGauge : IBaseJobGauge
         {
             [FieldOffset(0x8)] public ushort SummonTimer; // millis counting down
             [FieldOffset(0xA)] public ushort AttunementTimer; // millis counting down
@@ -177,32 +137,29 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
             [FieldOffset(0xD)] public byte ReturnSummonGlam; // PetMirage sheet
             [FieldOffset(0xE)] public byte Attunement; // Count of "Attunement cost" resource
             [FieldOffset(0xF)] public AetherFlags AetherFlags; // bitfield
-
-            ushort IBaseSummonerGauge.SummonTimer => SummonTimer;
-
-            ushort IBaseSummonerGauge.AttunementTimer => AttunementTimer;
-
-            byte IBaseSummonerGauge.ReturnSummon => ReturnSummon;
-
-            byte IBaseSummonerGauge.ReturnSummonGlam => ReturnSummonGlam;
-
-            byte IBaseSummonerGauge.Attunement => Attunement;
-
-            AetherFlags IBaseSummonerGauge.AetherFlags => AetherFlags;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x50)]
-        public struct RedMageGauge : IBaseRedMageGauge
+        public struct RedMageGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public byte WhiteMana;
             [FieldOffset(0x09)] public byte BlackMana;
             [FieldOffset(0x0A)] public byte ManaStacks;
+        }
 
-            byte IBaseRedMageGauge.WhiteMana => WhiteMana;
+        [StructLayout(LayoutKind.Explicit, Size = 0x10)]
+        public struct PictomancerGauge : IBaseJobGauge
+        {
+            [FieldOffset(0x08)] public byte PalleteGauge;
+            [FieldOffset(0x0A)] public byte Paint;
+            [FieldOffset(0x0B)] public CanvasFlags CanvasFlags;
+            [FieldOffset(0x0C)] public CreatureFlags CreatureFlags;
 
-            byte IBaseRedMageGauge.BlackMana => BlackMana;
-
-            byte IBaseRedMageGauge.ManaStacks => ManaStacks;
+            public bool CreatureMotifDrawn => CanvasFlags.HasFlag(CanvasFlags.Pom) || CanvasFlags.HasFlag(CanvasFlags.Wing) || CanvasFlags.HasFlag(CanvasFlags.Claw) || CanvasFlags.HasFlag(CanvasFlags.Maw);
+            public bool WeaponMotifDrawn => CanvasFlags.HasFlag(CanvasFlags.Weapon);
+            public bool LandscapeMotifDrawn => CanvasFlags.HasFlag(CanvasFlags.Landscape);
+            public bool MooglePortraitReady => CreatureFlags.HasFlag(CreatureFlags.MooglePortait);
+            public bool MadeenPortraitReady => CreatureFlags.HasFlag(CreatureFlags.MadeenPortrait);
         }
 
         #endregion
@@ -210,24 +167,17 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         #region RangeDPS
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct BardGauge : IBaseBardGauge
+        public struct BardGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public ushort SongTimer;
             [FieldOffset(0x0C)] public byte Repertoire;
             [FieldOffset(0x0D)] public byte SoulVoice;
-            [FieldOffset(0x0E)] public SongFlags SongFlags; // bitfield
-
-            ushort IBaseBardGauge.SongTimer => SongTimer;
-
-            byte IBaseBardGauge.Repertoire => Repertoire;
-
-            byte IBaseBardGauge.SoulVoice => SoulVoice;
-
-            SongFlags IBaseBardGauge.SongFlags => SongFlags;
+            [FieldOffset(0x0E)] public byte RadiantFinaleCoda;
+            [FieldOffset(0x0F)] public SongFlags SongFlags; // bitfield
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct MachinistGauge : IBaseMachinistGauge
+        public struct MachinistGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public short OverheatTimeRemaining;
             [FieldOffset(0x0A)] public short SummonTimeRemaining;
@@ -235,37 +185,20 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
             [FieldOffset(0x0D)] public byte Battery;
             [FieldOffset(0x0E)] public byte LastSummonBatteryPower;
             [FieldOffset(0x0F)] public byte TimerActive;
-
-            short IBaseMachinistGauge.OverheatTimeRemaining => OverheatTimeRemaining;
-
-            short IBaseMachinistGauge.SummonTimeRemaining => SummonTimeRemaining;
-
-            byte IBaseMachinistGauge.Heat => Heat;
-
-            byte IBaseMachinistGauge.Battery => Battery;
-
-            byte IBaseMachinistGauge.LastSummonBatteryPower => LastSummonBatteryPower;
-
-            byte IBaseMachinistGauge.TimerActive => TimerActive;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public unsafe struct DancerGauge : IBaseDancerGauge
+        public struct DancerGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public byte Feathers;
             [FieldOffset(0x09)] public byte Esprit;
-            [FieldOffset(0x0A)] public fixed byte DanceSteps[4];
+            [FieldOffset(0x0A)] public byte DanceStep1;
+            [FieldOffset(0x0B)] public byte DanceStep2;
+            [FieldOffset(0x0C)] public byte DanceStep3;
+            [FieldOffset(0x0D)] public byte DanceStep4;
             [FieldOffset(0x0E)] public byte StepIndex;
 
-            public DanceStep CurrentStep => (DanceStep)(StepIndex >= 4 ? 0 : DanceSteps[StepIndex]);
-
-            byte IBaseDancerGauge.Feathers => Feathers;
-
-            byte IBaseDancerGauge.Esprit => Esprit;
-
-            byte[] IBaseDancerGauge.DanceSteps => new byte[] { DanceSteps[0], DanceSteps[1], DanceSteps[2], DanceSteps[3] };
-
-            byte IBaseDancerGauge.StepIndex => StepIndex;
+            public DanceStep CurrentStep => (DanceStep)(StepIndex >= 4 ? 0 : new byte[] { DanceStep1, DanceStep2, DanceStep3, DanceStep4 }[StepIndex]);
         }
 
         #endregion
@@ -273,7 +206,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
         #region MeleeDPS
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct MonkGauge : IBaseMonkGauge
+        public struct MonkGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public byte Chakra; // Chakra count
 
@@ -286,141 +219,233 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.JobGauge
             [FieldOffset(0x0B)]
             public BeastChakraType BeastChakra3; // CoeurlChakra = 1, RaptorChakra = 2, OpoopoChakra = 3 (only one value)
 
-            [FieldOffset(0x0C)] public NadiFlags Nadi; // LunarNadi = 2, SolarNadi = 4 (If both then 2+4=6)
+            [FieldOffset(0x0C)] public byte BeastChakraStacks;
+
+            [FieldOffset(0x0D)] public NadiFlags Nadi; // LunarNadi = 1, SolarNadi = 2 (If both then 1+2=3)
             [FieldOffset(0x0E)] public ushort BlitzTimeRemaining; // 20 seconds
 
             public BeastChakraType[] BeastChakra => new[] { BeastChakra1, BeastChakra2, BeastChakra3 };
 
-            byte IBaseMonkGauge.Chakra => Chakra;
-
-            BeastChakraType IBaseMonkGauge.BeastChakra1 => BeastChakra1;
-
-            BeastChakraType IBaseMonkGauge.BeastChakra2 => BeastChakra2;
-
-            BeastChakraType IBaseMonkGauge.BeastChakra3 => BeastChakra3;
-
-            NadiFlags IBaseMonkGauge.Nadi => Nadi;
-
-            ushort IBaseMonkGauge.BlitzTimeRemaining => BlitzTimeRemaining;
+            public int OpoOpoStacks => BeastChakraStacks & 3;
+            public int RaptorStacks => ((BeastChakraStacks >> 2) & 3);
+            public int CoeurlStacks => ((BeastChakraStacks >> 4) & 3);
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct DragoonGauge : IBaseDragoonGauge
+        public struct DragoonGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public short LotdTimer;
             [FieldOffset(0x0A)] public byte LotdState; // This seems to only ever be 0 or 2 now
             [FieldOffset(0x0B)] public byte EyeCount;
             [FieldOffset(0x0C)] public byte FirstmindsFocusCount;
-
-            short IBaseDragoonGauge.LotdTimer => LotdTimer;
-
-            byte IBaseDragoonGauge.LotdState => LotdState;
-
-            byte IBaseDragoonGauge.EyeCount => EyeCount;
-
-            byte IBaseDragoonGauge.FirstmindsFocusCount => FirstmindsFocusCount;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct NinjaGauge : IBaseNinjaGauge
+        public struct NinjaGauge : IBaseJobGauge
         {
-            [FieldOffset(0x08)] public ushort HutonTimer;
-            [FieldOffset(0x0A)] public byte Ninki;
-            [FieldOffset(0x0B)] public byte HutonManualCasts;
-
-            ushort IBaseNinjaGauge.HutonTimer => HutonTimer;
-
-            byte IBaseNinjaGauge.Ninki => Ninki;
-
-            byte IBaseNinjaGauge.HutonManualCasts => HutonManualCasts;
+            [FieldOffset(0x08)] public byte Ninki;
+            [FieldOffset(0x0A)] public byte Kazematoi;
+            // checked in ProcessDeferredReplaceAction for the mudras
+            // [FieldOffset(0x0C)] public byte NinjutsuStarted? FirstMudraUsed?;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct SamuraiGauge : IBaseSamuraiGauge
+        public struct SamuraiGauge : IBaseJobGauge
         {
             [FieldOffset(0x0A)] public KaeshiAction Kaeshi;
             [FieldOffset(0x0B)] public byte Kenki;
             [FieldOffset(0x0C)] public byte MeditationStacks;
             [FieldOffset(0x0D)] public SenFlags SenFlags;
-
-            KaeshiAction IBaseSamuraiGauge.Kaeshi => Kaeshi;
-
-            byte IBaseSamuraiGauge.Kenki => Kenki;
-
-            byte IBaseSamuraiGauge.MeditationStacks => MeditationStacks;
-
-            SenFlags IBaseSamuraiGauge.SenFlags => SenFlags;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct ReaperGauge : IBaseReaperGauge
+        public struct ReaperGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public byte Soul;
             [FieldOffset(0x09)] public byte Shroud;
             [FieldOffset(0x0A)] public ushort EnshroudedTimeRemaining;
             [FieldOffset(0x0C)] public byte LemureShroud;
             [FieldOffset(0x0D)] public byte VoidShroud;
+        }
 
-            byte IBaseReaperGauge.Soul => Soul;
-
-            byte IBaseReaperGauge.Shroud => Shroud;
-
-            ushort IBaseReaperGauge.EnshroudedTimeRemaining => EnshroudedTimeRemaining;
-
-            byte IBaseReaperGauge.LemureShroud => LemureShroud;
-
-            byte IBaseReaperGauge.VoidShroud => VoidShroud;
+        [StructLayout(LayoutKind.Explicit, Size = 0x10)]
+        public struct ViperGauge : IBaseJobGauge
+        {
+            [FieldOffset(0x08)] public byte RattlingCoilStacks;
+            [FieldOffset(0x0A)] public byte SerpentOffering;
+            [FieldOffset(0x09)] public byte AnguineTribute;
+            [FieldOffset(0x0B)] public DreadCombo DreadCombo; //Shows the previously used action of the secondary combo(s) whilst it's active
         }
 
         #endregion
 
         #region Tanks
 
-        [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct DarkKnightGauge : IBaseDarkKnightGauge
+        [StructLayout(LayoutKind.Explicit, Size = 0x18)]
+        public struct DarkKnightGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public byte Blood;
+            [FieldOffset(0x09)] public byte DarkArtsState;
             [FieldOffset(0x0A)] public ushort DarksideTimer;
-            [FieldOffset(0x0C)] public byte DarkArtsState;
-            [FieldOffset(0x0E)] public ushort ShadowTimer;
-
-            byte IBaseDarkKnightGauge.Blood => Blood;
-
-            ushort IBaseDarkKnightGauge.DarksideTimer => DarksideTimer;
-
-            byte IBaseDarkKnightGauge.DarkArtsState => DarkArtsState;
-
-            ushort IBaseDarkKnightGauge.ShadowTimer => ShadowTimer;
+            [FieldOffset(0x0C)] public ushort ShadowTimer;
+            [FieldOffset(0x10)] public ushort DeliriumStep;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct PaladinGauge : IBasePaladinGauge
+        public struct PaladinGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public byte OathGauge;
-
-            byte IBasePaladinGauge.OathGauge => OathGauge;
+            [FieldOffset(0x0A)] public ushort ConfiteorComboTimer; //that only updates when you generate/spend oath
+            [FieldOffset(0x0C)] public ushort ConfiteorComboStep;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct WarriorGauge : IBaseWarriorGauge
+        public struct WarriorGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public byte BeastGauge;
-
-            byte IBaseWarriorGauge.BeastGauge => BeastGauge;
         }
 
         [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct GunbreakerGauge : IBaseGunbreakerGauge
+        public struct GunbreakerGauge : IBaseJobGauge
         {
             [FieldOffset(0x08)] public byte Ammo;
             [FieldOffset(0x0A)] public short MaxTimerDuration;
             [FieldOffset(0x0C)] public byte AmmoComboStep;
+        }
 
-            byte IBaseGunbreakerGauge.Ammo => Ammo;
+        #endregion
 
-            short IBaseGunbreakerGauge.MaxTimerDuration => MaxTimerDuration;
+        #region FFXIVClientStructs Flags
 
-            byte IBaseGunbreakerGauge.AmmoComboStep => AmmoComboStep;
+        public enum AstrologianCard
+        {
+            None = 0,
+            Balance = 1,
+            Bole = 2,
+            Arrow = 3,
+            Spear = 4,
+            Ewer = 5,
+            Spire = 6,
+            Lord = 7,
+            Lady = 8
+        }
+
+        public enum AstrologianDraw : byte
+        {
+            Astral = 0,
+            Umbral = 1
+        }
+
+        public enum DanceStep : byte
+        {
+            Finish = 0,
+            Emboite = 1,
+            Entrechat = 2,
+            Jete = 3,
+            Pirouette = 4
+        }
+
+        [Flags]
+        public enum EnochianFlags : byte
+        {
+            None = 0,
+            Enochian = 1,
+            Paradox = 2
+        }
+
+        public enum KaeshiAction : byte
+        {
+            Higanbana = 1,
+            Goken = 2,
+            Setsugekka = 3,
+            Namikiri = 4
+        }
+
+        [Flags]
+        public enum SenFlags : byte
+        {
+            None = 0,
+            Setsu = 1 << 0,
+            Getsu = 1 << 1,
+            Ka = 1 << 2
+        }
+
+        [Flags]
+        public enum SongFlags : byte
+        {
+            None = 0,
+            MagesBallad = 1 << 0,
+            ArmysPaeon = 1 << 1,
+            WanderersMinuet = MagesBallad | ArmysPaeon,
+            MagesBalladLastPlayed = 1 << 2,
+            ArmysPaeonLastPlayed = 1 << 3,
+            WanderersMinuetLastPlayed = MagesBalladLastPlayed | ArmysPaeonLastPlayed,
+            MagesBalladCoda = 1 << 4,
+            ArmysPaeonCoda = 1 << 5,
+            WanderersMinuetCoda = 1 << 6
+        }
+
+        [Flags]
+        public enum AetherFlags : byte
+        {
+            None = 0,
+            Aetherflow1 = 1 << 0,
+            Aetherflow2 = 1 << 1,
+            Aetherflow = Aetherflow1 | Aetherflow2,
+            IfritAttuned = 1 << 2,
+            TitanAttuned = 1 << 3,
+            GarudaAttuned = TitanAttuned | IfritAttuned,
+            PhoenixReady = 1 << 4,
+            IfritReady = 1 << 5,
+            TitanReady = 1 << 6,
+            GarudaReady = 1 << 7
+        }
+
+        public enum BeastChakraType : byte
+        {
+            None = 0,
+            Coeurl = 1,
+            OpoOpo = 2,
+            Raptor = 3
+        }
+
+        [Flags]
+        public enum NadiFlags : byte
+        {
+            Lunar = 1,
+            Solar = 2
+        }
+
+        [Flags]
+        public enum CanvasFlags : byte
+        {
+            Pom = 1,
+            Wing = 2,
+            Claw = 4,
+            Maw = 8,
+            Weapon = 16,
+            Landscape = 32,
+        }
+
+        [Flags]
+        public enum CreatureFlags : byte
+        {
+            Pom = 1,
+            Wings = 2,
+            Claw = 4,
+
+            MooglePortait = 16,
+            MadeenPortrait = 32,
+        }
+
+        public enum DreadCombo : byte
+        {
+            Dreadwinder = 1,
+            HuntersCoil = 2,
+            SwiftskinsCoil = 3,
+            PitOfDread = 4,
+            HuntersDen = 5,
+            SwiftskinsDen = 6,
         }
 
         #endregion
