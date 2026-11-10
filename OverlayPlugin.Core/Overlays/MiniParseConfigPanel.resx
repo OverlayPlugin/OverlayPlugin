@@ -125,13 +125,13 @@
   <data name="tabGeneral.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 343</value>
   </data>
@@ -154,7 +154,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="cbHideOutOfCombat.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -178,7 +178,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;cbHideOutOfCombat.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="applyPresetCombo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -202,7 +202,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;applyPresetCombo.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="cbMuteHidden.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -226,7 +226,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;cbMuteHidden.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="label13.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -253,7 +253,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="label10.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -280,7 +280,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="label8.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -309,7 +309,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="cbEnableOverlay.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -333,7 +333,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;cbEnableOverlay.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -360,7 +360,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>8</value>
   </data>
   <data name="tableLayoutPanel2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -417,7 +417,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>buttonMiniParseSelectFile</value>
   </data>
   <data name="&gt;&gt;buttonMiniParseSelectFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonMiniParseSelectFile.Parent" xml:space="preserve">
     <value>tableLayoutPanel2</value>
@@ -450,7 +450,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanel2.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>9</value>
   </data>
   <data name="tableLayoutPanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="textMiniParseUrl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonMiniParseSelectFile" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,37" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -486,7 +486,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>10</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -519,7 +519,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>11</value>
   </data>
   <data name="checkLock.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -546,7 +546,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;checkLock.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>12</value>
   </data>
   <data name="checkMiniParseVisible.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -573,7 +573,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;checkMiniParseVisible.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>13</value>
   </data>
   <data name="label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -606,7 +606,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>14</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -639,7 +639,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>15</value>
   </data>
   <data name="checkMiniParseClickthru.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -666,7 +666,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;checkMiniParseClickthru.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>16</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -699,7 +699,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>17</value>
   </data>
   <data name="cbWhiteBg.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -726,7 +726,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;cbWhiteBg.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>18</value>
   </data>
   <data name="label12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -756,16 +756,16 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>19</value>
   </data>
   <data name="tabGeneral.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 27</value>
   </data>
   <data name="tabGeneral.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabGeneral.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 558</value>
+    <value>610, 553</value>
   </data>
   <data name="tabGeneral.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -788,6 +788,9 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
   <data name="btnApplyHotkeyChanges.Location" type="System.Drawing.Point, System.Drawing">
     <value>363, 7</value>
   </data>
+  <data name="btnApplyHotkeyChanges.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
+  </data>
   <data name="btnApplyHotkeyChanges.Size" type="System.Drawing.Size, System.Drawing">
     <value>125, 28</value>
   </data>
@@ -801,7 +804,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>btnApplyHotkeyChanges</value>
   </data>
   <data name="&gt;&gt;btnApplyHotkeyChanges.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;btnApplyHotkeyChanges.Parent" xml:space="preserve">
     <value>tabHotkeys</value>
@@ -811,6 +814,9 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
   </data>
   <data name="btnRemoveHotkey.Location" type="System.Drawing.Point, System.Drawing">
     <value>164, 7</value>
+  </data>
+  <data name="btnRemoveHotkey.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="btnRemoveHotkey.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 28</value>
@@ -825,7 +831,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>btnRemoveHotkey</value>
   </data>
   <data name="&gt;&gt;btnRemoveHotkey.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;btnRemoveHotkey.Parent" xml:space="preserve">
     <value>tabHotkeys</value>
@@ -835,6 +841,9 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
   </data>
   <data name="btnAddHotkey.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 7</value>
+  </data>
+  <data name="btnAddHotkey.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="btnAddHotkey.Size" type="System.Drawing.Size, System.Drawing">
     <value>139, 28</value>
@@ -849,7 +858,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>btnAddHotkey</value>
   </data>
   <data name="&gt;&gt;btnAddHotkey.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;btnAddHotkey.Parent" xml:space="preserve">
     <value>tabHotkeys</value>
@@ -918,13 +927,13 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>3</value>
   </data>
   <data name="tabHotkeys.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 27</value>
   </data>
   <data name="tabHotkeys.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabHotkeys.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 558</value>
+    <value>610, 553</value>
   </data>
   <data name="tabHotkeys.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1038,7 +1047,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>btnResetZoom</value>
   </data>
   <data name="&gt;&gt;btnResetZoom.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;btnResetZoom.Parent" xml:space="preserve">
     <value>tableLayoutPanel4</value>
@@ -1161,10 +1170,10 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>4</value>
   </data>
   <data name="tabAdvanced.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 27</value>
   </data>
   <data name="tabAdvanced.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 558</value>
+    <value>610, 553</value>
   </data>
   <data name="tabAdvanced.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1344,10 +1353,10 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>4</value>
   </data>
   <data name="tabACTWS.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 27</value>
   </data>
   <data name="tabACTWS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 558</value>
+    <value>610, 553</value>
   </data>
   <data name="tabACTWS.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1370,6 +1379,9 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
   <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 3</value>
   </data>
+  <data name="tabControl1.Padding" type="System.Drawing.Point, System.Drawing">
+    <value>2, 4</value>
+  </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
     <value>618, 584</value>
   </data>
@@ -1380,7 +1392,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabControl1</value>
   </data>
   <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.TabControlPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1416,7 +1428,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>buttonMiniParseOpenDevTools</value>
   </data>
   <data name="&gt;&gt;buttonMiniParseOpenDevTools.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonMiniParseOpenDevTools.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
@@ -1446,7 +1458,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>buttonMiniParseReloadBrowser</value>
   </data>
   <data name="&gt;&gt;buttonMiniParseReloadBrowser.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonMiniParseReloadBrowser.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
@@ -1476,7 +1488,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>buttonResetOverlayPosition</value>
   </data>
   <data name="&gt;&gt;buttonResetOverlayPosition.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonResetOverlayPosition.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>

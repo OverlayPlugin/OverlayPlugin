@@ -28,51 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RenameOverlayDialog));
-            this.lblName = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            // 
-            // lblName
-            // 
-            resources.ApplyResources(this.lblName, "lblName");
-            this.lblName.Name = "lblName";
-            // 
-            // txtName
-            // 
-            resources.ApplyResources(this.txtName, "txtName");
-            this.txtName.Name = "txtName";
-            // 
-            // btnCancel
-            // 
-            resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnOk
-            // 
-            resources.ApplyResources(this.btnOk, "btnOk");
-            this.btnOk.Name = "btnOk";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
-            // RenameOverlayDialog
-            // 
-            resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.txtName);
-            this.Controls.Add(this.lblName);
-            this.Name = "RenameOverlayDialog";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.TopMost = true;
-            this.ResumeLayout(false);
-            this.PerformLayout();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RenameOverlayDialog));
+			this.lblName = new System.Windows.Forms.Label();
+			this.txtName = new System.Windows.Forms.TextBox();
+			this.btnCancel = new Advanced_Combat_Tracker.ButtonPainted();
+			this.btnOk = new Advanced_Combat_Tracker.ButtonPainted();
+			this.SuspendLayout();
+			// 
+			// lblName
+			// 
+			resources.ApplyResources(this.lblName, "lblName");
+			this.lblName.Name = "lblName";
+			// 
+			// txtName
+			// 
+			resources.ApplyResources(this.txtName, "txtName");
+			this.txtName.Name = "txtName";
+			// 
+			// btnCancel
+			// 
+			resources.ApplyResources(this.btnCancel, "btnCancel");
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.UseVisualStyleBackColor = true;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			// 
+			// btnOk
+			// 
+			resources.ApplyResources(this.btnOk, "btnOk");
+			this.btnOk.Name = "btnOk";
+			this.btnOk.UseVisualStyleBackColor = true;
+			this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+			// 
+			// RenameOverlayDialog
+			// 
+			resources.ApplyResources(this, "$this");
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.btnOk);
+			this.Controls.Add(this.btnCancel);
+			this.Controls.Add(this.txtName);
+			this.Controls.Add(this.lblName);
+			this.Name = "RenameOverlayDialog";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
+			this.TopMost = true;
+			this.ResumeLayout(false);
+			this.PerformLayout();
 
         }
 
@@ -80,7 +80,7 @@
 
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnOk;
+        private Advanced_Combat_Tracker.ButtonPainted btnCancel;
+        private Advanced_Combat_Tracker.ButtonPainted btnOk;
     }
 }

@@ -352,7 +352,7 @@
     <value>buttonLogParseCopyActXiv</value>
   </data>
   <data name="&gt;&gt;buttonLogParseCopyActXiv.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonLogParseCopyActXiv.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
@@ -379,7 +379,7 @@
     <value>buttonLogParseOpenDevTools</value>
   </data>
   <data name="&gt;&gt;buttonLogParseOpenDevTools.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonLogParseOpenDevTools.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
@@ -409,7 +409,7 @@
     <value>buttonLogParseReloadBrowser</value>
   </data>
   <data name="&gt;&gt;buttonLogParseReloadBrowser.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonLogParseReloadBrowser.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
@@ -523,7 +523,7 @@
     <value>buttonLogParseSelectFile</value>
   </data>
   <data name="&gt;&gt;buttonLogParseSelectFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Advanced_Combat_Tracker.ButtonPainted, Advanced Combat Tracker, Version=3.8.1.284, Culture=neutral, PublicKeyToken=a946b61e93d97868</value>
   </data>
   <data name="&gt;&gt;buttonLogParseSelectFile.Parent" xml:space="preserve">
     <value>tableLayoutPanel2</value>
