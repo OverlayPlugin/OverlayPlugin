@@ -1,0 +1,46 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+    html, body {
+        margin: 0;
+        background: transparent;
+    }
+
+    #sample {
+        width: 80px;
+        height: 80px;
+        background: #00ff00;
+    }
+
+    #pulse {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        width: 2px;
+        height: 2px;
+    }
+</style>
+<div id="sample"></div>
+<div id="pulse"></div>
+<script>
+    let frame = 0;
+    setInterval(() => {
+        document.getElementById('pulse').style.background = ++frame % 2 ? 'red' : 'blue';
+    }, 50);
+
+    (async () => {
+        while (!window.OverlayPluginApi || !OverlayPluginApi.ready) {
+            await new Promise(resolve => setTimeout(resolve, 20));
+        }
+
+        const echo = await OverlayPluginApi.echo('ci-echo');
+        await OverlayPluginApi.report(JSON.stringify({
+            stage: new URLSearchParams(location.search).get('stage'),
+            width: innerWidth,
+            height: innerHeight,
+            echo,
+            name: OverlayPluginApi.overlayName,
+            uuid: OverlayPluginApi.overlayUuid
+        }));
+    })().catch(error => console.error(error.stack));
+</script>

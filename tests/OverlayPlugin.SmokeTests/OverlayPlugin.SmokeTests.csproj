@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>RainbowMage.OverlayPlugin.SmokeTests</RootNamespace>
+    <OutputPath>..\..\out\smoke\$(Configuration)\</OutputPath>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Test the binaries built by the normal solution build. -->
+    <Reference Include="HtmlRenderer">
+      <HintPath>..\..\out\$(Configuration)\libs\HtmlRenderer.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OverlayPlugin.Common">
+      <HintPath>..\..\out\$(Configuration)\libs\OverlayPlugin.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OverlayPlugin.Core">
+      <HintPath>..\..\out\$(Configuration)\libs\OverlayPlugin.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OverlayPlugin.Updater">
+      <HintPath>..\..\out\$(Configuration)\libs\OverlayPlugin.Updater.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\out\$(Configuration)\libs\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Compile Include="..\..\OverlayPlugin\AssemblyResolver.cs" Link="AssemblyResolver.cs" />
+  </ItemGroup>
+</Project>
