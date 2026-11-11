@@ -1,9 +1,11 @@
 import importlib.util
+import io
 import json
 import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
@@ -14,19 +16,43 @@ spec.loader.exec_module(runner)
 
 
 class SmokeRunnerTests(unittest.TestCase):
-    def test_nonzero_host_fails_and_preserves_log(self):
-        with tempfile.TemporaryDirectory() as directory:
-            log = Path(directory) / 'host.log'
-            with self.assertRaisesRegex(RuntimeError, 'Exit code 7'):
-                runner.run_process([sys.executable, '-c', "print('failure evidence'); exit(7)"], log)
-            self.assertIn('failure evidence', log.read_text())
+    def test_child_output_is_visible_on_success_failure_and_timeout(self):
+        path = str(Path(runner.__file__).resolve())
+        for behavior, timeout, error in (
+            ('pass', 5, None),
+            ('raise SystemExit(7)', 5, 'Exit code 7'),
+            ('import time; time.sleep(60)', 1, 'Timed out'),
+        ):
+            with self.subTest(behavior=behavior):
+                command = [
+                    sys.executable,
+                    '-c',
+                    "import sys; print('child output', flush=True); "
+                    "print('child error output', file=sys.stderr, flush=True); " + behavior,
+                ]
+                script = f'import runpy; runpy.run_path({path!r})["run_process"]({command!r}, timeout={timeout})'
+                completed = subprocess.run([sys.executable, '-c', script], capture_output=True, text=True, timeout=10)
+                self.assertIn('child output\n', completed.stdout)
+                self.assertIn('child error output\n', completed.stdout)
+                if error:
+                    self.assertNotEqual(completed.returncode, 0)
+                    self.assertIn(error, completed.stderr)
+                else:
+                    self.assertEqual(completed.returncode, 0, completed.stderr)
 
-    def test_hung_host_fails(self):
+    def test_failed_websocket_host_prints_diagnostics(self):
         with tempfile.TemporaryDirectory() as directory:
-            with self.assertRaisesRegex(RuntimeError, 'Timed out'):
-                runner.run_process(
-                    [sys.executable, '-c', 'import time; time.sleep(60)'], Path(directory) / 'host.log', timeout=0.1
-                )
+            root = Path(directory)
+            path = str(Path(runner.__file__).resolve())
+            command = [sys.executable, '-c', "print('host failure', flush=True); exit(7)"]
+            script = (
+                f'import runpy; from pathlib import Path; root = Path({str(root)!r}); '
+                f'runpy.run_path({path!r})["external_browser"]({command!r}, root, root, root, "unused")'
+            )
+            completed = subprocess.run([sys.executable, '-c', script], capture_output=True, text=True, timeout=10)
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertIn('host failure', completed.stdout)
+            self.assertIn('WebSocket host did not start', completed.stderr)
 
     def test_partial_browser_exchange_fails(self):
         for result in (
@@ -40,6 +66,35 @@ class SmokeRunnerTests(unittest.TestCase):
         ):
             with self.subTest(result=result), self.assertRaises(RuntimeError):
                 runner.validate_result(result)
+
+    def test_websocket_host_and_browser_use_the_same_allocated_port(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'websocket-ready').touch()
+            host = mock.Mock()
+            host.wait.return_value = 0
+            browser = mock.Mock()
+            server = mock.MagicMock()
+            server.__enter__.return_value = server
+            server.server_port = 12345
+
+            def report(timeout):
+                server.result = {'passed': True, 'sessions': 2, 'text': 'Damage: 123'}
+                return True
+
+            with (
+                mock.patch.object(runner.http.server, 'ThreadingHTTPServer', return_value=server),
+                mock.patch.object(runner.threading, 'Thread'),
+                mock.patch.object(runner.threading.Event, 'wait', side_effect=report),
+                mock.patch.object(runner.subprocess, 'Popen', side_effect=[host, browser]) as popen,
+                mock.patch.object(runner, 'terminate'),
+            ):
+                runner.external_browser(['host', 'websocket', str(root)], root, root, root, 'chrome')
+
+            port = int(popen.call_args_list[0].args[0][-1])
+            self.assertGreater(port, 0)
+            self.assertIn(f'http://127.0.0.1:12345/websocket.html?port={port}', popen.call_args_list[1].args[0])
+            self.assertTrue((root / 'websocket-stop').is_file())
 
     def test_complete_browser_exchange_passes(self):
         runner.validate_result({'passed': True, 'sessions': 2, 'text': 'Damage: 123'})
@@ -88,6 +143,32 @@ class SmokeRunnerTests(unittest.TestCase):
             self.assertFalse(summary['passed'])
             self.assertEqual(summary['phases'], [])
 
+    def test_failed_render_prints_cef_diagnostics(self):
+        def fail_render(command, timeout=90):
+            (Path(command[2]) / 'OverlayPluginCEF.log').write_text('CEF failure evidence')
+            raise RuntimeError('Render failed')
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bundle = root / 'bundle/Debug'
+            bundle.mkdir(parents=True)
+            (bundle / 'OverlayPlugin.SmokeTests.exe').touch()
+            results = root / 'results'
+            arguments = ['run-smoke.py', '--bundle', str(root / 'bundle'), '--results', str(results)]
+            output = io.StringIO()
+            with (
+                mock.patch.object(sys, 'argv', arguments),
+                mock.patch.object(runner, 'os', SimpleNamespace(name='nt', environ={})),
+                mock.patch.object(runner, 'find_chrome', return_value='chromium'),
+                mock.patch.object(runner, 'run_process', side_effect=fail_render),
+                redirect_stdout(output),
+                self.assertRaisesRegex(RuntimeError, 'Render failed'),
+            ):
+                runner.main()
+
+            self.assertIn('CEF failure evidence', output.getvalue())
+            self.assertFalse(json.loads((results / 'summary.json').read_text())['passed'])
+
     def test_runtime_and_installer_use_separate_cef_sources(self):
         for installer in (False, True):
             with self.subTest(installer=installer), tempfile.TemporaryDirectory() as directory:
@@ -100,11 +181,13 @@ class SmokeRunnerTests(unittest.TestCase):
                 cef.mkdir()
                 (cef / 'libcef.dll').write_text('build CEF')
                 results = root / 'results'
-                arguments = ['run-smoke.py', '--bundle', str(root / 'bundle'), '--results', str(results)]
+                # Windows temp paths may also have an alternate spelling through 8.3 names.
+                bundle_argument = root / 'bundle/Debug/..'
+                arguments = ['run-smoke.py', '--bundle', str(bundle_argument), '--results', str(results)]
                 if installer:
                     arguments.append('--installer')
 
-                def run_host(command, log, timeout=90):
+                def run_host(command, timeout=90):
                     if command[1] == 'install':
                         (Path(command[2]) / 'OverlayPluginCef/x64').mkdir(parents=True)
 
@@ -125,15 +208,32 @@ class SmokeRunnerTests(unittest.TestCase):
                     self.assertEqual(summary['phases'], ['Release/install-fresh-and-reuse'])
                     find_chrome.assert_not_called()
                     browser.assert_not_called()
-                    self.assertFalse((results / 'Release/state/OverlayPluginCef/x64/libcef.dll').exists())
+                    state = Path(run_process.call_args_list[0].args[0][2])
+                    self.assertFalse((state / 'OverlayPluginCef/x64/libcef.dll').exists())
                 else:
                     self.assertEqual(modes, ['render', 'render'])
                     self.assertEqual(summary['phases'], ['Debug/render', 'Release/render', 'Release/websocket'])
                     browser.assert_called_once()
-                    self.assertEqual(browser.call_args.args[1], root / 'bundle/Release')
-                    self.assertEqual(
-                        (results / 'Release/state/OverlayPluginCef/x64/libcef.dll').read_text(), 'build CEF'
-                    )
+                    self.assertTrue(browser.call_args.args[1].samefile(bundle_argument / 'Release'))
+                    state = browser.call_args.args[2]
+                    self.assertEqual((state / 'OverlayPluginCef/x64/libcef.dll').read_text(), 'build CEF')
+
+                (state / 'previous-capture.png').write_bytes(b'previous capture')
+                with (
+                    mock.patch.object(sys, 'argv', arguments),
+                    mock.patch.object(runner, 'os', SimpleNamespace(name='nt', environ={})),
+                    mock.patch.object(runner, 'find_chrome', return_value='chromium'),
+                    mock.patch.object(runner, 'run_process', side_effect=run_host) as second_run,
+                    mock.patch.object(runner, 'external_browser'),
+                ):
+                    runner.main()
+                    new_states = [Path(call.args[0][2]) for call in second_run.call_args_list]
+                    self.assertNotIn(state, new_states)
+                    self.assertEqual((state / 'previous-capture.png').read_bytes(), b'previous capture')
+                    with mock.patch.object(runner, 'run_process', side_effect=RuntimeError('host failure')):
+                        with self.assertRaisesRegex(RuntimeError, 'host failure'):
+                            runner.main()
+                self.assertFalse(json.loads((results / 'summary.json').read_text())['passed'])
 
 
 if __name__ == '__main__':

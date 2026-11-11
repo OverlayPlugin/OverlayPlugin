@@ -10,32 +10,18 @@ REPORTER = Path(__file__).with_name('report-smoke.py').resolve()
 
 
 class SmokeReportTests(unittest.TestCase):
-    def test_results_and_diagnostics_are_published_without_binary_state(self):
+    def test_summary_is_appended_with_readable_phase_names(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             results = root / 'out/smoke-results'
-            state = results / 'Release/state'
-            state.mkdir(parents=True)
-            installer = results / 'installer/Release'
+            installer = results / 'installer'
             installer.mkdir(parents=True)
-            wine = root / 'out/wine-logs'
-            wine.mkdir(parents=True)
             (results / 'summary.json').write_text(
                 json.dumps({'passed': False, 'phases': ['Debug/render', 'Release/render', 'Release/websocket']})
             )
-            (installer.parent / 'summary.json').write_text(
+            (installer / 'summary.json').write_text(
                 json.dumps({'passed': True, 'phases': ['Release/install-fresh-and-reuse']})
             )
-            for path in (
-                results / 'Release/render.log',
-                state / 'cef.log',
-                installer / 'install-fresh.log',
-                wine / 'setup.log',
-            ):
-                path.write_text('diagnostic: ' + path.name)
-            (results / 'Release/websocket-result.json').write_text('{"passed": false}')
-            (state / 'capture.png').write_bytes(b'binary screenshot')
-            (state / 'libcef.dll').write_bytes(b'binary runtime')
             summary = root / 'job-summary.md'
             summary.write_text('Previous step\n')
 
@@ -56,22 +42,15 @@ class SmokeReportTests(unittest.TestCase):
             self.assertIn('| Installer | Passed | CEF installation and reuse |', markdown)
             self.assertNotIn('Debug/render', markdown)
             self.assertNotIn('Release/install-fresh-and-reuse', markdown)
-            for name in ('render.log', 'cef.log', 'install-fresh.log', 'setup.log', 'websocket-result.json'):
-                self.assertIn(name, completed.stdout)
-            self.assertIn('::group::', completed.stdout)
-            self.assertIn('::endgroup::', completed.stdout)
-            self.assertNotIn('binary', completed.stdout)
+            self.assertEqual(completed.stdout.strip(), markdown.removeprefix('Previous step\n').strip())
 
-    def test_missing_or_incomplete_results_do_not_hide_setup_logs(self):
+    def test_missing_or_incomplete_results_are_reported(self):
         for incomplete in (False, True):
             with self.subTest(incomplete=incomplete), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
-                wine = root / 'out/wine-logs'
-                wine.mkdir(parents=True)
-                (wine / 'setup.log').write_text('runtime setup failed')
                 if incomplete:
                     results = root / 'out/smoke-results'
-                    results.mkdir()
+                    results.mkdir(parents=True)
                     (results / 'summary.json').write_text('{')
                 summary = root / 'job-summary.md'
                 completed = subprocess.run(
@@ -83,7 +62,7 @@ class SmokeReportTests(unittest.TestCase):
                     check=True,
                     timeout=10,
                 )
-                self.assertIn('runtime setup failed', completed.stdout)
+                self.assertIn('Runtime smoke tests', completed.stdout)
                 status = 'Incomplete results' if incomplete else 'No test results'
                 self.assertIn(f'| Runtime | {status} | - |', summary.read_text())
                 self.assertIn('| Installer | Setup failed | - |', summary.read_text())

@@ -25,9 +25,10 @@ namespace RainbowMage.OverlayPlugin.SmokeTests
         [STAThread]
         private static int Main(string[] args)
         {
-            if (args.Length != 2 || (args[0] != "install" && args[0] != "reuse" && args[0] != "render" && args[0] != "websocket"))
+            if (args.Length < 2 || (args[0] != "install" && args[0] != "reuse" && args[0] != "render" && args[0] != "websocket") ||
+                args.Length != (args[0] == "websocket" ? 3 : 2))
             {
-                Console.Error.WriteLine("Usage: OverlayPlugin.SmokeTests.exe install|reuse|render|websocket STATE_DIRECTORY");
+                Console.Error.WriteLine("Usage: OverlayPlugin.SmokeTests.exe install|reuse|render STATE_DIRECTORY or websocket STATE_DIRECTORY PORT");
                 return 2;
             }
 
@@ -55,7 +56,7 @@ namespace RainbowMage.OverlayPlugin.SmokeTests
                 {
                     try
                     {
-                        await Run(args[0], window, cef);
+                        await Run(args, window, cef);
                         Console.WriteLine("PASS " + args[0]);
                         exitCode = 0;
                     }
@@ -75,8 +76,9 @@ namespace RainbowMage.OverlayPlugin.SmokeTests
 
         // Resolve product dependencies only after the production assembly resolver is registered.
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static async Task Run(string mode, Form window, string cef)
+        private static async Task Run(string[] args, Form window, string cef)
         {
+            var mode = args[0];
             if (mode == "install")
             {
                 Console.WriteLine("CEF source: " + CefInstaller.GetUrl());
@@ -102,7 +104,7 @@ namespace RainbowMage.OverlayPlugin.SmokeTests
             }
             if (mode == "websocket")
             {
-                await TestWebSocket();
+                await TestWebSocket(int.Parse(args[2]));
                 return;
             }
             await TestRendering(window, cef);
@@ -295,7 +297,7 @@ namespace RainbowMage.OverlayPlugin.SmokeTests
             Check(pixel.A == 255 && pixel.R == 0 && pixel.G == 255 && pixel.B == 0, "Expected green pixel, got " + pixel);
         }
 
-        private static async Task TestWebSocket()
+        private static async Task TestWebSocket(int port)
         {
             var container = new TinyIoCContainer();
             var logger = new Logger();
@@ -304,7 +306,7 @@ namespace RainbowMage.OverlayPlugin.SmokeTests
             var config = new PluginConfig(Path.Combine(state, "config.json"), container)
             {
                 WSServerIP = "127.0.0.1",
-                WSServerPort = 18766,
+                WSServerPort = port,
                 WSServerSSL = false,
             };
             container.Register<IPluginConfig>(config);

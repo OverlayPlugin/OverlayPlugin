@@ -117,7 +117,7 @@ jobs:
         if: ${{ !cancelled() && inputs.check-installer }}
         run: python tests/run-smoke.py --installer --results out/smoke-results/installer
 
-      - name: Publish smoke logs and summary
+      - name: Publish smoke summary
         if: always()
         env:
           INSTALLER_OUTCOME: ${{ steps.installer.outcome }}
@@ -168,6 +168,14 @@ jobs:
         with:
           path: ~/.cache/winetricks
           key: winetricks-20260125-${{ hashFiles('tests/run-wine.sh') }}
+          restore-keys: |
+            winetricks-20260125-
+
+      - name: Cache Wine runtime prefix
+        uses: actions/cache@v6
+        with:
+          path: out/wine-prefix
+          key: wine-prefix-${{ matrix.os }}-${{ matrix.wine }}-${{ hashFiles('tests/setup-wine.sh', 'tests/run-wine.sh') }}
 
       - name: Test Linux runtime through Wine
         run: xvfb-run -a -s '-screen 0 1280x800x24' bash tests/run-wine.sh
@@ -177,7 +185,7 @@ jobs:
         if: ${{ !cancelled() && inputs.check-installer }}
         run: xvfb-run -a -s '-screen 0 1280x800x24' bash tests/run-wine.sh --installer --results out/smoke-results/installer
 
-      - name: Publish smoke logs and summary
+      - name: Publish smoke summary
         if: always()
         env:
           INSTALLER_OUTCOME: ${{ steps.installer.outcome }}

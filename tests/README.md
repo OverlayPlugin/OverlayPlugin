@@ -46,7 +46,7 @@ pass. Default runtime checks use build output and do not validate installation.
    This requires Python 3 and native Chrome/Chromium/Edge. Set `CHROME` to the
    browser executable if it is not found automatically.
 
-   To run only the optional installer check in a fresh results directory:
+   To run only the optional installer check:
 
    ```powershell
    python tests/run-smoke.py --installer --results out/installer-results
@@ -64,15 +64,19 @@ pass. Default runtime checks use build output and do not validate installation.
    A native Chromium-based browser must also be installed. GitHub's Ubuntu
    runner provides Google Chrome. The scripts install .NET Framework 4.8 and
    the VC++ runtimes required by the plugin.
+   Actions caches the initialized prefix separately for each Ubuntu/Wine
+   combination. The first run still installs the runtimes; later runs reuse
+   them while testing CEF in fresh application-data directories.
    `WINEPREFIX` defaults to `out/wine-prefix`; use an isolated prefix, not an
    existing ACT/game installation. The script terminates that prefix's Wine
    processes on exit. `WINETRICKS_CACHE` may be set to reuse installer downloads.
    To run only the installer check, append
    `--installer --results out/installer-results` to `tests/run-wine.sh`.
 
-3. Each run requires a new results directory. To keep previous results, pass
-   `--results out/another-smoke-results` to either runner command. Run the
-   orchestration regression checks independently with:
+3. Each run creates fresh state directories and updates `summary.json` in the
+   results directory. Previous captures are preserved. Use
+   `--results out/another-smoke-results` to keep runs and summaries separate.
+   Run the orchestration regression checks independently with:
 
    ```sh
    python3 -m unittest discover -s tests -p 'test_*.py' -v
@@ -81,11 +85,12 @@ pass. Default runtime checks use build output and do not validate installation.
 ## Results and limits
 
 `out/smoke-results/summary.json` records completed phases and overall success.
-Logs include CEF versions and load paths, rendering diagnostics, and browser
-results. Wine setup logs are in `out/wine-logs/`. Actions publishes these logs
-and a job summary even on failure; PNG screenshots are available as
-`smoke-screenshots-*` artifacts. Local runs keep the diagnostic files.
-Optional installer results have their own summary and logs.
+Execution steps print CEF versions and load paths, rendering diagnostics,
+browser results, and Wine setup output directly to the workflow log. The summary
+step publishes test results even on failure; PNG screenshots are available as
+`smoke-screenshots-*` artifacts. Local runs print the same diagnostics to the
+terminal and keep result JSON and screenshots. Optional installer results have
+their own summary.
 
 These component tests cover the scenarios above, rather than the full ACT/FFXIV
 workflow. Linux rendering uses X11/Xvfb and software rendering; GPU and Wayland

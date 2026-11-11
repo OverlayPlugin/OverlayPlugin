@@ -1,4 +1,4 @@
-"""Publish local smoke diagnostics to Actions logs and the job summary."""
+"""Publish smoke test results to the job summary."""
 
 import json
 import os
@@ -16,6 +16,8 @@ def main():
     results = Path('out/smoke-results')
     summary = ['## Runtime smoke tests', '', '| Check | Result | Completed phases |', '| --- | --- | --- |']
     for name, path in (('Runtime', results / 'summary.json'), ('Installer', results / 'installer/summary.json')):
+        if name == 'Installer' and os.environ.get('INSTALLER_OUTCOME') == 'skipped':
+            continue
         if path.is_file():
             try:
                 result = json.loads(path.read_text(encoding='utf-8'))
@@ -30,19 +32,6 @@ def main():
             outcome = os.environ['INSTALLER_OUTCOME']
             status = {'failure': 'Setup failed', 'cancelled': 'Cancelled'}.get(outcome, 'No test results')
             summary.append(f'| Installer | {status} | - |')
-
-    logs = sorted(
-        list(results.glob('*.log'))
-        + list(results.glob('*/*.log'))
-        + list(results.glob('*/state/*.log'))
-        + list(results.glob('*/websocket-result.json'))
-        + list(results.glob('installer/*/*.log'))
-        + list(Path('out/wine-logs').glob('*.log'))
-    )
-    for path in logs:
-        print(f'::group::{path.as_posix()}', flush=True)
-        print(path.read_text(encoding='utf-8', errors='replace'), flush=True)
-        print('::endgroup::', flush=True)
 
     markdown = '\n'.join(summary) + '\n'
     print(markdown, flush=True)
