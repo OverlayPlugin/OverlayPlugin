@@ -113,7 +113,7 @@ namespace RainbowMage.OverlayPlugin
 
             try
             {
-                var sslPath = GetCertPath();
+                var sslPath = _cfg.WSServerSSL ? GetCertPath() : null;
                 var secure = _cfg.WSServerSSL && File.Exists(sslPath);
 
                 if (_cfg.WSServerIP == "*")
