@@ -2,8 +2,9 @@
 
 The [runtime-tests workflow](../.github/workflows/runtime-tests.yml) builds Debug
 and Release on Windows, then tests the same binaries on Windows, Ubuntu 24.04
-with Wine 9 and 11, and Ubuntu 26.04 with Wine 11. It runs on relevant pull
-requests, pushes to `main`, and manual runs.
+with Wine 9 and 11, and Ubuntu 26.04 with Wine 11. It runs on pull requests
+that change `HtmlRenderer/HtmlRenderer.csproj`, the runtime-tests workflow, or
+files under `tests/`, and on manual runs.
 
 ## What is checked
 

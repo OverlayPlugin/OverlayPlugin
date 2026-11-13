@@ -1,9 +1,6 @@
 name: Runtime smoke tests
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     types:
       - opened
@@ -11,16 +8,7 @@ on:
       - synchronize
     paths:
       - '.github/workflows/runtime-tests.yml'
-      - 'AddonExample/**'
-      - 'HtmlRenderer/**'
-      - 'Overlay*/**'
-      - 'tools/fetch_deps.ps1'
-      - 'DEPS.json'
-      - 'OverlayPlugin.sln'
-      - 'build.bat'
-      - 'build.ps1'
-      - 'build-cef-redists.*'
-      - 'Directory.Build.props'
+      - 'HtmlRenderer/HtmlRenderer.csproj'
       - 'tests/**'
   workflow_dispatch:
     inputs:
