@@ -1,0 +1,48 @@
+<!doctype html>
+<meta charset="utf-8">
+<body>Waiting for OverlayPlugin</body>
+<script>
+    function session() {
+        return new Promise((resolve, reject) => {
+            const port = new URLSearchParams(location.search).get('port');
+            const ws = new WebSocket(`ws://127.0.0.1:${port}/ws`);
+            let echoed = false;
+            let received = false;
+            ws.onopen = () => {
+                ws.send(JSON.stringify({ call: 'subscribe', events: ['CombatData'] }));
+                ws.send(JSON.stringify({ call: 'smokeEcho', value: 'ci-echo', rseq: 42 }));
+            };
+            ws.onerror = () => reject(new Error('WebSocket error'));
+            ws.onmessage = event => {
+                const data = JSON.parse(event.data);
+                if (data.rseq === 42 && data.value === 'ci-echo') {
+                    echoed = true;
+                }
+                if (data.type === 'CombatData' && data.damage === 123) {
+                    received = true;
+                }
+                if (echoed && received) {
+                    document.body.textContent = 'Damage: ' + 123;
+                    ws.close();
+                }
+            };
+            ws.onclose = () => echoed && received ? resolve() : reject(new Error('Incomplete exchange'));
+        });
+    }
+
+    (async () => {
+        await session();
+        await session();
+        await fetch('/result', {
+            method: 'POST',
+            body: JSON.stringify({
+                passed: document.body.textContent === 'Damage: 123',
+                sessions: 2,
+                text: document.body.textContent
+            })
+        });
+    })().catch(error => fetch('/result', {
+        method: 'POST',
+        body: JSON.stringify({ passed: false, error: String(error) })
+    }));
+</script>
