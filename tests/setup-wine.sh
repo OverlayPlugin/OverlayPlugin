@@ -2,42 +2,39 @@
 set -euo pipefail
 
 # Run as root; prefix initialization and tests run as the runner user separately.
-case "${1:-}" in
-    9|11) version=$1 ;;
-    *) echo 'Usage: sudo bash tests/setup-wine.sh 9|11' >&2; exit 2 ;;
-esac
+if [[ $# != 1 || ! ${1:-} =~ ^[1-9][0-9]*$ ]]; then
+    echo 'Usage: sudo bash tests/setup-wine.sh <positive Wine major version>' >&2
+    exit 2
+fi
+version=$1
 
 # shellcheck source=/dev/null
 source /etc/os-release
-if [[ $EUID != 0 || $ID != ubuntu || ( $VERSION_ID != 24.04 && $VERSION_ID != 26.04 ) ]]; then
-    echo 'This installer requires root on Ubuntu 24.04 or 26.04.' >&2
-    exit 1
-fi
-if [[ $version == 9 && $VERSION_ID != 24.04 ]]; then
-    echo 'Wine 9 is only tested on Ubuntu 24.04.' >&2
+if [[ $EUID != 0 || $ID != ubuntu ]]; then
+    echo 'This installer requires root on Ubuntu.' >&2
     exit 1
 fi
 
 export DEBIAN_FRONTEND=noninteractive
-# Ubuntu 26.04's WineHQ package uses the new WoW64 mode without i386 libraries.
-if [[ $VERSION_ID == 24.04 ]]; then
+# Wine 9 and WineHQ packages for Ubuntu before 26.04 require i386 libraries.
+if [[ $version == 9 ]] || dpkg --compare-versions "$VERSION_ID" lt 26.04; then
     dpkg --add-architecture i386
 fi
 apt-get update
 apt-get install -y --no-install-recommends ca-certificates curl cabextract unzip \
     xvfb xauth openbox x11-utils fonts-liberation fonts-wine
 
-if [[ $version == 11 ]]; then
+if [[ $version != 9 ]]; then
     mkdir -p /etc/apt/keyrings
     curl --fail --location --retry 3 https://dl.winehq.org/wine-builds/winehq.key \
         -o /etc/apt/keyrings/winehq.asc
     echo "deb [signed-by=/etc/apt/keyrings/winehq.asc] https://dl.winehq.org/wine-builds/ubuntu/ $VERSION_CODENAME main" \
         > /etc/apt/sources.list.d/overlayplugin-winehq.list
     apt-get update
-    apt-get install -y --install-recommends "winehq-stable=11.0.0.0~${VERSION_CODENAME}-1"
+    apt-get install -y --install-recommends "winehq-stable=${version}.*"
 else
-    apt-get install -y --install-recommends wine=9.0~repack-4build3 \
-        wine64=9.0~repack-4build3 wine32:i386=9.0~repack-4build3
+    apt-get install -y --install-recommends "wine=${version}.*" \
+        "wine64=${version}.*" "wine32:i386=${version}.*"
 fi
 
 curl --fail --location --retry 3 \

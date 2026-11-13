@@ -148,8 +148,14 @@ jobs:
           name: smoke-bundle
           path: out/smoke/
 
-      - name: Install pinned Wine and Winetricks
-        run: sudo bash tests/setup-wine.sh '${{ matrix.wine }}'
+      - name: Install Wine and pinned Winetricks
+        id: wine
+        run: |
+          sudo bash tests/setup-wine.sh '${{ matrix.wine }}'
+          package=wine
+          if [[ '${{ matrix.wine }}' != 9 ]]; then package=winehq-stable; fi
+          installed_version=$(dpkg-query -W -f='${Version}' "$package")
+          echo "version=$installed_version" >> "$GITHUB_OUTPUT"
 
       - name: Cache runtime installers
         uses: actions/cache@v6
@@ -163,7 +169,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: out/wine-prefix
-          key: wine-prefix-${{ matrix.os }}-${{ matrix.wine }}-${{ hashFiles('tests/setup-wine.sh', 'tests/run-wine.sh') }}
+          key: wine-prefix-${{ matrix.os }}-${{ steps.wine.outputs.version }}-${{ hashFiles('tests/setup-wine.sh', 'tests/run-wine.sh') }}
 
       - name: Test Linux runtime through Wine
         run: xvfb-run -a -s '-screen 0 1280x800x24' bash tests/run-wine.sh

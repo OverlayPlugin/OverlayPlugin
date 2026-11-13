@@ -54,20 +54,27 @@ pass. Default runtime checks use build output and do not validate installation.
    ```
 
 2. To test on Linux, transfer `out/smoke/` from that Windows build into the same
-   location in a checkout. On Ubuntu 24.04 or 26.04, install one of the pinned Wine
-   versions and run:
+   location in a checkout. On Ubuntu, select a Wine major version and run:
 
    ```sh
-   sudo bash tests/setup-wine.sh 11  # Wine 9 is also supported on Ubuntu 24.04
+   sudo bash tests/setup-wine.sh 11
    xvfb-run -a -s '-screen 0 1280x800x24' bash tests/run-wine.sh
    ```
+
+   Setup selects the latest available package within the requested major:
+   Wine 9 from Ubuntu, or other majors from WineHQ stable. The argument must be
+   a positive integer. Setup fails if the repository for that Ubuntu release or
+   the requested major is unavailable. CI tests Ubuntu 24.04 with Wine 9 and 11,
+   and Ubuntu 26.04 with Wine 11; other combinations are not verified.
+   The selected package version is printed in the setup log. Winetricks remains
+   pinned.
 
    A native Chromium-based browser must also be installed. GitHub's Ubuntu
    runner provides Google Chrome. The scripts install .NET Framework 4.8 and
    the VC++ runtimes required by the plugin.
-   Actions caches the initialized prefix separately for each Ubuntu/Wine
-   combination. The first run still installs the runtimes; later runs reuse
-   them while testing CEF in fresh application-data directories.
+   Actions caches the initialized prefix separately for each Ubuntu release and
+   installed Wine package version. The first run still installs the runtimes;
+   later runs reuse them while testing CEF in fresh application-data directories.
    `WINEPREFIX` defaults to `out/wine-prefix`; use an isolated prefix, not an
    existing ACT/game installation. The script terminates that prefix's Wine
    processes on exit. `WINETRICKS_CACHE` may be set to reuse installer downloads.
