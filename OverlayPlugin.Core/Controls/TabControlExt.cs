@@ -24,6 +24,22 @@ namespace RainbowMage.OverlayPlugin
         {
             return (int)(InputValue * DpiScale);
         }
+        byte PercFromTo(byte From, byte To, double Percent)
+        {
+            int diff = Math.Abs(To - From);
+            if (From < To)
+                return (byte)(From + diff * Percent);
+            else
+                return (byte)(From - diff * Percent);
+        }
+        Color GetColorMix(Color From, Color To, double Percent)
+        {
+            return Color.FromArgb(
+                    PercFromTo(From.R, To.R, Math.Abs(Percent)),
+                    PercFromTo(From.G, To.G, Math.Abs(Percent)),
+                    PercFromTo(From.B, To.B, Math.Abs(Percent)));
+        }
+
 
         bool itemSizeSet = false;
         protected override void OnPaint(PaintEventArgs e)
@@ -34,23 +50,34 @@ namespace RainbowMage.OverlayPlugin
                 ItemSize = new Size(Dpi(46), Dpi(140));
             }
 
+            Color tabBackColor, tabSetBackColor;
+            if (ActGlobals.oFormActMain == null)
+            {
+                tabBackColor = Color.White;
+                tabSetBackColor = SystemColors.ControlLight;
+            }
+            else
+            {
+                tabBackColor = GetColorMix(ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting, ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting, 0.0);
+                tabSetBackColor = GetColorMix(ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.BackColorSetting, ActGlobals.oFormActMain.ActColorSettings.InternalWindowColors.ForeColorSetting, 0.2);
+            }
+
             //base.OnPaint(e);    // Seems unnecessary since the next line wipes everything?
-            e.Graphics.Clear(SystemColors.ControlLightLight);
-            Rectangle tabsetRect = new Rectangle(Dpi(4), Dpi(4), (ItemSize.Height * RowCount) - Dpi(4), Height - Dpi(8));   // The entire tabset area
-            Rectangle tabmodelRect = new Rectangle(tabsetRect.X + Dpi(2), 0, tabsetRect.Width - Dpi(4), 20);    // A size model for a single tab
-            e.Graphics.FillRectangle(SystemBrushes.ControlLight, tabsetRect);
+            e.Graphics.Clear(ActGlobals.oFormActMain?.ActColorSettings.MainWindowColors.BackColorSetting ?? SystemColors.ControlLightLight);
+            Rectangle tabsetRect = new Rectangle(2, Dpi(4), (ItemSize.Height * RowCount) - 0, Height);   // The entire tabset area
+            Rectangle tabmodelRect = new Rectangle(tabsetRect.X + Dpi(2), 0, ItemSize.Height - Dpi(4), 20);    // A size model for a single tab
+            e.Graphics.FillRectangle(new SolidBrush(tabSetBackColor), tabsetRect);
 
             int inc = 0;
-
             foreach (TabPage tp in TabPages)
             {
-                Color fore = Color.Black;
+                Color tabForeColor = ActGlobals.oFormActMain?.ActColorSettings.InternalWindowColors.ForeColorSetting ?? Color.Black;
                 Font fontF = Font;
                 Font fontFSmall = new Font(Font.FontFamily, (float)(Font.Size * 0.85));  // This is already DPI scaled by Windows because this.Font was
                 Rectangle tabclipRect = GetTabRect(inc);    // A clipping rectangle that encompasses this tab
-                Rectangle tabRect = new Rectangle(tabmodelRect.X, tabclipRect.Y + Dpi(5), tabmodelRect.Width, tabclipRect.Height - Dpi(2)); // A combination of our tab size model and the offset from the clipping rectangle
-                Rectangle textRect1 = new Rectangle(tabmodelRect.X, tabclipRect.Y + Dpi(6), tabmodelRect.Width, tabclipRect.Height - Dpi(20));
-                Rectangle textRect2 = new Rectangle(tabmodelRect.X, tabclipRect.Y + Dpi(22), tabmodelRect.Width, tabclipRect.Height - Dpi(20));
+                Rectangle tabRect = new Rectangle(tabclipRect.X + Dpi(2), tabclipRect.Y + Dpi(5), tabmodelRect.Width, tabclipRect.Height - Dpi(2)); // A combination of our tab size model and the offset from the clipping rectangle
+                Rectangle textRect1 = new Rectangle(tabclipRect.X + Dpi(2), tabclipRect.Y + Dpi(6), tabmodelRect.Width, tabclipRect.Height - Dpi(20));
+                Rectangle textRect2 = new Rectangle(tabclipRect.X + Dpi(2), tabclipRect.Y + Dpi(22), tabmodelRect.Width, tabclipRect.Height - Dpi(20));
 
                 StringFormat sf = new StringFormat();
                 sf.LineAlignment = StringAlignment.Center;
@@ -59,16 +86,16 @@ namespace RainbowMage.OverlayPlugin
                 if (inc == SelectedIndex)
                 {
                     e.Graphics.FillRectangle(new SolidBrush(SystemColors.Highlight), tabRect);
-                    fore = SystemColors.HighlightText;
+                    tabForeColor = SystemColors.HighlightText;
                     fontF = new Font(Font, FontStyle.Bold);
                 }
                 else
                 {
-                    e.Graphics.FillRectangle(Brushes.White, tabRect);
+                    e.Graphics.FillRectangle(new SolidBrush(tabBackColor), tabRect);
                 }
 
-                e.Graphics.DrawString(tp.Name, fontF, new SolidBrush(fore), textRect1, sf);
-                e.Graphics.DrawString(tp.Text, fontFSmall, new SolidBrush(fore), textRect2, sf);
+                e.Graphics.DrawString(tp.Name, fontF, new SolidBrush(tabForeColor), textRect1, sf);
+                e.Graphics.DrawString(tp.Text, fontFSmall, new SolidBrush(tabForeColor), textRect2, sf);
                 inc++;
             }
         }
