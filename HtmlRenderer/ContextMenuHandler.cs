@@ -33,7 +33,9 @@ namespace RainbowMage.HtmlRenderer
         {
             if (ctxMenuCallback == null)
             {
-                // Suppress the context menu.
+                // Suppress the context menu, but not for devtools
+                if (parameters.FrameUrl.StartsWith("devtools://"))
+                    return false;
                 return true;
             }
             else
