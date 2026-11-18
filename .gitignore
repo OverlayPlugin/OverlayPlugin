@@ -170,6 +170,7 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+__pycache__/
 bower_components/
 
 # RIA/Silverlight projects

@@ -1,0 +1,195 @@
+name: Runtime smoke tests
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    paths:
+      - '.github/workflows/runtime-tests.yml'
+      - 'HtmlRenderer/HtmlRenderer.csproj'
+      - 'tests/**'
+  workflow_dispatch:
+    inputs:
+      check-installer:
+        description: Also test installation and reuse of the published CEF archive
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: runtime-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  msbuild:
+    runs-on: windows-latest
+    timeout-minutes: 40
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Check dependencies cache
+        id: cache-dependencies
+        uses: actions/cache@v6
+        with:
+          path: |
+            ./Thirdparty
+            ./OverlayPlugin.Core/Thirdparty
+          key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.ps1', './DEPS.json', './tools/StripFFXIVClientStructs/StripFFXIVClientStructs/StripFFXIVClientStructs.cs') }}
+          restore-keys: |
+            ${{ runner.os }}-overlayplugin-
+      # Fetch dependencies only if cache-hit is false
+      - name: Fetch dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          .\tools\fetch_deps.ps1
+
+      - name: Set up msbuild
+        uses: microsoft/setup-msbuild@v3
+
+      - name: Add Custom Problem Matcher
+        run: |
+          echo "::add-matcher::.github/matchers/${{ github.job }}.json"
+
+      - name: Run Build
+        run: .\build.bat -ci
+        shell: cmd
+
+      - name: Build smoke test bundle
+        shell: pwsh
+        run: .\tests\prepare-smoke.ps1
+
+      - name: Upload smoke bundle
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-bundle
+          path: out/smoke/
+          if-no-files-found: error
+          retention-days: 7
+
+  windows:
+    needs: msbuild
+    runs-on: windows-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+
+      - name: Download Windows binaries
+        uses: actions/download-artifact@v8
+        with:
+          name: smoke-bundle
+          path: out/smoke/
+
+      - name: Check smoke runner failure handling
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+
+      - name: Test Windows runtime
+        run: python tests/run-smoke.py
+
+      - name: Test published CEF installer
+        id: installer
+        if: ${{ !cancelled() && inputs.check-installer }}
+        run: python tests/run-smoke.py --installer --results out/smoke-results/installer
+
+      - name: Publish smoke summary
+        if: always()
+        env:
+          INSTALLER_OUTCOME: ${{ steps.installer.outcome }}
+        run: python tests/report-smoke.py
+
+      - name: Upload Windows screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-screenshots-windows
+          path: out/smoke-results/*/state/*.png
+          if-no-files-found: ignore
+          retention-days: 14
+
+  wine:
+    needs: msbuild
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            wine: '9'
+          - os: ubuntu-24.04
+            wine: '11'
+          - os: ubuntu-26.04
+            wine: '11'
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+
+      - name: Download tested Windows binaries
+        uses: actions/download-artifact@v8
+        with:
+          name: smoke-bundle
+          path: out/smoke/
+
+      - name: Install Wine and pinned Winetricks
+        id: wine
+        run: |
+          sudo bash tests/setup-wine.sh '${{ matrix.wine }}'
+          package=wine
+          if [[ '${{ matrix.wine }}' != 9 ]]; then package=winehq-stable; fi
+          installed_version=$(dpkg-query -W -f='${Version}' "$package")
+          echo "version=$installed_version" >> "$GITHUB_OUTPUT"
+
+      - name: Cache runtime installers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/winetricks
+          key: winetricks-20260125-${{ hashFiles('tests/run-wine.sh') }}
+          restore-keys: |
+            winetricks-20260125-
+
+      - name: Cache Wine runtime prefix
+        uses: actions/cache@v6
+        with:
+          path: out/wine-prefix
+          key: wine-prefix-${{ matrix.os }}-${{ steps.wine.outputs.version }}-${{ hashFiles('tests/setup-wine.sh', 'tests/run-wine.sh') }}
+
+      - name: Test Linux runtime through Wine
+        run: xvfb-run -a -s '-screen 0 1280x800x24' bash tests/run-wine.sh
+
+      - name: Test published CEF installer through Wine
+        id: installer
+        if: ${{ !cancelled() && inputs.check-installer }}
+        run: xvfb-run -a -s '-screen 0 1280x800x24' bash tests/run-wine.sh --installer --results out/smoke-results/installer
+
+      - name: Publish smoke summary
+        if: always()
+        env:
+          INSTALLER_OUTCOME: ${{ steps.installer.outcome }}
+        run: python3 tests/report-smoke.py
+
+      - name: Upload Wine screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-screenshots-${{ matrix.os }}-wine-${{ matrix.wine }}
+          path: out/smoke-results/*/state/*.png
+          if-no-files-found: ignore
+          retention-days: 14
