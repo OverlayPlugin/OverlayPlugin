@@ -140,6 +140,20 @@
         "Comment": "Extra info from ActorControlSelf packets"
     },
     {
+        "ID": 275,
+        "Name": "SpawnObject",
+        "Source": "OverlayPlugin",
+        "Version": 1,
+        "Comment": "SpawnObject packet data"
+    },
+    {
+        "ID": 276,
+        "Name": "DespawnObject",
+        "Source": "OverlayPlugin",
+        "Version": 1,
+        "Comment": "DespawnObject packet data"
+    },
+    {
         "StartID": 256,
         "EndID": 512,
         "Source": "OverlayPlugin",
