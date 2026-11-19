@@ -21,6 +21,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
     public interface IContentFinderSettingsMemory : IVersionedMemory
     {
         ContentFinderSettings GetContentFinderSettings();
+
+
     }
 
     class ContentFinderSettingsMemoryManager : IContentFinderSettingsMemory
@@ -80,5 +82,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.ContentFinderSettings
                 return null;
             return memory.GetContentFinderSettings();
         }
+
+
     }
 }
